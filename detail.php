@@ -29,13 +29,13 @@ $term = array(
 );
 
 $args = $_GET;
+print "<ul>\n";
 foreach($term as $key => $s) {
 	$args['s'] = $s;
-	printf('<a href="%s/%s">%s</a>'."\n",
+	printf('<li><a href="%s/%s">%s</a></li>'."\n",
 		$CONFIG['weburl'], build_url('detail.php', $args), $key);
 }
-
-print "<br>\n";
+print "</ul>\n";
 
 $plugins = collectd_plugins($host);
 

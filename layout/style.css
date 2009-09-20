@@ -21,3 +21,12 @@ table.summary td {
 img {
 	border: 0;
 }
+
+ul {
+		margin: 0;
+		padding: 0;
+}
+
+li {
+        display: inline;
+}
