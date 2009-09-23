@@ -16,6 +16,7 @@ EOT;
 
 function html_end() {
 	echo <<<EOT
+<hr><span class="small">Collectd Graph Panel is distributed under the GNU General Public License (GPL)</span>
 </body>
 </html>
 EOT;
