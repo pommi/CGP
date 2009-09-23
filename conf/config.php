@@ -14,6 +14,7 @@ $CONFIG['groupby'] = array(
 	'sensors' => 'type',
 );
 
-include 'config.local.php';
+if (file_exists(dirname(__FILE__).'/config.local.php'))
+	include 'config.local.php';
 
 ?>
