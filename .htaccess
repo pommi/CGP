@@ -1,2 +1,4 @@
+Options -Indexes
+
 RewriteEngine On
 RewriteRule     ^.git(ignore|/) - [F,L]
