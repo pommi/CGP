@@ -2,8 +2,8 @@
 
 # Collectd CPU plugin
 
-require_once $CONFIG['webdir'].'/conf/config.php';
-require_once $CONFIG['webdir'].'/type/GenericStacked.class.php';
+require_once 'conf/common.inc.php';
+require_once 'type/GenericStacked.class.php';
 
 ## LAYOUT
 # processes/
@@ -15,7 +15,7 @@ require_once $CONFIG['webdir'].'/type/GenericStacked.class.php';
 # processes/ps_state-sleeping.rrd
 
 # grouped
-require_once $CONFIG['webdir'].'/inc/collectd.inc.php';
+require_once 'inc/collectd.inc.php';
 $tinstance = collectd_plugindetail($host, $plugin, 'ti');
 
 $obj = new Type_GenericStacked;

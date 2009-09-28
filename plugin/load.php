@@ -2,8 +2,8 @@
 
 # Collectd Load plugin
 
-require_once $CONFIG['webdir'].'/conf/config.php';
-require_once $CONFIG['webdir'].'/type/Default.class.php';
+require_once 'conf/common.inc.php';
+require_once 'type/Default.class.php';
 
 ## LAYOUT
 # load/load.rrd

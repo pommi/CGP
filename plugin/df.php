@@ -2,8 +2,8 @@
 
 # Collectd Df plugin
 
-require_once $CONFIG['webdir'].'/conf/config.php';
-require_once $CONFIG['webdir'].'/type/GenericStacked.class.php';
+require_once 'conf/common.inc.php';
+require_once 'type/GenericStacked.class.php';
 
 # LAYOUT
 #

@@ -1,13 +1,17 @@
 <?php
 
+require_once 'conf/common.inc.php';
+require_once 'inc/rrdtool.class.php';
+
 function html_start() {
+	global $CONFIG;
 	echo <<<EOT
 <!DOCTYPE HTML>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Collectd Graph Panel</title>
-	<link rel="stylesheet" href="layout/style.css" type="text/css">
+	<link rel="stylesheet" href="{$CONFIG['weburl']}/layout/style.css" type="text/css">
 </head>
 <body>
 
@@ -22,8 +26,6 @@ function html_end() {
 EOT;
 }
 
-require_once 'conf/common.inc.php';
-require_once 'inc/rrdtool.class.php';
 function host_summary($hosts) {
 	global $CONFIG;
 

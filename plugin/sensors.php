@@ -2,8 +2,8 @@
 
 # Collectd Sensors plugin
 
-require_once $CONFIG['webdir'].'/conf/config.php';
-require_once $CONFIG['webdir'].'/type/Default.class.php';
+require_once 'conf/common.inc.php';
+require_once 'type/Default.class.php';
 
 ## LAYOUT
 # disk-XXXX/
@@ -12,7 +12,7 @@ require_once $CONFIG['webdir'].'/type/Default.class.php';
 # disk-XXXX/voltage-XXXX.rrd
 
 # grouped
-require_once $CONFIG['webdir'].'/inc/collectd.inc.php';
+require_once 'inc/collectd.inc.php';
 $tinstance = collectd_plugindetail($host, $plugin, 'ti', array('t' => $type));
 
 $obj = new Type_Default;

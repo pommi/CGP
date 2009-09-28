@@ -2,8 +2,8 @@
 
 # Collectd Interface plugin
 
-require_once $CONFIG['webdir'].'/conf/config.php';
-require_once $CONFIG['webdir'].'/type/GenericIO.class.php';
+require_once 'conf/common.inc.php';
+require_once 'type/GenericIO.class.php';
 
 # LAYOUT
 # interface/
