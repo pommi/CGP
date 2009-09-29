@@ -9,10 +9,12 @@ html_start();
 $h = array();
 
 # show all categorized hosts
-foreach($CONFIG['cat'] as $cat => $hosts) {
-	printf("<h2>%s</h2>\n", $cat);
-	host_summary($hosts);
-	$h = array_merge($h, $hosts);
+if (is_array($CONFIG['cat'])) {
+	foreach($CONFIG['cat'] as $cat => $hosts) {
+		printf("<h2>%s</h2>\n", $cat);
+		host_summary($hosts);
+		$h = array_merge($h, $hosts);
+	}
 }
 
 # search for uncategorized hosts
