@@ -15,12 +15,21 @@ function html_start() {
 </head>
 <body>
 
+<div id="header">
+  <h1><a href="{$CONFIG['weburl']}">Collectd Graph Panel</a></h1>
+</div>
+
+<div id="content">
+
 EOT;
 }
 
 function html_end() {
 	echo <<<EOT
+</div>
+<div id="footer">
 <hr><span class="small">Collectd Graph Panel is distributed under the GNU General Public License (GPL)</span>
+</div>
 </body>
 </html>
 EOT;

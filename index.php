@@ -10,7 +10,7 @@ $h = array();
 
 # show all categorized hosts
 foreach($CONFIG['cat'] as $cat => $hosts) {
-	printf("<h1>%s</h1>\n", $cat);
+	printf("<h2>%s</h2>\n", $cat);
 	host_summary($hosts);
 	$h = array_merge($h, $hosts);
 }
@@ -21,7 +21,7 @@ $uhosts = array_diff($chosts, $h);
 
 # show all uncategorized hosts
 if ($uhosts) {
-	echo "<h1>uncategorized</h1>\n";
+	echo "<h2>uncategorized</h2>\n";
 	host_summary($uhosts);
 }
 

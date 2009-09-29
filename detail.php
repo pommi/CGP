@@ -15,7 +15,7 @@ $seconds = $_GET['s'];
 
 html_start();
 
-printf('<h1><a href="%s">&laquo;</a> %s</h1>'."\n",
+printf('<h2><a href="%s">&laquo;</a> %s</h2>'."\n",
 	$CONFIG['weburl'].'/host.php?h='.htmlentities($host), $host
 );
 
