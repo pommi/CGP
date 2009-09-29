@@ -4,6 +4,12 @@ require_once 'conf/common.inc.php';
 require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
+# use width/height from config if nothing is given
+if (empty($_GET['x']))
+	$_GET['x'] = $CONFIG['detail-width'];
+if (empty($_GET['y']))
+	$_GET['y'] = $CONFIG['detail-heigth'];
+
 $host = $_GET['h'];
 $plugin = $_GET['p'];
 $pinstance = $_GET['pi'];

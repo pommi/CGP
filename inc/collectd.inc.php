@@ -123,7 +123,7 @@ function graphs_from_plugin($host, $plugin) {
 				);
 				printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
 					$CONFIG['weburl'],
-					build_url('detail.php', $items).'&x=800&y=350',
+					build_url('detail.php', $items),
 					$CONFIG['weburl'],
 					build_url('graph.php', $items)
 				);
@@ -140,7 +140,7 @@ function graphs_from_plugin($host, $plugin) {
 					);
 					printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
 						$CONFIG['weburl'],
-						build_url('detail.php', $items).'&x=800&y=350',
+						build_url('detail.php', $items),
 						$CONFIG['weburl'],
 						build_url('graph.php', $items)
 					);

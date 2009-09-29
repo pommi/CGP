@@ -7,8 +7,8 @@ $plugin = $_GET['p'];
 $pinstance = $_GET['pi'];
 $type = $_GET['t'];
 $tinstance = $_GET['ti'];
-$width = $_GET['x'];
-$heigth = $_GET['y'];
+$width = empty($_GET['x']) ? $CONFIG['width'] : $_GET['x'];
+$heigth = empty($_GET['y']) ? $CONFIG['heigth'] : $_GET['y'];
 $seconds = $_GET['s'];
 
 if (!preg_match('/^[a-z]+$/', $plugin)) {
