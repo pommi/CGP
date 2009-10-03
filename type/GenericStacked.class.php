@@ -14,7 +14,10 @@ class Type_GenericStacked extends Type_Default {
 		$rrdgraph[] = sprintf('-s -%d', is_numeric($this->seconds) ? $this->seconds : 86400);
 
 		if (is_array($this->args['tinstance']))
-			$array = is_array($this->order) ? $this->order : $this->args['tinstance'];
+			if (is_array($this->order))
+				$array = array_intersect($this->order, $this->args['tinstance']);
+			else
+				$array = $this->args['tinstance'];
 		else
 			$array = $this->data_sources;
 
