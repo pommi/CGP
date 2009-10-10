@@ -9,7 +9,7 @@ $splugin = $_GET['p'];
 
 html_start();
 
-printf('<h2><a href="%s">&laquo;</a> %s</h2>'."\n", $CONFIG['weburl'], $host);
+printf('<h2>%s</h2>'."\n", $host);
 
 $plugins = collectd_plugins($host);
 
