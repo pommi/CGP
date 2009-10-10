@@ -5,12 +5,18 @@ require_once 'inc/rrdtool.class.php';
 
 function html_start() {
 	global $CONFIG;
+
+	if (isset($_GET['h']))
+		$path = ' - '.htmlentities(ucfirst($_GET['h']));
+	if (isset($_GET['p']))
+		$path .= ' - '.htmlentities(ucfirst($_GET['p']));
+
 	echo <<<EOT
 <!DOCTYPE HTML>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Collectd Graph Panel</title>
+	<title>CGP{$path}</title>
 	<link rel="stylesheet" href="{$CONFIG['weburl']}/layout/style.css" type="text/css">
 </head>
 <body>
