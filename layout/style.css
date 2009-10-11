@@ -33,6 +33,15 @@ h3 {
 	font-size: 1em;
 }
 
+a:link, a:visited, a:active {
+	text-decoration: none;
+	color: #222;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 table.summary th {
 	width: 150px;
 	font-weight: normal;
@@ -49,12 +58,13 @@ img {
 }
 
 ul {
-		margin: 0;
-		padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 li {
-        display: inline;
+	display: inline;
+	margin-left: 10px;
 }
 
 hr {
