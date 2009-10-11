@@ -27,7 +27,7 @@ printf('<h2><a href="%s">%s</a></h2>'."\n",
 
 $term = array(
 	'2hour'	=> 3600*2,
-	'6hour'	=> 3600*6,
+	'8hour'	=> 3600*8,
 	'day'	=> 86400,
 	'week'	=> 86400*7,
 	'month'	=> 86400*31,
