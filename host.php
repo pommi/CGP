@@ -21,7 +21,7 @@ if(!$plugins) {
 # first the ones defined in overview
 foreach($CONFIG['overview'] as $plugin) {
 	if (in_array($plugin, $plugins)) {
-		printf("<h3>[-] %s</h3>\n", $plugin);
+		printf("<h3><img src=\"%s/layout/minus.gif\" alt=\"[-]\"> %s</h3>\n", $CONFIG['weburl'], $plugin);
 		graphs_from_plugin($host, $plugin);
 	}
 }
@@ -31,10 +31,10 @@ foreach($plugins as $plugin) {
 	if (!in_array($plugin, $CONFIG['overview'])) {
 		$url = sprintf('<a href="%s/host.php?h=%s&p=%s">%s</a>'."\n", $CONFIG['weburl'], $host, $plugin, $plugin);
 		if ($splugin == $plugin) {
-			printf("<h3>[-] %s</h3>\n", $url);
+			printf("<h3><img src=\"%s/layout/minus.gif\" alt=\"[-]\"> %s</h3>\n", $CONFIG['weburl'], $url);
 			graphs_from_plugin($host, $plugin);
 		} else {
-			printf("<h3>[+] %s</h3>\n", $url);
+			printf("<h3><img src=\"%s/layout/plus.gif\" alt=\"[+]\"> %s</h3>\n", $CONFIG['weburl'], $url);
 		}
 	}
 }
