@@ -110,16 +110,18 @@ function graphs_from_plugin($host, $plugin) {
 	$ts = collectd_plugindetail($host, $plugin, 't');
 	$tis = collectd_plugindetail($host, $plugin, 'ti');
 	if (!$pis) $pis = array('NULL');
-	if (!$tis) $tis = array('NULL');
+	if (!$tis || $CONFIG['groupby'][$plugin] == 'type')
+		$tis = array('NULL');
 
 	foreach($pis as $pi) {
-		if ($CONFIG['groupby'][$plugin] == 'type') {
+		foreach ($tis as $ti) {
 			foreach ($ts as $t) {
 				$items = array(
 					'h' => $host,
 					'p' => $plugin,
 					'pi' => $pi,
-					't' => $t
+					't' => $t,
+					'ti' => $ti
 				);
 				printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
 					$CONFIG['weburl'],
@@ -127,24 +129,6 @@ function graphs_from_plugin($host, $plugin) {
 					$CONFIG['weburl'],
 					build_url('graph.php', $items)
 				);
-			}
-		} else {
-			foreach ($tis as $ti) {
-				foreach ($ts as $t) {
-					$items = array(
-						'h' => $host,
-						'p' => $plugin,
-						'pi' => $pi,
-						't' => $t,
-						'ti' => $ti
-					);
-					printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
-						$CONFIG['weburl'],
-						build_url('detail.php', $items),
-						$CONFIG['weburl'],
-						build_url('graph.php', $items)
-					);
-				}
 			}
 		}
 	}
