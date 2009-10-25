@@ -6,10 +6,7 @@ require_once 'inc/rrdtool.class.php';
 function html_start() {
 	global $CONFIG;
 
-	if (isset($_GET['h']))
-		$path = ' - '.htmlentities(ucfirst($_GET['h']));
-	if (isset($_GET['p']))
-		$path .= ' - '.htmlentities(ucfirst($_GET['p']));
+	$path = htmlentities(breadcrumbs());
 
 	echo <<<EOT
 <!DOCTYPE HTML>
@@ -58,6 +55,22 @@ function host_summary($hosts) {
 	}
 
 	echo "</table>\n";
+}
+
+
+function breadcrumbs() {
+	if (isset($_GET['h']))
+		$path = ' - '.ucfirst($_GET['h']);
+	if (isset($_GET['p']))
+		$path .= ' - '.ucfirst($_GET['p']);
+	if (isset($_GET['pi']))
+		$path .= ' - '.$_GET['pi'];
+	if (isset($_GET['t']) && isset($_GET['p']) && $_GET['t'] != $_GET['p'])
+		$path .= ' - '.$_GET['t'];
+	if (isset($_GET['ti']))
+		$path .= ' - '.$_GET['ti'];
+
+	return $path;
 }
 
 ?>
