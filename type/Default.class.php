@@ -46,14 +46,26 @@ class Type_Default {
 		return $c[r].$c[g].$c[b];
 	}
 
+	function identifier($host, $plugin, $pinst, $type, $tinst) {
+		$identifier = sprintf('%s/%s%s%s/%s%s%s', $host,
+			$plugin, strlen($pinst) ? '-' : '', $pinst,
+			$type, strlen($tinst) ? '-' : '', $tinst);
+
+		if (is_file($this->datadir.'/'.$identifier.'.rrd'))
+			return $identifier;
+		else
+			return FALSE;
+	}
+
 	function get_filename($tinstance=NULL) {
 		if (!is_array($this->args['tinstance']) && $tinstance == NULL)
 			$tinstance = $this->args['tinstance'];
-			
-		$search = array('{host}', '{plugin}', '{pinstance}', '{type}', '{tinstance}');
-		$replace = array($this->args['host'], $this->args['plugin'], $this->args['pinstance'], $this->args['type'], $tinstance);
-		$f = $this->datadir . '/' . str_replace($search, $replace, $this->path_format);
-		return $f;
+
+		$identifier = $this->identifier($this->args['host'],
+				$this->args['plugin'], $this->args['pinstance'],
+				$this->args['type'], $tinstance);
+
+		return $this->datadir.'/'.$identifier.'.rrd';
 	}
 
 	function rrd_graph($debug=false) {

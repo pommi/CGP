@@ -10,7 +10,6 @@ require_once 'type/Default.class.php';
 
 $obj = new Type_Default;
 $obj->datadir = $CONFIG['datadir'];
-$obj->path_format = '{host}/{plugin}/{type}.rrd';
 $obj->args = array(
 	'host' => $host,
 	'plugin' => $plugin,

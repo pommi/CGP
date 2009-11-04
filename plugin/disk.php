@@ -14,7 +14,6 @@ require_once 'type/GenericIO.class.php';
 
 $obj = new Type_GenericIO;
 $obj->datadir = $CONFIG['datadir'];
-$obj->path_format = '{host}/{plugin}-{pinstance}/{type}.rrd';
 $obj->args = array(
 	'host' => $host,
 	'plugin' => $plugin,

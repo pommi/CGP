@@ -18,7 +18,6 @@ $tinstance = collectd_plugindetail($host, $plugin, 'ti');
 
 $obj = new Type_GenericStacked;
 $obj->datadir = $CONFIG['datadir'];
-$obj->path_format = '{host}/{plugin}/{type}-{tinstance}.rrd';
 $obj->args = array(
 	'host' => $host,
 	'plugin' => $plugin,

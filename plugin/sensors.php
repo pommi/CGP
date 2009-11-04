@@ -17,7 +17,6 @@ $tinstance = collectd_plugindetail($host, $plugin, 'ti', array('t' => $type));
 
 $obj = new Type_Default;
 $obj->datadir = $CONFIG['datadir'];
-$obj->path_format = '{host}/{plugin}-{pinstance}/{type}-{tinstance}.rrd';
 $obj->args = array(
 	'host' => $host,
 	'plugin' => $plugin,
