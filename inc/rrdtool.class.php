@@ -1,9 +1,6 @@
 <?php
 
 class RRDTool {
-	var $width = 175;
-	var $height = 125;
-
 	function rrd_info($rrdfile) {
 		if (file_exists($rrdfile)) {
 			$raw_info = shell_exec('/usr/bin/rrdtool info '.$rrdfile);
