@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
+require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # load/load.rrd
@@ -34,6 +35,8 @@ $obj->seconds = $seconds;
 $obj->rrd_title = "System load on $host";
 $obj->rrd_vertical = 'System load';
 $obj->rrd_format = '%.2lf';
+
+collectd_flush(ident_from_args($obj->args));
 
 $obj->rrd_graph();
 

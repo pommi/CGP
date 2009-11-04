@@ -157,4 +157,85 @@ function build_url($base, $items, $s=86400) {
 	return $base;
 }
 
+# generate identifier that collectd's FLUSH command understands
+function collectd_identifier($host, $plugin, $pinst, $type, $tinst) {
+	global $CONFIG;
+
+	$identifier = sprintf('%s/%s%s%s/%s%s%s', $host,
+		$plugin, strlen($pinst) ? '-' : '', $pinst,
+		$type, strlen($tinst) ? '-' : '', $tinst);
+
+	if (is_file($CONFIG['datadir'].'/'.$identifier.'.rrd'))
+		return $identifier;
+	else
+		return FALSE;
+}
+
+# tell collectd to FLUSH all data of the identifier(s)
+function collectd_flush($identifier) {
+	global $CONFIG;
+
+	if (!$CONFIG['socket'])
+		return FALSE;
+
+	if (!$identifier || (is_array($identifier) && count($identifier) == 0) ||
+			!(is_string($identifier) || is_array($identifier)))
+		return FALSE;
+
+	$u_errno  = 0;
+	$u_errmsg = '';
+	if ($socket = @fsockopen($CONFIG['socket'], 0, $u_errno, $u_errmsg)) {
+		$cmd = 'FLUSH plugin=rrdtool';
+		if (is_array($identifier)) {
+			foreach ($identifier as $val)
+				$cmd .= sprintf(' identifier="%s"', $val);
+		} else
+			$cmd .= sprintf(' identifier="%s"', $identifier);
+		$cmd .= "\n";
+
+		$r = fwrite($socket, $cmd, strlen($cmd));
+		if ($r === false || $r != strlen($cmd)) {
+			printf('ERROR: Failed to write full command to unix-socket: %d out of %d written',
+				$r === false ? -1 : $r, strlen($cmd));
+			return FALSE;
+		}
+
+		$resp = fgets($socket);
+		if ($resp === false) {
+			printf('ERROR: Failed to read response from collectd for command: %s',
+				trim($cmd));
+			return FALSE;
+		}
+
+		$n = (int)$resp;
+		while ($n-- > 0)
+			fgets($socket);
+
+		fclose($socket);
+
+		return TRUE;
+	} else {
+		printf('ERROR: Failed to open unix-socket to collectd: %d: %s',
+			$u_errno, $u_errmsg);
+		return FALSE;
+	}
+}
+
+# generate identifiers from args
+function ident_from_args($args) {
+	if (is_array($args['tinstance'])) {
+		foreach($args['tinstance'] as $ti) {
+			$instances[] = collectd_identifier($args['host'],
+				$args['plugin'], $args['pinstance'],
+				$args['type'], $ti);
+		}
+	} else {
+		$instances[] = collectd_identifier($args['host'],
+			$args['plugin'], $args['pinstance'],
+			$args['type'], $args['tinstance']);
+	}
+
+	return $instances;
+}
+
 ?>

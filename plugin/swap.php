@@ -44,6 +44,8 @@ $obj->rrd_title = "Swap utilization on $host";
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%s';
 
+collectd_flush(ident_from_args($obj->args));
+
 $obj->rrd_graph();
 
 ?>

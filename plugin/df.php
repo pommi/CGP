@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
+require_once 'inc/collectd.inc.php';
 
 # LAYOUT
 #
@@ -35,6 +36,8 @@ $obj->seconds = $seconds;
 $obj->rrd_title = "Free space ($tinstance) on $host";
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%sB';
+
+collectd_flush(ident_from_args($obj->args));
 
 $obj->rrd_graph();
 

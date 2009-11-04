@@ -52,6 +52,8 @@ switch($type) {
 	break;
 }
 
+collectd_flush(ident_from_args($obj->args));
+
 $obj->rrd_graph();
 
 ?>

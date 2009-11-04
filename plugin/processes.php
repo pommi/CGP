@@ -52,6 +52,8 @@ $obj->rrd_title = "Processes on $host";
 $obj->rrd_vertical = 'Processes';
 $obj->rrd_format = '%5.1lf%s';
 
+collectd_flush(ident_from_args($obj->args));
+
 $obj->rrd_graph();
 
 ?>

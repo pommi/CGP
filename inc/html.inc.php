@@ -2,6 +2,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'inc/rrdtool.class.php';
+require_once 'inc/collectd.inc.php';
 
 function html_start() {
 	global $CONFIG;
@@ -46,6 +47,7 @@ function host_summary($hosts) {
 	echo "<table class=\"summary\">\n";
 
 	foreach($hosts as $host) {
+		collectd_flush(sprintf('%s/load/load', $host));
 		$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
 		if (!$rrd_info)
 			continue;

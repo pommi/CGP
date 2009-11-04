@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
+require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # users/users.rrd
@@ -30,6 +31,8 @@ $obj->seconds = $seconds;
 $obj->rrd_title = "Users on $host";
 $obj->rrd_vertical = 'Users';
 $obj->rrd_format = '%.1lf';
+
+collectd_flush(ident_from_args($obj->args));
 
 $obj->rrd_graph();
 

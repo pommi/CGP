@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericIO.class.php';
+require_once 'inc/collectd.inc.php';
 
 # LAYOUT
 # interface/
@@ -47,6 +48,8 @@ switch($type) {
 		$obj->rrd_vertical = 'Packets per second';
 	break;
 }
+
+collectd_flush(ident_from_args($obj->args));
 
 $obj->rrd_graph();
 

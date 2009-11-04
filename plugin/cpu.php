@@ -59,6 +59,8 @@ $obj->rrd_title = "CPU-$pinstance usage on $host";
 $obj->rrd_vertical = 'Jiffies';
 $obj->rrd_format = '%5.2lf';
 
+collectd_flush(ident_from_args($obj->args));
+
 $obj->rrd_graph();
 
 ?>

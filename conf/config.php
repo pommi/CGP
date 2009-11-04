@@ -21,6 +21,11 @@ $CONFIG['groupby'] = array(
 	'sensors' => 'type',
 );
 
+# collectd's unix socket (unixsock plugin)
+# enabled: 'unix:///var/run/collectd-unixsock'
+# disabled: NULL
+$CONFIG['socket'] = NULL;
+
 if (file_exists(dirname(__FILE__).'/config.local.php'))
 	include 'config.local.php';
 

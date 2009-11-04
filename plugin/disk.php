@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericIO.class.php';
+require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # disk-XXXX/
@@ -56,6 +57,8 @@ switch($type) {
 		$obj->scale = '0.001';
 	break;
 }
+
+collectd_flush(ident_from_args($obj->args));
 
 $obj->rrd_graph();
 
