@@ -11,9 +11,14 @@ require_once 'type/GenericStacked.class.php';
 # swap/swap-free.rrd
 # swap/swap-used.rrd
 
+if ($type == 'swap_io') {
+	die_img('Error: swap_io not supported yet');
+	exit;
+}
+
 # grouped
 require_once 'inc/collectd.inc.php';
-$tinstance = collectd_plugindetail($host, $plugin, 'ti');
+$tinstance = collectd_plugindetail($host, $plugin, 'ti', array('t' => $type));
 
 $obj = new Type_GenericStacked;
 $obj->datadir = $CONFIG['datadir'];
