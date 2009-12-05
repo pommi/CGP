@@ -16,6 +16,7 @@ function html_start() {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>CGP{$path}</title>
 	<link rel="stylesheet" href="{$CONFIG['weburl']}/layout/style.css" type="text/css">
+	<script type="text/javascript" src="{$CONFIG['weburl']}/ajax.js"></script>
 </head>
 <body>
 

@@ -74,6 +74,10 @@ hr {
 	border-top: 1px solid #000;
 }
 
+.point {
+	cursor: pointer;
+}
+
 .small {
 	font-size: 0.7em;
 }
