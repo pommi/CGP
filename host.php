@@ -22,7 +22,7 @@ if(!$plugins) {
 foreach($CONFIG['overview'] as $plugin) {
 	if (in_array($plugin, $plugins)) {
 		printf('<div id="%s">'."\n", $plugin);
-		printf("<h3><span class=\"point\" onclick=\"javascript:rmP('%s','%s')\"><img src=\"%s/layout/minus.gif\" alt=\"[-]\"> %s</span></h3>\n", $host, $plugin, $CONFIG['weburl'], $plugin);
+		plugin_header($host, $plugin, 0);
 		graphs_from_plugin($host, $plugin);
 		print "</div>\n";
 	}
@@ -33,10 +33,10 @@ foreach($plugins as $plugin) {
 	if (!in_array($plugin, $CONFIG['overview'])) {
 		printf('<div id="%s">'."\n", $plugin);
 		if ($splugin == $plugin) {
-			printf("<h3><span class=\"point\" onclick=\"javascript:rmP('%s','%s')\"><img src=\"%s/layout/minus.gif\" alt=\"[-]\"> %s</span></h3>\n", $host, $plugin, $CONFIG['weburl'], $plugin);
+			plugin_header($host, $plugin, 0);
 			graphs_from_plugin($host, $plugin);
 		} else {
-			printf("<h3><span class=\"point\" onclick=\"javascript:getP('%s','%s')\"><img src=\"%s/layout/plus.gif\" alt=\"[+]\"> %s</span></h3>\n", $host, $plugin, $CONFIG['weburl'], $plugin);
+			plugin_header($host, $plugin, 1);
 		}
 		print "</div>\n";
 	}

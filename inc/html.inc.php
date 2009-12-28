@@ -40,6 +40,22 @@ function html_end() {
 EOT;
 }
 
+function plugin_header($host, $plugin, $status) {
+	global $CONFIG;
+
+	if ($status == 1) {
+		$f = 'get';
+		$i = 'plus';
+		$a = '+';
+	} else {
+		$f = 'rm';
+		$i = 'minus';
+		$a = '-';
+	}
+
+	return printf("<h3><span class=\"point\" onclick=\"javascript:%sP('%s','%s')\"><img src=\"%s/layout/%s.gif\" alt=\"[%s]\"> %s</span></h3>\n", $f, $host, $plugin, $CONFIG['weburl'], $i, $a, $plugin);
+}
+
 function host_summary($hosts) {
 	global $CONFIG;
 
