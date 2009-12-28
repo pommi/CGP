@@ -5,13 +5,7 @@ require_once 'Default.class.php';
 class Type_GenericStacked extends Type_Default {
 	
 	function rrd_gen_graph() {
-		$rrdgraph[] = '/usr/bin/rrdtool graph - -a PNG';
-		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
-		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
-		$rrdgraph[] = '-l 0';
-		$rrdgraph[] = sprintf('-t "%s"', $this->rrd_title);
-		$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
-		$rrdgraph[] = sprintf('-s -%d', is_numeric($this->seconds) ? $this->seconds : 86400);
+		$rrdgraph = $this->rrd_options();
 
 		if (is_array($this->args['tinstance']))
 			if (is_array($this->order))

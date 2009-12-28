@@ -84,9 +84,7 @@ class Type_Default {
 		}
 	}
 
-	function rrd_gen_graph() {
-		$filename = $this->get_filename();
-
+	function rrd_options() {
 		$rrdgraph[] = '/usr/bin/rrdtool graph - -a PNG';
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
@@ -94,6 +92,14 @@ class Type_Default {
 		$rrdgraph[] = sprintf('-t "%s"', $this->rrd_title);
 		$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
 		$rrdgraph[] = sprintf('-s -%d', is_numeric($this->seconds) ? $this->seconds : 86400);
+
+		return $rrdgraph;
+	}
+
+	function rrd_gen_graph() {
+		$filename = $this->get_filename();
+
+		$rrdgraph = $this->rrd_options();
 
 		if (is_array($this->args['tinstance']))
 			$array = is_array($this->order) ? $this->order : $this->args['tinstance'];
