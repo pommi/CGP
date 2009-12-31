@@ -13,15 +13,7 @@ require_once 'inc/collectd.inc.php';
 # disk-XXXX/disk_ops.rrd
 # disk-XXXX/disk_time.rrd
 
-$obj = new Type_GenericIO;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
+$obj = new Type_GenericIO($CONFIG['datadir']);
 $obj->data_sources = array('read', 'write');
 $obj->ds_names = array(
 	'read' => 'Read   ',
@@ -33,33 +25,31 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
-switch($type) {
+switch($obj->args['type']) {
 	case 'disk_merged':
-		$obj->rrd_title = sprintf('Disk Merged Operations (%s)', $pinstance);
+		$obj->rrd_title = sprintf('Disk Merged Operations (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Merged operations/s';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'disk_octets':
-		$obj->rrd_title = sprintf('Disk Traffic (%s)', $pinstance);
+		$obj->rrd_title = sprintf('Disk Traffic (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Bytes per second';
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'disk_ops':
-		$obj->rrd_title = sprintf('Disk Operations (%s)', $pinstance);
+		$obj->rrd_title = sprintf('Disk Operations (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Ops per second';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'disk_time':
-		$obj->rrd_title = sprintf('Disk time per operation (%s)', $pinstance);
+		$obj->rrd_title = sprintf('Disk time per operation (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Avg. Time/Op';
 		$obj->rrd_format = '%5.1lf%ss';
 		$obj->scale = '0.001';
 	break;
 }
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>

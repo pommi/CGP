@@ -3,56 +3,41 @@
 require_once 'Default.class.php';
 
 class Type_GenericStacked extends Type_Default {
-	
+
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
 
-		if (is_array($this->args['tinstance']))
-			if (is_array($this->order))
-				$array = array_intersect($this->order, $this->args['tinstance']);
-			else
-				$array = $this->args['tinstance'];
-		else
-			$array = $this->data_sources;
+		$sources = $this->rrd_get_sources();
 
 		$i=0;
-		foreach ($array as $value) {
-			if (is_array($this->args['tinstance'])) {
-				$filename = $this->get_filename($value);
-				$ds = $this->data_sources[0];
-			} else {
-				$filename = $this->get_filename();
-				$ds = $value;
+		foreach ($this->tinstances as $tinstance) {
+			foreach ($this->data_sources as $ds) {
+				$rrdgraph[] = sprintf('DEF:min_%s=%s:%s:MIN', $sources[$i], $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s=%s:%s:AVERAGE', $sources[$i], $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s=%s:%s:MAX', $sources[$i], $this->files[$tinstance], $ds);
+				$i++;
 			}
-			$rrdgraph[] = sprintf('DEF:min%s=%s:%s:MIN', $i, $filename, $ds);
-			$rrdgraph[] = sprintf('DEF:avg%s=%s:%s:AVERAGE', $i, $filename, $ds);
-			$rrdgraph[] = sprintf('DEF:max%s=%s:%s:MAX', $i, $filename, $ds);
-			$i++;
 		}
 
-		for ($i=count($array)-1 ; $i>=0 ; $i--) {
-			if ($i == (count($array)-1))
-				$rrdgraph[] = sprintf('CDEF:cdef%d=avg%d', $i, $i);
+		for ($i=count($sources)-1 ; $i>=0 ; $i--) {
+			if ($i == (count($sources)-1))
+				$rrdgraph[] = sprintf('CDEF:area_%s=avg_%1$s', $sources[$i]);
 			else
-				$rrdgraph[] = sprintf('CDEF:cdef%d=cdef%d,avg%d,+', $i, $i+1, $i);
+				$rrdgraph[] = sprintf('CDEF:area_%s=area_%s,avg_%1$s,+', $sources[$i], $sources[$i+1]);
 		}
 
-		$i=0;
-		foreach ($array as $value) {
-			$color = $this->get_faded_color($this->colors[$value]);
-			$rrdgraph[] = sprintf('AREA:cdef%d#%s', $i, $color);
-			$i++;
+		foreach ($sources as $source) {
+			$color = $this->get_faded_color($this->colors[$source]);
+			$rrdgraph[] = sprintf('AREA:area_%s#%s', $source, $color);
 		}
 
-		$i=0;
-		foreach ($array as $value) {
-			$dsname = $this->ds_names[$value] != '' ? $this->ds_names[$value] : $value;
-			$rrdgraph[] = sprintf('LINE1:cdef%d#%s:\'%s\'', $i, $this->validate_color($this->colors[$value]), $dsname);
-			$rrdgraph[] = sprintf('GPRINT:min%d:MIN:\'%s Min,\'', $i, $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:avg%d:AVERAGE:\'%s Avg,\'', $i, $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:max%d:MAX:\'%s Max,\'', $i, $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:avg%d:LAST:\'%s Last\\l\'', $i, $this->rrd_format);
-			$i++;
+		foreach ($sources as $source) {
+			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
+			$rrdgraph[] = sprintf('LINE1:area_%s#%s:\'%s\'', $source, $this->validate_color($this->colors[$source]), $dsname);
+			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', $source, $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', $source, $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:\'%s Max,\'', $source, $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:\'%s Last\\l\'', $source, $this->rrd_format);
 		}
 
 		return $rrdgraph;

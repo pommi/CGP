@@ -12,15 +12,7 @@ require_once 'inc/collectd.inc.php';
 # interface/if_octets-XXXX.rrd
 # interface/if_packets-XXXX.rrd
 
-$obj = new Type_GenericIO;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
+$obj = new Type_GenericIO($CONFIG['datadir']);
 $obj->data_sources = array('rx', 'tx');
 $obj->ds_names = array(
 	'rx' => 'Receive ',
@@ -32,25 +24,24 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
 $obj->rrd_format = '%5.1lf%s';
-switch($type) {
+
+switch($obj->args['type']) {
 	case 'if_errors':
-		$obj->rrd_title = sprintf('Interface Errors (%s)', $tinstance);
+		$obj->rrd_title = sprintf('Interface Errors (%s)', $obj->args['tinstance']);
 		$obj->rrd_vertical = 'Errors per second';
 	break;
 	case 'if_octets':
-		$obj->rrd_title = sprintf('Interface Traffic (%s)', $tinstance);
+		$obj->rrd_title = sprintf('Interface Traffic (%s)', $obj->args['tinstance']);
 		$obj->rrd_vertical = 'Bits per second';
 	break;
 	case 'if_packets':
-		$obj->rrd_title = sprintf('Interface Packets (%s)', $tinstance);
+		$obj->rrd_title = sprintf('Interface Packets (%s)', $obj->args['tinstance']);
 		$obj->rrd_vertical = 'Packets per second';
 	break;
 }
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>

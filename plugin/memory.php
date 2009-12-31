@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
+require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # memory/
@@ -12,20 +13,7 @@ require_once 'type/GenericStacked.class.php';
 # memory/memory-free.rrd
 # memory/memory-used.rrd
 
-# grouped
-require_once 'inc/collectd.inc.php';
-$tinstance = collectd_plugindetail($host, $plugin, 'ti');
-
-$obj = new Type_GenericStacked;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
-$obj->data_sources = array('value');
+$obj = new Type_GenericStacked($CONFIG['datadir']);
 $obj->order = array('free', 'buffered', 'cached', 'used');
 $obj->ds_names = array(
 	'free' => 'Free    ',
@@ -41,14 +29,12 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
 
 $obj->rrd_title = 'Physical memory utilization';
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%s';
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>

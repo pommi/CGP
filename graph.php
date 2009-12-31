@@ -2,26 +2,20 @@
 
 require_once 'conf/common.inc.php';
 
-$host = $_GET['h'];
-$plugin = $_GET['p'];
-$pinstance = $_GET['pi'];
-$type = $_GET['t'];
-$tinstance = $_GET['ti'];
 $width = empty($_GET['x']) ? $CONFIG['width'] : $_GET['x'];
 $heigth = empty($_GET['y']) ? $CONFIG['heigth'] : $_GET['y'];
-$seconds = $_GET['s'];
 
-if (!preg_match('/^[a-z]+$/', $plugin)) {
+if (!preg_match('/^[a-z]+$/', $_GET['p'])) {
 	die_img('Error: plugin contains unknown characters.');
 	exit;
 }
 
-if (!file_exists($CONFIG['webdir']."/plugin/$plugin.php")) {
-	die_img(sprintf('Error: plugin not available (%s).', $plugin));
+if (!file_exists($CONFIG['webdir'].'/plugin/'.$_GET['p'].'.php')) {
+	die_img(sprintf('Error: plugin not available (%s).', $_GET['p']));
 	exit;
 }
 
-include $CONFIG['webdir']."/plugin/$plugin.php";
+include $CONFIG['webdir'].'/plugin/'.$_GET['p'].'.php';
 
 
 function die_img($msg) {

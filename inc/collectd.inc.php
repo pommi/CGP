@@ -221,21 +221,4 @@ function collectd_flush($identifier) {
 	}
 }
 
-# generate identifiers from args
-function ident_from_args($args) {
-	if (is_array($args['tinstance'])) {
-		foreach($args['tinstance'] as $ti) {
-			$instances[] = collectd_identifier($args['host'],
-				$args['plugin'], $args['pinstance'],
-				$args['type'], $ti);
-		}
-	} else {
-		$instances[] = collectd_identifier($args['host'],
-			$args['plugin'], $args['pinstance'],
-			$args['type'], $args['tinstance']);
-	}
-
-	return $instances;
-}
-
 ?>

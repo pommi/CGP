@@ -9,15 +9,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # users/users.rrd
 
-$obj = new Type_Default;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
+$obj = new Type_Default($CONFIG['datadir']);
 $obj->data_sources = array('users');
 $obj->ds_names = array(
 	'users' => 'Users',
@@ -27,13 +19,11 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
 $obj->rrd_title = 'Users';
 $obj->rrd_vertical = 'Users';
 $obj->rrd_format = '%.1lf';
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>

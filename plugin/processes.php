@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
+require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # processes/
@@ -14,20 +15,7 @@ require_once 'type/GenericStacked.class.php';
 # processes/ps_state-running.rrd
 # processes/ps_state-sleeping.rrd
 
-# grouped
-require_once 'inc/collectd.inc.php';
-$tinstance = collectd_plugindetail($host, $plugin, 'ti');
-
-$obj = new Type_GenericStacked;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
-$obj->data_sources = array('value');
+$obj = new Type_GenericStacked($CONFIG['datadir']);
 $obj->ds_names = array(
 	'paging' => 'Paging  ',
 	'blocked' => 'Blocked ',
@@ -46,14 +34,12 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
 
 $obj->rrd_title = 'Processes';
 $obj->rrd_vertical = 'Processes';
 $obj->rrd_format = '%5.1lf%s';
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>

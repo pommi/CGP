@@ -4,6 +4,7 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
+require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # cpu-X/
@@ -16,19 +17,7 @@ require_once 'type/GenericStacked.class.php';
 # cpu-X/cpu-user.rrd
 # cpu-X/cpu-wait.rrd
 
-# grouped
-require_once 'inc/collectd.inc.php';
-$tinstance = collectd_plugindetail($host, $plugin, 'ti');
-
-$obj = new Type_GenericStacked;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
+$obj = new Type_GenericStacked($CONFIG['datadir']);
 $obj->data_sources = array('value');
 $obj->order = array('idle', 'nice', 'user', 'wait', 'system', 'softirq', 'interrupt', 'steal');
 $obj->ds_names = array(
@@ -53,14 +42,12 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
 
-$obj->rrd_title = sprintf('CPU-%s usage', $pinstance);
+$obj->rrd_title = sprintf('CPU-%s usage', $obj->args['pinstance']);
 $obj->rrd_vertical = 'Jiffies';
 $obj->rrd_format = '%5.2lf';
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>

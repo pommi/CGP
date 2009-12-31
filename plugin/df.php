@@ -11,15 +11,7 @@ require_once 'inc/collectd.inc.php';
 # df/
 # df/df-XXXX.rrd
 
-$obj = new Type_GenericStacked;
-$obj->datadir = $CONFIG['datadir'];
-$obj->args = array(
-	'host' => $host,
-	'plugin' => $plugin,
-	'pinstance' => $pinstance,
-	'type' => $type,
-	'tinstance' => $tinstance,
-);
+$obj = new Type_GenericStacked($CONFIG['datadir']);
 $obj->data_sources = array('free', 'used');
 $obj->ds_names = array(
 	'free' => 'Free',
@@ -31,14 +23,12 @@ $obj->colors = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->seconds = $seconds;
 
-$obj->rrd_title = sprintf('Free space (%s)', $tinstance);
+$obj->rrd_title = sprintf('Free space (%s)', $obj->args['tinstance']);
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%sB';
 
-collectd_flush(ident_from_args($obj->args));
-
+collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 
 ?>
