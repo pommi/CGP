@@ -28,7 +28,7 @@ $obj->colors = array(
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
-$obj->rrd_title = "Users on $host";
+$obj->rrd_title = 'Users';
 $obj->rrd_vertical = 'Users';
 $obj->rrd_format = '%.1lf';
 

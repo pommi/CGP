@@ -30,7 +30,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
 
-$obj->rrd_title = "Interrupts on $host";
+$obj->rrd_title = 'Interrupts';
 $obj->rrd_vertical = 'IRQs/s';
 $obj->rrd_format = '%6.1lf';
 

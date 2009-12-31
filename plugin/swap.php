@@ -45,7 +45,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
 
-$obj->rrd_title = "Swap utilization on $host";
+$obj->rrd_title = 'Swap utilization';
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%s';
 

@@ -55,7 +55,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
 
-$obj->rrd_title = "CPU-$pinstance usage on $host";
+$obj->rrd_title = sprintf('CPU-%s usage', $pinstance);
 $obj->rrd_vertical = 'Jiffies';
 $obj->rrd_format = '%5.2lf';
 

@@ -28,7 +28,7 @@ $obj->colors = array(
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
-$obj->rrd_title = "Available entropy on $host";
+$obj->rrd_title = 'Available entropy';
 $obj->rrd_vertical = 'Bits';
 $obj->rrd_format = '%4.0lf';
 

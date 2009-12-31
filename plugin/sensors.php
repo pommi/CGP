@@ -34,19 +34,19 @@ $obj->seconds = $seconds;
 switch($type) {
 	case 'fanspeed':
 		$obj->colors = '00ff00';
-		$obj->rrd_title = "Fanspeed ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Fanspeed (%s)', $pinstance);
 		$obj->rrd_vertical = 'RPM';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'temperature':
 		$obj->colors = '0000ff';
-		$obj->rrd_title = "Temperature ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Temperature (%s)', $pinstance);
 		$obj->rrd_vertical = 'Celius';
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'voltage':
 		$obj->colors = 'ff0000';
-		$obj->rrd_title = "Voltage ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Voltage (%s)', $pinstance);
 		$obj->rrd_vertical = 'Volt';
 		$obj->rrd_format = '%5.1lf';
 	break;

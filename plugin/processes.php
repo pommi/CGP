@@ -48,7 +48,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
 
-$obj->rrd_title = "Processes on $host";
+$obj->rrd_title = 'Processes';
 $obj->rrd_vertical = 'Processes';
 $obj->rrd_format = '%5.1lf%s';
 

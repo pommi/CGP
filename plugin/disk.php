@@ -36,22 +36,22 @@ $obj->heigth = $heigth;
 $obj->seconds = $seconds;
 switch($type) {
 	case 'disk_merged':
-		$obj->rrd_title = "Disk Merged Operations ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Disk Merged Operations (%s)', $pinstance);
 		$obj->rrd_vertical = 'Merged operations/s';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'disk_octets':
-		$obj->rrd_title = "Disk Traffic ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Disk Traffic (%s)', $pinstance);
 		$obj->rrd_vertical = 'Bytes per second';
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'disk_ops':
-		$obj->rrd_title = "Disk Operations ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Disk Operations (%s)', $pinstance);
 		$obj->rrd_vertical = 'Ops per second';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'disk_time':
-		$obj->rrd_title = "Disk time per operation ($pinstance) on $host";
+		$obj->rrd_title = sprintf('Disk time per operation (%s)', $pinstance);
 		$obj->rrd_vertical = 'Avg. Time/Op';
 		$obj->rrd_format = '%5.1lf%ss';
 		$obj->scale = '0.001';

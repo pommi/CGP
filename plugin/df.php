@@ -33,7 +33,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
 
-$obj->rrd_title = "Free space ($tinstance) on $host";
+$obj->rrd_title = sprintf('Free space (%s)', $tinstance);
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%sB';
 

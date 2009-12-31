@@ -32,7 +32,7 @@ $obj->colors = array(
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->seconds = $seconds;
-$obj->rrd_title = "System load on $host";
+$obj->rrd_title = 'System load';
 $obj->rrd_vertical = 'System load';
 $obj->rrd_format = '%.2lf';
 
