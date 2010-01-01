@@ -1,0 +1,10 @@
+0.2 (2010-01-02)
+- new layout and styling (thanks to Daniel Von Fange)
+- fancy ajax to expand/collapse plugin information
+- make width/height of a graph configurable
+- linux 2.4 kernel support
+- swap_io support
+- unixsock flush support
+
+0.1 (2009-09-24)
+- initial release
