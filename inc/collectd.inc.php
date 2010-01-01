@@ -112,7 +112,9 @@ function graphs_from_plugin($host, $plugin) {
 	$ts = collectd_plugindetail($host, $plugin, 't');
 	$tis = collectd_plugindetail($host, $plugin, 'ti');
 	if (!$pis) $pis = array('NULL');
-	if (!$tis || $CONFIG['groupby'][$plugin] == 'type')
+	if (!$tis) $tis = array('NULL');
+	# backwards compatibility
+	if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface)$/', $plugin))
 		$tis = array('NULL');
 
 	foreach($pis as $pi) {

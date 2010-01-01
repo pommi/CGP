@@ -1,5 +1,8 @@
 <?php
 
+# collectd version
+$CONFIG['version'] = 4;
+
 # collectd's datadir
 $CONFIG['datadir'] = '/var/lib/collectd/rrd';
 
@@ -21,16 +24,6 @@ $CONFIG['detail-heigth'] = 350;
 # disabled: NULL
 $CONFIG['socket'] = NULL;
 
-# group data to show in a graph
-# XXX: these settings have to move to their plugins
-$CONFIG['groupby'] = array(
-	'cpu' => 'type',
-	'irq' => 'type',
-	'memory' => 'type',
-	'processes' => 'type',
-	'swap' => 'type',
-	'sensors' => 'type',
-);
 
 # load local configuration
 if (file_exists(dirname(__FILE__).'/config.local.php'))
