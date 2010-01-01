@@ -1,21 +1,24 @@
 <?php
 
 require_once 'conf/common.inc.php';
+require_once 'inc/functions.inc.php';
 
+$plugin = validate_get($_GET['p'], 'plugin');
 $width = empty($_GET['x']) ? $CONFIG['width'] : $_GET['x'];
 $heigth = empty($_GET['y']) ? $CONFIG['heigth'] : $_GET['y'];
 
-if (!preg_match('/^[a-z]+$/', $_GET['p'])) {
+if (validate_get($_GET['h'], 'host') === NULL) {
 	die_img('Error: plugin contains unknown characters.');
 	exit;
 }
 
-if (!file_exists($CONFIG['webdir'].'/plugin/'.$_GET['p'].'.php')) {
-	die_img(sprintf('Error: plugin not available (%s).', $_GET['p']));
+if (!file_exists($CONFIG['webdir'].'/plugin/'.$plugin.'.php')) {
+	die_img(sprintf('Error: plugin not available (%s).', $plugin));
 	exit;
 }
 
-include $CONFIG['webdir'].'/plugin/'.$_GET['p'].'.php';
+# load plugin
+include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
 
 
 function die_img($msg) {

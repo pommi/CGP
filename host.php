@@ -4,8 +4,8 @@ require_once 'conf/common.inc.php';
 require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
-$host = $_GET['h'];
-$splugin = $_GET['p'];
+$host = validate_get($_GET['h'], 'host');
+$splugin = validate_get($_GET['p'], 'plugin');
 
 html_start();
 

@@ -1,7 +1,10 @@
 <?php
 
+# html related functions
+
 require_once 'conf/common.inc.php';
 require_once 'inc/rrdtool.class.php';
+require_once 'inc/functions.inc.php';
 require_once 'inc/collectd.inc.php';
 
 function html_start() {
@@ -78,15 +81,15 @@ function host_summary($hosts) {
 
 
 function breadcrumbs() {
-	if (isset($_GET['h']))
+	if (validate_get($_GET['h'], 'host'))
 		$path = ' - '.ucfirst($_GET['h']);
-	if (isset($_GET['p']))
+	if (validate_get($_GET['p'], 'plugin'))
 		$path .= ' - '.ucfirst($_GET['p']);
-	if (isset($_GET['pi']))
+	if (validate_get($_GET['pi'], 'pinstance'))
 		$path .= ' - '.$_GET['pi'];
-	if (isset($_GET['t']) && isset($_GET['p']) && $_GET['t'] != $_GET['p'])
+	if (validate_get($_GET['t'], 'type') && validate_get($_GET['p'], 'plugin') && $_GET['t'] != $_GET['p'])
 		$path .= ' - '.$_GET['t'];
-	if (isset($_GET['ti']))
+	if (validate_get($_GET['ti'], 'tinstance'))
 		$path .= ' - '.$_GET['ti'];
 
 	return $path;

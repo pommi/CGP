@@ -1,6 +1,7 @@
 <?php
 
 require_once 'conf/common.inc.php';
+require_once 'inc/functions.inc.php';
 require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
@@ -10,11 +11,11 @@ if (empty($_GET['x']))
 if (empty($_GET['y']))
 	$_GET['y'] = $CONFIG['detail-heigth'];
 
-$host = $_GET['h'];
-$plugin = $_GET['p'];
-$pinstance = $_GET['pi'];
-$type = $_GET['t'];
-$tinstance = $_GET['ti'];
+$host = validate_get($_GET['h'], 'host');
+$plugin = validate_get($_GET['p'], 'plugin');
+$pinstance = validate_get($_GET['pi'], 'pinstance');
+$type = validate_get($_GET['t'], 'type');
+$tinstance = validate_get($_GET['ti'], 'tinstance');
 $width = $_GET['x'];
 $heigth = $_GET['y'];
 $seconds = $_GET['s'];

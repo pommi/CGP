@@ -1,5 +1,7 @@
 <?php
 
+# collectd related functions
+
 require_once 'conf/common.inc.php';
 
 # returns an array of all collectd hosts
