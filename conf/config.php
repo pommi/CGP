@@ -15,6 +15,9 @@ $CONFIG['rrdtool'] = '/usr/bin/rrdtool';
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
+# browser cache time for the graphs (in seconds)
+$CONFIG['cache'] = 90;
+
 # default width/height of the graphs
 $CONFIG['width'] = 400;
 $CONFIG['heigth'] = 175;

@@ -5,6 +5,7 @@
 class Type_Default {
 	var $datadir;
 	var $rrdtool;
+	var $cache;
 	var $args;
 	var $seconds;
 	var $data_sources = array('value');
@@ -25,6 +26,7 @@ class Type_Default {
 	function __construct($config) {
 		$this->datadir = $config['datadir'];
 		$this->rrdtool = $config['rrdtool'];
+		$this->cache = $config['cache'];
 		$this->parse_get();
 		$this->rrd_files();
 		$this->identifiers = $this->file2identifier($this->files);
@@ -114,7 +116,8 @@ class Type_Default {
 		
 		if(!$debug) {
 			# caching
-			header("Expires: " . date(DATE_RFC822,strtotime("90 seconds")));
+			if (is_numeric($this->cache) && $this->cache > 0)
+				header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
 			header("content-type: image/png");
 			$graphdata = implode(' ', $graphdata);
 			echo `$graphdata`;
