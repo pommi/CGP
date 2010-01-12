@@ -18,7 +18,8 @@ if (is_array($CONFIG['cat'])) {
 }
 
 # search for uncategorized hosts
-$chosts = collectd_hosts();
+if(!$chosts = collectd_hosts())
+	printf('<p class="warn">Error: No Collectd hosts found in <em>%s</em></p>', $CONFIG['datadir']);
 $uhosts = array_diff($chosts, $h);
 
 # show all uncategorized hosts
