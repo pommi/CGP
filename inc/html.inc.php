@@ -62,7 +62,7 @@ function plugin_header($host, $plugin, $status) {
 function host_summary($hosts) {
 	global $CONFIG;
 
-	$rrd = new RRDTool;
+	$rrd = new RRDTool($CONFIG['rrdtool']);
 
 	echo "<table class=\"summary\">\n";
 

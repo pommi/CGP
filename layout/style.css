@@ -81,3 +81,8 @@ hr {
 .small {
 	font-size: 0.7em;
 }
+
+.warn {
+	font-weight: bold;
+	color: #D50100;
+}

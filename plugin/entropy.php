@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # entropy/entropy.rrd
 
-$obj = new Type_Default($CONFIG['datadir']);
+$obj = new Type_Default($CONFIG);
 $obj->data_sources = array('entropy');
 $obj->ds_names = array(
 	'entropy' => 'Entropy bits',

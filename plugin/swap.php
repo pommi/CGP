@@ -14,7 +14,7 @@ require_once 'inc/collectd.inc.php';
 switch($_GET['t']) {
 	case 'swap':
 		require_once 'type/GenericStacked.class.php';
-		$obj = new Type_GenericStacked($CONFIG['datadir']);
+		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('free', 'cached', 'used');
 		$obj->ds_names = array(
 			'free' => 'Free	',
@@ -31,7 +31,7 @@ switch($_GET['t']) {
 	break;
 	case 'swap_io':
 		require_once 'type/GenericIO.class.php';
-		$obj = new Type_GenericIO($CONFIG['datadir']);
+		$obj = new Type_GenericIO($CONFIG);
 		$obj->order = array('out', 'in');
 		$obj->ds_names = array(
 			'out' => 'Out',

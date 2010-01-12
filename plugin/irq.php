@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # irq/
 # irq/irq-XX.rrd
 
-$obj = new Type_GenericStacked($CONFIG['datadir']);
+$obj = new Type_GenericStacked($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
 

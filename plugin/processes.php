@@ -15,7 +15,7 @@ require_once 'inc/collectd.inc.php';
 # processes/ps_state-running.rrd
 # processes/ps_state-sleeping.rrd
 
-$obj = new Type_GenericStacked($CONFIG['datadir']);
+$obj = new Type_GenericStacked($CONFIG);
 $obj->ds_names = array(
 	'paging' => 'Paging  ',
 	'blocked' => 'Blocked ',

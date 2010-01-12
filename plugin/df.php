@@ -11,7 +11,7 @@ require_once 'inc/collectd.inc.php';
 # df/
 # df/df-XXXX.rrd
 
-$obj = new Type_GenericStacked($CONFIG['datadir']);
+$obj = new Type_GenericStacked($CONFIG);
 $obj->data_sources = array('free', 'used');
 $obj->ds_names = array(
 	'free' => 'Free',

@@ -4,6 +4,7 @@
 
 class Type_Default {
 	var $datadir;
+	var $rrdtool;
 	var $args;
 	var $seconds;
 	var $data_sources = array('value');
@@ -21,8 +22,9 @@ class Type_Default {
 	var $tinstances;
 	var $identifiers;
 
-	function __construct($datadir) {
-		$this->datadir = $datadir;
+	function __construct($config) {
+		$this->datadir = $config['datadir'];
+		$this->rrdtool = $config['rrdtool'];
 		$this->parse_get();
 		$this->rrd_files();
 		$this->identifiers = $this->file2identifier($this->files);
@@ -124,7 +126,8 @@ class Type_Default {
 	}
 
 	function rrd_options() {
-		$rrdgraph[] = '/usr/bin/rrdtool graph - -a PNG';
+		$rrdgraph[] = $this->rrdtool;
+		$rrdgraph[] = 'graph - -a PNG';
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
 		$rrdgraph[] = '-l 0';

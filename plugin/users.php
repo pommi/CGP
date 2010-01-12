@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # users/users.rrd
 
-$obj = new Type_Default($CONFIG['datadir']);
+$obj = new Type_Default($CONFIG);
 $obj->data_sources = array('users');
 $obj->ds_names = array(
 	'users' => 'Users',

@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 # interface/if_octets-XXXX.rrd
 # interface/if_packets-XXXX.rrd
 
-$obj = new Type_GenericIO($CONFIG['datadir']);
+$obj = new Type_GenericIO($CONFIG);
 $obj->data_sources = array('rx', 'tx');
 $obj->ds_names = array(
 	'rx' => 'Receive ',

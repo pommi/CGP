@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 # disk-XXXX/temerature-XXXX.rrd
 # disk-XXXX/voltage-XXXX.rrd
 
-$obj = new Type_Default($CONFIG['datadir']);
+$obj = new Type_Default($CONFIG);
 $obj->ds_names = array(
 	'value' => 'Value  ',
 );
