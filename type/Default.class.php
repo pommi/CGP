@@ -78,10 +78,11 @@ class Type_Default {
 		$files = $this->get_filenames();
 
 		foreach($files as $filename) {
-			preg_match("#^$this->datadir/{$this->args['host']}/[\w\d]+-?([\w\d-]+)?/[\w\d]+-?([\w\d-]+)?\.rrd#", $filename, $matches);
+			$basename=basename($filename,'.rrd');
+			$instance=substr($basename,strpos($basename,'-')+1);
 
-			$this->tinstances[] = $matches[2];
-			$this->files[$matches[2]] = $filename;
+			$this->tinstances[] = $instance;
+			$this->files[$instance] = $filename;
 		}
 
 		sort($this->tinstances);
@@ -103,8 +104,7 @@ class Type_Default {
 	function file2identifier($files) {
 		foreach($files as $key => $file) {
 			if (is_file($file)) {
-				$files[$key] = preg_replace("#^$this->datadir/#", '', $files[$key]);
-				$files[$key] = preg_replace('#\.rrd$#', '', $files[$key]);
+				$files[$key] = basename($files[$key], '.rrd');
 			}
 		}
 
@@ -167,29 +167,29 @@ class Type_Default {
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:min_%s=%s:%s:MIN', $sources[$i], $this->files[$tinstance], $ds);
-				$rrdgraph[] = sprintf('DEF:avg_%s=%s:%s:AVERAGE', $sources[$i], $this->files[$tinstance], $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s=%s:%s:MAX', $sources[$i], $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:min_%s="%s":%s:MIN', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s="%s":%s:MAX', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
 				$i++;
 			}
 		}
 
 		if(count($this->files)<=1) {
 			foreach ($sources as $source) {
-				$rrdgraph[] = sprintf('AREA:max_%s#%s', $source, $this->get_faded_color($this->colors[$source]));
-				$rrdgraph[] = sprintf('AREA:min_%s#%s', $source, 'ffffff');
+				$rrdgraph[] = sprintf('AREA:max_%s#%s', crc32hex($source), $this->get_faded_color($this->colors[$source]));
+				$rrdgraph[] = sprintf('AREA:min_%s#%s', crc32hex($source), 'ffffff');
 				break; # only 1 area to draw
 			}
 		}
 
-		foreach ($sources as $source) {
+		foreach($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
 			$color = is_array($this->colors) ? $this->colors[$source]: $this->colors;
-			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', $source, $this->validate_color($color), $dsname);
-			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', $source, $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', $source, $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:\'%s Max,\'', $source, $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:\'%s Last\\l\'', $source, $this->rrd_format);
+			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $dsname);
+			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:\'%s Max,\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:\'%s Last\\l\'', crc32hex($source), $this->rrd_format);
 		}
 
 		return $rrdgraph;

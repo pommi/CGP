@@ -5,17 +5,17 @@
 function validate_get($value, $type) {
 	switch($type) {
 		case 'host':
-			if (!preg_match('/^[\d\w\W]+$/', $value))
+			if (!preg_match('/^[\d\w\W]+$/u', $value))
 				return NULL;
 		break;
 		case 'plugin':
 		case 'type':
-			if (!preg_match('/^\w+$/', $value))
+			if (!preg_match('/^\w+$/u', $value))
 				return NULL;
 		break;
 		case 'pinstance':
 		case 'tinstance':
-			if (!preg_match('/^[\d\w-]+$/', $value))
+			if (!preg_match('/^[\d\w-]+$/u', $value))
 				return NULL;
 		break;
 	}
@@ -23,5 +23,8 @@ function validate_get($value, $type) {
 	return $value;
 }
 
+function crc32hex($str) {
+	return sprintf("%x",crc32($str));
+}
 
 ?>
