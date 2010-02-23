@@ -167,7 +167,25 @@ class Type_Default {
 			# use data_sources as sources
 			$sources = $this->data_sources;
 		}
+		$this->fill_ds_names($sources);
 		return $sources;
+	}
+
+	function fill_ds_names($sources) {
+		$max = 0;
+		foreach ($sources as $source) {
+			if(strlen($source) > $max) {
+				$max = strlen($source);
+			}
+		}
+		if($max > 0) {
+			$fmt = sprintf("%%-%ds", $max);
+			foreach ($sources as $source) {
+				if(!isset($this->ds_names[$source])) {
+					$this->ds_names[$source] = sprintf($fmt, $source);
+				}
+			}
+		}
 	}
 
 	function rrd_gen_graph() {
