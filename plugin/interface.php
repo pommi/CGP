@@ -33,7 +33,7 @@ switch($obj->args['type']) {
 	break;
 	case 'if_octets':
 		$obj->rrd_title = sprintf('Interface Traffic (%s)', $obj->args['tinstance']);
-		$obj->rrd_vertical = 'Bits per second';
+		$obj->rrd_vertical = 'Bytes per second';
 	break;
 	case 'if_packets':
 		$obj->rrd_title = sprintf('Interface Packets (%s)', $obj->args['tinstance']);
