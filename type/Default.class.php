@@ -149,7 +149,18 @@ class Type_Default {
 				$this->tinstances = array_intersect($this->order, $this->tinstances);
 			}
 			# use tinstances as sources
-			$sources = $this->tinstances;
+			if(is_array($this->data_sources) && count($this->data_sources)>1) {
+				$sources = array();
+				foreach($this->tinstances as $f) {
+					foreach($this->data_sources as $s) {
+						$sources[] = $f . '-' . $s;
+					}
+				}
+			}
+			else {
+				$sources = $this->tinstances;
+			}
+			$sources = str_replace('.', '_', $sources);
 		}
 		# or one file with multiple data_sources
 		else {
@@ -182,7 +193,7 @@ class Type_Default {
 			}
 		}
 
-		foreach($sources as $source) {
+		foreach ($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
 			$color = is_array($this->colors) ? $this->colors[$source]: $this->colors;
 			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $dsname);
