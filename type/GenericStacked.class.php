@@ -26,14 +26,18 @@ class Type_GenericStacked extends Type_Default {
 				$rrdgraph[] = sprintf('CDEF:area_%s=area_%s,avg_%1$s,+', crc32hex($sources[$i]), crc32hex($sources[$i+1]));
 		}
 
+		$c = 0;
 		foreach ($sources as $source) {
-			$color = $this->get_faded_color($this->colors[$source]);
+			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
+			$color = $this->get_faded_color($color);
 			$rrdgraph[] = sprintf('AREA:area_%s#%s', crc32hex($source), $color);
 		}
 
+		$c = 0;
 		foreach ($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
-			$rrdgraph[] = sprintf('LINE1:area_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($this->colors[$source]), $dsname);
+			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
+			$rrdgraph[] = sprintf('LINE1:area_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $dsname);
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:\'%s Max,\'', crc32hex($source), $this->rrd_format);

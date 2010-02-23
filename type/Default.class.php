@@ -32,6 +32,30 @@ class Type_Default {
 		$this->identifiers = $this->file2identifier($this->files);
 	}
 
+	function generate_colors() {
+		$base = array( array(255,   0,   0),
+			       array(  0, 255,   0),
+			       array(  0,   0, 255),
+			       array(255, 120,   0),
+			       array(255,   0, 120),
+			       array(  0, 255, 120),
+			       array(120, 255,   0),
+			       array(120,   0, 255),
+			       array(  0, 120, 255));
+
+		$this->colors = array();
+		$n = 0;
+		$p = 0;
+		foreach($base as $b) {
+			$n = $p;
+			for($i = 100; $i >= 20; $i -= 30) {
+				$this->colors[$n] = sprintf('%02x%02x%02x', $b[0] * $i / 100, $b[1] * $i / 100, $b[2] * $i / 100);
+				$n += count($base);
+			}
+			$p++;
+		}
+	}
+
 	# parse $_GET values
 	function parse_get() {
 		$this->args = array(
@@ -204,16 +228,19 @@ class Type_Default {
 		}
 
 		if(count($this->files)<=1) {
+			$c = 0;
 			foreach ($sources as $source) {
-				$rrdgraph[] = sprintf('AREA:max_%s#%s', crc32hex($source), $this->get_faded_color($this->colors[$source]));
+				$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
+				$rrdgraph[] = sprintf('AREA:max_%s#%s', crc32hex($source), $this->get_faded_color($color));
 				$rrdgraph[] = sprintf('AREA:min_%s#%s', crc32hex($source), 'ffffff');
 				break; # only 1 area to draw
 			}
 		}
 
+		$c = 0;
 		foreach ($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
-			$color = is_array($this->colors) ? $this->colors[$source]: $this->colors;
+			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
 			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $dsname);
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);
