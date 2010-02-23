@@ -118,9 +118,9 @@ class Type_Default {
 			$this->args['plugin'], strlen($this->args['pinstance']) ? '-' : '', $this->args['pinstance'],
 			$this->args['type'], strlen($this->args['tinstance']) ? '-' : '', $this->args['tinstance']);
 
-		$wildcard = strlen($this->args['tinstance']) ? '' : '*';
+		$wildcard = strlen($this->args['tinstance']) ? '.' : '[-.]*';
 
-		$files = glob($this->datadir .'/'. $identifier . $wildcard . '.rrd');
+		$files = glob($this->datadir .'/'. $identifier . $wildcard . 'rrd');
 
 		return $files;
 	}
