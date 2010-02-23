@@ -18,21 +18,19 @@ $obj->ds_names = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
+$obj->generate_colors();
 switch($obj->args['type']) {
 	case 'fanspeed':
-		$obj->colors = '00ff00';
 		$obj->rrd_title = sprintf('Fanspeed (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'RPM';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'temperature':
-		$obj->colors = '0000ff';
 		$obj->rrd_title = sprintf('Temperature (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Celius';
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'voltage':
-		$obj->colors = 'ff0000';
 		$obj->rrd_title = sprintf('Voltage (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Volt';
 		$obj->rrd_format = '%5.1lf';
