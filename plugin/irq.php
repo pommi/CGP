@@ -13,6 +13,7 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_GenericStacked($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
+$obj->generate_colors();
 
 $obj->rrd_title = 'Interrupts';
 $obj->rrd_vertical = 'IRQs/s';
