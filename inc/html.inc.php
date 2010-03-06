@@ -67,24 +67,26 @@ function host_summary($hosts) {
 	echo "<table class=\"summary\">\n";
 
 	foreach($hosts as $host) {
-		collectd_flush(sprintf('%s/load/load', $host));
-		$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
-
-		# ignore if file does not exist
-		if (!$rrd_info)
-			continue;
-
 		printf('<tr><th><a href="%s/host.php?h=%s">%s</a></th>',
 			$CONFIG['weburl'],$host, $host);
 
-		if (isset($rrd_info['ds[shortterm].last_ds']) &&
-			isset($rrd_info['ds[midterm].last_ds']) &&
-			isset($rrd_info['ds[longterm].last_ds'])) {
+		if ($CONFIG['showload']) {
+			collectd_flush(sprintf('%s/load/load', $host));
+			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
 
-			printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
-				$rrd_info['ds[shortterm].last_ds'],
-				$rrd_info['ds[midterm].last_ds'],
-				$rrd_info['ds[longterm].last_ds']);
+			# ignore if file does not exist
+			if (!$rrd_info)
+				continue;
+
+			if (isset($rrd_info['ds[shortterm].last_ds']) &&
+				isset($rrd_info['ds[midterm].last_ds']) &&
+				isset($rrd_info['ds[longterm].last_ds'])) {
+
+				printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
+					$rrd_info['ds[shortterm].last_ds'],
+					$rrd_info['ds[midterm].last_ds'],
+					$rrd_info['ds[longterm].last_ds']);
+			}
 		}
 
 		print "</tr>\n";

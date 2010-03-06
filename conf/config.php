@@ -15,6 +15,9 @@ $CONFIG['rrdtool'] = '/usr/bin/rrdtool';
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
+# show load averages on overview page
+$CONFIG['showload'] = true;
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 
