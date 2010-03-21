@@ -128,7 +128,8 @@ class Type_Default {
 	function file2identifier($files) {
 		foreach($files as $key => $file) {
 			if (is_file($file)) {
-				$files[$key] = basename($files[$key], '.rrd');
+				$files[$key] = preg_replace("#^$this->datadir/#u", '', $files[$key]);
+				$files[$key] = preg_replace('#\.rrd$#', '', $files[$key]);
 			}
 		}
 
