@@ -9,6 +9,9 @@ $CONFIG['datadir'] = '/var/lib/collectd/rrd';
 # rrdtool executable
 $CONFIG['rrdtool'] = '/usr/bin/rrdtool';
 
+# rrdtool special options
+$CONFIG['rrdtool_opts'] = '';
+
 # category of hosts to show on main page
 #$CONFIG['cat']['category1'] = array('host1', 'host2');
 
