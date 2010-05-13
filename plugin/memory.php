@@ -14,17 +14,19 @@ require_once 'inc/collectd.inc.php';
 # memory/memory-used.rrd
 
 $obj = new Type_GenericStacked($CONFIG);
-$obj->order = array('free', 'buffered', 'cached', 'used');
+$obj->order = array('free', 'buffered', 'cached', 'locked', 'used');
 $obj->ds_names = array(
-	'free' => 'Free    ',
-	'cached' => 'Cached  ',
+	'free'     => 'Free    ',
+	'cached'   => 'Cached  ',
 	'buffered' => 'Buffered',
-	'used' => 'Used    ',
+	'locked'   => 'Locked  ',
+	'used'     => 'Used    ',
 );
 $obj->colors = array(
 	'free' => '00e000',
 	'cached' => '0000ff',
 	'buffered' => 'ffb000',
+	'locked' => 'ff00ff',
 	'used' => 'ff0000',
 );
 $obj->width = $width;
