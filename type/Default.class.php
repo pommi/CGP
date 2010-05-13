@@ -171,7 +171,7 @@ class Type_Default {
 		if (is_array($this->files) && count($this->files)>1) {
 			# and must it be ordered?
 			if (is_array($this->order)) {
-				$this->tinstances = array_intersect($this->order, $this->tinstances);
+				$this->tinstances = array_merge(array_intersect($this->order, $this->tinstances));
 			}
 			# use tinstances as sources
 			if(is_array($this->data_sources) && count($this->data_sources)>1) {
