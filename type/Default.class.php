@@ -189,7 +189,6 @@ class Type_Default {
 			else {
 				$sources = $this->tinstances;
 			}
-			$sources = str_replace('.', '_', $sources);
 		}
 		# or one file with multiple data_sources
 		else {
