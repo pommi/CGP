@@ -48,6 +48,14 @@ table.summary th {
 	text-align: left;
 }
 
+table.summary tr.even {
+/*	background: #eeeeee; */
+}
+
+table.summary tr.odd {
+/*	background: #cccccc; */
+}
+
 table.summary td {
 	width: 50px;
 	text-align: right;

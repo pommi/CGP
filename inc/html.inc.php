@@ -66,8 +66,14 @@ function host_summary($hosts) {
 
 	echo "<table class=\"summary\">\n";
 
+	$row_style = array(0 => "even", 1 => "odd");
+	$host_counter = 0;
+
 	foreach($hosts as $host) {
-		printf('<tr><th><a href="%s/host.php?h=%s">%s</a></th>',
+		$host_counter++;
+
+		printf('<tr class="%s">', $row_style[$host_counter % 2]);
+		printf('<th><a href="%s/host.php?h=%s">%s</a></th>',
 			$CONFIG['weburl'],$host, $host);
 
 		if ($CONFIG['showload']) {
