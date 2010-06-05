@@ -27,4 +27,10 @@ function crc32hex($str) {
 	return sprintf("%x",crc32($str));
 }
 
+function error_image() {
+	header("Content-Type: image/png");
+	readfile('layout/error.png');
+	exit;
+}
+
 ?>
