@@ -131,7 +131,9 @@ function graphs_from_plugin($host, $plugin) {
 					$CONFIG['weburl'],
 					build_url('detail.php', $items),
 					$CONFIG['weburl'],
-					build_url('graph.php', $items)
+				       (array_key_exists($plugin, $CONFIG['time_range']) ? 
+					build_url('graph.php', $items, $CONFIG['time_range'][$plugin]) :
+					build_url('graph.php', $items) )
 				);
 			}
 		}

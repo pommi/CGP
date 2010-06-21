@@ -18,6 +18,9 @@ $CONFIG['rrdtool_opts'] = '';
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
+# default plugins time range
+$CONFIG['time_range'] = array('uptime' => 31536000);
+
 # show load averages on overview page
 $CONFIG['showload'] = true;
 
