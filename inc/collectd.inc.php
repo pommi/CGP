@@ -127,13 +127,16 @@ function graphs_from_plugin($host, $plugin) {
 					't' => $t,
 					'ti' => $ti
 				);
+
+				$time = array_key_exists($plugin, $CONFIG['time_range'])
+					? $CONFIG['time_range'][$plugin]
+					: 86400;
+
 				printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
 					$CONFIG['weburl'],
-					build_url('detail.php', $items),
+					build_url('detail.php', $items, $time),
 					$CONFIG['weburl'],
-				       (array_key_exists($plugin, $CONFIG['time_range']) ? 
-					build_url('graph.php', $items, $CONFIG['time_range'][$plugin]) :
-					build_url('graph.php', $items) )
+					build_url('graph.php', $items, $time)
 				);
 			}
 		}
