@@ -27,7 +27,7 @@ switch($obj->args['type']) {
 	break;
 	case 'temperature':
 		$obj->rrd_title = sprintf('Temperature (%s)', $obj->args['pinstance']);
-		$obj->rrd_vertical = 'Celius';
+		$obj->rrd_vertical = 'Celsius';
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'voltage':
