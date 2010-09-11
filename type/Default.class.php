@@ -105,7 +105,9 @@ class Type_Default {
 
 		foreach($files as $filename) {
 			$basename=basename($filename,'.rrd');
-			$instance=substr($basename,strpos($basename,'-')+1);
+			$instance = strpos($basename,'-')
+				? substr($basename, strpos($basename,'-') + 1)
+				: $basename;
 
 			$this->tinstances[] = $instance;
 			$this->files[$instance] = $filename;
