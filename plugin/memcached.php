@@ -29,13 +29,12 @@ switch($_GET['t']) {
         $obj->data_sources = array('used', 'free');
 		$obj->order = array('used', 'free');
 		$obj->ds_names = array(
-			'used' => 'Used ',
-			'free' => 'Free ',
+			'used' => 'Used',
+			'free' => 'Free',
 		);
 		$obj->colors = array(
 			'used' => '00e000',
 			'free' => '0000ff',
-
 		);
 		$obj->rrd_title = 'Memcached Memory Usage';
 		$obj->rrd_vertical = 'bytes';
@@ -47,9 +46,9 @@ switch($_GET['t']) {
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('flush', 'get', 'set');
 		$obj->ds_names = array(
-			'flush' => 'Flush ',
-			'get'   => 'Get   ',
-			'set'   => 'Set   ',
+			'flush' => 'Flush',
+			'get'   => 'Get  ',
+			'set'   => 'Set  ',
 		);
 		$obj->colors = array(
 			'flush' => '00e000',
@@ -66,11 +65,10 @@ switch($_GET['t']) {
         $obj = new Type_Default($CONFIG);
         $obj->data_sources = array('value');
         $obj->ds_names = array(
-	        'value ' => 'Connections',
+	        'value' => 'Connections',
         );
         $obj->colors = array(
 	        'percent' => '00b000',
-
         );
 		$obj->rrd_title = 'Memcached Number of Connections';
 		$obj->rrd_vertical = 'Connections';
@@ -98,8 +96,8 @@ switch($_GET['t']) {
         $obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive',
-			'tx' => 'Transmit ',
+			'rx' => 'Receive ',
+			'tx' => 'Transmit',
 		);
 		$obj->colors = array(
 			'rx' => '0000ff',
@@ -114,9 +112,9 @@ switch($_GET['t']) {
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('evictions', 'hits', 'misses');
 		$obj->ds_names = array(
-			'evictions' => 'Evictions ',
-			'hits'      => 'Hits      ',
-			'misses'    => 'Misses    ',
+			'evictions' => 'Evictions',
+			'hits'      => 'Hits     ',
+			'misses'    => 'Misses   ',
 		);
 		$obj->colors = array(
 			'evictions' => '00e000',
@@ -137,7 +135,6 @@ switch($_GET['t']) {
         );
         $obj->colors = array(
 	        'percent' => '00e000',
-
         );
 		$obj->rrd_title = 'Memcached Hits/Gets Ratio';
 		$obj->rrd_vertical = 'Percent';
@@ -147,13 +144,11 @@ switch($_GET['t']) {
         require_once 'type/Default.class.php';
         $obj = new Type_Default($CONFIG);
         $obj->data_sources = array('threads');
-		$obj->order = array( 'threads');
+		$obj->order = array('threads');
 		$obj->ds_names = array(
-
-			'threads' => 'Threads ',
+			'threads' => 'Threads',
 		);
 		$obj->colors = array(
-
 			'threads' => '00b000',
 		);
 		$obj->rrd_title = 'Memcached number of Threads';
@@ -165,15 +160,14 @@ switch($_GET['t']) {
         require_once 'type/Default.class.php';
         $obj = new Type_Default($CONFIG);
         $obj->data_sources = array('user', 'syst');
-		$obj->order = array( 'user', 'syst');
+		$obj->order = array('user', 'syst');
 		$obj->ds_names = array(
-			'user' => 'User ',
-			'syst' => 'System ',
+			'user' => 'User  ',
+			'syst' => 'System',
 		);
 		$obj->colors = array(
 			'user'  => '00e000',
 			'syst'  => '0000ff',
-
 		);
 		$obj->rrd_title = 'CPU Time consumed by the memcached process';
 		$obj->rrd_vertical = 'Time';
