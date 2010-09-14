@@ -17,14 +17,14 @@ switch($_GET['t']) {
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('free', 'cached', 'used');
 		$obj->ds_names = array(
-			'free' => 'Free	',
-			'cached' => 'Cached  ',
-			'used' => 'Used	',
+			'free'   => 'Free  ',
+			'cached' => 'Cached',
+			'used'   => 'Used  ',
 		);
 		$obj->colors = array(
-			'free' => '00e000',
+			'free'   => '00e000',
 			'cached' => '0000ff',
-			'used' => 'ff0000',
+			'used'   => 'ff0000',
 		);
 		$obj->rrd_title = 'Swap utilization';
 		$obj->rrd_vertical = 'Bytes';
@@ -35,11 +35,11 @@ switch($_GET['t']) {
 		$obj->order = array('out', 'in');
 		$obj->ds_names = array(
 			'out' => 'Out',
-			'in' => 'In ',
+			'in'  => 'In ',
 		);
 		$obj->colors = array(
 			'out' => '0000ff',
-			'in' => '00b000',
+			'in'  => '00b000',
 		);
 		$obj->rrd_title = 'Swapped I/O pages';
 		$obj->rrd_vertical = 'Pages';
