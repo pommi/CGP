@@ -14,7 +14,7 @@ require_once 'inc/collectd.inc.php';
 
 $obj = new Type_Default($CONFIG);
 $obj->ds_names = array(
-	'value' => 'Value  ',
+	'value' => 'Value',
 );
 $obj->width = $width;
 $obj->heigth = $heigth;

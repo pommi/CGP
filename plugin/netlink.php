@@ -23,7 +23,7 @@ switch($obj->args['type']) {
 	case 'if_dropped':
 		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive ',
+			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
 		$obj->colors = array(
@@ -36,7 +36,7 @@ switch($obj->args['type']) {
 	case 'if_errors':
 		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive ',
+			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
 		$obj->colors = array(
@@ -56,7 +56,7 @@ switch($obj->args['type']) {
 	case 'if_octets':
 		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive ',
+			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
 		$obj->colors = array(
@@ -69,7 +69,7 @@ switch($obj->args['type']) {
 	case 'if_packets':
 		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive ',
+			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
 		$obj->colors = array(
@@ -79,16 +79,15 @@ switch($obj->args['type']) {
 		$obj->rrd_title = sprintf('Interface Packets (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Packets/s';
 		break;
-		break;
 	case 'if_rx_errors':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'crc'    => 'CRC   ',
-			'fifo'   => 'FiFo  ',
-			'frame'  => 'Frame ',
+			'crc'    => 'CRC',
+			'fifo'   => 'FiFo',
+			'frame'  => 'Frame',
 			'length' => 'Lenght',
 			'missed' => 'Missed',
-			'over'   => 'Over  ',
+			'over'   => 'Over',
 		);
 		$obj->colors = array(
 			'crc'    => '00e000',
@@ -104,11 +103,11 @@ switch($obj->args['type']) {
 	case 'if_tx_errors':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'aborted'  => 'Aborted  ',
-			'carrier'  => 'Carrier  ',
-			'fifo'     => 'FiFo     ',
+			'aborted'  => 'Aborted',
+			'carrier'  => 'Carrier',
+			'fifo'     => 'FiFo',
 			'heartbeat'=> 'Heartbeat',
-			'window'   => 'Window   ',
+			'window'   => 'Window',
 		);
 		$obj->colors = array(
 			'aborted'  => 'f00000',

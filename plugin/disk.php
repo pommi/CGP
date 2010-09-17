@@ -16,7 +16,7 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_GenericIO($CONFIG);
 $obj->data_sources = array('read', 'write');
 $obj->ds_names = array(
-	'read' => 'Read   ',
+	'read' => 'Read',
 	'write' => 'Written',
 );
 $obj->colors = array(

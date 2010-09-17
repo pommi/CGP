@@ -47,8 +47,8 @@ switch($_GET['t']) {
 		$obj->order = array('flush', 'get', 'set');
 		$obj->ds_names = array(
 			'flush' => 'Flush',
-			'get'   => 'Get  ',
-			'set'   => 'Set  ',
+			'get'   => 'Get',
+			'set'   => 'Set',
 		);
 		$obj->colors = array(
 			'flush' => '00e000',
@@ -96,7 +96,7 @@ switch($_GET['t']) {
         $obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive ',
+			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
 		$obj->colors = array(
@@ -113,8 +113,8 @@ switch($_GET['t']) {
 		$obj->order = array('evictions', 'hits', 'misses');
 		$obj->ds_names = array(
 			'evictions' => 'Evictions',
-			'hits'      => 'Hits     ',
-			'misses'    => 'Misses   ',
+			'hits'      => 'Hits',
+			'misses'    => 'Misses',
 		);
 		$obj->colors = array(
 			'evictions' => '00e000',
@@ -162,7 +162,7 @@ switch($_GET['t']) {
         $obj->data_sources = array('user', 'syst');
 		$obj->order = array('user', 'syst');
 		$obj->ds_names = array(
-			'user' => 'User  ',
+			'user' => 'User',
 			'syst' => 'System',
 		);
 		$obj->colors = array(

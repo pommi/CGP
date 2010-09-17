@@ -197,24 +197,26 @@ class Type_Default {
 			# use data_sources as sources
 			$sources = $this->data_sources;
 		}
-		$this->fill_ds_names($sources);
+		$this->parse_ds_names($sources);
 		return $sources;
 	}
 
-	function fill_ds_names($sources) {
+	function parse_ds_names($sources) {
+		# fill ds_names if not defined by plugin
+		if (!is_array($this->ds_names))
+			$this->ds_names = array_combine($sources, $sources);
+
+		# detect length of longest ds_name
 		$max = 0;
-		foreach ($sources as $source) {
-			if(strlen($source) > $max) {
-				$max = strlen($source);
-			}
+		foreach ($this->ds_names as $ds_name) {
+			if(strlen((string)$ds_name) > $max)
+				$max = strlen((string)$ds_name);
 		}
-		if($max > 0) {
-			$fmt = sprintf("%%-%ds", $max);
-			foreach ($sources as $source) {
-				if(!isset($this->ds_names[$source])) {
-					$this->ds_names[$source] = sprintf($fmt, $source);
-				}
-			}
+
+		# make all ds_names equal in lenght
+		$format = sprintf("%%-%ds", $max);
+		foreach ($this->ds_names as $index => $value) {
+			$this->ds_names[$index] = sprintf($format, $value);
 		}
 	}
 

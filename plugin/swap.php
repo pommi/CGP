@@ -17,9 +17,9 @@ switch($_GET['t']) {
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('free', 'cached', 'used');
 		$obj->ds_names = array(
-			'free'   => 'Free  ',
+			'free'   => 'Free',
 			'cached' => 'Cached',
-			'used'   => 'Used  ',
+			'used'   => 'Used',
 		);
 		$obj->colors = array(
 			'free'   => '00e000',
@@ -35,7 +35,7 @@ switch($_GET['t']) {
 		$obj->order = array('out', 'in');
 		$obj->ds_names = array(
 			'out' => 'Out',
-			'in'  => 'In ',
+			'in'  => 'In',
 		);
 		$obj->colors = array(
 			'out' => '0000ff',

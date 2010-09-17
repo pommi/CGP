@@ -16,11 +16,11 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_GenericStacked($CONFIG);
 $obj->order = array('free', 'buffered', 'cached', 'locked', 'used');
 $obj->ds_names = array(
-	'free'     => 'Free    ',
-	'cached'   => 'Cached  ',
+	'free'     => 'Free',
+	'cached'   => 'Cached',
 	'buffered' => 'Buffered',
-	'locked'   => 'Locked  ',
-	'used'     => 'Used    ',
+	'locked'   => 'Locked',
+	'used'     => 'Used',
 );
 $obj->colors = array(
 	'free' => '00e000',

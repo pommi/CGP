@@ -17,11 +17,11 @@ require_once 'inc/collectd.inc.php';
 
 $obj = new Type_GenericStacked($CONFIG);
 $obj->ds_names = array(
-	'paging' => 'Paging  ',
-	'blocked' => 'Blocked ',
-	'zombies' => 'Zombies ',
-	'stopped' => 'Stopped ',
-	'running' => 'Running ',
+	'paging' => 'Paging',
+	'blocked' => 'Blocked',
+	'zombies' => 'Zombies',
+	'stopped' => 'Stopped',
+	'running' => 'Running',
 	'sleeping' => 'Sleeping',
 	'value' => 'Forks',
 );

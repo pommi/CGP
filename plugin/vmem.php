@@ -29,10 +29,10 @@ switch($obj->args['type']) {
 		break;
 	case 'vmpage_io':
 		$obj->data_sources = array('in', 'out');
-		$obj->ds_names = array('memory-in'  => 'Memory (in) ',
+		$obj->ds_names = array('memory-in'  => 'Memory (in)',
 		                       'memory-out' => 'Memory (out)',
-		                       'swap-in'    => 'Swap (in)   ',
-		                       'swap-out'   => 'Swap (out)  ');
+		                       'swap-in'    => 'Swap (in)',
+		                       'swap-out'   => 'Swap (out)');
 		$obj->colors = array('memory-in'  => 'ff0000',
 		                     'memory-out' => '0000ff',
 		                     'swap-in'    => 'ff00ff',
