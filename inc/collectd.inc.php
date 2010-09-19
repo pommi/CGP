@@ -31,31 +31,18 @@ function collectd_plugindata($host) {
 	if (!$files)
 		return false;
 	
-	$data;
-	$i = 0;
+	$data = array();
 	foreach($files as $item) {
-		unset($part);
+		preg_match('#([\w_]+)(?:\-(.+))?/([\w_]+)(?:\-(.+))?\.rrd#', $item, $matches);
 
-		# split item by plugin/type
-		$part = explode('/', $item);
-		$part[1] = preg_replace('/\.rrd/', '', $part[1]);
-
-		# plugin
-		$data[$i]['p'] = preg_replace('/-.+/', '', $part[0]);
-
-		# plugin instance
-		if(preg_match('/-/', $part[0]))
-			$data[$i]['pi'] = preg_replace('/^[a-z_]+\-/', '', $part[0]);
-		
-		# type
-		$data[$i]['t'] = preg_replace('/-.+/', '', $part[1]);
-
-		# type instance
-		if(preg_match('/-/', $part[1]))
-			$data[$i]['ti'] = preg_replace('/^[a-z_]+\-/', '', $part[1]);
-
-		$i++;
+		$data[] = array(
+			'p'  => $matches[1],
+			'pi' => isset($matches[2]) ? $matches[2] : '',
+			't'  => $matches[3],
+			'ti' => isset($matches[4]) ? $matches[4] : '',
+		);
 	}
+
 	return($data);
 }
 
