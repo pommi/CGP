@@ -1,3 +1,41 @@
+0.3 (2010-10-04)
+* general
+ - improved support for utf8 filenames
+ - use default color palette in graphs when not defined
+ - automatic alignment of graph legend
+ - show static error image when plugin is not supported (remove php_gd dependency)
+
+* config settings:
+ - rrdtool executable
+ - rrdtool options
+ - default graph time range
+ - show load averages on overview page
+ - browser cache time for graph images
+
+* plugins (new):
+ - apache
+ - bind
+ - conntrack
+ - hddtemp
+ - memcached
+ - netlink
+ - nfs
+ - ntpd
+ - nut
+ - ping
+ - tcpconns
+ - uptime
+ - vmem
+ - wireless
+
+* plugins (updated):
+ - interface: traffic in bytes (instead of bits)
+ - irq: use default color palette
+ - memory: locked state (Solaris)
+ - processes: ability to monitor specific processes
+ - processes: fork rate
+
+
 0.2 (2010-01-02)
 - new layout and styling (thanks to Daniel Von Fange)
 - fancy ajax to expand/collapse plugin information
@@ -5,6 +43,7 @@
 - linux 2.4 kernel support
 - swap_io support
 - unixsock flush support
+
 
 0.1 (2009-09-24)
 - initial release
