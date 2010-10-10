@@ -41,5 +41,3 @@ switch($obj->args['type']) {
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
-
-?>

@@ -34,5 +34,3 @@ $obj->generate_colors();
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
-
-?>
