@@ -7,10 +7,10 @@ require_once 'type/Default.class.php';
 require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
-# disk-XXXX/
-# disk-XXXX/fanspeed-XXXX.rrd
-# disk-XXXX/temerature-XXXX.rrd
-# disk-XXXX/voltage-XXXX.rrd
+# sensors-XXXX/
+# sensors-XXXX/fanspeed-XXXX.rrd
+# sensors-XXXX/temerature-XXXX.rrd
+# sensors-XXXX/voltage-XXXX.rrd
 
 $obj = new Type_Default($CONFIG);
 $obj->ds_names = array(
