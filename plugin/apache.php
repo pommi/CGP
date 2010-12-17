@@ -25,7 +25,7 @@ switch ($obj->args['type']) {
 			'count' => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Traffic%s',
-			!isset($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
+			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Bytes/s';
 	break;
 	case 'apache_connections':
@@ -37,7 +37,7 @@ switch ($obj->args['type']) {
 			'count' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Webserver Connections%s',
-			!isset($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
+			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Conns/s';
 	break;
 	case 'apache_idle_workers':
@@ -49,7 +49,7 @@ switch ($obj->args['type']) {
 			'count' => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Idle Workers%s',
-			!isset($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
+			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Workers';
 	break;
 	case 'apache_requests':
@@ -61,7 +61,7 @@ switch ($obj->args['type']) {
 			'count' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Webserver Requests%s',
-			!isset($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
+			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Requests/s';
 	break;
 	case 'apache_scoreboard':
@@ -96,7 +96,7 @@ switch ($obj->args['type']) {
 			'idle_cleanup' => 'ffff00',
 		);
 		$obj->rrd_title = sprintf('Webserver Scoreboard%s',
-			!isset($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
+			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Slots';
 	break;
 }
