@@ -68,7 +68,31 @@ switch ($obj->args['type']) {
 		require_once 'type/GenericStacked.class.php';
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->data_sources = array('count');
-		$obj->order = array('open', 'idle_cleanup', 'finishing', 'logging', 'closing', 'dnslookup', 'keepalive', 'sending', 'reading', 'starting', 'waiting');
+		$obj->order = array(
+			'open',
+			'idle_cleanup',
+			'finishing',
+			'logging',
+			'closing',
+			'dnslookup',
+			'keepalive',
+			'sending',
+			'reading',
+			'starting',
+			'waiting',
+
+			'connect',
+			'hard_error',
+			'close',
+			'response_end',
+			'write',
+			'response_start',
+			'handle_request',
+			'read_post',
+			'request_end',
+			'read',
+			'request_start',
+		);
 		$obj->ds_names = array(
 			'open'      => 'Open (empty)',
 			'waiting'   => 'Waiting',
@@ -81,6 +105,18 @@ switch ($obj->args['type']) {
 			'logging'   => 'Logging',
 			'finishing' => 'Finishing',
 			'idle_cleanup' => 'Idle cleanup',
+
+			'connect'        => 'Connect (empty)',
+			'close'          => 'Close',
+			'hard_error'     => 'Hard error',
+			'read'           => 'Read',
+			'read_post'      => 'Read POST',
+			'write'          => 'Write',
+			'handle_request' => 'Handle request',
+			'request_start'  => 'Request start',
+			'request_end'    => 'Request end',
+			'response_start' => 'Response start',
+			'response_end'   => 'Response end',
 		);
 		$obj->colors = array(
 			'open'      => 'e0e0e0',
@@ -94,6 +130,18 @@ switch ($obj->args['type']) {
 			'logging'   => 'a000a0',
 			'finishing' => '008080',
 			'idle_cleanup' => 'ffff00',
+
+			'connect'        => 'e0e0e0',
+			'close'          => '008080',
+			'hard_error'     => 'ff0000',
+			'read'           => 'ff00ff',
+			'read_post'      => '00e000',
+			'write'          => '000080',
+			'handle_request' => '0080ff',
+			'request_start'  => 'ffb000',
+			'request_end'    => '0000ff',
+			'response_start' => 'ffff00',
+			'response_end'   => 'a000a0',
 		);
 		$obj->rrd_title = sprintf('Webserver Scoreboard%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
