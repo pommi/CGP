@@ -35,12 +35,7 @@ switch($obj->args['type']) {
 	break;
 	case 'dns_opcode':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
-			'value' => 'Queries/s',
-		);
-		$obj->colors = array(
-			'value' => '0000ff',
-		);
+		$obj->generate_colors();
 		$obj->rrd_title = 'DNS Opcode Query';
 		$obj->rrd_vertical = 'Queries/s';
 		$obj->rrd_format = '%5.1lf%s';
