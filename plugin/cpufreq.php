@@ -13,7 +13,6 @@ $obj = new Type_Default($CONFIG);
 $obj->data_sources = array('value');
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->generate_colors();
 $obj->rrd_title = 'CPU frequency scaling';
 $obj->rrd_vertical = 'Mhz';
 $obj->rrd_format = '%5.1lf%s';

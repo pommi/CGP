@@ -18,7 +18,6 @@ $obj->ds_names = array(
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->generate_colors();
 switch($obj->args['type']) {
 	case 'fanspeed':
 		$obj->rrd_title = sprintf('Fanspeed (%s)', $obj->args['pinstance']);

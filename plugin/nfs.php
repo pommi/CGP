@@ -30,7 +30,6 @@ $obj->heigth = $heigth;
 $obj->rrd_title = sprintf('NFS-%s Procedures', $obj->args['pinstance']);
 $obj->rrd_vertical = 'Procedures';
 $obj->rrd_format = '%5.2lf';
-$obj->generate_colors();
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();

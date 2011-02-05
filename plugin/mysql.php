@@ -13,7 +13,6 @@ $obj->heigth = $heigth;
 switch($obj->args['type'])
 {
 	case 'mysql_commands':
-		$obj->generate_colors();
 		$obj->rrd_title = sprintf('MySQL commands (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Issues/s';
 		$obj->rrd_format = '%5.1lf%s';

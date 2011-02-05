@@ -19,7 +19,6 @@ $obj->ds_names = array('ping' => 'Ping time',
                        'ping_droprate' => 'Ping droprate');
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->generate_colors();
 switch($obj->args['type']) {
 	case 'ping':
 		$obj->data_sources = array('ping');

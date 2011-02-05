@@ -43,7 +43,6 @@ switch($obj->args['type']) {
 		break;
 	case 'vmpage_number':
 		$obj->data_sources = array('value');
-		$obj->generate_colors();
 		$obj->order = array('active_anon', 'active_file',
 		                    'anon_pages', 'bounce',
 		                    'dirty', 'file_pages',

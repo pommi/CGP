@@ -16,7 +16,6 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_Default($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->generate_colors();
 switch($obj->args['type']) {
 	case 'percent':
 		$obj->data_sources = array('percent');

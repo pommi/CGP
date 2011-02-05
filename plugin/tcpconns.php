@@ -13,7 +13,6 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_GenericStacked($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
-$obj->generate_colors();
 $obj->rrd_title = sprintf('TCP Connections (%s)', $obj->args['pinstance']);
 $obj->rrd_vertical = '#';
 $obj->rrd_format = '%5.1lf';

@@ -34,27 +34,25 @@ class Type_Default {
 		$this->identifiers = $this->file2identifier($this->files);
 	}
 
-	function generate_colors() {
-		$base = array( array(255,   0,   0),
-			       array(  0, 255,   0),
-			       array(  0,   0, 255),
-			       array(255, 120,   0),
-			       array(255,   0, 120),
-			       array(  0, 255, 120),
-			       array(120, 255,   0),
-			       array(120,   0, 255),
-			       array(  0, 120, 255));
+	function rainbow_colors() {
+		$sources = count($this->rrd_get_sources());
+		foreach ($this->rrd_get_sources() as $ds) {
+			# hue (saturnation=1, value=1)
+			$h = 360 - ($c * (330/($sources-1)));
 
-		$this->colors = array();
-		$n = 0;
-		$p = 0;
-		foreach($base as $b) {
-			$n = $p;
-			for($i = 100; $i >= 20; $i -= 30) {
-				$this->colors[$n] = sprintf('%02x%02x%02x', $b[0] * $i / 100, $b[1] * $i / 100, $b[2] * $i / 100);
-				$n += count($base);
+			$h = ($h %= 360) / 60;
+			$f = $h - floor($h);
+			$q[0] = $q[1] = 0;
+			$q[2] = 1*(1-1*(1-$f));
+			$q[3] = $q[4] = 1;
+			$q[5] = 1*(1-1*$f);
+
+			$hex = '';
+			foreach(array(4,2,0) as $j) {
+				$hex .= sprintf('%02x', $q[(floor($h)+$j)%6] * 255);
 			}
-			$p++;
+			$this->colors[$ds] = $hex;
+			$c++;
 		}
 	}
 
@@ -141,6 +139,9 @@ class Type_Default {
 	}
 
 	function rrd_graph($debug=false) {
+		if (!$this->colors)
+			$this->rainbow_colors();
+
 		$graphdata = $this->rrd_gen_graph();
 		
 		if(!$debug) {
