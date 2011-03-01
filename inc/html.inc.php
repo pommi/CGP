@@ -33,10 +33,11 @@ EOT;
 }
 
 function html_end() {
+	global $CONFIG;
 	echo <<<EOT
 </div>
 <div id="footer">
-<hr><span class="small">Collectd Graph Panel is distributed under the GNU General Public License (GPL)</span>
+<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> is distributed under the <a href="{$CONFIG['weburl']}/doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
 </div>
 </body>
 </html>
