@@ -14,7 +14,7 @@ $obj->data_sources = array('value');
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->rrd_title = 'CPU frequency scaling';
-$obj->rrd_vertical = 'Mhz';
+$obj->rrd_vertical = 'Hz';
 $obj->rrd_format = '%5.1lf%s';
 
 collectd_flush($obj->identifiers);
