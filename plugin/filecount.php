@@ -27,7 +27,7 @@ switch($obj->args['type']) {
 		break;
 	case 'files':
 		$obj->ds_names = array('value' => 'Files');
-		$obj->colors = array('value' => '0000ff');
+		$obj->colors = array('value' => 'f0a000');
 		$obj->rrd_title = sprintf('Filecount: number of files (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Files';
 		break;
