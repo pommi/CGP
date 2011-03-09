@@ -34,10 +34,24 @@ EOT;
 
 function html_end() {
 	global $CONFIG;
+
+	$git = '/usr/bin/git';
+	$changelog = $CONFIG['webdir'].'/doc/CHANGELOG';
+
+	$version = 'v?';
+	if (file_exists($git) && is_dir($CONFIG['webdir'].'/.git')) {
+		chdir($CONFIG['webdir']);
+		$version = exec($git.' describe');
+	} elseif (file_exists($changelog)) {
+		$changelog = file($changelog);
+		$version = explode(' ', $changelog[0]);
+		$version = 'v'.$version[0];
+	}
+
 	echo <<<EOT
 </div>
 <div id="footer">
-<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> is distributed under the <a href="{$CONFIG['weburl']}/doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
+<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}/doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
 </div>
 </body>
 </html>
