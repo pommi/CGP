@@ -41,7 +41,7 @@ function html_end() {
 	$version = 'v?';
 	if (file_exists($git) && is_dir($CONFIG['webdir'].'/.git')) {
 		chdir($CONFIG['webdir']);
-		$version = exec($git.' describe');
+		$version = exec($git.' describe --tags');
 	} elseif (file_exists($changelog)) {
 		$changelog = file($changelog);
 		$version = explode(' ', $changelog[0]);
