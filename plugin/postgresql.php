@@ -38,8 +38,7 @@ switch($obj->args['type']) {
 			!empty($obj->args['pinstance']) ? $obj->args['pinstance'] : '');
 		$obj->rrd_vertical = 'Size';
 	break;
-	case 'pg_blks':
-	case 'pg_n_tup_c':
+	default:
 		$obj->rrd_title = sprintf('%s/%s', $obj->args['pinstance'], $obj->args['type']);
 		$obj->rrd_vertical = 'Ops per second';
 	break;
