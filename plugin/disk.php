@@ -29,7 +29,7 @@ switch($obj->args['type']) {
 	case 'disk_merged':
 		$obj->rrd_title = sprintf('Disk Merged Operations (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Merged operations/s';
-		$obj->rrd_format = '%5.1lf';
+		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'disk_octets':
 		$obj->rrd_title = sprintf('Disk Traffic (%s)', $obj->args['pinstance']);
@@ -39,7 +39,7 @@ switch($obj->args['type']) {
 	case 'disk_ops':
 		$obj->rrd_title = sprintf('Disk Operations (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Ops per second';
-		$obj->rrd_format = '%5.1lf';
+		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'disk_time':
 		$obj->rrd_title = sprintf('Disk time per operation (%s)', $obj->args['pinstance']);
