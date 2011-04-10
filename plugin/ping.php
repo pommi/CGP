@@ -19,22 +19,21 @@ $obj->ds_names = array('ping' => 'Ping time',
                        'ping_droprate' => 'Ping droprate');
 $obj->width = $width;
 $obj->heigth = $heigth;
+$obj->rrd_format = '%5.1lf';
+
 switch($obj->args['type']) {
 	case 'ping':
 		$obj->data_sources = array('ping');
 		$obj->rrd_title = 'Ping latency';
 		$obj->rrd_vertical = 'Milliseconds';
-		$obj->rrd_format = '%5.1lf';
 		break;
 	case 'ping_stddev':
 		$obj->rrd_title = 'Ping stddev';
 		$obj->rrd_vertical = '';
-		$obj->rrd_format = '%5.1lf';
 		break;
 	case 'ping_droprate':
 		$obj->rrd_title = 'Ping droprate';
 		$obj->rrd_vertical = '';
-		$obj->rrd_format = '%5.1lf';
 		break;
 }
 

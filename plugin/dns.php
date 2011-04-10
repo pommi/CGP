@@ -15,6 +15,8 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_GenericStacked($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
+$obj->rrd_format = '%5.1lf%s';
+
 switch($obj->args['type']) {
 	case 'dns_octets':
 		$obj->data_sources = array(
@@ -31,19 +33,16 @@ switch($obj->args['type']) {
 		);
 		$obj->rrd_title = 'DNS traffic';
 		$obj->rrd_vertical = 'Bit/s';
-		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'dns_opcode':
 		$obj->data_sources = array('value');
 		$obj->rrd_title = 'DNS Opcode Query';
 		$obj->rrd_vertical = 'Queries/s';
-		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'dns_qtype':
 		$obj->data_sources = array('value');
 		$obj->rrd_title = 'DNS QType';
 		$obj->rrd_vertical = 'Queries/s';
-		$obj->rrd_format = '%5.1lf%s';
 	break;
 }
 

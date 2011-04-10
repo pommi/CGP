@@ -19,30 +19,28 @@ $obj->ds_names = array('ping' => 'Ping time',
                        'ping_droprate' => 'Ping droprate');
 $obj->width = $width;
 $obj->heigth = $heigth;
+$obj->rrd_format = '%5.1lf%s';
+
 switch($obj->args['type']) {
 	case 'delay':
 		$obj->data_sources = array('seconds');
 		$obj->rrd_title = sprintf('Delay');
 		$obj->rrd_vertical = 'Seconds';
-		$obj->rrd_format = '%5.1lf%s';
 		break;
 	case 'frequency_offset':
 		$obj->data_sources = array('ppm');
 		$obj->rrd_title = 'Frequency offset';
 		$obj->rrd_vertical = 'ppm';
-		$obj->rrd_format = '%5.1lf%s';
 		break;
 	case 'time_dispersion':
 		$obj->data_sources = array('seconds');
 		$obj->rrd_title = 'Time dispersion';
 		$obj->rrd_vertical = 'Seconds';
-		$obj->rrd_format = '%5.1lf%s';
 		break;
 	case 'time_offset':
 		$obj->data_sources = array('seconds');
 		$obj->rrd_title = 'Time offset';
 		$obj->rrd_vertical = 'Seconds';
-		$obj->rrd_format = '%5.1lf%s';
 		break;
 }
 
