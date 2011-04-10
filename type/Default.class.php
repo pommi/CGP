@@ -195,8 +195,13 @@ class Type_Default {
 		}
 		# or one file with multiple data_sources
 		else {
-			# use data_sources as sources
-			$sources = $this->data_sources;
+			if(is_array($this->data_sources) && count($this->data_sources)==1 && in_array('value', $this->data_sources)) {
+				# use tinstances as sources
+				$sources = $this->tinstances;
+			} else {
+				# use data_sources as sources
+				$sources = $this->data_sources;
+			}
 		}
 		$this->parse_ds_names($sources);
 		return $sources;
