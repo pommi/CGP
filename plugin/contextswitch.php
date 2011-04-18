@@ -1,6 +1,6 @@
 <?php
 
-# Collectd Entropy plugin
+# Collectd contextswitch plugin
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
