@@ -2,6 +2,12 @@
 
 # global functions
 
+function GET($index) {
+	if (isset($_GET[$index]))
+		return $_GET[$index];
+	return null;
+}
+
 function validate_get($value, $type) {
 	switch($type) {
 		case 'host':

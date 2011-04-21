@@ -11,7 +11,7 @@ require_once 'inc/collectd.inc.php';
 # swap/swap-free.rrd
 # swap/swap-used.rrd
 
-switch($_GET['t']) {
+switch(GET('t')) {
 	case 'swap':
 		require_once 'type/GenericStacked.class.php';
 		$obj = new Type_GenericStacked($CONFIG);

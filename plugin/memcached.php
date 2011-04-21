@@ -21,7 +21,7 @@ require_once 'inc/collectd.inc.php';
 # ps_cputime.rrd
 
 
-switch($_GET['t']) {
+switch(GET('t')) {
 # df-cache.rrd
 	case 'df':
         require_once 'type/Default.class.php';

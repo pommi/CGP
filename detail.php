@@ -11,14 +11,14 @@ if (empty($_GET['x']))
 if (empty($_GET['y']))
 	$_GET['y'] = $CONFIG['detail-heigth'];
 
-$host = validate_get($_GET['h'], 'host');
-$plugin = validate_get($_GET['p'], 'plugin');
-$pinstance = validate_get($_GET['pi'], 'pinstance');
-$type = validate_get($_GET['t'], 'type');
-$tinstance = validate_get($_GET['ti'], 'tinstance');
-$width = $_GET['x'];
-$heigth = $_GET['y'];
-$seconds = $_GET['s'];
+$host = validate_get(GET('h'), 'host');
+$plugin = validate_get(GET('p'), 'plugin');
+$pinstance = validate_get(GET('pi'), 'pinstance');
+$type = validate_get(GET('t'), 'type');
+$tinstance = validate_get(GET('ti'), 'tinstance');
+$width = GET('x');
+$heigth = GET('y');
+$seconds = GET('s');
 
 html_start();
 

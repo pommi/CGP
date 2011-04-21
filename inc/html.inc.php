@@ -118,16 +118,17 @@ function host_summary($hosts) {
 
 
 function breadcrumbs() {
-	if (validate_get($_GET['h'], 'host'))
-		$path = ' - '.ucfirst($_GET['h']);
-	if (validate_get($_GET['p'], 'plugin'))
-		$path .= ' - '.ucfirst($_GET['p']);
-	if (validate_get($_GET['pi'], 'pinstance'))
-		$path .= ' - '.$_GET['pi'];
-	if (validate_get($_GET['t'], 'type') && validate_get($_GET['p'], 'plugin') && $_GET['t'] != $_GET['p'])
-		$path .= ' - '.$_GET['t'];
-	if (validate_get($_GET['ti'], 'tinstance'))
-		$path .= ' - '.$_GET['ti'];
+	$path = '';
+	if (validate_get(GET('h'), 'host'))
+		$path .= ' - '.ucfirst(GET('h'));
+	if (validate_get(GET('p'), 'plugin'))
+		$path .= ' - '.ucfirst(GET('p'));
+	if (validate_get(GET('pi'), 'pinstance'))
+		$path .= ' - '.GET('pi');
+	if (validate_get(GET('t'), 'type') && validate_get(GET('p'), 'plugin') && GET('t') != GET('p'))
+		$path .= ' - '.GET('t');
+	if (validate_get(GET('ti'), 'tinstance'))
+		$path .= ' - '.GET('ti');
 
 	return $path;
 }
