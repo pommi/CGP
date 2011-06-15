@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # users/users.rrd
 
 $obj = new Type_Default($CONFIG);
-$obj->data_sources = array('users');
+$obj->data_sources = array('value');
 $obj->ds_names = array(
 	'users' => 'Users',
 );
@@ -22,6 +22,10 @@ $obj->heigth = $heigth;
 $obj->rrd_title = 'Users';
 $obj->rrd_vertical = 'Users';
 $obj->rrd_format = '%.1lf';
+
+# backwards compatibility
+if ($CONFIG['version'] < 5)
+	$obj->data_sources = array('users');
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
