@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # entropy/entropy.rrd
 
 $obj = new Type_Default($CONFIG);
-$obj->data_sources = array('entropy');
+$obj->data_sources = array('value');
 $obj->ds_names = array(
 	'entropy' => 'Entropy bits',
 );
@@ -22,6 +22,10 @@ $obj->heigth = $heigth;
 $obj->rrd_title = 'Available entropy';
 $obj->rrd_vertical = 'Bits';
 $obj->rrd_format = '%4.0lf';
+
+# backwards compatibility
+if ($CONFIG['version'] < 5)
+	$obj->data_sources = array('entropy');
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
