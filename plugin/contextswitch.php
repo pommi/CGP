@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # contextswitch/contextswitch.rrd
 
 $obj = new Type_Default($CONFIG);
-$obj->data_sources = array('contextswitches');
+$obj->data_sources = array('value');
 $obj->ds_names = array(
 	'contextswitches' => 'Context switches',
 );
@@ -22,6 +22,10 @@ $obj->heigth = $heigth;
 $obj->rrd_title = 'Context switches';
 $obj->rrd_vertical = 'switch per second Bits';
 $obj->rrd_format = '%4.0lf';
+
+# backwards compatibility
+if ($CONFIG['version'] < 5)
+	$obj->data_sources = array('contextswitches');
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
