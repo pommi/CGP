@@ -10,19 +10,32 @@ require_once 'inc/collectd.inc.php';
 # conntrack/conntrack.rrd
 
 $obj = new Type_Default($CONFIG);
-# the data source is named 'entropy' in collectd's types.db
-$obj->data_sources = array('entropy');
+$obj->data_sources = array('value');
 $obj->ds_names = array(
-	'entropy' => 'Conntrack entries',
+	'value' => 'Conntrack entries',
 );
 $obj->colors = array(
-	'entropy' => '0000f0',
+	'value' => '0000f0',
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->rrd_title = 'Conntrack entries';
 $obj->rrd_vertical = '#';
 $obj->rrd_format = '%.1lf';
+
+# backwards compatibility
+# the data source is named 'entropy' in collectd's types.db
+if ($CONFIG['version'] < 5) {
+	$obj->data_sources = array('entropy');
+	if (count($obj->ds_names) == 1) {
+		$obj->ds_names['entropy'] = $obj->ds_names['value'];
+		unset($obj->ds_names['value']);
+	}
+	if (count($obj->colors) == 1) {
+		$obj->colors['entropy'] = $obj->colors['value'];
+		unset($obj->colors['value']);
+	}
+}
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
