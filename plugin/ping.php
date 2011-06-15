@@ -23,7 +23,8 @@ $obj->rrd_format = '%5.1lf';
 
 switch($obj->args['type']) {
 	case 'ping':
-		$obj->data_sources = array('ping');
+		if ($CONFIG['version'] < 5)
+			$obj->data_sources = array('ping');
 		$obj->rrd_title = 'Ping latency';
 		$obj->rrd_vertical = 'Milliseconds';
 		break;
