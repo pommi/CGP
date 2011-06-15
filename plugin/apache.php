@@ -17,48 +17,48 @@ $obj = new Type_Default($CONFIG);
 
 switch ($obj->args['type']) {
 	case 'apache_bytes':
-		$obj->data_sources = array('count');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'count' => 'Bytes/s',
+			$obj->args['type'] => 'Bytes/s',
 		);
 		$obj->colors = array(
-			'count' => '0000ff',
+			$obj->args['type'] => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Traffic%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Bytes/s';
 	break;
 	case 'apache_connections':
-		$obj->data_sources = array('count');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'count' => 'Conns/s',
+			$obj->args['type'] => 'Conns/s',
 		);
 		$obj->colors = array(
-			'count' => '00b000',
+			$obj->args['type'] => '00b000',
 		);
 		$obj->rrd_title = sprintf('Webserver Connections%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Conns/s';
 	break;
 	case 'apache_idle_workers':
-		$obj->data_sources = array('count');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'count' => 'Workers',
+			$obj->args['type'] => 'Workers',
 		);
 		$obj->colors = array(
-			'count' => '0000ff',
+			$obj->args['type'] => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Idle Workers%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
 		$obj->rrd_vertical = 'Workers';
 	break;
 	case 'apache_requests':
-		$obj->data_sources = array('count');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'count' => 'Requests/s',
+			$obj->args['type'] => 'Requests/s',
 		);
 		$obj->colors = array(
-			'count' => '00b000',
+			$obj->args['type'] => '00b000',
 		);
 		$obj->rrd_title = sprintf('Webserver Requests%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
@@ -67,7 +67,7 @@ switch ($obj->args['type']) {
 	case 'apache_scoreboard':
 		require_once 'type/GenericStacked.class.php';
 		$obj = new Type_GenericStacked($CONFIG);
-		$obj->data_sources = array('count');
+		$obj->data_sources = array('value');
 		$obj->order = array(
 			'open',
 			'idle_cleanup',
@@ -152,6 +152,19 @@ switch ($obj->args['type']) {
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf';
+
+# backwards compatibility
+if ($CONFIG['version'] < 5) {
+	$obj->data_sources = array('count');
+	if (count($obj->ds_names) == 1) {
+		$obj->ds_names['count'] = $obj->ds_names[$obj->args['type']];
+		unset($obj->ds_names[$obj->args['type']]);
+	}
+	if (count($obj->colors) == 1) {
+		$obj->colors['count'] = $obj->colors[$obj->args['type']];
+		unset($obj->colors[$obj->args['type']]);
+	}
+}
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
