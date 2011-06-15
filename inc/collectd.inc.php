@@ -204,15 +204,15 @@ function collectd_flush($identifier) {
 
 		$r = fwrite($socket, $cmd, strlen($cmd));
 		if ($r === false || $r != strlen($cmd)) {
-			printf('ERROR: Failed to write full command to unix-socket: %d out of %d written',
-				$r === false ? -1 : $r, strlen($cmd));
+			error_log(sprintf('ERROR: Failed to write full command to unix-socket: %d out of %d written',
+				$r === false ? -1 : $r, strlen($cmd)));
 			return FALSE;
 		}
 
 		$resp = fgets($socket);
 		if ($resp === false) {
-			printf('ERROR: Failed to read response from collectd for command: %s',
-				trim($cmd));
+			error_log(sprintf('ERROR: Failed to read response from collectd for command: %s',
+				trim($cmd)));
 			return FALSE;
 		}
 
@@ -224,8 +224,8 @@ function collectd_flush($identifier) {
 
 		return TRUE;
 	} else {
-		printf('ERROR: Failed to open unix-socket to collectd: %d: %s',
-			$u_errno, $u_errmsg);
+		error_log(sprintf('ERROR: Failed to open unix-socket to collectd: %d: %s',
+			$u_errno, $u_errmsg));
 		return FALSE;
 	}
 }
