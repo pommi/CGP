@@ -44,6 +44,11 @@ switch($obj->args['type']) {
 		$obj->rrd_title = 'DNS QType';
 		$obj->rrd_vertical = 'Queries/s';
 	break;
+	case 'dns_rcode':
+		$obj->data_sources = array('value');
+		$obj->rrd_title = 'DNS Reply code';
+		$obj->rrd_vertical = 'Queries/s';
+	break;
 }
 
 collectd_flush($obj->identifiers);
