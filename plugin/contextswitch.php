@@ -12,10 +12,10 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_Default($CONFIG);
 $obj->data_sources = array('value');
 $obj->ds_names = array(
-	'contextswitches' => 'Context switches',
+	'value' => 'Context switches',
 );
 $obj->colors = array(
-	'contextswitches' => '0000f0',
+	'value' => '0000f0',
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
@@ -24,8 +24,15 @@ $obj->rrd_vertical = 'switch per second Bits';
 $obj->rrd_format = '%4.0lf';
 
 # backwards compatibility
-if ($CONFIG['version'] < 5)
+if ($CONFIG['version'] < 5) {
 	$obj->data_sources = array('contextswitches');
+
+	$obj->ds_names['contextswitches'] = $obj->ds_names['value'];
+	unset($obj->ds_names['value']);
+
+	$obj->colors['contextswitches'] = $obj->colors['value'];
+	unset($obj->colors['value']);
+}
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();

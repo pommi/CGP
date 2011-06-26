@@ -12,10 +12,10 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_Default($CONFIG);
 $obj->data_sources = array('value');
 $obj->ds_names = array(
-	'users' => 'Users',
+	'value' => 'Users',
 );
 $obj->colors = array(
-	'users' => '0000f0',
+	'value' => '0000f0',
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
@@ -24,8 +24,15 @@ $obj->rrd_vertical = 'Users';
 $obj->rrd_format = '%.1lf';
 
 # backwards compatibility
-if ($CONFIG['version'] < 5)
+if ($CONFIG['version'] < 5) {
 	$obj->data_sources = array('users');
+
+	$obj->ds_names['users'] = $obj->ds_names['value'];
+	unset($obj->ds_names['value']);
+
+	$obj->colors['users'] = $obj->colors['value'];
+	unset($obj->colors['value']);
+}
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();

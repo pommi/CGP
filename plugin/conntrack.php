@@ -27,14 +27,12 @@ $obj->rrd_format = '%.1lf';
 # the data source is named 'entropy' in collectd's types.db
 if ($CONFIG['version'] < 5) {
 	$obj->data_sources = array('entropy');
-	if (count($obj->ds_names) == 1) {
-		$obj->ds_names['entropy'] = $obj->ds_names['value'];
-		unset($obj->ds_names['value']);
-	}
-	if (count($obj->colors) == 1) {
-		$obj->colors['entropy'] = $obj->colors['value'];
-		unset($obj->colors['value']);
-	}
+
+	$obj->ds_names['entropy'] = $obj->ds_names['value'];
+	unset($obj->ds_names['value']);
+
+	$obj->colors['entropy'] = $obj->colors['value'];
+	unset($obj->colors['value']);
 }
 
 collectd_flush($obj->identifiers);

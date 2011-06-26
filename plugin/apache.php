@@ -19,10 +19,10 @@ switch ($obj->args['type']) {
 	case 'apache_bytes':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			$obj->args['type'] => 'Bytes/s',
+			'value' => 'Bytes/s',
 		);
 		$obj->colors = array(
-			$obj->args['type'] => '0000ff',
+			'value' => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Traffic%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
@@ -31,10 +31,10 @@ switch ($obj->args['type']) {
 	case 'apache_connections':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			$obj->args['type'] => 'Conns/s',
+			'value' => 'Conns/s',
 		);
 		$obj->colors = array(
-			$obj->args['type'] => '00b000',
+			'value' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Webserver Connections%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
@@ -43,10 +43,10 @@ switch ($obj->args['type']) {
 	case 'apache_idle_workers':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			$obj->args['type'] => 'Workers',
+			'value' => 'Workers',
 		);
 		$obj->colors = array(
-			$obj->args['type'] => '0000ff',
+			'value' => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Idle Workers%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
@@ -55,10 +55,10 @@ switch ($obj->args['type']) {
 	case 'apache_requests':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			$obj->args['type'] => 'Requests/s',
+			'value' => 'Requests/s',
 		);
 		$obj->colors = array(
-			$obj->args['type'] => '00b000',
+			'value' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Webserver Requests%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
@@ -157,12 +157,12 @@ $obj->rrd_format = '%5.1lf';
 if ($CONFIG['version'] < 5) {
 	$obj->data_sources = array('count');
 	if (count($obj->ds_names) == 1) {
-		$obj->ds_names['count'] = $obj->ds_names[$obj->args['type']];
-		unset($obj->ds_names[$obj->args['type']]);
+		$obj->ds_names['count'] = $obj->ds_names['value'];
+		unset($obj->ds_names['value']);
 	}
 	if (count($obj->colors) == 1) {
-		$obj->colors['count'] = $obj->colors[$obj->args['type']];
-		unset($obj->colors[$obj->args['type']]);
+		$obj->colors['count'] = $obj->colors['value'];
+		unset($obj->colors['value']);
 	}
 }
 

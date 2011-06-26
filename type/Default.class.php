@@ -105,7 +105,7 @@ class Type_Default {
 			$basename=basename($filename,'.rrd');
 			$instance = strpos($basename,'-')
 				? substr($basename, strpos($basename,'-') + 1)
-				: $basename;
+				: 'value';
 
 			$this->tinstances[] = $instance;
 			$this->files[$instance] = $filename;
