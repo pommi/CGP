@@ -103,12 +103,12 @@ switch($obj->args['type']) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG);
 
-		$obj->data_sources = array('ns');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'ns' => 'CPU time',
+			'value' => 'CPU time',
 		);
 		$obj->colors = array(
-			'ns' => '0000ff',
+			'value' => '0000ff',
 		);
 		$obj->rrd_title = 'CPU usage';
 		$obj->rrd_vertical = 'CPU time';
@@ -117,12 +117,12 @@ switch($obj->args['type']) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG);
 
-		$obj->data_sources = array('ns');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'ns' => 'VCPU time',
+			'value' => 'VCPU time',
 		);
 		$obj->colors = array(
-			'ns' => '0000ff',
+			'value' => '0000ff',
 		);
 		$obj->rrd_title = 'VCPU usage';
 		$obj->rrd_vertical = 'VCPU time';
@@ -132,6 +132,16 @@ switch($obj->args['type']) {
 $obj->width = $width;
 $obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf%s';
+
+if ($CONFIG['version'] < 5 && count($obj->data_sources) == 1) {
+	$obj->data_sources = array('ns');
+
+	$obj->ds_names['ns'] = $obj->ds_names['value'];
+	unset($obj->ds_names['value']);
+
+	$obj->colors['ns'] = $obj->colors['value'];
+	unset($obj->colors['value']);
+}
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
