@@ -30,16 +30,16 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Ampere hours';
 	break;
 	case 'frequency':
-		$obj->data_sources = array('frequency');
-		$obj->ds_names = array('frequency' => 'Input Frequency');
-		$obj->colors = array('frequency' => '0000f0');
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('value' => 'Input Frequency');
+		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Input Frequency');
 		$obj->rrd_vertical = 'Hertz';
 	break;
 	case 'percent':
-		$obj->data_sources = array('percent');
-		$obj->ds_names = array('percent' => 'Load');
-		$obj->colors = array('percent' => '0000f0');
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('value' => 'Load');
+		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Load');
 		$obj->rrd_vertical = 'Percent';
 	break;
@@ -51,9 +51,9 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Celsius';
 	break;
 	case 'timeleft':
-		$obj->data_sources = array('timeleft');
-		$obj->ds_names = array('timeleft' => 'Time Left');
-		$obj->colors = array('timeleft' => '0000f0');
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('value' => 'Time Left');
+		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Time Left');
 		$obj->rrd_vertical = 'Minutes';
 	break;
@@ -74,6 +74,19 @@ switch($obj->args['type']) {
 	break;
 }
 $obj->rrd_format = '%5.1lf%s';
+
+# backwards compatibility
+if ($CONFIG['version'] < 5 &&
+	in_array($obj->args['type'], array('frequency', 'percent', 'timeleft'))) {
+
+	$obj->data_sources = array($obj->args['type']);
+
+	$obj->ds_names[$obj->args['type']] = $obj->ds_names['value'];
+	unset($obj->ds_names['value']);
+
+	$obj->colors[$obj->args['type']] = $obj->colors['value'];
+	unset($obj->colors['value']);
+}
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
