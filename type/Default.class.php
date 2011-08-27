@@ -98,6 +98,10 @@ class Type_Default {
 		return $c['r'].$c['g'].$c['b'];
 	}
 
+	function rrd_escape($value) {
+		return str_replace(':', '\:', $value);
+	}
+
 	function rrd_files() {
 		$files = $this->get_filenames();
 
@@ -234,9 +238,9 @@ class Type_Default {
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:min_%s="%s":%s:MIN', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
-				$rrdgraph[] = sprintf('DEF:avg_%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s="%s":%s:MAX', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:min_%s="%s":%s:MIN', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s="%s":%s:MAX', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
 				$i++;
 			}
 		}

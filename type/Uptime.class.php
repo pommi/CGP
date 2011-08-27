@@ -12,8 +12,8 @@ class Type_Uptime extends Type_Default {
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:avg_%s=%s:%s:AVERAGE', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s=%s:%s:MAX', crc32hex($sources[$i]), $this->files[$tinstance], $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s="%s":%s:MAX', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
 
 				$rrdgraph[] = sprintf('CDEF:c_avg_%s=avg_%1$s,86400,/', crc32hex($sources[$i]));
 				$rrdgraph[] = sprintf('CDEF:c_max_%s=max_%1$s,86400,/', crc32hex($sources[$i]));
