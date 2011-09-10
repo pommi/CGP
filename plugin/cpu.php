@@ -46,6 +46,7 @@ $obj->heigth = $heigth;
 $obj->rrd_title = sprintf('CPU-%s usage', $obj->args['pinstance']);
 $obj->rrd_vertical = 'Jiffies';
 $obj->rrd_format = '%5.2lf';
+$obj->rrdtool_opts .= ' -u 100';
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();
