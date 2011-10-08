@@ -133,7 +133,7 @@ function graphs_from_plugin($host, $plugin) {
 			? $CONFIG['time_range'][$plugin]
 			: $CONFIG['time_range']['default'];
 
-		printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
+		printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
 			$CONFIG['weburl'],
 			build_url('detail.php', $items, $time),
 			$CONFIG['weburl'],

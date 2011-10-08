@@ -18,8 +18,8 @@ function html_start() {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>CGP{$path}</title>
-	<link rel="stylesheet" href="{$CONFIG['weburl']}/layout/style.css" type="text/css">
-	<script type="text/javascript" src="{$CONFIG['weburl']}/ajax.js"></script>
+	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
+	<script type="text/javascript" src="{$CONFIG['weburl']}ajax.js"></script>
 </head>
 <body>
 
@@ -51,7 +51,7 @@ function html_end() {
 	echo <<<EOT
 </div>
 <div id="footer">
-<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}/doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
+<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
 </div>
 </body>
 </html>
@@ -71,7 +71,7 @@ function plugin_header($host, $plugin, $status) {
 		$a = '-';
 	}
 
-	return printf("<h3><span class=\"point\" onclick=\"javascript:%sP('%s','%s')\"><img src=\"%s/layout/%s.gif\" alt=\"[%s]\"> %s</span></h3>\n", $f, $host, $plugin, $CONFIG['weburl'], $i, $a, $plugin);
+	return printf("<h3><span class=\"point\" onclick=\"javascript:%sP('%s','%s')\"><img src=\"%slayout/%s.gif\" alt=\"[%s]\"> %s</span></h3>\n", $f, $host, $plugin, $CONFIG['weburl'], $i, $a, $plugin);
 }
 
 function host_summary($hosts) {
@@ -88,7 +88,7 @@ function host_summary($hosts) {
 		$host_counter++;
 
 		printf('<tr class="%s">', $row_style[$host_counter % 2]);
-		printf('<th><a href="%s/host.php?h=%s">%s</a></th>',
+		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
 			$CONFIG['weburl'],$host, $host);
 
 		if ($CONFIG['showload']) {
