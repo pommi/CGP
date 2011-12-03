@@ -119,12 +119,25 @@ function group_plugindata($plugindata) {
 	return $data;
 }
 
+function plugin_sort($data) {
+	foreach ($data as $key => $row) {
+		$pi[$key] = $row['pi'];
+		$ti[$key] = $row['ti'];
+		$t[$key] = $row['t'];
+	}
+
+	array_multisort($pi, SORT_ASC, $t, SORT_ASC, $ti, SORT_ASC, $data);
+
+	return $data;
+}
+
 # generate graph url's for a plugin of a host
 function graphs_from_plugin($host, $plugin) {
 	global $CONFIG;
 
 	$plugindata = collectd_plugindata($host, $plugin);
 	$plugindata = group_plugindata($plugindata);
+	$plugindata = plugin_sort($plugindata);
 
 	foreach ($plugindata as $items) {
 		$items['h'] = $host;
