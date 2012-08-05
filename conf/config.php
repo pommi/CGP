@@ -18,6 +18,9 @@ $CONFIG['rrdtool_opts'] = '';
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
+# interface unit use bit instead of Byte 
+$CONFIG['interface_use_bit'] = false;
+
 # default plugins time range
 $CONFIG['time_range']['default'] = 86400;
 $CONFIG['time_range']['uptime']  = 31536000;
