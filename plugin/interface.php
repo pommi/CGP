@@ -39,7 +39,14 @@ switch($obj->args['type']) {
 	break;
 	case 'if_octets':
 		$obj->rrd_title = sprintf('Interface Traffic (%s)', $obj->args[$instance]);
-		$obj->rrd_vertical = 'Bytes per second';
+		if ($CONFIG['interface_use_bit']) {
+			$obj->scale = 8;
+			$obj->rrd_vertical = 'Bits per second';
+		} else {
+			$obj->scale = 1;
+			$obj->rrd_vertical = 'Bytes per second';
+		}
+
 	break;
 	case 'if_packets':
 		$obj->rrd_title = sprintf('Interface Packets (%s)', $obj->args[$instance]);

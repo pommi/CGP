@@ -107,7 +107,7 @@ function group_plugindata($plugindata) {
 	# type instances should be grouped in 1 graph
 	foreach ($plugindata as $item) {
 		# backwards compatibility
-		if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface)$/', $item['p']))
+		if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface|snmp)$/', $item['p']))
 			if($item['p'] != 'libvirt')
 				unset($item['ti']);
 		$data[] = $item;
@@ -171,7 +171,7 @@ function build_url($base, $items, $s=NULL) {
 		if ($value == 'NULL')
 			continue;
 
-		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&', $key, $value);
+		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&', $key, urlencode($value));
 		$i++;
 	}
 	if (!isset($items['s']))
