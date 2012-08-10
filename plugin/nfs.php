@@ -15,13 +15,13 @@ require_once 'inc/collectd.inc.php';
 $obj = new Type_GenericStacked($CONFIG);
 $obj->data_sources = array('value');
 switch($obj->args['pinstance']) {
-    case 'v2client':
-        $obj->order = array('create', 'fsstat', 'getattr', 'link', 'lookup', 'mkdir', 'null', 'readdir', 'readlink', 'read', 'remove', 'rename', 'rmdir', 'root', 'setattr', 'symlink', 'wrcache', 'write');
-    break;
+	case 'v2client':
+		$obj->order = array('create', 'fsstat', 'getattr', 'link', 'lookup', 'mkdir', 'null', 'readdir', 'readlink', 'read', 'remove', 'rename', 'rmdir', 'root', 'setattr', 'symlink', 'wrcache', 'write');
+	break;
 
-    case 'v3client':
-        $obj->order = array('access', 'commit', 'create', 'fsinfo', 'fsstat', 'getattr', 'link', 'lookup', 'mkdir', 'mknod', 'null', 'pathconf', 'read', 'readdir', 'readdirplus', 'readlink', 'remove', 'rename', 'rmdir', 'setattr', 'symlink', 'write');
-    break;
+	case 'v3client':
+		$obj->order = array('access', 'commit', 'create', 'fsinfo', 'fsstat', 'getattr', 'link', 'lookup', 'mkdir', 'mknod', 'null', 'pathconf', 'read', 'readdir', 'readdirplus', 'readlink', 'remove', 'rename', 'rmdir', 'setattr', 'symlink', 'write');
+	break;
 }
 
 $obj->width = $width;

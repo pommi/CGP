@@ -46,7 +46,7 @@ switch($obj->args['type']) {
 		$obj->order = array('active_anon', 'active_file',
 		                    'anon_pages', 'bounce',
 		                    'dirty', 'file_pages',
-                            'free_pages', 'inactive_anon',
+		                    'free_pages', 'inactive_anon',
 		                    'inactive_file', 'mapped',
 		                    'mlock', 'page_table_pages',
 		                    'slab_reclaimable', 'slab_unreclaimable',

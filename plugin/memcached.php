@@ -24,9 +24,9 @@ require_once 'inc/collectd.inc.php';
 switch(GET('t')) {
 # df-cache.rrd
 	case 'df':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('used', 'free');
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('used', 'free');
 		$obj->order = array('used', 'free');
 		$obj->ds_names = array(
 			'used' => 'Used',
@@ -54,7 +54,7 @@ switch(GET('t')) {
 		$obj->colors = array(
 			'flush' => '00e000',
 			'get'   => '0000ff',
-            'set'   => 'ffb000',
+			'set'   => 'ffb000',
 		);
 		$obj->rrd_title = 'Memcached Commands';
 		$obj->rrd_vertical = 'Commands';
@@ -62,39 +62,39 @@ switch(GET('t')) {
 
 # memcached_connections-current.rrd
 	case 'memcached_connections':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('value');
-        $obj->ds_names = array(
-	        'value' => 'Connections',
-        );
-        $obj->colors = array(
-	        'percent' => '00b000',
-        );
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('value');
+		$obj->ds_names = array(
+			'value' => 'Connections',
+		);
+		$obj->colors = array(
+			'percent' => '00b000',
+		);
 		$obj->rrd_title = 'Memcached Number of Connections';
 		$obj->rrd_vertical = 'Connections';
-    break;
+	break;
 
 # memcached_items-current.rrd
 	case 'memcached_items':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('value');
-        $obj->ds_names = array(
-	        'value ' => 'Items',
-        );
-        $obj->colors = array(
-	        'value' => '00b000',
-        );
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('value');
+		$obj->ds_names = array(
+			'value ' => 'Items',
+		);
+		$obj->colors = array(
+			'value' => '00b000',
+		);
 		$obj->rrd_title = 'Number of Items in Memcached';
 		$obj->rrd_vertical = 'Items';
-    break;
+	break;
 
 # memcached_octets.rrd
 	case 'memcached_octets':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('rx', 'tx');
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
 		$obj->ds_names = array(
 			'rx' => 'Receive',
@@ -115,13 +115,13 @@ switch(GET('t')) {
 		$obj->order = array('evictions', 'hits', 'misses');
 		$obj->ds_names = array(
 			'evictions' => 'Evictions',
-			'hits'      => 'Hits',
-			'misses'    => 'Misses',
+			'hits'	  => 'Hits',
+			'misses'	=> 'Misses',
 		);
 		$obj->colors = array(
 			'evictions' => '00e000',
-			'hits'      => '0000ff',
-            'misses'    => 'ffb000',
+			'hits'	  => '0000ff',
+			'misses'	=> 'ffb000',
 		);
 		$obj->rrd_title = 'Memcached Operations';
 		$obj->rrd_vertical = 'Commands';
@@ -129,23 +129,23 @@ switch(GET('t')) {
 
 # percent-hitratio.rrd
 	case 'percent':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('percent');
-        $obj->ds_names = array(
-	        'percent ' => 'Percentage',
-        );
-        $obj->colors = array(
-	        'percent' => '00e000',
-        );
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('percent');
+		$obj->ds_names = array(
+			'percent ' => 'Percentage',
+		);
+		$obj->colors = array(
+			'percent' => '00e000',
+		);
 		$obj->rrd_title = 'Memcached Hits/Gets Ratio';
 		$obj->rrd_vertical = 'Percent';
-    break;
+	break;
 # ps_count.rrd
 	case 'ps_count':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('threads');
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('threads');
 		$obj->order = array('threads');
 		$obj->ds_names = array(
 			'threads' => 'Threads',
@@ -159,9 +159,9 @@ switch(GET('t')) {
 
 # ps_cputime.rrd
 	case 'ps_cputime':
-        require_once 'type/Default.class.php';
-        $obj = new Type_Default($CONFIG);
-        $obj->data_sources = array('user', 'syst');
+		require_once 'type/Default.class.php';
+		$obj = new Type_Default($CONFIG);
+		$obj->data_sources = array('user', 'syst');
 		$obj->order = array('user', 'syst');
 		$obj->ds_names = array(
 			'user' => 'User',
