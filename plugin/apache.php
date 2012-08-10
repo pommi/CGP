@@ -19,14 +19,15 @@ switch ($obj->args['type']) {
 	case 'apache_bytes':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'value' => 'Bytes/s',
+			'value' => sprintf('%s/s', ucfirst($CONFIG['datasize'])),
 		);
 		$obj->colors = array(
 			'value' => '0000ff',
 		);
 		$obj->rrd_title = sprintf('Webserver Traffic%s',
 			!empty($obj->args['pinstance']) ? ' ('.$obj->args['pinstance'].')' : '');
-		$obj->rrd_vertical = 'Bytes/s';
+		$obj->rrd_vertical = sprintf('%s/s', ucfirst($CONFIG['datasize']));
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 	break;
 	case 'apache_connections':
 		$obj->data_sources = array('value');

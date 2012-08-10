@@ -23,7 +23,8 @@ switch($obj->args['type']) {
 		$obj->ds_names = array('value' => 'Size');
 		$obj->colors = array('value' => '0000ff');
 		$obj->rrd_title = sprintf('Filecount: size (%s)', $obj->args['pinstance']);
-		$obj->rrd_vertical = 'Bytes';
+		$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 		break;
 	case 'files':
 		$obj->ds_names = array('value' => 'Files');

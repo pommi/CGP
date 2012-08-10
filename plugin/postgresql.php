@@ -51,7 +51,8 @@ switch($obj->args['type']) {
 		);
 		$obj->rrd_title = sprintf('PostgreSQL DB size (%s)',
 			!empty($obj->args['pinstance']) ? $obj->args['pinstance'] : '');
-		$obj->rrd_vertical = 'Bytes';
+		$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 	break;
 	case 'pg_n_tup_c':
 		$obj->order = array(

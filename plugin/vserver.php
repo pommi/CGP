@@ -51,7 +51,8 @@ switch($obj->args['type']) {
             $obj->heigth = $heigth;
 
             $obj->rrd_title = sprintf('Memory utilization on Vserver %s', $obj->args['pinstance']);
-            $obj->rrd_vertical = 'Bytes';
+			$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
+			$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
             $obj->rrd_format = '%5.1lf%s';
 
             collectd_flush($obj->identifiers);
@@ -104,7 +105,8 @@ switch($obj->args['type']) {
                     'unspec-tx' => '000080',
                     );
             $obj->rrd_title = sprintf('Traffic on Vserver %s', $obj->args['pinstance']);
-            $obj->rrd_vertical = 'Bytes per second';
+			$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['datasize']));
+			$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
             $obj->width = $width;
             $obj->heigth = $heigth;
             $obj->rrd_format = '%5.1lf%s';

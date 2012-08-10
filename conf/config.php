@@ -25,6 +25,9 @@ $CONFIG['time_range']['uptime']  = 31536000;
 # show load averages on overview page
 $CONFIG['showload'] = true;
 
+# show graphs in bits or bytes
+$CONFIG['datasize'] = 'bytes';
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 

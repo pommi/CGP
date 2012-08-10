@@ -37,7 +37,8 @@ switch(GET('t')) {
 			'free' => '0000ff',
 		);
 		$obj->rrd_title = 'Memcached Memory Usage';
-		$obj->rrd_vertical = 'bytes';
+		$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 	break;
 
 # memcached_command-(flush|get|set).rrd
@@ -104,7 +105,8 @@ switch(GET('t')) {
 			'tx' => '00b000',
 		);
 		$obj->rrd_title = 'Memcached Network Traffic';
-		$obj->rrd_vertical = 'Bytes';
+		$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 	break;
 # memcached_ops-(evictions|hits|misses).rrd
 	case 'memcached_ops':

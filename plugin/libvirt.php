@@ -30,7 +30,8 @@ switch($obj->args['type']) {
 			'write' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Disk Traffic (%s)', $obj->args['tinstance']);
-		$obj->rrd_vertical = 'Bytes per second';
+		$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['datasize']));
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'disk_ops':
@@ -84,7 +85,8 @@ switch($obj->args['type']) {
 			'tx' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Interface Traffic (%s)', $obj->args['tinstance']);
-		$obj->rrd_vertical = 'Bytes per second';
+		$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['datasize']));
+		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 	break;
 	case 'if_packets':
 		$obj->data_sources = array('rx', 'tx');
