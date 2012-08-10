@@ -3,11 +3,11 @@
 # Collectd tail plugin
 
 require_once 'conf/common.inc.php';
-require_once 'type/GenericStacked.class.php';
+require_once 'type/Default.class.php';
 require_once 'inc/collectd.inc.php';
 
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_Default($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
 
