@@ -17,7 +17,7 @@ class Type_GenericIO extends Type_Default {
 				$rrdgraph[] = sprintf('DEF:min_%s%s="%s":%s:MIN', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
 				$rrdgraph[] = sprintf('DEF:avg_%s%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
 				$rrdgraph[] = sprintf('DEF:max_%s%s="%s":%s:MAX', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
-				if (!$raw)
+				if (!$this->scale)
 					$rrdgraph[] = sprintf('VDEF:tot_%s=avg_%1$s,TOTAL', crc32hex($sources[$i]));
 				$i++;
 			}
