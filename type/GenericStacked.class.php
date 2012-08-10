@@ -9,13 +9,26 @@ class Type_GenericStacked extends Type_Default {
 
 		$sources = $this->rrd_get_sources();
 
+		if ($this->scale)
+			$raw = '_raw';
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:min_%s="%s":%s:MIN', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:avg_%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s="%s":%s:MAX', crc32hex($sources[$i]), $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:min_%s%s="%s":%s:MIN', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s%s="%s":%s:MAX', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
 				$i++;
+			}
+		}
+		if ($this->scale) {
+			$i=0;
+			foreach ($this->tinstances as $tinstance) {
+				foreach ($this->data_sources as $ds) {
+					$rrdgraph[] = sprintf('CDEF:min_%s=min_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
+					$rrdgraph[] = sprintf('CDEF:avg_%s=avg_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
+					$rrdgraph[] = sprintf('CDEF:max_%s=max_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
+					$i++;
+				}
 			}
 		}
 
