@@ -33,8 +33,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 
 $obj->rrd_title = 'Physical memory utilization';
-$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
-$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
+$obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%s';
 
 collectd_flush($obj->identifiers);

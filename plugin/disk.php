@@ -33,9 +33,8 @@ switch($obj->args['type']) {
 	break;
 	case 'disk_octets':
 		$obj->rrd_title = sprintf('Disk Traffic (%s)', $obj->args['pinstance']);
-		$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['datasize']));
+		$obj->rrd_vertical = 'Bytes per second';
 		$obj->rrd_format = '%5.1lf%s';
-		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
 	break;
 	case 'disk_ops':
 		$obj->rrd_title = sprintf('Disk Operations (%s)', $obj->args['pinstance']);

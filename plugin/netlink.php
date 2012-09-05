@@ -64,8 +64,8 @@ switch($obj->args['type']) {
 			'tx' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Interface Traffic (%s)', $obj->args['pinstance']);
-		$obj->rrd_vertical = sprintf('%s/s', ucfirst($CONFIG['datasize']));
-		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
+		$obj->rrd_vertical = sprintf('%s/s', ucfirst($CONFIG['network_datasize']));
+		$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
 		break;
 	case 'if_packets':
 		$obj->data_sources = array('rx', 'tx');

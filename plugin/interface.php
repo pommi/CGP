@@ -39,8 +39,8 @@ switch($obj->args['type']) {
 	break;
 	case 'if_octets':
 		$obj->rrd_title = sprintf('Interface Traffic (%s)', $obj->args[$instance]);
-		$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['datasize']));
-		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
+		$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['network_datasize']));
+		$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
 	break;
 	case 'if_packets':
 		$obj->rrd_title = sprintf('Interface Packets (%s)', $obj->args[$instance]);

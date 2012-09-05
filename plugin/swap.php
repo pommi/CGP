@@ -27,8 +27,7 @@ switch(GET('t')) {
 			'used'   => 'ff0000',
 		);
 		$obj->rrd_title = 'Swap utilization';
-		$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
-		$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
+		$obj->rrd_vertical = 'Bytes';
 	break;
 	case 'swap_io':
 		require_once 'type/GenericIO.class.php';

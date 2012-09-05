@@ -29,9 +29,8 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 
 $obj->rrd_title = sprintf('Free space (%s)', $obj->args['pinstance']);
-$obj->rrd_vertical = ucfirst($CONFIG['datasize']);
-$obj->scale = $CONFIG['datasize'] == 'bits' ? 8 : 1;
-$obj->rrd_format = '%5.1lf%s';
+$obj->rrd_vertical = 'Bytes';
+$obj->rrd_format = '%5.1lf%sB';
 
 # backwards compatibility
 if ($CONFIG['version'] < 5) {

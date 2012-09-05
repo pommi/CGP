@@ -26,7 +26,7 @@ $CONFIG['time_range']['uptime']  = 31536000;
 $CONFIG['showload'] = true;
 
 # show graphs in bits or bytes
-$CONFIG['datasize'] = 'bytes';
+$CONFIG['network_datasize'] = 'bytes';
 
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
