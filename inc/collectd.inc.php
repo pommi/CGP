@@ -33,13 +33,22 @@ function collectd_plugindata($host, $plugin=NULL) {
 	
 	$data = array();
 	foreach($files as $item) {
-		preg_match('#([\w_]+)(?:\-(.+))?/([\w_]+)(?:\-(.+))?\.rrd#', $item, $matches);
+		preg_match('`
+			(?P<p>[\w_]+)      # plugin
+			(?:(?<=varnish)(?:\-(?P<c>[\w]+)))? # category
+			(?:\-(?P<pi>.+))?  # plugin instance
+			/
+			(?P<t>[\w_]+)      # type
+			(?:\-(?P<ti>.+))?  # type instance
+			\.rrd
+		`x', $item, $matches);
 
 		$data[] = array(
-			'p'  => $matches[1],
-			'pi' => isset($matches[2]) ? $matches[2] : '',
-			't'  => $matches[3],
-			'ti' => isset($matches[4]) ? $matches[4] : '',
+			'p'  => $matches['p'],
+			'c'  => isset($matches['c']) ? $matches['c'] : '',
+			'pi' => isset($matches['pi']) ? $matches['pi'] : '',
+			't'  => $matches['t'],
+			'ti' => isset($matches['ti']) ? $matches['ti'] : '',
 		);
 	}
 
@@ -70,7 +79,7 @@ function collectd_plugins($host) {
 
 # returns an array of all pi/t/ti of an plugin
 function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
-	$details = array('pi', 't', 'ti');
+	$details = array('pi', 'c', 't', 'ti');
 	if (!in_array($detail, $details))
 		return false;
 
@@ -122,11 +131,12 @@ function group_plugindata($plugindata) {
 function plugin_sort($data) {
 	foreach ($data as $key => $row) {
 		$pi[$key] = $row['pi'];
+		$c[$key] = $row['c'];
 		$ti[$key] = $row['ti'];
 		$t[$key] = $row['t'];
 	}
 
-	array_multisort($pi, SORT_ASC, $t, SORT_ASC, $ti, SORT_ASC, $data);
+	array_multisort($c, SORT_ASC, $pi, SORT_ASC, $t, SORT_ASC, $ti, SORT_ASC, $data);
 
 	return $data;
 }
@@ -178,20 +188,6 @@ function build_url($base, $items, $s=NULL) {
 		$base .= '&s='.$s;
 
 	return $base;
-}
-
-# generate identifier that collectd's FLUSH command understands
-function collectd_identifier($host, $plugin, $pinst, $type, $tinst) {
-	global $CONFIG;
-
-	$identifier = sprintf('%s/%s%s%s/%s%s%s', $host,
-		$plugin, strlen($pinst) ? '-' : '', $pinst,
-		$type, strlen($tinst) ? '-' : '', $tinst);
-
-	if (is_file($CONFIG['datadir'].'/'.$identifier.'.rrd'))
-		return $identifier;
-	else
-		return FALSE;
 }
 
 # tell collectd to FLUSH all data of the identifier(s)

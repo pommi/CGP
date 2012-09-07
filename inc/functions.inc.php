@@ -15,6 +15,7 @@ function validate_get($value, $type) {
 				return NULL;
 		break;
 		case 'plugin':
+		case 'category':
 		case 'type':
 			if (!preg_match('/^\w+$/u', $value))
 				return NULL;

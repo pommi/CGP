@@ -62,6 +62,7 @@ class Type_Default {
 			'host' => GET('h'),
 			'plugin' => GET('p'),
 			'pinstance' => GET('pi'),
+			'category' => GET('c'),
 			'type' => GET('t'),
 			'tinstance' => GET('ti'),
 		);
@@ -120,9 +121,14 @@ class Type_Default {
 	}
 
 	function get_filenames() {
-		$identifier = sprintf('%s/%s%s%s/%s%s%s', $this->args['host'],
-			$this->args['plugin'], strlen($this->args['pinstance']) ? '-' : '', $this->args['pinstance'],
-			$this->args['type'], strlen($this->args['tinstance']) ? '-' : '', $this->args['tinstance']);
+		$identifier = sprintf('%s/%s%s%s%s%s/%s%s%s',
+			$this->args['host'],
+			$this->args['plugin'],
+			strlen($this->args['category']) ? '-' : '', $this->args['category'],
+			strlen($this->args['pinstance']) ? '-' : '', $this->args['pinstance'],
+			$this->args['type'],
+			strlen($this->args['tinstance']) ? '-' : '', $this->args['tinstance']
+		);
 
 		$wildcard = strlen($this->args['tinstance']) ? '.' : '[-.]*';
 

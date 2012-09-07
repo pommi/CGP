@@ -14,6 +14,7 @@ if (empty($_GET['y']))
 $host = validate_get(GET('h'), 'host');
 $plugin = validate_get(GET('p'), 'plugin');
 $pinstance = validate_get(GET('pi'), 'pinstance');
+$category = validate_get(GET('c'), 'category');
 $type = validate_get(GET('t'), 'type');
 $tinstance = validate_get(GET('ti'), 'tinstance');
 $width = GET('x');
