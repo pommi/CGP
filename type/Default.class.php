@@ -153,7 +153,7 @@ class Type_Default {
 			$this->rainbow_colors();
 
 		$graphdata = $this->rrd_gen_graph();
-		
+
 		if(!$debug) {
 			# caching
 			if (is_numeric($this->cache) && $this->cache > 0)
