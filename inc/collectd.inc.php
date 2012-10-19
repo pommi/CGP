@@ -30,7 +30,7 @@ function collectd_plugindata($host, $plugin=NULL) {
 	$files = glob("*/*.rrd");
 	if (!$files)
 		return false;
-	
+
 	$data = array();
 	foreach($files as $item) {
 		preg_match('`
@@ -73,7 +73,7 @@ function collectd_plugins($host) {
 		if (!in_array($item['p'], $plugins))
 			$plugins[] = $item['p'];
 	}
-	
+
 	return $plugins;
 }
 
@@ -105,7 +105,7 @@ function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
 
 	if (empty($return))
 		return false;
-	
+
 	return $return;
 }
 
@@ -130,10 +130,10 @@ function group_plugindata($plugindata) {
 
 function plugin_sort($data) {
 	foreach ($data as $key => $row) {
-		$pi[$key] = $row['pi'];
-		$c[$key] = $row['c'];
-		$ti[$key] = $row['ti'];
-		$t[$key] = $row['t'];
+		$pi[$key] = (isset($row['pi'])) ? $row['pi'] : null;
+		$c[$key]  = (isset($row['c']))  ? $row['c'] : null;
+		$ti[$key] = (isset($row['ti'])) ? $row['ti'] : null;
+		$t[$key]  = (isset($row['t']))  ? $row['t'] : null;
 	}
 
 	array_multisort($c, SORT_ASC, $pi, SORT_ASC, $t, SORT_ASC, $ti, SORT_ASC, $data);
@@ -171,7 +171,7 @@ function build_url($base, $items, $s=NULL) {
 
 	if (!is_array($items))
 		return false;
-	
+
 	if (!is_numeric($s))
 		$s = $CONFIG['time_range']['default'];
 

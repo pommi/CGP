@@ -153,7 +153,7 @@ class Type_Default {
 			$this->rainbow_colors();
 
 		$graphdata = $this->rrd_gen_graph();
-		
+
 		if(!$debug) {
 			# caching
 			if (is_numeric($this->cache) && $this->cache > 0)
@@ -243,6 +243,9 @@ class Type_Default {
 
 		if ($this->scale)
 			$raw = '_raw';
+		else
+			$raw = null;
+
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
