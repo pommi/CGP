@@ -130,10 +130,10 @@ function group_plugindata($plugindata) {
 
 function plugin_sort($data) {
 	foreach ($data as $key => $row) {
-		$pi[$key] = $row['pi'];
-		$c[$key] = $row['c'];
-		$ti[$key] = $row['ti'];
-		$t[$key] = $row['t'];
+		$pi[$key] = (isset($row['pi'])) ? $row['pi'] : null;
+		$c[$key]  = (isset($row['c']))  ? $row['c'] : null;
+		$ti[$key] = (isset($row['ti'])) ? $row['ti'] : null;
+		$t[$key]  = (isset($row['t']))  ? $row['t'] : null;
 	}
 
 	array_multisort($c, SORT_ASC, $pi, SORT_ASC, $t, SORT_ASC, $ti, SORT_ASC, $data);

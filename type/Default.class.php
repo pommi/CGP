@@ -243,6 +243,9 @@ class Type_Default {
 
 		if ($this->scale)
 			$raw = '_raw';
+		else
+			$raw = null;
+
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
