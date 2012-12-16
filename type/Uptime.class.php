@@ -45,7 +45,7 @@ class Type_Uptime extends Type_Default {
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
 
 			//current value
-			$rrdgraph[] = sprintf('LINE1:area_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $dsname);
+			$rrdgraph[] = sprintf('LINE1:area_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
 			$rrdgraph[] = sprintf('GPRINT:c_avg_%s:LAST:\'%s days\\l\'', crc32hex($source), $this->rrd_format);
 
 			//max value

@@ -51,7 +51,7 @@ class Type_GenericIO extends Type_Default {
 
 		foreach($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
-			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->colors[$source], $dsname);
+			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->colors[$source], $this->rrd_escape($dsname));
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:\'%s Max,\'', crc32hex($source), $this->rrd_format);
