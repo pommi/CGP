@@ -161,6 +161,12 @@ class Type_Default {
 			header("content-type: image/png");
 			$graphdata = implode(' ', $graphdata);
 			echo `$graphdata`;
+		} elseif ($debug == 'cmd') {
+			print '<pre>';
+			foreach ($graphdata as $d) {
+				printf("%s \\\n", $d);
+			}
+			print '</pre>';
 		} else {
 			print '<pre>';
 			print_r($graphdata);
