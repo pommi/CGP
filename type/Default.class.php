@@ -35,6 +35,7 @@ class Type_Default {
 	}
 
 	function rainbow_colors() {
+		$c = 0;
 		$sources = count($this->rrd_get_sources());
 		foreach ($this->rrd_get_sources() as $ds) {
 			# hue (saturnation=1, value=1)

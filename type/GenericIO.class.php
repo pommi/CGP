@@ -9,6 +9,7 @@ class Type_GenericIO extends Type_Default {
 
 		$sources = $this->rrd_get_sources();
 
+		$raw = null;
 		if ($this->scale)
 			$raw = '_raw';
 		$i=0;
