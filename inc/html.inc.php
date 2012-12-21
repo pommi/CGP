@@ -13,7 +13,7 @@ function html_start() {
 	$path = htmlentities(breadcrumbs());
 
 	echo <<<EOT
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -58,20 +58,55 @@ function html_end() {
 EOT;
 }
 
-function plugin_header($host, $plugin, $status) {
-	global $CONFIG;
+function plugin_header($host, $plugin) {
+	return printf("<h3><a href='%shost.php?h=%s&p=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
+}
 
-	if ($status == 1) {
-		$f = 'get';
-		$i = 'plus';
-		$a = '+';
-	} else {
-		$f = 'rm';
-		$i = 'minus';
-		$a = '-';
+function plugins_list($host, $overview_plugins, $other_plugins, $selected_plugins = array()) {
+	echo '<div class="plugins">';
+	echo '<h3>Plugins</h3>';
+	echo '<ul>';
+
+	$selected = selected_overview($selected_plugins);
+	printf("<li><a %s href='%shost.php?h=%s'>%s</a></li>\n", $selected, $CONFIG['weburl'], $host, 'overview');
+
+	# first the ones defined as ordered
+	foreach($overview_plugins as $plugin) {
+		$selected = selected_plugin($plugin, $selected_plugins);
+		printf("<li><a %s href='%shost.php?h=%s&p=%s'>%s</a></li>\n", $selected, $CONFIG['weburl'], $host, $plugin, $plugin);
 	}
 
-	return printf("<h3><span class=\"point\" onclick=\"javascript:%sP('%s','%s')\"><img src=\"%slayout/%s.gif\" alt=\"[%s]\"> %s</span></h3>\n", $f, $host, $plugin, $CONFIG['weburl'], $i, $a, $plugin);
+	# other plugins
+	foreach($other_plugins as $plugin) {
+		if (!in_array($plugin, $overview_plugins)) {
+			$selected = selected_plugin($plugin, $selected_plugins);
+			printf("<li><a %s href='%shost.php?h=%s&p=%s'>%s</a></li>\n", $selected, $CONFIG['weburl'], $host, $plugin, $plugin);
+		}
+	}
+
+	echo '</ul>';
+	echo '</div><! .plugins -->';
+}
+
+function selected_overview($selected_plugins) {
+	if (count($selected_plugins) > 1) {
+		return 'class="selected"';
+	}
+	return '';
+}
+
+function selected_plugin($plugin, $selected_plugins) {
+	if (in_array($plugin, $selected_plugins)) {
+		return 'class="selected"';
+	}
+	return '';
+}
+
+function selected_timerange($value1, $value2) {
+	if ($value1 == $value2) {
+		return 'class="selected"';
+	}
+	return '';
 }
 
 function host_summary($hosts) {

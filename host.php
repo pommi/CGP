@@ -5,7 +5,14 @@ require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
 $host = validate_get(GET('h'), 'host');
-$splugin = validate_get(GET('p'), 'plugin');
+$plugin = validate_get(GET('p'), 'plugin');
+
+if (!$plugin) {
+	$selected_plugins = $CONFIG['overview'];
+}
+else {
+	$selected_plugins = array($plugin);
+}
 
 html_start();
 
@@ -18,29 +25,14 @@ if(!$plugins) {
 	return false;
 }
 
-# first the ones defined in overview
-foreach($CONFIG['overview'] as $plugin) {
-	if (in_array($plugin, $plugins)) {
-		printf('<div id="%s">'."\n", $plugin);
-		plugin_header($host, $plugin, 0);
-		graphs_from_plugin($host, $plugin);
-		print "</div>\n";
-	}
-}
+plugins_list($host, $CONFIG['overview'], $plugins, $selected_plugins);
 
-# other plugins
-foreach($plugins as $plugin) {
-	if (!in_array($plugin, $CONFIG['overview'])) {
-		printf('<div id="%s">'."\n", $plugin);
-		if ($splugin == $plugin) {
-			plugin_header($host, $plugin, 0);
-			graphs_from_plugin($host, $plugin);
-		} else {
-			plugin_header($host, $plugin, 1);
-		}
-		print "</div>\n";
-	}
+echo '<div class="graphs">';
+foreach ($selected_plugins as $selected_plugin) {
+	plugin_header($host, $selected_plugin);
+	graphs_from_plugin($host, $selected_plugin);
 }
+echo '</div><! .graphs -->';
 
 html_end();
 

@@ -21,11 +21,29 @@ $width = GET('x');
 $heigth = GET('y');
 $seconds = GET('s');
 
+if (!$plugin) {
+	$selected_plugins = $CONFIG['overview'];
+}
+else {
+	$selected_plugins = array($plugin);
+}
+
 html_start();
 
-printf('<h2><a href="%s">%s</a></h2>'."\n",
-	$CONFIG['weburl'].'host.php?h='.htmlentities($host), $host
-);
+printf('<h2>%s</h2>'."\n", $host);
+
+$plugins = collectd_plugins($host);
+
+if(!$plugins) {
+	echo "Unknown host\n";
+	return false;
+}
+
+plugins_list($host, $CONFIG['overview'], $plugins, $selected_plugins);
+
+
+echo '<div class="graphs">';
+plugin_header($host, $plugin);
 
 $term = array(
 	'2hour'	=> 3600*2,
@@ -38,23 +56,17 @@ $term = array(
 );
 
 $args = $_GET;
-print "<ul>\n";
+print '<ul class="time-range">' . "\n";
 foreach($term as $key => $s) {
 	$args['s'] = $s;
-	printf('<li><a href="%s%s">%s</a></li>'."\n",
-		$CONFIG['weburl'], build_url('detail.php', $args), $key);
+	$selected = selected_timerange($seconds, $s);
+	printf('<li><a %s href="%s%s">%s</a></li>'."\n",
+		$selected, $CONFIG['weburl'], build_url('detail.php', $args), $key);
 }
 print "</ul>\n";
 
-$plugins = collectd_plugins($host);
-
-if(!$plugins) {
-	echo "Unknown host\n";
-	return false;
-}
-
-# show graph
 printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+echo '</div><! .graphs -->';
 
 html_end();
 
