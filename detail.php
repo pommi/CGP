@@ -66,7 +66,7 @@ foreach($term as $key => $s) {
 print "</ul>\n";
 
 printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
-echo '</div><! .graphs -->';
+echo '</div>';
 
 html_end();
 

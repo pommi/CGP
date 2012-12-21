@@ -85,7 +85,7 @@ function plugins_list($host, $overview_plugins, $other_plugins, $selected_plugin
 	}
 
 	echo '</ul>';
-	echo '</div><! .plugins -->';
+	echo '</div>';
 }
 
 function selected_overview($selected_plugins) {

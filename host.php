@@ -32,7 +32,7 @@ foreach ($selected_plugins as $selected_plugin) {
 	plugin_header($host, $selected_plugin);
 	graphs_from_plugin($host, $selected_plugin);
 }
-echo '</div><! .graphs -->';
+echo '</div>';
 
 html_end();
 
