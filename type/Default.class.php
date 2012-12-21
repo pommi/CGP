@@ -39,7 +39,7 @@ class Type_Default {
 		$sources = count($this->rrd_get_sources());
 		foreach ($this->rrd_get_sources() as $ds) {
 			# hue (saturnation=1, value=1)
-			$h = 360 - ($c * (330/($sources-1)));
+			$h = $sources > 1 ? 360 - ($c * (330/($sources-1))) : 360;
 
 			$h = ($h %= 360) / 60;
 			$f = $h - floor($h);
