@@ -15,7 +15,12 @@ body {
 	text-decoration: none;
 }
 
-#content, #footer{
+#content {
+	padding-left: 20px;
+}
+
+#footer {
+	clear: both;
 	padding: 0px 20px 16px;
 }
 
@@ -96,10 +101,7 @@ hr {
 }
 
 .graphs {
-	display: inline-block;
-	margin: 0 0 0 20px;
-	width: 83%;
-	vertical-align: top;
+	overflow: hidden;
 }
 
 .graphs img {
@@ -108,8 +110,8 @@ hr {
 }
 
 .plugins {
-	display: inline-block;
-	width: 12%;
+	float: left;
+	margin-right: 25px;
 }
 
 .plugins ul > li:first-of-type {
