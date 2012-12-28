@@ -54,6 +54,7 @@ function collectd_plugindata($host, $plugin=NULL) {
 
 	# only return data about one plugin
 	if (!is_null($plugin)) {
+		$pdata = array();
 		foreach($data as $item) {
 			if ($item['p'] == $plugin)
 				$pdata[] = $item;
@@ -113,6 +114,7 @@ function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
 function group_plugindata($plugindata) {
 	global $CONFIG;
 
+	$data = array();
 	# type instances should be grouped in 1 graph
 	foreach ($plugindata as $item) {
 		# backwards compatibility
@@ -129,6 +131,9 @@ function group_plugindata($plugindata) {
 }
 
 function plugin_sort($data) {
+	if (empty($data))
+		return $data;
+
 	foreach ($data as $key => $row) {
 		$pi[$key] = (isset($row['pi'])) ? $row['pi'] : null;
 		$c[$key]  = (isset($row['c']))  ? $row['c'] : null;

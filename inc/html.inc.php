@@ -58,10 +58,14 @@ EOT;
 }
 
 function plugin_header($host, $plugin) {
+	global $CONFIG;
+
 	return printf("<h3><a href='%shost.php?h=%s&p=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
 }
 
 function plugins_list($host, $overview_plugins, $other_plugins, $selected_plugins = array()) {
+	global $CONFIG;
+
 	echo '<div class="plugins">';
 	echo '<h3>Plugins</h3>';
 	echo '<ul>';
