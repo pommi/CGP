@@ -7,12 +7,7 @@ require_once 'inc/collectd.inc.php';
 $host = validate_get(GET('h'), 'host');
 $plugin = validate_get(GET('p'), 'plugin');
 
-if (!$plugin) {
-	$selected_plugins = $CONFIG['overview'];
-}
-else {
-	$selected_plugins = array($plugin);
-}
+$selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
 html_start();
 
@@ -25,7 +20,7 @@ if(!$plugins) {
 	return false;
 }
 
-plugins_list($host, $CONFIG['overview'], $plugins, $selected_plugins);
+plugins_list($host, $selected_plugins);
 
 echo '<div class="graphs">';
 foreach ($selected_plugins as $selected_plugin) {

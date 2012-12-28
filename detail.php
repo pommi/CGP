@@ -21,12 +21,7 @@ $width = GET('x');
 $heigth = GET('y');
 $seconds = GET('s');
 
-if (!$plugin) {
-	$selected_plugins = $CONFIG['overview'];
-}
-else {
-	$selected_plugins = array($plugin);
-}
+$selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
 html_start();
 
@@ -39,8 +34,7 @@ if(!$plugins) {
 	return false;
 }
 
-plugins_list($host, $CONFIG['overview'], $plugins, $selected_plugins);
-
+plugins_list($host, $selected_plugins);
 
 echo '<div class="graphs">';
 plugin_header($host, $plugin);
