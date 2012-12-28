@@ -29,8 +29,10 @@ plugins_list($host, $CONFIG['overview'], $plugins, $selected_plugins);
 
 echo '<div class="graphs">';
 foreach ($selected_plugins as $selected_plugin) {
-	plugin_header($host, $selected_plugin);
-	graphs_from_plugin($host, $selected_plugin);
+	if (in_array($selected_plugin, $plugins)) {
+		plugin_header($host, $selected_plugin);
+		graphs_from_plugin($host, $selected_plugin);
+	}
 }
 echo '</div>';
 

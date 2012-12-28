@@ -75,8 +75,10 @@ function plugins_list($host, $overview_plugins, $other_plugins, $selected_plugin
 
 	# first the ones defined as ordered
 	foreach($overview_plugins as $plugin) {
-		$selected = selected_plugin($plugin, $selected_plugins);
-		printf("<li><a %s href='%shost.php?h=%s&p=%s'>%s</a></li>\n", $selected, $CONFIG['weburl'], $host, $plugin, $plugin);
+		if (in_array($plugin, $other_plugins)) {
+			$selected = selected_plugin($plugin, $selected_plugins);
+			printf("<li><a %s href='%shost.php?h=%s&p=%s'>%s</a></li>\n", $selected, $CONFIG['weburl'], $host, $plugin, $plugin);
+		}
 	}
 
 	# other plugins
