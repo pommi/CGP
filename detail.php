@@ -39,19 +39,9 @@ plugins_list($host, $selected_plugins);
 echo '<div class="graphs">';
 plugin_header($host, $plugin);
 
-$term = array(
-	'2hour'	=> 3600*2,
-	'8hour'	=> 3600*8,
-	'day'	=> 86400,
-	'week'	=> 86400*7,
-	'month'	=> 86400*31,
-	'quarter'=> 86400*31*3,
-	'year'	=> 86400*365,
-);
-
 $args = $_GET;
 print '<ul class="time-range">' . "\n";
-foreach($term as $key => $s) {
+foreach($CONFIG['term'] as $key => $s) {
 	$args['s'] = $s;
 	$selected = selected_timerange($seconds, $s);
 	printf('<li><a %s href="%s%s">%s</a></li>'."\n",
