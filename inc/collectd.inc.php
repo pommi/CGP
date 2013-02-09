@@ -11,9 +11,9 @@ function collectd_hosts() {
 	if (!is_dir($CONFIG['datadir']))
 		return false;
 
-	$dir = scandir($CONFIG['datadir']);
+	$dir = array_diff(scandir($CONFIG['datadir']), array('.', '..'));
 	foreach($dir as $k => $v) {
-		if(!is_dir($CONFIG['datadir'].'/'.$v) || $v == '.' || $v == '..')
+		if(!is_dir($CONFIG['datadir'].'/'.$v))
 			unset($dir[$k]);
 	}
 	return($dir);
