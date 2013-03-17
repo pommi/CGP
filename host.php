@@ -22,11 +22,13 @@ if(!$plugins) {
 
 plugins_list($host, $selected_plugins);
 
+$overview = empty($plugin) ? true : false;
+
 echo '<div class="graphs">';
 foreach ($selected_plugins as $selected_plugin) {
 	if (in_array($selected_plugin, $plugins)) {
 		plugin_header($host, $selected_plugin);
-		graphs_from_plugin($host, $selected_plugin);
+		graphs_from_plugin($host, $selected_plugin, $overview);
 	}
 }
 echo '</div>';
