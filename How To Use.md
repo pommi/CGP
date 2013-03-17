@@ -7,7 +7,7 @@ In your config.local.php, define the plugins you want to use on the overview pag
 $CONFIG['overview'] = array('interface', 'load', 'memory', 'sensors');
 ```
 
-Now the interface plugin shows graphs errors, packets and octets for each interface.
+Now the interface plugin shows graphs for errors, packets and octets for each interface.
 I have eth0 and wlan0. On the overview page, I want to see the octets graph for wlan0 only.
 By examining the interface plugin page, I determine the parameters for filtering the wlan0
 graph.
