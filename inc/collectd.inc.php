@@ -147,15 +147,26 @@ function plugin_sort($data) {
 }
 
 # generate graph url's for a plugin of a host
-function graphs_from_plugin($host, $plugin) {
+function graphs_from_plugin($host, $plugin, $overview=false) {
 	global $CONFIG;
 
 	$plugindata = collectd_plugindata($host, $plugin);
 	$plugindata = group_plugindata($plugindata);
 	$plugindata = plugin_sort($plugindata);
 
-	foreach ($plugindata as $items) {
-		$items['h'] = $host;
+    $f = array();
+
+    if ($overview == true && isset($CONFIG['overview_filter'][$plugin])) {
+        $f = $CONFIG['overview_filter'][$plugin];
+    }
+
+    foreach ($plugindata as $items) {
+
+        if (!empty($f) && ($f !== array_intersect_assoc($f, $items))) {
+            continue;
+        }
+
+        $items['h'] = $host;
 
 		$time = array_key_exists($plugin, $CONFIG['time_range'])
 			? $CONFIG['time_range'][$plugin]
