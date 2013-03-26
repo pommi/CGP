@@ -162,7 +162,7 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 
     foreach ($plugindata as $items) {
 
-        if (!empty($f) && ($f !== array_intersect($f, $items))) {
+        if (!empty($f) && ($f !== array_intersect_assoc($f, $items))) {
             continue;
         }
 
