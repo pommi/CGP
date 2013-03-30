@@ -154,19 +154,16 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 	$plugindata = group_plugindata($plugindata);
 	$plugindata = plugin_sort($plugindata);
 
-    $f = array();
+	foreach ($plugindata as $items) {
 
-    if ($overview == true && isset($CONFIG['overview_filter'][$plugin])) {
-        $f = $CONFIG['overview_filter'][$plugin];
-    }
+		if (
+			$overview && isset($CONFIG['overview_filter'][$plugin]) &&
+			$CONFIG['overview_filter'][$plugin] !== array_intersect_assoc($CONFIG['overview_filter'][$plugin], $items)
+		) {
+			continue;
+		}
 
-    foreach ($plugindata as $items) {
-
-        if (!empty($f) && ($f !== array_intersect_assoc($f, $items))) {
-            continue;
-        }
-
-        $items['h'] = $host;
+		$items['h'] = $host;
 
 		$time = array_key_exists($plugin, $CONFIG['time_range'])
 			? $CONFIG['time_range'][$plugin]
