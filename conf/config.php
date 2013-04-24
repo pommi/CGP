@@ -4,7 +4,9 @@
 $CONFIG['version'] = 4;
 
 # collectd's datadir
-$CONFIG['datadir'] = '/var/lib/collectd/rrd';
+// todo -- change this back
+#$CONFIG['datadir'] = '/var/lib/collectd/rrd';
+$CONFIG['datadir'] = '/opt/collectd/var/lib/collectd/rrd';
 
 # rrdtool executable
 $CONFIG['rrdtool'] = '/usr/bin/rrdtool';

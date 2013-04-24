@@ -17,17 +17,30 @@ function html_start() {
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>CGP{$path}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<title>Collectd Graph Panel {$path}</title>
 	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
+	<link rel="stylesheet" href="{$CONFIG['weburl']}assets/css/bootstrap.min.css" type="text/css">
+	<style type="text/css">
+        body { padding-top: 40px; }
+        @media screen and (max-width: 768px) {
+            body { padding-top: 0px; }
+        }
+    </style>
 </head>
 <body>
 
-<div id="header">
-  <h1><a href="{$CONFIG['weburl']}">Collectd Graph Panel</a></h1>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="{$CONFIG['weburl']}">Collectd Graph Panel</a>
+        </div>
+    </div>
 </div>
 
-<div id="content">
-
+<div class="container-fluid clearfix">
 EOT;
 }
 
@@ -48,10 +61,14 @@ function html_end() {
 	}
 
 	echo <<<EOT
+	<footer>
+        <a href="http://pommi.nethuis.nl/category/cgp/" rel="external" target="_blank">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a>
+    </footer>
 </div>
-<div id="footer">
-<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
-</div>
+
+<script src="{$CONFIG['weburl']}assets/js/jquery-2.0.0.min.js"></script>
+<script src="{$CONFIG['weburl']}assets/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 EOT;
@@ -132,41 +149,57 @@ function host_summary($hosts) {
 
 	$rrd = new RRDTool($CONFIG['rrdtool']);
 
-	echo "<table class=\"summary\">\n";
+	if(count($hosts) > 0){
 
-	$row_style = array(0 => "even", 1 => "odd");
-	$host_counter = 0;
+        echo '<table class="table table-bordered table-striped table-hover table-inverse">';
 
-	foreach($hosts as $host) {
-		$host_counter++;
+        echo '<thead>';
+            echo '<tr>';
+                echo '<th>Host</th>';
+                if($CONFIG['showload']){
+                    echo '<th>Short Load</th>';
+                    echo '<th>Mid Load</th>';
+                    echo '<th>Long Load</th>';
+                }
+            echo '</tr>';
+        echo '</thead>';
 
-		printf('<tr class="%s">', $row_style[$host_counter % 2]);
-		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
-			$CONFIG['weburl'],$host, $host);
+        echo '<tbody>';
 
-		if ($CONFIG['showload']) {
-			collectd_flush(sprintf('%s/load/load', $host));
-			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
+        $row_style = array(0 => "even", 1 => "odd");
+        $host_counter = 0;
 
-			# ignore if file does not exist
-			if (!$rrd_info)
-				continue;
+        foreach($hosts as $host) {
+            $host_counter++;
 
-			if (isset($rrd_info['ds[shortterm].last_ds']) &&
-				isset($rrd_info['ds[midterm].last_ds']) &&
-				isset($rrd_info['ds[longterm].last_ds'])) {
+            printf('<tr>', $row_style[$host_counter % 2]);
+            printf('<td><a href="%shost.php?h=%s">%s</a></td>',
+                $CONFIG['weburl'],$host, $host);
 
-				printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
-					$rrd_info['ds[shortterm].last_ds'],
-					$rrd_info['ds[midterm].last_ds'],
-					$rrd_info['ds[longterm].last_ds']);
-			}
-		}
+            if ($CONFIG['showload']) {
+                collectd_flush(sprintf('%s/load/load', $host));
+                $rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
 
-		print "</tr>\n";
-	}
+                # ignore if file does not exist
+                if (!$rrd_info)
+                    continue;
 
-	echo "</table>\n";
+                if (isset($rrd_info['ds[shortterm].last_ds']) &&
+                    isset($rrd_info['ds[midterm].last_ds']) &&
+                    isset($rrd_info['ds[longterm].last_ds'])) {
+
+                    printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
+                        $rrd_info['ds[shortterm].last_ds'],
+                        $rrd_info['ds[midterm].last_ds'],
+                        $rrd_info['ds[longterm].last_ds']);
+                }
+            }
+
+            print "</tr>\n";
+        }
+        echo '</tbody>';
+	    echo '</table>';
+    }
 }
 
 
