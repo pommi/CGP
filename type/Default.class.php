@@ -298,5 +298,3 @@ class Type_Default {
 		return $rrdgraph;
 	}
 }
-
-?>

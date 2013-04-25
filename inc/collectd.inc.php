@@ -252,5 +252,3 @@ function collectd_flush($identifier) {
 		return FALSE;
 	}
 }
-
-?>

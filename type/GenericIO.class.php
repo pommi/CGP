@@ -63,5 +63,3 @@ class Type_GenericIO extends Type_Default {
 		return $rrdgraph;
 	}
 }
-
-?>

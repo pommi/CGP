@@ -1,36 +1,51 @@
 <?php
 
-require_once 'conf/common.inc.php';
-require_once 'inc/html.inc.php';
-require_once 'inc/collectd.inc.php';
+    require_once 'conf/common.inc.php';
+    require_once 'inc/html.inc.php';
+    require_once 'inc/collectd.inc.php';
 
-$host = validate_get(GET('h'), 'host');
-$plugin = validate_get(GET('p'), 'plugin');
+    $host = validate_get(GET('h'), 'host');
+    $plugin = validate_get(GET('p'), 'plugin');
 
-$selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
+    // check for multiple hosts
+    if(strpos($host, ',') !== 0){
+        $hosts = explode(',', $host);
+    } else {
+        $hosts = array($host);
+    }
 
-html_start();
+    $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
-printf('<h2>%s</h2>'."\n", $host);
+    html_start();
 
-$plugins = collectd_plugins($host);
+    // get all of the available plugins for all of the hosts
+    $plugins = array();
+    foreach($hosts as $k => $host):
+        $plugins = array_merge($plugins, collectd_plugins($host));
+    endforeach;
 
-if(!$plugins) {
-	echo "Unknown host\n";
-	return false;
-}
+        echo '<div class="row-fluid">';
 
-plugins_list($host, $selected_plugins);
+            echo '<div class="span2">';
+            list_plugins($plugins, $hosts, $CONFIG);
+            echo '</div>';
 
-echo '<div class="graphs">';
-foreach ($selected_plugins as $selected_plugin) {
-	if (in_array($selected_plugin, $plugins)) {
-		plugin_header($host, $selected_plugin);
-		graphs_from_plugin($host, $selected_plugin, empty($plugin));
-	}
-}
-echo '</div>';
+            echo '<div class="span10">';
+            foreach($hosts as $k => $host){
+                if(!empty($plugin) && !in_array($plugin, collectd_plugins($host)))
+                    continue;
+                printf('<h2><a href="%shost.php?h=%s">%s</a></h2>', $CONFIG['weburl'], $host, $host);
+                foreach ($selected_plugins as $selected_plugin) {
+                    if (empty($plugin) || in_array($selected_plugin, $plugins)) {
+                        echo '<div class="row-fluid">';
+                            plugin_header($host, $selected_plugin);
+                            graphs_from_plugin($host, $selected_plugin, empty($plugin));
+                        echo '</div>';
+                    }
+                }
+            }
+            echo '</div>';
 
-html_end();
+        echo '</div>';
 
-?>
+    html_end();

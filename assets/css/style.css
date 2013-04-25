@@ -1,0 +1,21 @@
+div#footer {
+    padding-top:60px;
+}
+
+.sidebar-nav-fixed {
+    position:fixed;
+    top:40px;
+}
+
+@media (max-width: 767px) {
+    .sidebar-nav-fixed {
+        width:auto;
+    }
+}
+
+@media (max-width: 979px) {
+    .sidebar-nav-fixed {
+        position:static;
+        width: auto;
+    }
+}

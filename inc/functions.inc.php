@@ -14,6 +14,10 @@ function validate_get($value, $type) {
 			if (!preg_match('/^[\d\w\W]+$/u', $value))
 				return NULL;
 		break;
+        case 'hosts':
+            if (!preg_match('/^[,\d\w\W]+$/u', $value))
+                return NULL;
+            break;
 		case 'plugin':
 		case 'category':
 		case 'type':
@@ -36,8 +40,6 @@ function crc32hex($str) {
 
 function error_image() {
 	header("Content-Type: image/png");
-	readfile('layout/error.png');
+	readfile('assets/img/error.png');
 	exit;
 }
-
-?>

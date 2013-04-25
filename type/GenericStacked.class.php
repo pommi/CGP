@@ -61,5 +61,3 @@ class Type_GenericStacked extends Type_Default {
 		return $rrdgraph;
 	}
 }
-
-?>

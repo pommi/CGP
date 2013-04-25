@@ -1,3 +1,10 @@
+0.4 (2013-04-25)
+* general
+ - improved UI
+ - file system restructure
+ - removed closing PHP tags on various files
+ - added multi-host support on hosts.php
+
 0.3 (2010-10-04)
 * general
  - improved support for utf8 filenames

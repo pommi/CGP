@@ -14,15 +14,15 @@ function html_start() {
 
 	echo <<<EOT
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 	<title>Collectd Graph Panel {$path}</title>
-	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
 	<link rel="stylesheet" href="{$CONFIG['weburl']}assets/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="{$CONFIG['weburl']}assets/css/style.css" type="text/css">
 	<style type="text/css">
         body { padding-top: 40px; }
         @media screen and (max-width: 768px) {
@@ -34,9 +34,7 @@ function html_start() {
 
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="brand" href="{$CONFIG['weburl']}">Collectd Graph Panel</a>
-        </div>
+        <a class="brand" style="margin-left:10px;" href="{$CONFIG['weburl']}">Collectd Graph Panel</a>
     </div>
 </div>
 
@@ -61,11 +59,12 @@ function html_end() {
 	}
 
 	echo <<<EOT
-	<footer>
-        <a href="http://pommi.nethuis.nl/category/cgp/" rel="external" target="_blank">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a>
-    </footer>
 </div>
-
+<div id="footer">
+    <div class="container">
+        <a href="http://pommi.nethuis.nl/category/cgp/" rel="external" target="_blank">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a>
+    </div>
+</div>
 <script src="{$CONFIG['weburl']}assets/js/jquery-2.0.0.min.js"></script>
 <script src="{$CONFIG['weburl']}assets/js/bootstrap.min.js"></script>
 
@@ -85,42 +84,55 @@ function plugins_list($host, $selected_plugins = array()) {
 
 	$plugins = collectd_plugins($host);
 
-	echo '<div class="plugins">';
-	echo '<h3>Plugins</h3>';
-	echo '<ul>';
 
-	printf("<li><a %s href='%shost.php?h=%s'>overview</a></li>\n",
-		selected_overview($selected_plugins),
-		$CONFIG['weburl'],
-		$host
-	);
+        echo '<div class="sidebar-nav sidebar-nav-fixed">';
+        echo '<h3>Plugins</h3>';
+        echo '<ul class="nav nav-list">';
 
-	# first the ones defined as ordered
-	foreach($CONFIG['overview'] as $plugin) {
-		if (in_array($plugin, $plugins)) {
-			printf("<li><a %s href='%shost.php?h=%s&p=%s'>%4\$s</a></li>\n",
-				selected_plugin($plugin, $selected_plugins),
-				$CONFIG['weburl'],
-				$host,
-				$plugin
-			);
-		}
-	}
+        printf("<li><a %s href='%shost.php?h=%s'>overview</a></li>\n",
+            selected_overview($selected_plugins),
+            $CONFIG['weburl'],
+            $host
+        );
 
-	# other plugins
-	foreach($plugins as $plugin) {
-		if (!in_array($plugin, $CONFIG['overview'])) {
-			printf("<li><a %s href='%shost.php?h=%s&p=%s'>%4\$s</a></li>\n",
-				selected_plugin($plugin, $selected_plugins),
-				$CONFIG['weburl'],
-				$host,
-				$plugin
-			);
-		}
-	}
+        # first the ones defined as ordered
+        foreach($CONFIG['overview'] as $plugin) {
+            if (in_array($plugin, $plugins)) {
+                printf("<li><a %s href='%shost.php?h=%s&p=%s'>%4\$s</a></li>\n",
+                    selected_plugin($plugin, $selected_plugins),
+                    $CONFIG['weburl'],
+                    $host,
+                    $plugin
+                );
+            }
+        }
 
-	echo '</ul>';
-	echo '</div>';
+        # other plugins
+        foreach($plugins as $plugin) {
+            if (!in_array($plugin, $CONFIG['overview'])) {
+                printf("<li><a %s href='%shost.php?h=%s&p=%s'>%4\$s</a></li>\n",
+                    selected_plugin($plugin, $selected_plugins),
+                    $CONFIG['weburl'],
+                    $host,
+                    $plugin
+                );
+            }
+        }
+
+        echo '</ul>';
+        echo '</div>';
+}
+
+function list_plugins(array $plugins, array $hosts, $config){
+    $plugins = array_unique($plugins);
+    echo '<div class="sidebar-nav sidebar-nav-fixed">';
+    echo '<h3>Plugins</h3>';
+    echo '<ul class="nav nav-list">';
+        foreach($plugins as $plugin){
+            echo '<li><a href="'.$config['weburl'].'host.php?h='.implode(',', $hosts).'&p='.$plugin.'">'.$plugin.'</a></li>';
+        }
+    echo '</ul>';
+    echo '</div>';
 }
 
 function selected_overview($selected_plugins) {
@@ -218,5 +230,3 @@ function breadcrumbs() {
 
 	return $path;
 }
-
-?>
