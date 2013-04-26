@@ -8,17 +8,29 @@ require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # nut-XXXX/
+# nut-XXXX/frequency-XXXX.rrd
 # nut-XXXX/percent-XXXX.rrd
 # nut-XXXX/temerature-XXXX.rrd
-# nut-XXXX/voltage-XXXX.rrd
 # nut-XXXX/timeleft-XXXX.rrd
+# nut-XXXX/voltage-XXXX.rrd
 
 $obj = new Type_Default($CONFIG);
 $obj->width = $width;
 $obj->heigth = $heigth;
 switch($obj->args['type']) {
+	case 'frequency':
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('output' => 'Output');
+		$obj->rrd_title = sprintf('Frequency (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'Hz';
+		$obj->rrd_format = '%5.1lf%s';
+	break;
 	case 'percent':
-		$obj->data_sources = array('percent');
+		if ($CONFIG['version'] < 5) {
+			$obj->data_sources = array('percent');
+		} else {
+			$obj->data_sources = array('value');
+		}
 		$obj->ds_names = array('charge' => 'Charge',
 		                       'load' => 'Load');
 		$obj->rrd_title = sprintf('Charge & load (%s)', $obj->args['pinstance']);
@@ -27,7 +39,7 @@ switch($obj->args['type']) {
 	break;
 	case 'temperature':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Temperature');
+		$obj->ds_names = array('battery' => 'Battery');
 		$obj->rrd_title = sprintf('Temperature (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = '°C';
 		$obj->rrd_format = '%5.1lf%s';
