@@ -4,6 +4,7 @@
  - file system restructure
  - removed closing PHP tags on various files
  - added multi-host support on hosts.php
+ - Set RRDTool class to have a public member defaulting to NULL
 
 0.3 (2010-10-04)
 * general

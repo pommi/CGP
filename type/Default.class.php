@@ -3,26 +3,27 @@
 # Collectd Default type
 
 class Type_Default {
-	var $datadir;
-	var $rrdtool;
-	var $rrdtool_opts;
-	var $cache;
-	var $args;
-	var $seconds;
-	var $data_sources = array('value');
-	var $order;
-	var $ds_names;
-	var $colors;
-	var $rrd_title;
-	var $rrd_vertical;
-	var $rrd_format;
-	var $scale;
-	var $width;
-	var $heigth;
+	public $datadir;
+    public $rrdtool;
+    public $rrdtool_opts;
+    public $cache;
+    public $args;
+    public $seconds;
+    public $end;
+    public $data_sources = array('value');
+    public $order;
+    public $ds_names;
+    public $colors;
+    public $rrd_title;
+    public $rrd_vertical;
+    public $rrd_format;
+    public $scale;
+    public $width;
+    public $heigth;
 
-	var $files;
-	var $tinstances;
-	var $identifiers;
+    public $files;
+    public $tinstances;
+    public $identifiers;
 
 	function __construct($config) {
 		$this->datadir = $config['datadir'];
@@ -68,6 +69,7 @@ class Type_Default {
 			'tinstance' => GET('ti'),
 		);
 		$this->seconds = GET('s');
+        $this->end = GET('e');
 	}
 
 	function validate_color($color) {
@@ -186,6 +188,8 @@ class Type_Default {
 		$rrdgraph[] = sprintf('-t "%s on %s"', $this->rrd_title, $this->args['host']);
 		$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
 		$rrdgraph[] = sprintf('-s -%d', is_numeric($this->seconds) ? $this->seconds : 86400);
+        if(!empty($this->end) && is_numeric($this->end))
+            $rrdgraph[] = sprintf('-e -%d', $this->end);
 
 		return $rrdgraph;
 	}

@@ -1,13 +1,14 @@
 <?php
 
     class RRDTool {
-        var $rrdtool = '/usr/bin/rrdtool';
+
+        public $rrdtool = NULL;
 
         function __construct($rrdtool) {
             if (file_exists($rrdtool)) {
                 $this->rrdtool = $rrdtool;
             } else {
-                printf('<p class="warn">Error: RRDTool (<em>%s</em>) is not executable. Please install RRDTool it and configure <em>$CONFIG[\'rrdtool\'].</em></p>', $rrdtool);
+                printf('<p class="alert alert-error">Error: RRDTool (<em>%s</em>) is not executable. Please install RRDTool it and configure <em>$CONFIG[\'rrdtool\'].</em></p>', $rrdtool);
                 die();
             }
         }
