@@ -165,9 +165,15 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 
 		$items['h'] = $host;
 
-		$time = array_key_exists($plugin, $CONFIG['time_range'])
-			? $CONFIG['time_range'][$plugin]
-			: $CONFIG['time_range']['default'];
+        // check for $_GET[s] and override other settings
+        $stime = GET('s');
+        if(!empty($stime) && $stime > 0){
+            $time = $stime;
+        } else {
+            $time = array_key_exists($plugin, $CONFIG['time_range'])
+                ? $CONFIG['time_range'][$plugin]
+                : $CONFIG['time_range']['default'];
+        }
 
 		printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
 			$CONFIG['weburl'],
