@@ -17,8 +17,6 @@ $pinstance = validate_get(GET('pi'), 'pinstance');
 $category = validate_get(GET('c'), 'category');
 $type = validate_get(GET('t'), 'type');
 $tinstance = validate_get(GET('ti'), 'tinstance');
-$width = GET('x');
-$heigth = GET('y');
 $seconds = GET('s');
 
 $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);

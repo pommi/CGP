@@ -32,6 +32,10 @@ class Type_Default {
 		$this->parse_get();
 		$this->rrd_files();
 		$this->identifiers = $this->file2identifier($this->files);
+		$this->width = GET('x');
+		if (empty($this->width)) $this->width = $config['width'];
+		$this->heigth = GET('y');
+		if (empty($this->heigth)) $this->heigth = $config['heigth'];
 	}
 
 	function rainbow_colors() {

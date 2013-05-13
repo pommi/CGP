@@ -29,8 +29,6 @@ switch(GET('t')) {
 }
 
 $obj->rrd_format = '%5.1lf%s';
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();

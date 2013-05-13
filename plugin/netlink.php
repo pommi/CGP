@@ -8,8 +8,6 @@ require_once 'inc/collectd.inc.php';
 
 $obj = new Type_GenericStacked($CONFIG);
 
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {

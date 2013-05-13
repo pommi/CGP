@@ -27,8 +27,6 @@ $obj->colors = array(
 	'rx' => '0000ff',
 	'tx' => '00b000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf%s';
 
 $instance = $CONFIG['version'] < 5 ? 'tinstance' : 'pinstance';

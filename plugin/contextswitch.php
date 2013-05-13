@@ -17,8 +17,6 @@ $obj->ds_names = array(
 $obj->colors = array(
 	'value' => '0000f0',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'Context switches';
 $obj->rrd_vertical = 'switch per second Bits';
 $obj->rrd_format = '%4.0lf';

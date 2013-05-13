@@ -10,8 +10,6 @@ $obj = new Type_GenericStacked($CONFIG);
 $obj->data_sources = array('value');
 $obj->ds_names = array('value' => 'Value');
 $obj->colors = array('value' => '0000f0');
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%6.1lf';
 
 switch($obj->args['type']) {

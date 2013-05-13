@@ -29,8 +29,6 @@ $obj->colors = array(
 	'locked' => 'ff00ff',
 	'used' => 'ff0000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 $obj->rrd_title = 'Physical memory utilization';
 $obj->rrd_vertical = 'Bytes';

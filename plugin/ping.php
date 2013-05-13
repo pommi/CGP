@@ -17,8 +17,6 @@ $obj->data_sources = array('value');
 $obj->ds_names = array('ping' => 'Ping time',
                        'ping_stddev' => 'Ping stddev',
                        'ping_droprate' => 'Ping droprate');
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf';
 
 switch($obj->args['type']) {
