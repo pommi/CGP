@@ -249,7 +249,7 @@ RrdGraphDesc.prototype.vdef = function (graph, vname, rpn)
 	if (graph.gdes[this.vidx].gf != RrdGraphDesc.GF_DEF && graph.gdes[this.vidx].gf != RrdGraphDesc.GF_CDEF) {
 		throw new RrdGraphDescError('variable "'+name+'" not DEF nor CDEF in VDEF.');
 	}
-	this.vf = new RrdVdef(rpn.substring(index+1));
+	this.vf = new RrdVdef(name, rpn.substring(index+1));
 	this.legend = '';
 };
 
