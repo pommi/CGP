@@ -36,6 +36,7 @@ class Type_Default {
 		if (empty($this->width)) $this->width = $config['width'];
 		$this->heigth = GET('y');
 		if (empty($this->heigth)) $this->heigth = $config['heigth'];
+		$this->graph_type = $config['graph_type'];
 	}
 
 	function rainbow_colors() {
@@ -108,6 +109,13 @@ class Type_Default {
 		return str_replace(':', '\:', $value);
 	}
 
+	function parse_filename($file) {
+		if ($this->graph_type == 'canvas') {
+			$file = 'rrd' . str_replace($this->datadir, '', $file);
+		}
+		return $this->rrd_escape($file);
+	}
+
 	function rrd_files() {
 		$files = $this->get_filenames();
 
@@ -153,35 +161,51 @@ class Type_Default {
 		return $files;
 	}
 
-	function rrd_graph($debug=false) {
+	function rrd_graph($debug = false) {
 		if (!$this->colors)
 			$this->rainbow_colors();
 
 		$graphdata = $this->rrd_gen_graph();
 
-		if(!$debug) {
-			# caching
-			if (is_numeric($this->cache) && $this->cache > 0)
-				header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
-			header("content-type: image/png");
-			$graphdata = implode(' ', $graphdata);
-			echo `$graphdata`;
-		} elseif ($debug == 'cmd') {
-			print '<pre>';
-			foreach ($graphdata as $d) {
-				printf("%s \\\n", $d);
-			}
-			print '</pre>';
-		} else {
-			print '<pre>';
-			print_r($graphdata);
-			print '</pre>';
+		$style = $debug !== false ? $debug : $this->graph_type;
+		switch ($style) {
+			case 'cmd':
+				print '<pre>';
+				foreach ($graphdata as $d) {
+					printf("%s \\\n", $d);
+				}
+				print '</pre>';
+			break;
+			case 'canvas':
+				printf('<canvas id="%s" class="rrd">', sha1(serialize($graphdata)));
+				foreach ($graphdata as $d) {
+					printf("%s\n", $d);
+				}
+				print '</canvas>';
+			break;
+			case 'debug':
+			case 1:
+				print '<pre>';
+				print_r($graphdata);
+				print '</pre>';
+			break;
+			case 'png':
+			default:
+				# caching
+				if (is_numeric($this->cache) && $this->cache > 0)
+					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
+				header("content-type: image/png");
+				$graphdata = implode(' ', $graphdata);
+				echo `$graphdata`;
+			break;
 		}
 	}
 
 	function rrd_options() {
-		$rrdgraph[] = $this->rrdtool;
-		$rrdgraph[] = 'graph - -a PNG';
+		if ($this->graph_type != 'canvas') {
+			$rrdgraph[] = $this->rrdtool;
+			$rrdgraph[] = 'graph - -a PNG';
+		}
 		if ($this->rrdtool_opts != '')
 			$rrdgraph[] = $this->rrdtool_opts;
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
@@ -260,9 +284,9 @@ class Type_Default {
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:min_%s%s="%s":%s:MIN', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:avg_%s%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s%s="%s":%s:MAX', crc32hex($sources[$i]), $raw, $this->rrd_escape($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:min_%s%s=%s:%s:MIN', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s%s=%s:%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s%s=%s:%s:MAX', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
 				$i++;
 			}
 		}
@@ -292,11 +316,11 @@ class Type_Default {
 		foreach ($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
-			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:\'%s Max,\'', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:\'%s Last\\l\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('"LINE1:avg_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
+			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('"GPRINT:avg_%s:LAST:%s Last\\l"', crc32hex($source), $this->rrd_format);
 		}
 
 		return $rrdgraph;

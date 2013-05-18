@@ -19,6 +19,26 @@ function html_start() {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>CGP{$path}</title>
 	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
+
+EOT;
+
+	if ($CONFIG['graph_type'] == 'canvas') {
+		echo <<<EOT
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/sprintf.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/strftime.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdRpn.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdTime.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGraph.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGfxCanvas.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/binaryXHR.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/rrdFile.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdDataFile.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdCmdLine.js"></script>
+
+EOT;
+	}
+
+echo <<<EOT
 </head>
 <body>
 
@@ -52,6 +72,17 @@ function html_end() {
 <div id="footer">
 <hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
 </div>
+
+EOT;
+
+	if ($CONFIG['graph_type'] == 'canvas') {
+		echo <<<EOT
+<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP.js"></script>
+
+EOT;
+	}
+
+echo <<<EOT
 </body>
 </html>
 EOT;

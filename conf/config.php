@@ -42,6 +42,9 @@ $CONFIG['term'] = array(
 # show graphs in bits or bytes
 $CONFIG['network_datasize'] = 'bytes';
 
+# png or canvas graphs
+$CONFIG['graph_type'] = 'png';
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 

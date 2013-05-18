@@ -169,12 +169,21 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			? $CONFIG['time_range'][$plugin]
 			: $CONFIG['time_range']['default'];
 
-		printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
-			$CONFIG['weburl'],
-			build_url('detail.php', $items, $time),
-			$CONFIG['weburl'],
-			build_url('graph.php', $items, $time)
-		);
+		if ($CONFIG['graph_type'] == 'canvas') {
+			chdir($CONFIG['webdir']);
+			isset($items['p']) ? $_GET['p'] = $items['p'] : $_GET['p'] = '';
+			isset($items['pi']) ? $_GET['pi'] = $items['pi'] : $_GET['pi'] = '';
+			isset($items['t']) ? $_GET['t'] = $items['t'] : $_GET['t'] = '';
+			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
+			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+		} else {
+			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
+				$CONFIG['weburl'],
+				build_url('detail.php', $items, $time),
+				$CONFIG['weburl'],
+				build_url('graph.php', $items, $time)
+			);
+		}
 	}
 }
 

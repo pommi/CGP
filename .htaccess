@@ -1,4 +1,6 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteRule     ^.git(ignore|/) - [F,L]
+RewriteRule ^.git(ignore|/) - [F,L]
+
+RewriteRule ^rrd/(.*) rrd.php?path=$1

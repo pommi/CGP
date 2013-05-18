@@ -47,7 +47,12 @@ foreach($CONFIG['term'] as $key => $s) {
 }
 print "</ul>\n";
 
-printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+if ($CONFIG['graph_type'] == 'canvas') {
+	chdir($CONFIG['webdir']);
+	include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+} else {
+	printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+}
 echo '</div>';
 
 html_end();

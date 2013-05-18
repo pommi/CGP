@@ -30,6 +30,21 @@ function validate_get($value, $type) {
 	return $value;
 }
 
+function validateRRDPath($base, $path) {
+	$realpath = realpath(sprintf('%s/%s', $base, $path));
+
+	if (strpos($realpath, $base) === false)
+		return false;
+
+	if (strpos($realpath, $base) !== 0)
+		return false;
+
+	if (!preg_match('/\.rrd$/', $realpath))
+		return false;
+
+	return $realpath;
+}
+
 function crc32hex($str) {
 	return sprintf("%x",crc32($str));
 }
