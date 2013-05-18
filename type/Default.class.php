@@ -19,6 +19,8 @@ class Type_Default {
 	var $scale = 1;
 	var $width;
 	var $heigth;
+	var $graph_type;
+	var $negative_io;
 
 	var $files;
 	var $tinstances;
