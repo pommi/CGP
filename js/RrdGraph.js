@@ -323,7 +323,7 @@ RrdGraphDesc.prototype.gprint = function (graph, vname, cf, format, strftimefmt)
 	this.vname = vname;
 	this.vidx = graph.find_var(vname);
 	this.legend = '';
-	if (format === undefined) {
+	if (!format) {
 		this.format = cf;
 		switch (graph.gdes[this.vidx].gf) {
 			case RrdGraphDesc.GF_DEF:
