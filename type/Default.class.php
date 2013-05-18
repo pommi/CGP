@@ -16,7 +16,7 @@ class Type_Default {
 	var $rrd_title;
 	var $rrd_vertical;
 	var $rrd_format;
-	var $scale;
+	var $scale = 1;
 	var $width;
 	var $heigth;
 
@@ -37,6 +37,7 @@ class Type_Default {
 		$this->heigth = GET('y');
 		if (empty($this->heigth)) $this->heigth = $config['heigth'];
 		$this->graph_type = $config['graph_type'];
+		$this->negative_io = $config['negative_io'];
 	}
 
 	function rainbow_colors() {

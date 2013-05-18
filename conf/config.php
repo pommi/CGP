@@ -45,6 +45,9 @@ $CONFIG['network_datasize'] = 'bytes';
 # png or canvas graphs
 $CONFIG['graph_type'] = 'png';
 
+# use the negative X-axis in I/O graphs
+$CONFIG['negative_io'] = false;
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 
