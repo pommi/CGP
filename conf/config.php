@@ -48,6 +48,9 @@ $CONFIG['graph_type'] = 'png';
 # use the negative X-axis in I/O graphs
 $CONFIG['negative_io'] = false;
 
+# create smooth graphs (rrdtool -E)
+$CONFIG['graph_smooth'] = false;
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 

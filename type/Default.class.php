@@ -21,6 +21,7 @@ class Type_Default {
 	var $heigth;
 	var $graph_type;
 	var $negative_io;
+	var $graph_smooth;
 
 	var $files;
 	var $tinstances;
@@ -40,6 +41,7 @@ class Type_Default {
 		if (empty($this->heigth)) $this->heigth = $config['heigth'];
 		$this->graph_type = $config['graph_type'];
 		$this->negative_io = $config['negative_io'];
+		$this->graph_smooth = $config['graph_smooth'];
 	}
 
 	function rainbow_colors() {
@@ -211,6 +213,8 @@ class Type_Default {
 		}
 		if ($this->rrdtool_opts != '')
 			$rrdgraph[] = $this->rrdtool_opts;
+		if ($this->graph_smooth)
+			$rrdgraph[] = '-E';
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
 		$rrdgraph[] = '-l 0';
