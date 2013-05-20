@@ -11,9 +11,11 @@ $h = array();
 # show all categorized hosts
 if (is_array($CONFIG['cat'])) {
 	foreach($CONFIG['cat'] as $cat => $hosts) {
-		printf("<h2>%s</h2>\n", $cat);
+      		printf("<fieldset id=\"%s\"/>", $cat);
+      		printf("<legend>%s</legend>", $cat);
 		host_summary($hosts);
 		$h = array_merge($h, $hosts);
+      		printf("</fieldset>");
 	}
 }
 

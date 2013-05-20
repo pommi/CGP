@@ -1,5 +1,5 @@
 body {
-	font-family: sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
 }
 
@@ -39,11 +39,13 @@ h3 {
 }
 
 a:link, a:visited, a:active {
-	text-decoration: none;
 	color: #222;
+   color: #0b3089;
+   text-decoration: underline;
 }
 
 a:hover {
+   display: inline-block;
 	text-decoration: underline;
 }
 
@@ -130,3 +132,31 @@ hr {
 	display: inline-block;
 	margin-bottom: 0.3em;
 }
+
+.green {
+   color: green;
+}
+.red {
+   color: red;
+}
+.orange {
+   color: orange;
+}
+
+fieldset {
+   border: 1px solid #0404B4;
+   padding: 5px 6px 5px 5px;
+   width: auto;
+   margin-bottom: 20px;
+}
+
+legend {
+   color: #fff;
+   /*background: #ffa20c;*/
+   background: #4d79b5;
+   width: auto;
+   border: 1px solid #0404B4;
+   font-size: 110%;
+   padding: 2px 6px
+}
+
