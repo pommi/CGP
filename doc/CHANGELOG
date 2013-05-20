@@ -1,3 +1,6 @@
+0.4.1 (2013-05-20)
+- remove dependency on mod_rewrite for rrd.php
+
 0.4 (2013-05-20)
 * general
  - new interface with a sidebar for plugin selection
