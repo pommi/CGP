@@ -91,7 +91,7 @@ EOT;
 function plugin_header($host, $plugin) {
 	global $CONFIG;
 
-	return printf("<h3><a href='%shost.php?h=%s&p=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
+	return printf("<h2><a href='%shost.php?h=%s&p=%s'>%s</a></h2>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
 }
 
 function plugins_list($host, $selected_plugins = array()) {
@@ -100,7 +100,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	$plugins = collectd_plugins($host);
 
 	echo '<div class="plugins">';
-	echo '<h3>Plugins</h3>';
+	echo '<h2>Plugins</h2>';
 	echo '<ul>';
 
 	printf("<li><a %s href='%shost.php?h=%s'>overview</a></li>\n",
@@ -158,11 +158,13 @@ function selected_timerange($value1, $value2) {
 	return '';
 }
 
-function host_summary($hosts) {
+function host_summary($cat, $hosts) {
 	global $CONFIG;
 
 	$rrd = new RRDTool($CONFIG['rrdtool']);
 
+	printf('<fieldset id="%s">', $cat);
+	printf('<legend>%s</legend>', $cat);
 	echo "<table class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
@@ -198,6 +200,7 @@ function host_summary($hosts) {
 	}
 
 	echo "</table>\n";
+	echo "</fieldset>\n";
 }
 
 
