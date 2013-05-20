@@ -116,7 +116,7 @@ class Type_Default {
 
 	function parse_filename($file) {
 		if ($this->graph_type == 'canvas') {
-			$file = 'rrd' . str_replace($this->datadir, '', $file);
+			$file = 'rrd.php/' . str_replace($this->datadir . '/', '', $file);
 		}
 		return $this->rrd_escape($file);
 	}
