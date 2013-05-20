@@ -1,7 +1,7 @@
 <?php
 
 # collectd version
-$CONFIG['version'] = 4;
+$CONFIG['version'] = 5;
 
 # collectd's datadir
 $CONFIG['datadir'] = '/var/lib/collectd/rrd';
