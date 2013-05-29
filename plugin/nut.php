@@ -45,7 +45,11 @@ switch($obj->args['type']) {
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'timeleft':
-		$obj->data_sources = array('timeleft');
+		if ($CONFIG['version'] < 5) {
+			$obj->data_sources = array('timeleft');
+		} else {
+			$obj->data_sources = array('value');
+		}
 		$obj->ds_names = array('timeleft' => 'Timeleft');
 		$obj->rrd_title = sprintf('Timeleft (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Seconds';
