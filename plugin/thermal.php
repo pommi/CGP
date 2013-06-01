@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 
 $obj = new Type_Default($CONFIG);
 $obj->ds_names = array(
-	'value' => 'Value',
+	'value' => 'Temperature',
 );
 switch($obj->args['type']) {
 	case 'gauge':
