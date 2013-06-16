@@ -14,6 +14,7 @@ switch(GET('t')) {
 	case 'if_octets':
 		require_once 'type/GenericIO.class.php';
 		$obj = new Type_GenericIO($CONFIG);
+		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
