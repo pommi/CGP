@@ -24,7 +24,8 @@ switch(GET('t')) {
 			'tx' => '00b000',
 		);
 		$obj->rrd_title = sprintf('Traffic (%s)', $obj->args['pinstance']);
-		$obj->rrd_vertical = '%s per second';
+		$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['network_datasize']));
+		$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'users':
