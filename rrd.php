@@ -4,7 +4,12 @@ require_once 'conf/common.inc.php';
 require_once 'inc/functions.inc.php';
 require_once 'inc/html.inc.php';
 
-if ($file = validateRRDPath($CONFIG['datadir'], $_SERVER['PATH_INFO'])) {
+$file_name = basename(__FILE__); 
+$path = $_SERVER['PHP_SELF'];
+$path_args  = strpos($path, $file_name);
+$path_info = substr($path, $path_args + strlen($file_name));
+
+if ($file = validateRRDPath($CONFIG['datadir'], $path_info)) {
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename='.basename($file));
 	header("Expires: " .date(DATE_RFC822,strtotime($CONFIG['cache']." seconds")));
