@@ -19,6 +19,7 @@ function html_start() {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>CGP{$path}</title>
 	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
+	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
 EOT;
 
