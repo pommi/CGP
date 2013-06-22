@@ -173,6 +173,8 @@ function host_summary($cat, $hosts) {
 	foreach($hosts as $host) {
 		$host_counter++;
 
+		$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
+
 		printf('<tr class="%s">', $row_style[$host_counter % 2]);
 		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
 			$CONFIG['weburl'],$host, $host);
@@ -189,10 +191,15 @@ function host_summary($cat, $hosts) {
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
 
-				printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
-					$rrd_info['ds[shortterm].last_ds'],
-					$rrd_info['ds[midterm].last_ds'],
-					$rrd_info['ds[longterm].last_ds']);
+				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
+					$class = '';
+					if ($cores > 0 && $rrd_info[$info] > $cores * 2)
+						$class = ' class="crit"';
+					elseif ($cores > 0 && $rrd_info[$info] > $cores)
+						$class = ' class="warn"';
+
+					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
+				}
 			}
 		}
 

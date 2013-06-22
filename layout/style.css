@@ -138,3 +138,14 @@ legend {
 	font-size: 1.4em;
 	font-weight: normal;
 }
+
+.warn {
+	color: darkorange;
+	font-weight: normal;
+	text-shadow: 0 0 1px darkorange;
+}
+.crit {
+	color: red;
+	font-weight: normal;
+	text-shadow: 0 0 1px red;
+}
