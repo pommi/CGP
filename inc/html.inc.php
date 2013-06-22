@@ -187,10 +187,26 @@ function host_summary($hosts) {
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
 
-				printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
-					$rrd_info['ds[shortterm].last_ds'],
-					$rrd_info['ds[midterm].last_ds'],
-					$rrd_info['ds[longterm].last_ds']);
+               			switch (round($rrd_info['ds[shortterm].last_ds'],0)) {
+                  			case 0: $class['shortterm']="green"; break;
+                  			case 1: $class['shortterm']="orange"; break;
+                  			default : $class['shortterm']="red"; break;
+               			}
+               			switch (round($rrd_info['ds[midterm].last_ds'],0)) {
+                  			case 0: $class['midterm']="green"; break;
+                  			case 1: $class['midterm']="orange"; break;
+                  			default : $class['midterm']="red"; break;
+               			}
+               			switch (round($rrd_info['ds[longterm].last_ds'],0)) {
+                  			case 0: $class['longterm']="green"; break;
+                  			case 1: $class['longterm']="orange"; break;
+                  			default : $class['longterm']="red"; break;
+               			}
+
+
+				printf('<td class="%2$s">%1.2f</td>', $rrd_info['ds[shortterm].last_ds'], $class['shortterm']);
+				printf('<td class="%2$s">%1.2f</td>', $rrd_info['ds[midterm].last_ds'], $class['midterm']);
+				printf('<td class="%2$s">%1.2f</td>', $rrd_info['ds[longterm].last_ds'], $class['longterm']);
 			}
 		}
 

@@ -11,7 +11,9 @@ $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
 html_start();
 
-printf('<h2>%s</h2>'."\n", $host);
+printf("<fieldset id=\"%s\"/>", $host);
+printf("<legend>%s</legend>", $host);
+
 
 $plugins = collectd_plugins($host);
 
@@ -30,6 +32,7 @@ foreach ($selected_plugins as $selected_plugin) {
 	}
 }
 echo '</div>';
+printf("</fieldset>");
 
 html_end();
 
