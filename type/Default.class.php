@@ -218,8 +218,8 @@ class Type_Default {
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
 		$rrdgraph[] = '-l 0';
-		$rrdgraph[] = sprintf('-t "%s on %s"', $this->rrd_title, $this->args['host']);
-		$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
+		$rrdgraph[] = sprintf('-t \'%s on %s\'', $this->rrd_title, $this->args['host']);
+		$rrdgraph[] = sprintf('-v \'%s\'', $this->rrd_vertical);
 		$rrdgraph[] = sprintf('-s e-%d', is_numeric($this->seconds) ? $this->seconds : 86400);
 
 		return $rrdgraph;
