@@ -3,27 +3,37 @@
 # Collectd aggregation plugin
 
 require_once 'conf/common.inc.php';
+require_once 'type/Default.class.php';
 require_once 'type/GenericStacked.class.php';
 require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
-# aggregation-XXXX-YYYYY/
 #
-# Layout for aggregation of "cpu" plugin:
-# aggregation-cpu-YYYYY/cpu-idle.rrd
-# aggregation-cpu-YYYYY/cpu-interrupt.rrd
-# aggregation-cpu-YYYYY/cpu-nice.rrd
-# aggregation-cpu-YYYYY/cpu-softirq.rrd
-# aggregation-cpu-YYYYY/cpu-steal.rrd
-# aggregation-cpu-YYYYY/cpu-system.rrd
-# aggregation-cpu-YYYYY/cpu-user.rrd
-# aggregation-cpu-YYYYY/cpu-wait.rrd
+# collectd, by default, creates the aggregation RRDs in the following pattern:
+# /(basedir)/(hostname)/aggregation-(type)-(instance)/(type)-(datasources).rrd
+# 
+# Examples (aggregation of multiple CPUs in a single host):
+#
+# collectd configuration:
+# <Plugin "aggregation">
+#  <Aggregation>
+#    Host "athens"
+#    Plugin "cpu"
+#    Type "cpu"
+#    GroupBy "Host"
+#    GroupBy "TypeInstance"
+#	 CalculateSum true
+# 	 CalculateAverage true
+#	 </Aggregation>
+# </Plugin>
+#
+# Produces filenames like:
+# /rrdcollectd/athens/aggregation-cpu-average/cpu-idle.rrd
+# /rrdcollectd/athens/aggregation-cpu-average/cpu-user.rrd
+# /rrdcollectd/athens/aggregation-cpu-average/cpu-wait.rrd
+# /rrdcollectd/athens/aggregation-cpu-average/cpu-system.rrd
 
-$obj = new Type_Default($CONFIG);
-$obj->ds_names = array(
-	'value' => 'Value',
-);
-switch($obj->args['type']) {
+switch(GET('t')) {
 	case 'cpu':
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->data_sources = array('value');
@@ -52,8 +62,9 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Jiffies';
 		$obj->rrd_format = '%5.2lf';
 		$obj->rrdtool_opts .= ' -u 100';
+
+		collectd_flush($obj->identifiers);
+		$obj->rrd_graph();
 	break;
 }
 
-collectd_flush($obj->identifiers);
-$obj->rrd_graph();
