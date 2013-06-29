@@ -291,9 +291,9 @@ class Type_Default {
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:min_%s%s=%s:%s:MIN', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:avg_%s%s=%s:%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s%s=%s:%s:MAX', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:min_%s%s="%s":%s:MIN', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s%s="%s":%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s%s="%s":%s:MAX', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
 				$i++;
 			}
 		}
