@@ -18,15 +18,6 @@ $CONFIG['rrdtool_opts'] = '';
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
-# auto-refresh of overview page, in seconds (if set to >0)
-$CONFIG['overview_refresh'] = 180;
-
-# auto-refresh of graphs on the host page, in seconds (if set to >0)
-$CONFIG['host_graphs_refresh'] = 120;
-
-# auto-refresh of graphs on the detailed view page, in seconds (if set to >0)
-$CONFIG['detail_graphs_refresh'] = 60;
-
 # example of filter to show only the if_octets of eth0 on host page
 # (interface must be enabled in the overview config array)
 #$CONFIG['overview_filter']['interface'] = array('ti' => 'eth0', 't' => 'if_octets');
@@ -62,6 +53,17 @@ $CONFIG['graph_smooth'] = false;
 
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
+
+# auto-refresh of overview page, in seconds (if set to >0)
+$CONFIG['overview_refresh'] = 120;
+
+# auto-refresh of graphs on the host page, in seconds (if set to >0)
+# NOT USED CURRENTLY
+$CONFIG['host_graphs_refresh'] = 90;
+
+# auto-refresh of graphs on the detailed view page, in seconds (if set to >0)
+# Note that this value can conflict with the cache value and both should be identical
+$CONFIG['detail_graphs_refresh'] = 15;
 
 # default width/height of the graphs
 $CONFIG['width'] = 400;
