@@ -234,6 +234,14 @@ class Type_Default {
 			$rrdgraph[] = $this->rrdtool_opts;
 		if ($this->graph_smooth)
 			$rrdgraph[] = '-E';
+		
+		# In the case of SVG files, we will want to have rrdgraph generate it at a higher "resolution"
+		# Then use a width= attribute in the <img> tag to scale it to the desired width
+		if ($this->graph_type == 'svg') {
+			$svg_factor = 1.15;
+			$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? ($this->width*$svg_factor) : 400*$svg_factor);
+			$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth*$svg_factor : 175*$svg_factor);
+		} else {
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
 		$rrdgraph[] = '-l 0'; # set --interlaced option to OFF

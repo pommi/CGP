@@ -52,7 +52,21 @@ if ($CONFIG['graph_type'] == 'canvas') {
 	chdir($CONFIG['webdir']);
 	include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
 } else {
-	printf('<img class="rrd_graph" src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+	if ($CONFIG['graph_type'] == 'svg') {
+		// In order to get SVG images that are approximately the same size as PNG images, using the same
+		// $CONFIG['detail-width'] setting, we need to adjust the SVG width up by 1.114x.
+		// With a detail-width of 850, SVG files display as exactly 850px while PNG displays as 947px wide.
+		$svg_upscale_magic_number = 1.114;
+		$img_width = sprintf('width="%s"', (is_numeric($CONFIG['detail-width']) ? ($CONFIG['detail-width']) : 400) * $svg_upscale_magic_number);
+	} else {
+		$img_width = '';
+	}
+	printf('<img class="rrd_graph" src="%s%s" %s>'."\n", 
+		$CONFIG['weburl'], 
+		build_url('graph.php', 
+		$_GET),
+		$img_width
+	);
 }
 echo '</div>';
 echo "</fieldset>\n";
