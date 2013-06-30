@@ -19,7 +19,13 @@ $CONFIG['rrdtool_opts'] = '';
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
 # auto-refresh of overview page, in seconds (if set to >0)
-$CONFIG['overview_refresh'] = 60;
+$CONFIG['overview_refresh'] = 180;
+
+# auto-refresh of graphs on the host page, in seconds (if set to >0)
+$CONFIG['host_graphs_refresh'] = 120;
+
+# auto-refresh of graphs on the detailed view page, in seconds (if set to >0)
+$CONFIG['detail_graphs_refresh'] = 60;
 
 # example of filter to show only the if_octets of eth0 on host page
 # (interface must be enabled in the overview config array)
