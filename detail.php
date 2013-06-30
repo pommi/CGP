@@ -57,19 +57,24 @@ if ($CONFIG['graph_type'] == 'canvas') {
 		// $CONFIG['detail-width'] setting, we need to adjust the SVG width up by 1.114x.
 		// With a detail-width of 850, SVG files display as exactly 850px while PNG displays as 947px wide.
 		$svg_upscale_magic_number = 1.114;
-		$img_width = sprintf('width="%s"', (is_numeric($CONFIG['detail-width']) ? ($CONFIG['detail-width']) : 400) * $svg_upscale_magic_number);
+		$img_width = sprintf(' width="%s"', (is_numeric($CONFIG['detail-width']) ? ($CONFIG['detail-width']) : 400) * $svg_upscale_magic_number);
 	} else {
 		$img_width = '';
 	}
-	printf('<img class="rrd_graph" src="%s%s" %s>'."\n", 
-		$CONFIG['weburl'], 
-		build_url('graph.php', 
-		$_GET),
+	$graph_url = $CONFIG['weburl'] . build_url('graph.php', $_GET);
+	# Basic version of refreshing the detail page graph, horribly hackish but it works, hard-coded to be 10s 
+	printf('<script>$(document).ready(function() { setInterval(function rrdGraphRefresh(){ console.log(\'refresh\'); $(\'#detailRRDGraph\').attr(\'src\', \'%s\' + \'&_ts=\' + new Date().getTime()); }, 10000); });</script>'."\n", 
+		$graph_url
+	);  
+	printf('<img class="rrd_graph" id="detailRRDGraph" src="%s"%s>'."\n", 
+		$graph_url, 
 		$img_width
 	);
 }
 echo '</div>';
 echo "</fieldset>\n";
+
+
 
 html_end();
 

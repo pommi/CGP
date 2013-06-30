@@ -96,6 +96,8 @@ EOT;
 EOT;
 	}
 
+	html_jquery_include();
+		
 echo <<<EOT
 </head>
 <body>
@@ -143,7 +145,6 @@ EOT;
 EOT;
 	}
 	
-	html_jquery_include();
 echo <<<EOT
 </body>
 </html>
