@@ -58,8 +58,9 @@ function html_jquery_include() {
 
 /**
  * Called at the top of every page to generate the HTML !DOCTYPE, header, the opening body tag, etc. 
+ * - $meta_refresh_period (seconds) if >0 then insert meta refresh tag
  */
-function html_start() {
+function html_start($meta_refresh_period = 0) {
 	global $CONFIG;
 
 	$path = htmlentities(breadcrumbs());
@@ -75,6 +76,10 @@ function html_start() {
 
 EOT;
 
+	if ((is_numeric($meta_refresh_period)) && ($meta_refresh_period > 0)) {
+		printf('<meta http-equiv="refresh" content="%s">', $meta_refresh_period);
+	}
+	
 	if ($CONFIG['graph_type'] == 'canvas') {
 		echo <<<EOT
 	<script type="text/javascript" src="{$CONFIG['weburl']}js/sprintf.js"></script>
