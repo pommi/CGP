@@ -177,7 +177,7 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
 			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
 		} else {
-			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
+			printf('<a href="%s%s"><img class="rrd_graph" src="%s%s"></a>'."\n",
 				$CONFIG['weburl'],
 				build_url('detail.php', $items, $time),
 				$CONFIG['weburl'],
