@@ -218,7 +218,17 @@ class Type_Default {
 	function rrd_options() {
 		if ($this->graph_type != 'canvas') {
 			$rrdgraph[] = $this->rrdtool;
+			
+			switch($this->graph_type) {
+				case 'png':
 			$rrdgraph[] = 'graph - -a PNG';
+					break;
+				case 'svg':
+					$rrdgraph[] = 'graph - -a SVG';
+					break;
+				default:
+					$this->graph_type = 'debug';
+					return;
 		}
 		if ($this->rrdtool_opts != '')
 			$rrdgraph[] = $this->rrdtool_opts;
