@@ -39,7 +39,7 @@ switch($pi[0]) {
 		$obj->rrd_title = 'CPU usage';
 		$obj->rrd_title = sprintf('CPU usage (%s)', $pi[1]);
 		$obj->rrd_vertical = 'Jiffies';
-		$obj->rrd_format = '%5.2lf';
+		$obj->rrd_format = '%7.2lf';
 		$obj->rrdtool_opts .= ' -u 100';
 
 		collectd_flush($obj->identifiers);
