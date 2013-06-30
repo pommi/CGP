@@ -229,6 +229,7 @@ class Type_Default {
 				default:
 					$this->graph_type = 'debug';
 					return;
+			}
 		}
 		if ($this->rrdtool_opts != '')
 			$rrdgraph[] = $this->rrdtool_opts;
