@@ -7,7 +7,11 @@ require_once 'inc/rrdtool.class.php';
 require_once 'inc/functions.inc.php';
 require_once 'inc/collectd.inc.php';
 
-function html_start() {
+/**
+ * Called at the top of every page to generate the HTML !DOCTYPE, header, the opening body tag, etc. 
+ * - $meta_refresh_period (seconds) if >0 then insert meta refresh tag
+ */
+function html_start($meta_refresh_period = 0) {
 	global $CONFIG;
 
 	$path = htmlentities(breadcrumbs());
@@ -23,6 +27,10 @@ function html_start() {
 
 EOT;
 
+	if ((is_numeric($meta_refresh_period)) && ($meta_refresh_period > 0)) {
+		printf('<meta http-equiv="refresh" content="%s">', $meta_refresh_period);
+	}
+	
 	if ($CONFIG['graph_type'] == 'canvas') {
 		echo <<<EOT
 	<script type="text/javascript" src="{$CONFIG['weburl']}js/sprintf.js"></script>
@@ -52,6 +60,9 @@ echo <<<EOT
 EOT;
 }
 
+/**
+ * Called at the bottom of every page to close up the body tag and include any 3rd party scripts.
+ */
 function html_end() {
 	global $CONFIG;
 
