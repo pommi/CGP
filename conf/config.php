@@ -66,6 +66,12 @@ $CONFIG['detail-heigth'] = 350;
 # disabled: NULL
 $CONFIG['socket'] = NULL;
 
+# Change this if you are going to host jQuery files locally, otherwise they will be pulled from a global CDN.
+$CONFIG['jquery_path'] = NULL;
+# Do you want to only use your locally hosted jQuery file if the CDN version does not load?
+$CONFIG['jquery_path_fallbackonly'] = false;
+# Use the "minified" version of the jquery file?  This should be set to true in most cases, unless you are debugging jQuery.
+$CONFIG['jquery_useminified'] = true;
 
 # load local configuration
 if (file_exists(dirname(__FILE__).'/config.local.php'))
