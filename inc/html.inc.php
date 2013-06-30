@@ -147,7 +147,6 @@ EOT;
 
 function plugin_header($host, $plugin) {
 	global $CONFIG;
-	debugMsgLine(sprintf('function plugin_header($host=[%s], $plugin=[%s])',$host, $plugin));
 
 	return printf("<h2><a href='%shost.php?h=%s&p=%s'>%s</a></h2>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
 }
