@@ -200,7 +200,6 @@ class Type_Default {
 					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
 				header("content-type: image/svg+xml");
 				$graphdata = implode(' ', $graphdata);
-				debugMsgLine(sprintf('imploded() $graphdata=[%s]',$graphdata));
 				echo `$graphdata`;
 			break;			
 			case 'png':
