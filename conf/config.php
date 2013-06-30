@@ -43,7 +43,6 @@ $CONFIG['term'] = array(
 $CONFIG['network_datasize'] = 'bytes';
 
 # Display graphs as png, svg or canvas
-# Note that svg graph dimensions are defined in "points" (pt) and not pixels, so svg image sizes will be different then png
 $CONFIG['graph_type'] = 'png';
 
 # use the negative X-axis in I/O graphs
