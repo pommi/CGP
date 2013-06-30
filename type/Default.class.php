@@ -263,21 +263,21 @@ class Type_Default {
 		# fill ds_names if not defined by plugin
 		if (!is_array($this->ds_names))
 			$this->ds_names = array_combine($sources, $sources);
-
-		# detect length of longest ds_name
-		$max = 0;
-		foreach ($this->ds_names as $ds_name) {
-			if(strlen((string)$ds_name) > $max)
-				$max = strlen((string)$ds_name);
-		}
-
-		# make all ds_names equal in lenght
-		$format = sprintf("%%-%ds", $max);
-		foreach ($this->ds_names as $index => $value) {
-			$this->ds_names[$index] = sprintf($format, $value);
-		}
 	}
-
+	
+	function create_sprintf_label_padding_format($sources) {
+		# get maximum label length for the LINE1 statement
+		$max_label_length = 0;
+		foreach ($sources as $source) {
+			$dsname = isset($this->ds_names[$source]) ? $this->ds_names[$source] : $source;
+			$label_length = strlen((string)$dsname);
+			if($label_length > $max_label_length)
+				$max_label_length = $label_length;
+		}
+		# setup sprintf() pattern to make all labels same displayed length
+		return sprintf("%%-%ds", $max_label_length);
+	}
+	
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
 
@@ -319,11 +319,12 @@ class Type_Default {
 			}
 		}
 
+		$label_format = $this->create_sprintf_label_padding_format($sources);
 		$c = 0;
 		foreach ($sources as $source) {
 			$dsname = isset($this->ds_names[$source]) ? $this->ds_names[$source] : $source;
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-			$rrdgraph[] = sprintf('"LINE1:avg_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
+			$rrdgraph[] = sprintf('"LINE1:avg_%s#%s:%s"', crc32hex($source), $this->validate_color($color), sprintf($label_format, $this->rrd_escape($dsname)));
 			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);

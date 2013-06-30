@@ -47,11 +47,12 @@ class Type_GenericStacked extends Type_Default {
 			$rrdgraph[] = sprintf('AREA:area_%s#%s', crc32hex($source), $color);
 		}
 
+		$label_format = $this->create_sprintf_label_padding_format($sources);
 		$c = 0;
 		foreach ($sources as $source) {
 			$dsname = isset($this->ds_names[$source]) ? $this->ds_names[$source] : $source;
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
-			$rrdgraph[] = sprintf('"LINE1:area_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
+			$rrdgraph[] = sprintf('"LINE1:area_%s#%s:%s"', crc32hex($source), $this->validate_color($color), sprintf($label_format, $this->rrd_escape($dsname)));
 			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);
