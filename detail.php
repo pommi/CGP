@@ -62,10 +62,28 @@ if ($CONFIG['graph_type'] == 'canvas') {
 		$img_width = '';
 	}
 	$graph_url = $CONFIG['weburl'] . build_url('graph.php', $_GET);
-	# Basic version of refreshing the detail page graph, horribly hackish but it works, hard-coded to be 10s 
-	printf('<script>$(document).ready(function() { setInterval(function rrdGraphRefresh(){ console.log(\'refresh\'); $(\'#detailRRDGraph\').attr(\'src\', \'%s\' + \'&_ts=\' + new Date().getTime()); }, 10000); });</script>'."\n", 
-		$graph_url
-	);  
+	# Get the aggressiveness value, verify that it falls within 0-1000 
+	if (isset($CONFIG['detail_graphs_refresh_aggressiveness']) && is_numeric($CONFIG['detail_graphs_refresh_aggressiveness'] )) {
+		if ($CONFIG['detail_graphs_refresh_aggressiveness'] < 0) $CONFIG['detail_graphs_refresh_aggressiveness'] = 0;
+		if ($CONFIG['detail_graphs_refresh_aggressiveness'] > 1000) $CONFIG['detail_graphs_refresh_aggressiveness'] = 1000;
+	} else {
+		$CONFIG['detail_graphs_refresh_aggressiveness'] = 400;
+	}
+	# Get seconds duration off of GET URL, or use default
+	if (isset($_GET['s']) && is_numeric($_GET['s'])) {
+		$duration_seconds = $_GET['s'];
+	} else {
+		$duration_seconds = $CONFIG['time_range']['default'];
+	}
+	# sanity check on graph duration (minimum of 60 seconds)
+	if ($duration_seconds < 60) $duration_seconds = 60;
+	# If the aggressiveness value > 0, then we can use it to calculate the refresh rate (in milliseconds)
+	if ($CONFIG['detail_graphs_refresh_aggressiveness'] > 0) {
+		printf('<script>$(document).ready(function() { setInterval(function rrdGraphRefresh(){ console.log(\'refresh\'); $(\'#detailRRDGraph\').attr(\'src\', \'%s\' + \'&_ts=\' + new Date().getTime()); }, %d); });</script>'."\n", 
+			$graph_url
+			($duration_seconds * 1000) / $CONFIG['detail_graphs_refresh_aggressiveness']
+		);
+	}
 	printf('<img class="rrd_graph" id="detailRRDGraph" src="%s"%s>'."\n", 
 		$graph_url, 
 		$img_width
