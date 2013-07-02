@@ -8,6 +8,55 @@ require_once 'inc/functions.inc.php';
 require_once 'inc/collectd.inc.php';
 
 /**
+ * Generates the script tag to include a javascript file.  
+ * - If $path has no leading slash, inclusion is done relative to $CONFIG['webdir']
+ * - If $path has a leading slash or starts with 'http', inclusion is done as-is
+ */
+function html_javascript_include($js_url) {
+	# Sample: <script src="//code.jquery.com/jquery-2.0.0.min.js"></script>
+	# TODO: Do we need to check for leading slash or 'http' at the front?
+	printf('<script src="%s"></script>', $js_url);	
+	echo "\n";
+}
+
+function html_jquery_include() {	
+	# http://stackoverflow.com/questions/1014203/best-way-to-use-googles-hosted-jquery-but-fall-back-to-my-hosted-library-on-go
+	
+	if (!isset($CONFIG['jquery_useminified'])) $CONFIG['jquery_useminified'] = true;
+	if (!isset($CONFIG['jquery_path_fallbackonly'])) $CONFIG['jquery_path_fallbackonly'] = false;
+
+	# Global CDN (content delivery network) source for jQuery files
+	# http://code.jquery.com/jquery-2.0.1.min.js
+	# http://code.jquery.com/jquery-2.0.1.js
+	$jquery_cdn_url = 'http://code.jquery.com/jquery-';
+	$jquery_version = '2.0.2';
+	
+	# Build global CDN URL
+	$jquery_cdn_path = $jquery_cdn_url . $jquery_version;
+	# TODO: The following fragment doesn't work, it always tacks on '.min' no matter what
+#	if ($CONFIG['jquery_useminified']) {
+#		$jquery_cdn_path .= '.min';
+#	}
+	$jquery_cdn_path .= '.js';
+	
+	if (isset($CONFIG['jquery_path'])) {
+		# If $CONFIG['jquery_path'] has been set		
+		if ($CONFIG['jquery_path_fallbackonly']) {
+			# If $CONFIG['jquery_path_fallbackonly'] is true, then we should attempt to use the CDN version first.
+			html_javascript_include($jquery_cdn_path);
+			printf('<script>if (!window.jQuery) { document.write(\'<script src="%s"><\/script>\'); }</script>', $CONFIG['jquery_path']);
+			echo "\n";
+		} else {
+			# Else we should only use the locally hosted
+			html_javascript_include($CONFIG['jquery_path']);
+		}
+	} else {
+		# Else we use only the CDN version
+		html_javascript_include($jquery_cdn_path);
+	}
+}
+
+/**
  * Called at the top of every page to generate the HTML !DOCTYPE, header, the opening body tag, etc. 
  * - $meta_refresh_period (seconds) if >0 then insert meta refresh tag
  */
@@ -47,6 +96,8 @@ EOT;
 EOT;
 	}
 
+	html_jquery_include();
+		
 echo <<<EOT
 </head>
 <body>
@@ -93,7 +144,7 @@ EOT;
 
 EOT;
 	}
-
+	
 echo <<<EOT
 </body>
 </html>

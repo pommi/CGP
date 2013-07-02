@@ -57,19 +57,54 @@ if ($CONFIG['graph_type'] == 'canvas') {
 		// $CONFIG['detail-width'] setting, we need to adjust the SVG width up by 1.114x.
 		// With a detail-width of 850, SVG files display as exactly 850px while PNG displays as 947px wide.
 		$svg_upscale_magic_number = 1.114;
-		$img_width = sprintf('width="%s"', (is_numeric($CONFIG['detail-width']) ? ($CONFIG['detail-width']) : 400) * $svg_upscale_magic_number);
+		$img_width = sprintf(' width="%s"', (is_numeric($CONFIG['detail-width']) ? ($CONFIG['detail-width']) : 400) * $svg_upscale_magic_number);
 	} else {
 		$img_width = '';
 	}
-	printf('<img class="rrd_graph" src="%s%s" %s>'."\n", 
-		$CONFIG['weburl'], 
-		build_url('graph.php', 
-		$_GET),
+	$graph_url = $CONFIG['weburl'] . build_url('graph.php', $_GET);
+
+	# Get seconds duration off of GET URL, or use default
+	if (isset($_GET['s']) && is_numeric($_GET['s'])) {
+		$duration_seconds = $_GET['s'];
+	} else {
+		$duration_seconds = $CONFIG['time_range']['default'];
+	}
+	# sanity check on graph duration (minimum of 60 seconds)
+	if ($duration_seconds < 60) $duration_seconds = 60;
+	
+	# Get the aggressiveness value, verify that it falls within 0-1000 
+	if (isset($CONFIG['detail_graphs_refresh_aggressiveness']) && is_numeric($CONFIG['detail_graphs_refresh_aggressiveness'] )) {
+		if ($CONFIG['detail_graphs_refresh_aggressiveness'] < 0) $CONFIG['detail_graphs_refresh_aggressiveness'] = 0;
+		if ($CONFIG['detail_graphs_refresh_aggressiveness'] > 1000) $CONFIG['detail_graphs_refresh_aggressiveness'] = 1000;
+	} else {
+		$CONFIG['detail_graphs_refresh_aggressiveness'] = 400;
+	}
+
+	# If the aggressiveness value > 0, then we can use it to calculate the refresh rate (in milliseconds)
+	if ($CONFIG['detail_graphs_refresh_aggressiveness'] > 0) {
+		# Calculate refresh rate (in msec)
+		$graph_refresh_time_msec = ($duration_seconds * 1000) / $CONFIG['detail_graphs_refresh_aggressiveness'];
+		# Cache time should be <= refresh time
+		if (isset($CONFIG['cache']) && is_numeric($CONFIG['cache'])) {
+			if ($CONFIG['cache'] > ($graph_refresh_time_msec/1000)) $CONFIG['cache'] = intval($graph_refresh_time_msec/1000);
+		}
+		# create the refresh script for this graph
+		printf('<script>$(document).ready(function() { setInterval(function rrdGraphRefresh(){ console.log(\'refresh\'); $(\'#detailRRDGraph\').attr(\'src\', \'%s\' + \'&_ts=\' + new Date().getTime()); }, %d); });</script>'."\n", 
+			$graph_url,
+			$graph_refresh_time_msec
+		);
+	}
+	
+	# Generate the graph image tag
+	printf('<img class="rrd_graph" id="detailRRDGraph" src="%s"%s>'."\n", 
+		$graph_url, 
 		$img_width
 	);
 }
 echo '</div>';
 echo "</fieldset>\n";
+
+
 
 html_end();
 
