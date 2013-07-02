@@ -57,13 +57,14 @@ $CONFIG['cache'] = 90;
 # auto-refresh of overview page, in seconds (if set to >0)
 $CONFIG['overview_refresh'] = 120;
 
-# auto-refresh of graphs on the host page, in seconds (if set to >0)
-# NOT USED CURRENTLY
-$CONFIG['host_graphs_refresh'] = 90;
+# How fast should the graphs on the host page be refreshed.
+# Used to calculate refresh_seconds = (graph time range) / (aggresiveness)
+# Higher values result in more frequent refreshes of the graphs.
+# Set to 0 for no auto-refresh or a value between 1-1000.
+$CONFIG['host_graphs_refresh_aggressiveness'] = 200;
 
-# auto-refresh of graphs on the detailed view page, in seconds (if set to >0)
-# Note that this value can conflict with the cache value and both should be identical
-$CONFIG['detail_graphs_refresh'] = 15;
+# How fast should the graphs on the detail page be refreshed.
+$CONFIG['detail_graphs_refresh_aggressiveness'] = 400;
 
 # default width/height of the graphs
 $CONFIG['width'] = 400;
