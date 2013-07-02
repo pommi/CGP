@@ -4,7 +4,7 @@ include_once 'conf/common.inc.php';
 include_once 'inc/collectd.inc.php';
 require_once 'inc/html.inc.php';
 
-html_start();
+html_start($CONFIG['overview_refresh']);
 
 $h = array();
 

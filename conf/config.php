@@ -18,6 +18,9 @@ $CONFIG['rrdtool_opts'] = '';
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
+# auto-refresh of overview page, in seconds (if set to >0)
+$CONFIG['overview_refresh'] = 5;
+
 # example of filter to show only the if_octets of eth0 on host page
 # (interface must be enabled in the overview config array)
 #$CONFIG['overview_filter']['interface'] = array('ti' => 'eth0', 't' => 'if_octets');
@@ -42,7 +45,7 @@ $CONFIG['term'] = array(
 # show graphs in bits or bytes
 $CONFIG['network_datasize'] = 'bytes';
 
-# png or canvas graphs
+# Display graphs as png, svg or canvas
 $CONFIG['graph_type'] = 'png';
 
 # use the negative X-axis in I/O graphs
@@ -53,6 +56,18 @@ $CONFIG['graph_smooth'] = false;
 
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
+
+# auto-refresh of overview page, in seconds (if set to >0)
+$CONFIG['overview_refresh'] = 120;
+
+# How fast should the graphs on the host page be refreshed.
+# Used to calculate refresh_seconds = (graph time range) / (aggresiveness)
+# Higher values result in more frequent refreshes of the graphs.
+# Set to 0 for no auto-refresh or a value between 1-1000.
+$CONFIG['host_graphs_refresh_aggressiveness'] = 200;
+
+# How fast should the graphs on the detail page be refreshed.
+$CONFIG['detail_graphs_refresh_aggressiveness'] = 400;
 
 # default width/height of the graphs
 $CONFIG['width'] = 400;
@@ -66,6 +81,12 @@ $CONFIG['detail-heigth'] = 350;
 # disabled: NULL
 $CONFIG['socket'] = NULL;
 
+# Change this if you are going to host jQuery files locally, otherwise they will be pulled from a global CDN.
+$CONFIG['jquery_path'] = NULL;
+# Do you want to only use your locally hosted jQuery file if the CDN version does not load?
+$CONFIG['jquery_path_fallbackonly'] = false;
+# Use the "minified" version of the jquery file?  This should be set to true in most cases, unless you are debugging jQuery.
+$CONFIG['jquery_useminified'] = true;
 
 # load local configuration
 if (file_exists(dirname(__FILE__).'/config.local.php'))

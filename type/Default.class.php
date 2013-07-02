@@ -194,6 +194,14 @@ class Type_Default {
 				print_r($graphdata);
 				print '</pre>';
 			break;
+			case 'svg':
+				# caching
+				if (is_numeric($this->cache) && $this->cache > 0)
+					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
+				header("content-type: image/svg+xml");
+				$graphdata = implode(' ', $graphdata);
+				echo `$graphdata`;
+			break;			
 			case 'png':
 			default:
 				# caching
@@ -209,18 +217,39 @@ class Type_Default {
 	function rrd_options() {
 		if ($this->graph_type != 'canvas') {
 			$rrdgraph[] = $this->rrdtool;
-			$rrdgraph[] = 'graph - -a PNG';
+			
+			switch($this->graph_type) {
+				case 'png':
+					$rrdgraph[] = 'graph - -a PNG';
+					break;
+				case 'svg':
+					$rrdgraph[] = 'graph - -a SVG';
+					break;
+				default:
+					$this->graph_type = 'debug';
+					return;
+			}
 		}
 		if ($this->rrdtool_opts != '')
 			$rrdgraph[] = $this->rrdtool_opts;
 		if ($this->graph_smooth)
 			$rrdgraph[] = '-E';
+		
+		# In the case of SVG files, we will want to have rrdgraph generate it at a higher "resolution"
+		# Then use a width= attribute in the <img> tag to scale it to the desired width
+		if ($this->graph_type == 'svg') {
+			$svg_factor = 1.15;
+			$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? ($this->width*$svg_factor) : 400*$svg_factor);
+			$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth*$svg_factor : 175*$svg_factor);
+		} else {
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
-		$rrdgraph[] = '-l 0';
-		$rrdgraph[] = sprintf('-t "%s on %s"', $this->rrd_title, $this->args['host']);
-		$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
-		$rrdgraph[] = sprintf('-s e-%d', is_numeric($this->seconds) ? $this->seconds : 86400);
+		}
+		
+		$rrdgraph[] = '-l 0'; # set --interlaced option to OFF
+		$rrdgraph[] = sprintf('-t \'%s on %s\'', $this->rrd_title, $this->args['host']);
+		$rrdgraph[] = sprintf('-v \'%s\'', $this->rrd_vertical);
+		$rrdgraph[] = sprintf('-s e-%d', is_numeric($this->seconds) ? $this->seconds : 86400);		
 
 		return $rrdgraph;
 	}
@@ -263,21 +292,21 @@ class Type_Default {
 		# fill ds_names if not defined by plugin
 		if (!is_array($this->ds_names))
 			$this->ds_names = array_combine($sources, $sources);
-
-		# detect length of longest ds_name
-		$max = 0;
-		foreach ($this->ds_names as $ds_name) {
-			if(strlen((string)$ds_name) > $max)
-				$max = strlen((string)$ds_name);
-		}
-
-		# make all ds_names equal in lenght
-		$format = sprintf("%%-%ds", $max);
-		foreach ($this->ds_names as $index => $value) {
-			$this->ds_names[$index] = sprintf($format, $value);
-		}
 	}
-
+	
+	function create_sprintf_label_padding_format($sources) {
+		# get maximum label length for the LINE1 statement
+		$max_label_length = 0;
+		foreach ($sources as $source) {
+			$dsname = isset($this->ds_names[$source]) ? $this->ds_names[$source] : $source;
+			$label_length = strlen((string)$dsname);
+			if($label_length > $max_label_length)
+				$max_label_length = $label_length;
+		}
+		# setup sprintf() pattern to make all labels same displayed length
+		return sprintf("%%-%ds", $max_label_length);
+	}
+	
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
 
@@ -291,9 +320,9 @@ class Type_Default {
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {
-				$rrdgraph[] = sprintf('DEF:min_%s%s=%s:%s:MIN', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:avg_%s%s=%s:%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
-				$rrdgraph[] = sprintf('DEF:max_%s%s=%s:%s:MAX', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:min_%s%s=\'%s\':%s:MIN', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:avg_%s%s=\'%s\':%s:AVERAGE', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
+				$rrdgraph[] = sprintf('DEF:max_%s%s=\'%s\':%s:MAX', crc32hex($sources[$i]), $raw, $this->parse_filename($this->files[$tinstance]), $ds);
 				$i++;
 			}
 		}
@@ -301,9 +330,9 @@ class Type_Default {
 			$i=0;
 			foreach ($this->tinstances as $tinstance) {
 				foreach ($this->data_sources as $ds) {
-					$rrdgraph[] = sprintf('CDEF:min_%s=min_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
-					$rrdgraph[] = sprintf('CDEF:avg_%s=avg_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
-					$rrdgraph[] = sprintf('CDEF:max_%s=max_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
+					$rrdgraph[] = sprintf('\'CDEF:min_%s=min_%1$s_raw,%s,*\'', crc32hex($sources[$i]), $this->scale);
+					$rrdgraph[] = sprintf('\'CDEF:avg_%s=avg_%1$s_raw,%s,*\'', crc32hex($sources[$i]), $this->scale);
+					$rrdgraph[] = sprintf('\'CDEF:max_%s=max_%1$s_raw,%s,*\'', crc32hex($sources[$i]), $this->scale);
 					$i++;
 				}
 			}
@@ -313,21 +342,22 @@ class Type_Default {
 			$c = 0;
 			foreach ($sources as $source) {
 				$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-				$rrdgraph[] = sprintf('AREA:max_%s#%s', crc32hex($source), $this->get_faded_color($color));
-				$rrdgraph[] = sprintf('AREA:min_%s#%s', crc32hex($source), 'ffffff');
+				$rrdgraph[] = sprintf('\'AREA:max_%s#%s\'', crc32hex($source), $this->get_faded_color($color));
+				$rrdgraph[] = sprintf('\'AREA:min_%s#%s\'', crc32hex($source), 'ffffff');
 				break; # only 1 area to draw
 			}
 		}
 
+		$label_format = $this->create_sprintf_label_padding_format($sources);
 		$c = 0;
 		foreach ($sources as $source) {
-			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
+			$dsname = isset($this->ds_names[$source]) ? $this->ds_names[$source] : $source;
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-			$rrdgraph[] = sprintf('"LINE1:avg_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
-			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:avg_%s:LAST:%s Last\\l"', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('\'LINE1:avg_%s#%s:%s\'', crc32hex($source), $this->validate_color($color), sprintf($label_format, $this->rrd_escape($dsname)));
+			$rrdgraph[] = sprintf('\'GPRINT:min_%s:MIN:%s Min,\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('\'GPRINT:avg_%s:AVERAGE:%s Avg,\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('\'GPRINT:max_%s:MAX:%s Max,\'', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('\'GPRINT:avg_%s:LAST:%s Last\\l\'', crc32hex($source), $this->rrd_format);
 		}
 
 		return $rrdgraph;

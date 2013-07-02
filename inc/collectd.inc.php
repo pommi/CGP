@@ -177,11 +177,18 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
 			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
 		} else {
-			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
+			if ($CONFIG['graph_type'] == 'svg') {
+				$svg_upscale_magic_number = 1.114;
+				$img_width = sprintf('width="%s"', (is_numeric($CONFIG['detail-width']) ? ($CONFIG['detail-width']) : 400) * $svg_upscale_magic_number);
+			} else {
+				$img_width = '';
+			}
+			printf('<a href="%s%s"><img class="rrd_graph" src="%s%s" %s></a>'."\n",
 				$CONFIG['weburl'],
 				build_url('detail.php', $items, $time),
 				$CONFIG['weburl'],
-				build_url('graph.php', $items, $time)
+				build_url('graph.php', $items, $time),
+				$img_width
 			);
 		}
 	}
