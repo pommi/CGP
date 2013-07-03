@@ -27,12 +27,11 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Milliseconds';
 		break;
 	case 'ping_stddev':
-		$obj->rrd_title = 'Ping stddev';
-		$obj->rrd_vertical = '';
+		$obj->rrd_title = 'Ping standard deviation';
+		$obj->rrd_vertical = 'Milliseconds';
 		break;
 	case 'ping_droprate':
 		$obj->rrd_title = 'Ping droprate';
-		$obj->rrd_vertical = '';
 		break;
 }
 
