@@ -111,7 +111,13 @@ class Type_Default {
 	}
 
 	function rrd_escape($value) {
-		return str_replace(':', '\:', $value);
+		if ($this->graph_type == 'canvas') {
+			# http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html#IEscaping_the_colon
+			return str_replace(':', '\:', $value);
+		} else {
+			# php needs it double escaped to execute rrdtool correctly
+			return str_replace(':', '\\\:', $value);
+		}
 	}
 
 	function parse_filename($file) {
