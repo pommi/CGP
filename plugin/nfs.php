@@ -24,8 +24,6 @@ switch($obj->args['pinstance']) {
 	break;
 }
 
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 $obj->rrd_title = sprintf('NFS-%s Procedures', $obj->args['pinstance']);
 $obj->rrd_vertical = 'Procedures';

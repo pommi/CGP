@@ -14,8 +14,6 @@ require_once 'inc/collectd.inc.php';
 # vmem/vmpage_number-<type>.rrd
 
 $obj = new Type_GenericStacked($CONFIG);
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {

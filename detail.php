@@ -17,15 +17,14 @@ $pinstance = validate_get(GET('pi'), 'pinstance');
 $category = validate_get(GET('c'), 'category');
 $type = validate_get(GET('t'), 'type');
 $tinstance = validate_get(GET('ti'), 'tinstance');
-$width = GET('x');
-$heigth = GET('y');
 $seconds = GET('s');
 
 $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
 html_start();
 
-printf('<h2>%s</h2>'."\n", $host);
+printf('<fieldset id="%s">', $host);
+printf('<legend>%s</legend>', $host);
 
 $plugins = collectd_plugins($host);
 
@@ -49,8 +48,14 @@ foreach($CONFIG['term'] as $key => $s) {
 }
 print "</ul>\n";
 
-printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+if ($CONFIG['graph_type'] == 'canvas') {
+	chdir($CONFIG['webdir']);
+	include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+} else {
+	printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+}
 echo '</div>';
+echo "</fieldset>\n";
 
 html_end();
 

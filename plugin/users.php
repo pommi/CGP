@@ -17,8 +17,6 @@ $obj->ds_names = array(
 $obj->colors = array(
 	'value' => '0000f0',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'Users';
 $obj->rrd_vertical = 'Users';
 $obj->rrd_format = '%.1lf';

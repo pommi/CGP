@@ -1,7 +1,7 @@
 <?php
 
 # collectd version
-$CONFIG['version'] = 4;
+$CONFIG['version'] = 5;
 
 # collectd's datadir
 $CONFIG['datadir'] = '/var/lib/collectd/rrd';
@@ -41,6 +41,15 @@ $CONFIG['term'] = array(
 
 # show graphs in bits or bytes
 $CONFIG['network_datasize'] = 'bytes';
+
+# png or canvas graphs
+$CONFIG['graph_type'] = 'png';
+
+# use the negative X-axis in I/O graphs
+$CONFIG['negative_io'] = false;
+
+# create smooth graphs (rrdtool -E)
+$CONFIG['graph_smooth'] = false;
 
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;

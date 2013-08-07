@@ -47,8 +47,6 @@ switch($obj->args['type']) {
 			'rss' => 'ffb000',
 			'anon' => 'ff00ff',
 			);
-		$obj->width = $width;
-		$obj->heigth = $heigth;
 
 		$obj->rrd_title = sprintf('Memory utilization on Vserver %s', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Bytes';
@@ -73,8 +71,6 @@ switch($obj->args['type']) {
 			'total' => 'ffb000',
 			'uninterruptable' => 'ff00ff',
 			);
-		$obj->width = $width;
-		$obj->heigth = $heigth;
 
 		$obj->rrd_title = sprintf('Threads on Vserver %s', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Numbers';
@@ -106,8 +102,6 @@ switch($obj->args['type']) {
 		$obj->rrd_title = sprintf('Traffic on Vserver %s', $obj->args['pinstance']);
 			$obj->rrd_vertical = sprintf('%s per second', ucfirst($CONFIG['network_datasize']));
 			$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
-		$obj->width = $width;
-		$obj->heigth = $heigth;
 		$obj->rrd_format = '%5.1lf%s';
 
 		collectd_flush($obj->identifiers);
@@ -121,8 +115,6 @@ switch($obj->args['type']) {
 		$obj->rrd_title = sprintf('Processes on Vserver %s', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Processes';
 
-		$obj->width = $width;
-		$obj->heigth = $heigth;
 		$obj->rrd_format = '%5.1lf%s';
 
 		collectd_flush($obj->identifiers);

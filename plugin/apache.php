@@ -150,8 +150,6 @@ switch ($obj->args['type']) {
 	break;
 }
 
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf';
 
 # backwards compatibility

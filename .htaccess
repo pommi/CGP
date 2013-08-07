@@ -1,4 +1,10 @@
 Options -Indexes
 
+<IfModule mod_deflate.c>
+<Files "rrd.php">
+	SetOutputFilter DEFLATE
+</Files>
+</IfModule>
+
 RewriteEngine On
-RewriteRule     ^.git(ignore|/) - [F,L]
+RewriteRule ^.git(ignore|/) - [F,L]

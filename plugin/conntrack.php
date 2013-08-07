@@ -17,8 +17,6 @@ $obj->ds_names = array(
 $obj->colors = array(
 	'value' => '0000f0',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'Conntrack entries';
 $obj->rrd_vertical = '#';
 $obj->rrd_format = '%.1lf';

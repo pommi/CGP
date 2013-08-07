@@ -30,12 +30,8 @@ h1 {
 }
 
 h2 {
-	font-size: 1.3em;
-	margin: 1em 0 0 0;
-}
-
-h3 {
-	font-size: 1em;
+	font-size: 1.1em;
+	font-weight: normal;
 }
 
 a:link, a:visited, a:active {
@@ -129,4 +125,27 @@ hr {
 .time-range li {
 	display: inline-block;
 	margin-bottom: 0.3em;
+}
+
+fieldset {
+	margin-top: 20px;
+	padding: 0;
+	border: 0;
+}
+
+legend {
+	padding: 0;
+	font-size: 1.4em;
+	font-weight: normal;
+}
+
+.warn {
+	color: darkorange;
+	font-weight: normal;
+	text-shadow: 0 0 1px darkorange;
+}
+.crit {
+	color: red;
+	font-weight: normal;
+	text-shadow: 0 0 1px red;
 }

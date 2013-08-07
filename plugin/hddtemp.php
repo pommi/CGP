@@ -11,8 +11,6 @@ require_once 'inc/collectd.inc.php';
 
 $obj = new Type_Default($CONFIG);
 $obj->ds_names = array('temperature' => 'Temperature');
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'HDD Temperature';
 $obj->rrd_vertical = '°C';
 $obj->rrd_format = '%.1lf';

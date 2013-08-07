@@ -19,6 +19,27 @@ function html_start() {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>CGP{$path}</title>
 	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
+	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+EOT;
+
+	if ($CONFIG['graph_type'] == 'canvas') {
+		echo <<<EOT
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/sprintf.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/strftime.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdRpn.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdTime.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGraph.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGfxCanvas.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/binaryXHR.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/rrdFile.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdDataFile.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdCmdLine.js"></script>
+
+EOT;
+	}
+
+echo <<<EOT
 </head>
 <body>
 
@@ -52,6 +73,17 @@ function html_end() {
 <div id="footer">
 <hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
 </div>
+
+EOT;
+
+	if ($CONFIG['graph_type'] == 'canvas') {
+		echo <<<EOT
+<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP.js"></script>
+
+EOT;
+	}
+
+echo <<<EOT
 </body>
 </html>
 EOT;
@@ -60,7 +92,7 @@ EOT;
 function plugin_header($host, $plugin) {
 	global $CONFIG;
 
-	return printf("<h3><a href='%shost.php?h=%s&p=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
+	return printf("<h2><a href='%shost.php?h=%s&p=%s'>%s</a></h2>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
 }
 
 function plugins_list($host, $selected_plugins = array()) {
@@ -69,7 +101,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	$plugins = collectd_plugins($host);
 
 	echo '<div class="plugins">';
-	echo '<h3>Plugins</h3>';
+	echo '<h2>Plugins</h2>';
 	echo '<ul>';
 
 	printf("<li><a %s href='%shost.php?h=%s'>overview</a></li>\n",
@@ -127,11 +159,13 @@ function selected_timerange($value1, $value2) {
 	return '';
 }
 
-function host_summary($hosts) {
+function host_summary($cat, $hosts) {
 	global $CONFIG;
 
 	$rrd = new RRDTool($CONFIG['rrdtool']);
 
+	printf('<fieldset id="%s">', $cat);
+	printf('<legend>%s</legend>', $cat);
 	echo "<table class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
@@ -139,6 +173,8 @@ function host_summary($hosts) {
 
 	foreach($hosts as $host) {
 		$host_counter++;
+
+		$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
 
 		printf('<tr class="%s">', $row_style[$host_counter % 2]);
 		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
@@ -156,10 +192,15 @@ function host_summary($hosts) {
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
 
-				printf('<td>%.2f</td><td>%.2f</td><td>%.2f</td>',
-					$rrd_info['ds[shortterm].last_ds'],
-					$rrd_info['ds[midterm].last_ds'],
-					$rrd_info['ds[longterm].last_ds']);
+				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
+					$class = '';
+					if ($cores > 0 && $rrd_info[$info] > $cores * 2)
+						$class = ' class="crit"';
+					elseif ($cores > 0 && $rrd_info[$info] > $cores)
+						$class = ' class="warn"';
+
+					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
+				}
 			}
 		}
 
@@ -167,6 +208,7 @@ function host_summary($hosts) {
 	}
 
 	echo "</table>\n";
+	echo "</fieldset>\n";
 }
 
 

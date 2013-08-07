@@ -17,8 +17,6 @@ $obj->ds_names = array(
 $obj->colors = array(
 	'value' => '00e000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'Uptime';
 $obj->rrd_vertical = 'Days';
 $obj->rrd_format = '%.1lf';

@@ -40,8 +40,6 @@ $obj->colors = array(
 	'interrupt' => 'a000a0',
 	'steal' => '000000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 $obj->rrd_title = sprintf('CPU-%s usage', $obj->args['pinstance']);
 $obj->rrd_vertical = 'Jiffies';

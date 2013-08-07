@@ -13,8 +13,6 @@ require_once 'inc/collectd.inc.php';
 # dns/dns_qtype-X.rrd
 
 $obj = new Type_GenericStacked($CONFIG);
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {

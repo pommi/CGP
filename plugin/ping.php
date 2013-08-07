@@ -17,8 +17,6 @@ $obj->data_sources = array('value');
 $obj->ds_names = array('ping' => 'Ping time',
                        'ping_stddev' => 'Ping stddev',
                        'ping_droprate' => 'Ping droprate');
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf';
 
 switch($obj->args['type']) {
@@ -29,12 +27,11 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Milliseconds';
 		break;
 	case 'ping_stddev':
-		$obj->rrd_title = 'Ping stddev';
-		$obj->rrd_vertical = '';
+		$obj->rrd_title = 'Ping standard deviation';
+		$obj->rrd_vertical = 'Milliseconds';
 		break;
 	case 'ping_droprate':
 		$obj->rrd_title = 'Ping droprate';
-		$obj->rrd_vertical = '';
 		break;
 }
 

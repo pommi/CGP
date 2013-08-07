@@ -1,3 +1,51 @@
+0.4.1 (2013-05-20)
+- remove dependency on mod_rewrite for rrd.php
+
+0.4 (2013-05-20)
+* general
+ - new interface with a sidebar for plugin selection
+ - integrate jsrrdgraph for client side rrd graphing using javascript/canvas
+ - collectd 5 support (this is the default now)
+ - generate graph colors using a rainbow colors function, which is not limited to 9 colors
+ - add total values to legend on I/O graphs
+ - resolve php notices
+
+* config settings:
+ - overview_filter: show a subset of graphs from a plugin on overview page
+ - term: configurable terms on detail page
+ - network_datasize: show network graphs in bits or bytes
+ - graph_type: show graphs using canvas (javascript) or regular png
+ - negative_io: use the negative X-axis in I/O graphs
+ - graph_smooth: create smooth graphs (rrdtool -E)
+
+* plugins (new):
+ - acpups
+ - battery
+ - contextswitch
+ - cpufreq
+ - dns
+ - filecount
+ - ip6tables
+ - iptables
+ - libvirt
+ - md
+ - mysql
+ - nginx
+ - postgresql
+ - powerdns
+ - snmp
+ - tail
+ - varnish
+ - vserver
+ - zfs_arc
+
+* plugins (updated):
+ - apache: bytes, connections, idle_workers, requests support
+ - apache: add support for lighttpd
+ - disk: SI magnitude units in legend for disk_merged and disk_ops
+ - cpu: default scale to 100%
+
+
 0.3 (2010-10-04)
 * general
  - improved support for utf8 filenames
