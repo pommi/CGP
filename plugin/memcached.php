@@ -130,9 +130,9 @@ switch(GET('t')) {
 	case 'percent':
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG);
-		$obj->data_sources = array('percent');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array(
-			'percent ' => 'Percentage',
+			'value ' => 'Percentage',
 		);
 		$obj->colors = array(
 			'percent' => '00e000',

@@ -154,6 +154,8 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 	$plugindata = group_plugindata($plugindata);
 	$plugindata = plugin_sort($plugindata);
 
+    $unique_id = NULL;
+
 	foreach ($plugindata as $items) {
 
 		if (
@@ -162,6 +164,8 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 		) {
 			continue;
 		}
+
+        $unique_id = uniqid();
 
 		$items['h'] = $host;
 
@@ -175,7 +179,17 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
                 : $CONFIG['time_range']['default'];
         }
 
-		printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
+        $menu = '<span class="pull-right pos-absolute img-menu bg-test"><ul class="inline">';
+        $menu .= '<li class="btn btn-inverse" onclick="javascript:swapImage(\''.$unique_id.'\', \''.build_url('graph.php', $items).'\');"><i class="icon-zoom-in icon-white"></i></li>';
+        $menu .= '<li class="btn btn-inverse" onclick="javascript:swapImage(\''.$unique_id.'\', \''.build_url('graph.php', $items).'\');"><i class="icon-zoom-out icon-white"></i></li>';
+        $menu .= '<li class="btn btn-inverse" onclick="javascript:swapImage(\''.$unique_id.'\', \''.build_url('graph.php', $items).'\');"><i class="icon-chevron-left icon-white"></i></li>';
+        $menu .= '<li class="btn btn-inverse" onclick="javascript:swapImage(\''.$unique_id.'\', \''.build_url('graph.php', $items).'\');"><i class="icon-chevron-right icon-white"></i></li>';
+        $menu .= '</ul></span>';
+
+        // turning off menu for now
+        $menu = '';
+
+		printf('<div class="pull-left pos-relative"><a href="%s%s"><img src="%s%s" id="'.$unique_id.'"></a>'.$menu.'</div>'."\n",
 			$CONFIG['weburl'],
 			build_url('detail.php', $items, $time),
 			$CONFIG['weburl'],
@@ -185,7 +199,7 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 }
 
 # generate an url with GET values from $items
-function build_url($base, $items, $s=NULL) {
+function build_url($base, $items, $s=NULL, $e=NULL) {
 	global $CONFIG;
 
 	if (!is_array($items))
@@ -193,6 +207,9 @@ function build_url($base, $items, $s=NULL) {
 
 	if (!is_numeric($s))
 		$s = $CONFIG['time_range']['default'];
+
+    if ($e !== NULL && !is_numeric($e))
+        $e = NULL;
 
 	$i=0;
 	foreach ($items as $key => $value) {
@@ -205,6 +222,8 @@ function build_url($base, $items, $s=NULL) {
 	}
 	if (!isset($items['s']))
 		$base .= '&s='.$s;
+    if (!isset($items['e']))
+        $base .= '&e='.$e;
 
 	return $base;
 }

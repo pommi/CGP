@@ -19,3 +19,26 @@ div#footer {
         width: auto;
     }
 }
+
+.pos-relative {
+    position:relative;
+}
+
+.pos-absolute {
+    position:absolute;
+}
+
+.img-menu {
+    top:10px;
+    right:10px;
+    width:60px;
+    padding:5px 5px 0px 5px;
+}
+
+.img-menu li {
+    margin:1px;
+}
+
+.bg-test {
+    background-color: #FF0000;
+}

@@ -58,6 +58,8 @@ function html_end() {
 		$version = 'v'.$version[0];
 	}
 
+    $now = time();
+
 	echo <<<EOT
 </div>
 <div id="footer">
@@ -67,7 +69,12 @@ function html_end() {
 </div>
 <script src="{$CONFIG['weburl']}assets/js/jquery-2.0.0.min.js"></script>
 <script src="{$CONFIG['weburl']}assets/js/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+    var now = {$now};
+    function swapImage(id, url){
+        $('#' + id).attr('src', url);
+    }
+</script>
 </body>
 </html>
 EOT;
@@ -76,7 +83,10 @@ EOT;
 function plugin_header($host, $plugin) {
 	global $CONFIG;
 
-	return printf("<h3><a href='%shost.php?h=%s&p=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
+    $s = GET('s');
+    $seconds = (!empty($s) && is_numeric($s)) ? $s : $CONFIG['time_range']['default'];
+
+	return printf("<h3><a href='%shost.php?h=%s&p=%s&s=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $seconds, $plugin);
 }
 
 function plugins_list($host, $selected_plugins = array()) {

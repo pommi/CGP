@@ -31,6 +31,15 @@
             echo '</div>';
 
             echo '<div class="span10">';
+            $args = $_GET;
+            echo '<br /><ul class="inline">';
+            foreach($CONFIG['term'] as $key => $s) {
+                $args['s'] = $s;
+                $selected = selected_timerange($seconds, $s);
+                printf('<li><a %s href="%s%s">%s</a></li>'."\n",
+                    $selected, $CONFIG['weburl'], build_url('host.php', $args), $key);
+            }
+            echo '</ul>';
             foreach($hosts as $k => $host){
                 if(!empty($plugin) && !in_array($plugin, collectd_plugins($host)))
                     continue;

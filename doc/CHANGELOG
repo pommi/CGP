@@ -6,6 +6,7 @@
  - added multi-host support on hosts.php
  - Set RRDTool class to have a public member defaulting to NULL
  - Added start time ability to host.php
+ - Fixed collectd 5 graph for memcached hit percent
 
 0.3 (2010-10-04)
 * general
