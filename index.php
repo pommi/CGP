@@ -12,7 +12,7 @@
     if (is_array($CONFIG['cat'])) {
         foreach($CONFIG['cat'] as $cat => $hosts) {
             printf("<h2><a href=\"%shost.php?h=%s\">%s</a></h2>\n", $CONFIG['weburl'], implode(',', $hosts), $cat);
-            host_summary($hosts);
+            host_summary($cat, $hosts);
             $h = array_merge($h, $hosts);
         }
     }
@@ -26,7 +26,7 @@
     # show all uncategorized hosts
     if ($uhosts) {
         echo "<h2>Uncategorized</h2>\n";
-        host_summary($uhosts);
+        host_summary(NULL, $uhosts);
     }
 
     html_end();
