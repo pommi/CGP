@@ -256,53 +256,6 @@ function host_summary($cat, $hosts) {
         echo '</tbody>';
 	    echo '</table>';
     }
-=======
-	printf('<fieldset id="%s">', $cat);
-	printf('<legend>%s</legend>', $cat);
-	echo "<table class=\"summary\">\n";
-
-	$row_style = array(0 => "even", 1 => "odd");
-	$host_counter = 0;
-
-	foreach($hosts as $host) {
-		$host_counter++;
-
-		$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
-
-		printf('<tr class="%s">', $row_style[$host_counter % 2]);
-		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
-			$CONFIG['weburl'],$host, $host);
-
-		if ($CONFIG['showload']) {
-			collectd_flush(sprintf('%s/load/load', $host));
-			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
-
-			# ignore if file does not exist
-			if (!$rrd_info)
-				continue;
-
-			if (isset($rrd_info['ds[shortterm].last_ds']) &&
-				isset($rrd_info['ds[midterm].last_ds']) &&
-				isset($rrd_info['ds[longterm].last_ds'])) {
-
-				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
-					$class = '';
-					if ($cores > 0 && $rrd_info[$info] > $cores * 2)
-						$class = ' class="crit"';
-					elseif ($cores > 0 && $rrd_info[$info] > $cores)
-						$class = ' class="warn"';
-
-					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
-				}
-			}
-		}
-
-		print "</tr>\n";
-	}
-
-	echo "</table>\n";
-	echo "</fieldset>\n";
->>>>>>> v4/master
 }
 
 
