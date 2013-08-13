@@ -25,8 +25,6 @@ $obj->colors = array(
 	'free' => '00ff00',
 	'used' => 'ff0000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 $obj->rrd_title = sprintf('Free space (%s)', $obj->args['pinstance']);
 $obj->rrd_vertical = 'Bytes';

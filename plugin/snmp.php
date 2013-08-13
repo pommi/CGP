@@ -3,12 +3,13 @@
 # Collectd snmp plugin
 
 require_once 'conf/common.inc.php';
-require_once 'type/Default.class.php';
 require_once 'inc/collectd.inc.php';
 
 
 switch(GET('t')) {
 	case 'if_octets':
+		require_once 'type/GenericIO.class.php';
+		$obj = new Type_GenericIO($CONFIG);
 		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
 			'rx' => 'Receive',
@@ -23,14 +24,13 @@ switch(GET('t')) {
 		$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
 	break;
 	default:
+		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG);
 		$obj->rrd_title = sprintf('SNMP: %s (%s)', $obj->args['type'], $obj->args['tinstance']);
 	return;
 }
 
 $obj->rrd_format = '%5.1lf%s';
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 collectd_flush($obj->identifiers);
 $obj->rrd_graph();

@@ -1,5 +1,4 @@
 <?php
-
     require_once 'conf/common.inc.php';
     require_once 'inc/html.inc.php';
     require_once 'inc/collectd.inc.php';
@@ -58,3 +57,4 @@
         echo '</div>';
 
     html_end();
+

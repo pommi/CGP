@@ -17,7 +17,6 @@ function html_start() {
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 	<title>Collectd Graph Panel {$path}</title>
@@ -29,6 +28,27 @@ function html_start() {
             body { padding-top: 0px; }
         }
     </style>
+	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+EOT;
+
+	if ($CONFIG['graph_type'] == 'canvas') {
+		echo <<<EOT
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/sprintf.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/strftime.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdRpn.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdTime.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGraph.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGfxCanvas.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/binaryXHR.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/rrdFile.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdDataFile.js"></script>
+	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdCmdLine.js"></script>
+
+EOT;
+	}
+
+echo <<<EOT
 </head>
 <body>
 
@@ -67,6 +87,7 @@ function html_end() {
         <a href="http://pommi.nethuis.nl/category/cgp/" rel="external" target="_blank">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a>
     </div>
 </div>
+
 <script src="{$CONFIG['weburl']}assets/js/jquery-2.0.0.min.js"></script>
 <script src="{$CONFIG['weburl']}assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -75,6 +96,19 @@ function html_end() {
         $('#' + id).attr('src', url);
     }
 </script>
+
+
+EOT;
+
+	if ($CONFIG['graph_type'] == 'canvas') {
+		echo <<<EOT
+<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP.js"></script>
+
+EOT;
+	}
+
+echo <<<EOT
+
 </body>
 </html>
 EOT;
@@ -87,13 +121,13 @@ function plugin_header($host, $plugin) {
     $seconds = (!empty($s) && is_numeric($s)) ? $s : $CONFIG['time_range']['default'];
 
 	return printf("<h3><a href='%shost.php?h=%s&p=%s&s=%s'>%s</a></h3>\n", $CONFIG['weburl'], $host, $plugin, $seconds, $plugin);
+
 }
 
 function plugins_list($host, $selected_plugins = array()) {
 	global $CONFIG;
 
 	$plugins = collectd_plugins($host);
-
 
         echo '<div class="sidebar-nav sidebar-nav-fixed">';
         echo '<h3>Plugins</h3>';
@@ -166,7 +200,7 @@ function selected_timerange($value1, $value2) {
 	return '';
 }
 
-function host_summary($hosts) {
+function host_summary($cat, $hosts) {
 	global $CONFIG;
 
 	$rrd = new RRDTool($CONFIG['rrdtool']);
@@ -222,6 +256,53 @@ function host_summary($hosts) {
         echo '</tbody>';
 	    echo '</table>';
     }
+=======
+	printf('<fieldset id="%s">', $cat);
+	printf('<legend>%s</legend>', $cat);
+	echo "<table class=\"summary\">\n";
+
+	$row_style = array(0 => "even", 1 => "odd");
+	$host_counter = 0;
+
+	foreach($hosts as $host) {
+		$host_counter++;
+
+		$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
+
+		printf('<tr class="%s">', $row_style[$host_counter % 2]);
+		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
+			$CONFIG['weburl'],$host, $host);
+
+		if ($CONFIG['showload']) {
+			collectd_flush(sprintf('%s/load/load', $host));
+			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
+
+			# ignore if file does not exist
+			if (!$rrd_info)
+				continue;
+
+			if (isset($rrd_info['ds[shortterm].last_ds']) &&
+				isset($rrd_info['ds[midterm].last_ds']) &&
+				isset($rrd_info['ds[longterm].last_ds'])) {
+
+				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
+					$class = '';
+					if ($cores > 0 && $rrd_info[$info] > $cores * 2)
+						$class = ' class="crit"';
+					elseif ($cores > 0 && $rrd_info[$info] > $cores)
+						$class = ' class="warn"';
+
+					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
+				}
+			}
+		}
+
+		print "</tr>\n";
+	}
+
+	echo "</table>\n";
+	echo "</fieldset>\n";
+>>>>>>> v4/master
 }
 
 

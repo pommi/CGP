@@ -21,8 +21,6 @@ $obj->colors = array(
 	'midterm' => '0000ff',
 	'longterm' => 'ff0000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'System load';
 $obj->rrd_vertical = 'System load';
 $obj->rrd_format = '%.2lf';

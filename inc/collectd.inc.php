@@ -169,6 +169,7 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 
 		$items['h'] = $host;
 
+
         // check for $_GET[s] and override other settings
         $stime = GET('s');
         if(!empty($stime) && $stime > 0){
@@ -195,6 +196,25 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			$CONFIG['weburl'],
 			build_url('graph.php', $items, $time)
 		);
+
+/** this is the v4 code from remote
+		if ($CONFIG['graph_type'] == 'canvas') {
+			chdir($CONFIG['webdir']);
+			isset($items['p']) ? $_GET['p'] = $items['p'] : $_GET['p'] = '';
+			isset($items['pi']) ? $_GET['pi'] = $items['pi'] : $_GET['pi'] = '';
+			isset($items['t']) ? $_GET['t'] = $items['t'] : $_GET['t'] = '';
+			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
+			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+		} else {
+			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
+				$CONFIG['weburl'],
+				build_url('detail.php', $items, $time),
+				$CONFIG['weburl'],
+				build_url('graph.php', $items, $time)
+			);
+		}
+*/
+
 	}
 }
 

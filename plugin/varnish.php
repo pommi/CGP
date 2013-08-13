@@ -23,8 +23,6 @@ require_once 'inc/collectd.inc.php';
 #varnish-default-connections/connections-received.rrd
 
 $obj = new Type_Default($CONFIG);
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_format = '%5.1lf%s';
 $obj->rrd_title = sprintf('%s (%s)', ucfirst($obj->args['pinstance']), $obj->args['category']);
 $obj->rrd_vertical = 'hits';

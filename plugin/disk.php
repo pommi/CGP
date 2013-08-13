@@ -23,8 +23,6 @@ $obj->colors = array(
 	'read' => '0000ff',
 	'write' => '00b000',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 switch($obj->args['type']) {
 	case 'disk_merged':
 		$obj->rrd_title = sprintf('Disk Merged Operations (%s)', $obj->args['pinstance']);

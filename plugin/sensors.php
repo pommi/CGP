@@ -16,8 +16,6 @@ $obj = new Type_Default($CONFIG);
 $obj->ds_names = array(
 	'value' => 'Value',
 );
-$obj->width = $width;
-$obj->heigth = $heigth;
 switch($obj->args['type']) {
 	case 'fanspeed':
 		$obj->rrd_title = sprintf('Fanspeed (%s)', $obj->args['pinstance']);

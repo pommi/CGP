@@ -18,8 +18,6 @@ require_once 'inc/collectd.inc.php';
 # apcups/voltage-output.rrd
 
 $obj = new Type_Default($CONFIG);
-$obj->width = $width;
-$obj->heigth = $heigth;
 
 switch($obj->args['type']) {
 	case 'charge':

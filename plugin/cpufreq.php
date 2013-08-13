@@ -11,8 +11,6 @@ require_once 'inc/collectd.inc.php';
 
 $obj = new Type_Default($CONFIG);
 $obj->data_sources = array('value');
-$obj->width = $width;
-$obj->heigth = $heigth;
 $obj->rrd_title = 'CPU frequency scaling';
 $obj->rrd_vertical = 'Hz';
 $obj->rrd_format = '%5.1lf%s';

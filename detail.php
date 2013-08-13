@@ -44,6 +44,10 @@
         plugin_header($host, $plugin);
 
         $args = $_GET;
+if ($CONFIG['graph_type'] == 'canvas') {
+    chdir($CONFIG['webdir']);
+    include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+} else {
         echo '<ul class="inline">';
             foreach($CONFIG['term'] as $key => $s) {
                 $args['s'] = $s;
@@ -52,6 +56,8 @@
                     $selected, $CONFIG['weburl'], build_url('detail.php', $args), $key);
             }
         echo '</ul>';
+}
+
 
         printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
 
