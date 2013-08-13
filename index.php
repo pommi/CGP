@@ -20,7 +20,8 @@
     # search for uncategorized hosts
     if(!$chosts = collectd_hosts())
         printf('<p class="alert alert-error">Error: No collectd hosts found in <em>%s</em></p>', $CONFIG['datadir']);
-    $uhosts = array_diff($chosts, $h);
+    if(!empty($uhosts))
+        $uhosts = array_diff($chosts, $h);
 
     # show all uncategorized hosts
     if ($uhosts) {
