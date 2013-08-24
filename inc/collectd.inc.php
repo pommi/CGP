@@ -119,7 +119,10 @@ function group_plugindata($plugindata) {
 	foreach ($plugindata as $item) {
 		# backwards compatibility
 		if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface)$/', $item['p']))
-			if($item['p'] != 'libvirt')
+			if (
+				$item['p'] != 'libvirt' &&
+				($item['p'] != 'snmp' && $item['t'] == 'if_octets')
+			)
 				unset($item['ti']);
 		$data[] = $item;
 	}
