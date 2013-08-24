@@ -125,6 +125,9 @@ class Type_Default {
 			$file = 'rrd.php/' . str_replace($this->datadir . '/', '', $file);
 			# rawurlencode all but /
 			$file = str_replace('%2F', '/', rawurlencode($file));
+		} else {
+			# escape spaces
+			$file = str_replace(' ', '\ ', $file);
 		}
 		return $this->rrd_escape($file);
 	}
