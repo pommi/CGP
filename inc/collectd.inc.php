@@ -121,7 +121,7 @@ function group_plugindata($plugindata) {
 		if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface)$/', $item['p']))
 			if (
 				$item['p'] != 'libvirt' &&
-				($item['p'] != 'snmp' && $item['t'] == 'if_octets')
+				($item['p'] != 'snmp' && $item['t'] != 'if_octets')
 			)
 				unset($item['ti']);
 		$data[] = $item;
