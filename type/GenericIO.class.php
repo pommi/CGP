@@ -3,7 +3,7 @@
 require_once 'Default.class.php';
 
 class Type_GenericIO extends Type_Default {
-	
+
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
 
@@ -56,7 +56,7 @@ class Type_GenericIO extends Type_Default {
 
 		$i = 0;
 		foreach($sources as $source) {
-			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
+			$dsname = (isset($this->ds_names[$source]) && empty($this->ds_names[$source])) ? $this->ds_names[$source] : $source;
 			$rrdgraph[] = sprintf('"LINE1:avg_%s%s#%s:%s"', crc32hex($source), $i == 1 ? '_neg' : '', $this->colors[$source], $this->rrd_escape($dsname));
 			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
@@ -65,7 +65,7 @@ class Type_GenericIO extends Type_Default {
 			$rrdgraph[] = sprintf('"GPRINT:tot_%s:%s Total\l"',crc32hex($source), $this->rrd_format);
 			$i++;
 		}
-		
+
 		return $rrdgraph;
 	}
 }
