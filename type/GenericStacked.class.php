@@ -37,7 +37,7 @@ class Type_GenericStacked extends Type_Default {
 			if ($i == (count($sources)-1))
 				$rrdgraph[] = sprintf('CDEF:area_%s=avg_%1$s', crc32hex($sources[$i]));
 			else
-				$rrdgraph[] = sprintf('CDEF:area_%s=area_%s,avg_%1$s,+', crc32hex($sources[$i]), crc32hex($sources[$i+1]));
+				$rrdgraph[] = sprintf('CDEF:area_%s=area_%s,avg_%1$s,ADDNAN', crc32hex($sources[$i]), crc32hex($sources[$i+1]));
 		}
 
 		$c = 0;
