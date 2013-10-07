@@ -41,7 +41,7 @@ class Type_Uptime extends Type_Default {
 
 		$c = 0;
 		foreach ($sources as $source) {
-			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
+			$dsname = empty($this->ds_names[$source]) ? $source : $this->ds_names[$source];
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
 
 			//current value
