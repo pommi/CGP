@@ -126,8 +126,8 @@ class Type_Default {
 			# rawurlencode all but /
 			$file = str_replace('%2F', '/', rawurlencode($file));
 		} else {
-			# escape spaces
-			$file = str_replace(' ', '\ ', $file);
+			# escape characters
+			$file = str_replace(array(' ', '(', ')'), array('\ ', '\(', '\)'), $file);
 		}
 		return $this->rrd_escape($file);
 	}
