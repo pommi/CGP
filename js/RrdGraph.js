@@ -2541,7 +2541,7 @@ RrdGraph.prototype.graph_size_location = function (elements)
 	return 0;
 };
 
-RrdGraph.prototype.graph_paint = function()
+RrdGraph.prototype.graph_paint_init = function()
 {
 	if (this.logarithmic && this.minval <= 0)
 		throw new RrdGraphError("for a logarithmic yaxis you must specify a lower-limit > 0");
@@ -2573,11 +2573,13 @@ RrdGraph.prototype.graph_paint = function()
 //	this.gdes[i].end_orig = this.end;
 	}
 
+}
+
+RrdGraph.prototype.graph_paint_draw = function()
+{
 	var areazero = 0.0
 	var lastgdes = null;
 
-	if (this.data_fetch() === -1)
-		return -1;
 	if (this.data_calc() === -1)
 		return -1;
 	var i = this.print_calc();
@@ -2823,6 +2825,14 @@ RrdGraph.prototype.graph_paint = function()
 		}
 	}
 	return 0;
+};
+
+RrdGraph.prototype.graph_paint = function ()
+{
+	this.graph_paint_init()
+	if (this.data_fetch() === -1)
+		return -1;
+	return this.graph_paint_draw()
 };
 
 RrdGraph.prototype.find_var = function(key)
