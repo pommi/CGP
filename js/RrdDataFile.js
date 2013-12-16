@@ -25,7 +25,7 @@
  * @constructor
  */
 var RrdDataFile = function() {
-  this.init.apply(this, arguments);
+	this.init.apply(this, arguments);
 };
 
 RrdDataFile.prototype = {
@@ -37,15 +37,15 @@ RrdDataFile.prototype = {
 	},
 	fetch: function(gdp, ft_step)
 	{
-    var cal_start, cal_end;
-    var best_full_rra = 0, best_part_rra = 0, chosen_rra = 0;
-    var best_full_step_diff = 0, best_part_step_diff = 0, tmp_step_diff = 0, tmp_match = 0, best_match = 0;
-    var full_match, rra_base;
-    var first_full = 1;
-    var first_part = 1;
-    var rrd;
-    var data_ptr;
-    var rows;
+		var cal_start, cal_end;
+		var best_full_rra = 0, best_part_rra = 0, chosen_rra = 0;
+		var best_full_step_diff = 0, best_part_step_diff = 0, tmp_step_diff = 0, tmp_match = 0, best_match = 0;
+		var full_match, rra_base;
+		var first_full = 1;
+		var first_part = 1;
+		var rrd;
+		var data_ptr;
+		var rows;
 
 		if (gdp.rrd in this.rrdfiles) {
 			rrd = this.rrdfiles[gdp.rrd];
@@ -59,7 +59,7 @@ RrdDataFile.prototype = {
 		var ds_cnt = rrd.getNrDSs();
 		var rra_cnt = rrd.getNrRRAs();
 
-    for (var i = 0; i < ds_cnt; i++)
+		for (var i = 0; i < ds_cnt; i++)
 			gdp.ds_namv[i] = rrd.rrd_header.getDSbyIdx(i).getName();
 
 		for (var i = 0; i < rra_cnt; i++) {
@@ -97,18 +97,18 @@ RrdDataFile.prototype = {
 		var rra = rrd.getRRA(chosen_rra);
 
 		ft_step = rrd.rrd_header.pdp_step * rra_info.getPdpPerRow();
-    gdp.start -= (gdp.start % ft_step);
-    gdp.end += (ft_step - gdp.end % ft_step);
-    rows = (gdp.end - gdp.start) / ft_step + 1;
+		gdp.start -= (gdp.start % ft_step);
+		gdp.end += (ft_step - gdp.end % ft_step);
+		rows = (gdp.end - gdp.start) / ft_step + 1;
 
 		gdp.ds_cnt = ds_cnt;
-    data_ptr = 0;
+		data_ptr = 0;
 
-    var rra_end_time = (rrd.getLastUpdate() - (rrd.getLastUpdate() % ft_step));
-    var rra_start_time = (rra_end_time - (ft_step * (rra_info.row_cnt - 1)));
-    /* here's an error by one if we don't be careful */
-    var start_offset = (gdp.start + ft_step - rra_start_time) / ft_step;
-    var end_offset = (rra_end_time - gdp.end) / ft_step;
+		var rra_end_time = (rrd.getLastUpdate() - (rrd.getLastUpdate() % ft_step));
+		var rra_start_time = (rra_end_time - (ft_step * (rra_info.row_cnt - 1)));
+		/* here's an error by one if we don't be careful */
+		var start_offset = (gdp.start + ft_step - rra_start_time) / ft_step;
+		var end_offset = (rra_end_time - gdp.end) / ft_step;
 
 		gdp.data = [];
 
@@ -117,7 +117,7 @@ RrdDataFile.prototype = {
 				for (var ii = 0; ii < ds_cnt; ii++)
 					gdp.data[data_ptr++] = Number.NaN;
 			} else if (i >= rra.row_cnt) {
-	    	for (var ii = 0; ii < ds_cnt; ii++)
+				for (var ii = 0; ii < ds_cnt; ii++)
 					gdp.data[data_ptr++] = Number.NaN;
 			} else {
 				for (var ii = 0; ii < ds_cnt; ii++)
