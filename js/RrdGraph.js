@@ -705,7 +705,7 @@ var RrdGraph = function (gfx, data)
 {
 	this.gfx = gfx; /* graphics object */
 	this.data = data; /* fetch data object */
-	this.data_fetch = [] /* List of data that need to be fetched */
+	this.data_need_fetch = [] /* List of data that need to be fetched */
 
 	this.minval = Number.NaN; /* extreme values in the data */
 	this.maxval = Number.NaN;
@@ -1335,10 +1335,10 @@ RrdGraph.prototype.data_fetch_async_callback = function (args, ft_step)
 	} else {
 		that.gdes[j].step = ft_step;
 	}
-	that.data_fetch[j] = 1;
+	that.data_need_fetch[j] = 1;
 
 	for (var i = 0, gdes_c = that.gdes.length; i < gdes_c; i++) {
-		if (that.data_fetch[i] == j + 2) {
+		if (that.data_need_fetch[i] == j + 2) {
 			that.gdes[i].start = that.gdes[j].start;
 			that.gdes[i].end = that.gdes[j].end;
 			that.gdes[i].step = that.gdes[j].step;
@@ -1346,13 +1346,13 @@ RrdGraph.prototype.data_fetch_async_callback = function (args, ft_step)
 			that.gdes[i].ds_namv = that.gdes[j].ds_namv;
 			that.gdes[i].data = that.gdes[j].data;
 			that.gdes[i].data_first = 0;
-			that.data_fetch[i] = 1;
+			that.data_need_fetch[i] = 1;
 		}
 	}
 
 	for (var i = 0, gdes_c = that.gdes.length; i < gdes_c; i++) {
-		if (that.data_fetch[i] < 0) continue;
-		if (that.data_fetch[i] == 1) continue;
+		if (that.data_need_fetch[i] < 0) continue;
+		if (that.data_need_fetch[i] == 1) continue;
 		return;
 	}
 
@@ -1379,7 +1379,7 @@ RrdGraph.prototype.data_fetch_async = function ()
 {
 	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
 		if (this.gdes[i].gf != RrdGraphDesc.GF_DEF) {
-			this.data_fetch.push(-1);
+			this.data_need_fetch.push(-1);
 			continue;
 		}
 
@@ -1391,15 +1391,15 @@ RrdGraph.prototype.data_fetch_async = function ()
 				&& (this.gdes[i].start_orig === this.gdes[ii].start_orig)
 				&& (this.gdes[i].end_orig === this.gdes[ii].end_orig)
 				&& (this.gdes[i].step_orig === this.gdes[ii].step_orig)) {
-					this.data_fetch.push(ii + 2);
+					this.data_need_fetch.push(ii + 2);
 					break;
 			}
 		}
-		this.data_fetch.push(0);
+		this.data_need_fetch.push(0);
 	 }
 
 	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
-		if (this.data_fetch[i] == 0) {
+		if (this.data_need_fetch[i] == 0) {
 			this.data.fetch_async(this.gdes[i], this.gdes[i].step, this.data_fetch_async_callback, {this: this, j:i});
 		}
 	}
