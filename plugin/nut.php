@@ -39,6 +39,13 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = '%';
 		$obj->rrd_format = '%5.1lf';
 	break;
+	case 'power':
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('ups' => 'UPS');
+		$obj->rrd_title = sprintf('Power (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'VA';
+		$obj->rrd_format = '%5.1lf%s';
+	break;
 	case 'temperature':
 		$obj->data_sources = array('value');
 		$obj->ds_names = array('battery' => 'Battery');
