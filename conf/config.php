@@ -45,6 +45,9 @@ $CONFIG['network_datasize'] = 'bytes';
 # png or canvas graphs
 $CONFIG['graph_type'] = 'png';
 
+# For canvas graphs, use 'async' or 'sync' fetch method
+$CONFIG['rrd_fetch_method'] = 'sync';
+
 # use the negative X-axis in I/O graphs
 $CONFIG['negative_io'] = false;
 

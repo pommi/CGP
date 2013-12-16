@@ -87,6 +87,17 @@ EOT;
 <script type="text/javascript" src="{$CONFIG['weburl']}js/CGP.js"></script>
 
 EOT;
+		if ($CONFIG['rrd_fetch_method'] == 'async') {
+		echo <<<EOT
+<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP-async.js"></script>
+
+EOT;
+		} else {
+		echo <<<EOT
+<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP-sync.js"></script>
+
+EOT;
+		}
 	}
 
 echo <<<EOT
