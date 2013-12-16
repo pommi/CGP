@@ -34,6 +34,8 @@ RrdDataFile.prototype = {
 	init: function()
 	{
 		this.rrdfiles = {};
+		this.rrdfiles_fetching = {};
+		this.rrdfiles_wait = {};
 	},
 	build: function(gdp, ft_step, rrd)
 	{
@@ -130,5 +132,42 @@ RrdDataFile.prototype = {
 		}
 
 		return this.build(gdp, ft_step, rrd);
+	},
+	fetch_async_callback: function(bf, args)
+	{
+		var rrd;
+
+		rrd = new RRDFile(bf);
+		args.this.rrdfiles[args.gdp.rrd] = rrd;
+		args.callback(args.callback_arg, args.this.build(args.gdp, args.ft_step, rrd));
+
+		for(var vname in args.this.rrdfiles_wait)
+		{
+			var o_args = args.this.rrdfiles_wait[vname];
+			if (args.gdp.rrd == o_args.gdp.rrd)
+			{
+				delete args.this.rrdfiles_wait[vname];
+				o_args.callback(o_args.callback_arg, args.this.build(o_args.gdp, o_args.ft_step, rrd));
+			}
+		}
+	},
+	fetch_async: function(gdp, ft_step, callback, callback_arg)
+	{
+		var rrd;
+		if (gdp.rrd == null) return -1;
+
+		if (gdp.rrd in this.rrdfiles) {
+			callback(callback_arg, this.build(gdp, ft_step, this.rrdfiles[gdp.rrd]));
+		} else if (gdp.rrd in this.rrdfiles_fetching) {
+			this.rrdfiles_wait[gdp.vname] = { this:this, gdp: gdp, ft_step: ft_step, callback: callback, callback_arg: callback_arg };
+			if (gdp.rrd in this.rrdfiles)
+			{
+				delete this.rrdfiles_wait[gdp.vname];
+				callback(callback_arg, this.build(gdp, ft_step, this.rrdfiles[gdp.rrd]));
+			}
+		} else {
+			this.rrdfiles_fetching[gdp.rrd] = FetchBinaryURLAsync(gdp.rrd, this.fetch_async_callback, { this:this, gdp: gdp, ft_step: ft_step, callback: callback, callback_arg: callback_arg });
+		}
+		return 0;
 	}
 };
