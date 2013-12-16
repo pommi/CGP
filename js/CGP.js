@@ -105,7 +105,7 @@ function draw(id) {
 	else gfx.canvas.stidx = i;
 
 	try {
-		rrdgraph.graph_paint();
+		rrdgraph.graph_paint_async();
 	} catch (e) {
 		alert(e+"\n"+e.stack);
 	}
