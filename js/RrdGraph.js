@@ -1361,10 +1361,10 @@ RrdGraph.prototype.data_fetch = function()
 		}
 		/* lets see if the required data source is really there */
 		for (var ii = 0; ii < this.gdes[i].ds_cnt; ii++) {
-				if (this.gdes[i].ds_namv[ii] === this.gdes[i].ds_nam) {
-					this.gdes[i].ds = ii;
-					break;
-				}
+			if (this.gdes[i].ds_namv[ii] === this.gdes[i].ds_nam) {
+				this.gdes[i].ds = ii;
+				break;
+			}
 		}
 
 		if (this.gdes[i].ds === -1)
