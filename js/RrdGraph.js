@@ -705,6 +705,7 @@ var RrdGraph = function (gfx, data)
 {
 	this.gfx = gfx; /* graphics object */
 	this.data = data; /* fetch data object */
+	this.data_need_fetch = [] /* List of data that need to be fetched */
 
 	this.minval = Number.NaN; /* extreme values in the data */
 	this.maxval = Number.NaN;
@@ -1315,6 +1316,92 @@ RrdGraph.prototype.reduce_data = function(gdes, cur_step)
 	if (end_offset) {
 	        for (col = 0; col < gdes.ds_cnt; col++)
           			gdes.data[dstptr++] = Number.NaN;
+	}
+};
+
+RrdGraph.prototype.data_fetch_async_callback = function (args, ft_step)
+{
+	var j, that;
+
+	j = args.j;
+	that = args.this;
+
+	if (ft_step < 0)
+		return -1;
+	that.gdes[j].data_first = 1;
+//	that.gdes[j].step = Math.max(that.gdes[j].step, that.step); // FIXME
+	if (ft_step < that.gdes[j].step) {
+		that.reduce_data(that.gdes[j], ft_step);
+	} else {
+		that.gdes[j].step = ft_step;
+	}
+	that.data_need_fetch[j] = 1;
+
+	for (var i = 0, gdes_c = that.gdes.length; i < gdes_c; i++) {
+		if (that.data_need_fetch[i] == j + 2) {
+			that.gdes[i].start = that.gdes[j].start;
+			that.gdes[i].end = that.gdes[j].end;
+			that.gdes[i].step = that.gdes[j].step;
+			that.gdes[i].ds_cnt = that.gdes[j].ds_cnt;
+			that.gdes[i].ds_namv = that.gdes[j].ds_namv;
+			that.gdes[i].data = that.gdes[j].data;
+			that.gdes[i].data_first = 0;
+			that.data_need_fetch[i] = 1;
+		}
+	}
+
+	for (var i = 0, gdes_c = that.gdes.length; i < gdes_c; i++) {
+		if (that.data_need_fetch[i] < 0) continue;
+		if (that.data_need_fetch[i] == 1) continue;
+		return;
+	}
+
+	for (var i = 0, gdes_c = that.gdes.length; i < gdes_c; i++) {
+		if (that.gdes[i].gf != RrdGraphDesc.GF_DEF) continue;
+
+		/* lets see if the required data source is really there */
+		for (var ii = 0; ii < that.gdes[i].ds_cnt; ii++) {
+				if (that.gdes[i].ds_namv[ii] === that.gdes[i].ds_nam) {
+					that.gdes[i].ds = ii;
+					break;
+				}
+		}
+
+		if (that.gdes[i].ds === -1) {
+			alert("No DS called '"+that.gdes[i].ds_nam+"' in '"+that.gdes[i].rrd+"'");
+			return;
+		}
+	}
+	that.graph_paint_draw();
+};
+
+RrdGraph.prototype.data_fetch_async = function ()
+{
+	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
+		if (this.gdes[i].gf != RrdGraphDesc.GF_DEF) {
+			this.data_need_fetch.push(-1);
+			continue;
+		}
+
+		for (var ii = 0; ii < i; ii++) {
+			if (this.gdes[ii].gf != RrdGraphDesc.GF_DEF) continue;
+			if ((this.gdes[i].rrd === this.gdes[ii].rrd)
+				&& (this.gdes[i].cf === this.gdes[ii].cf)
+				&& (this.gdes[i].cf_reduce === this.gdes[ii].cf_reduce)
+				&& (this.gdes[i].start_orig === this.gdes[ii].start_orig)
+				&& (this.gdes[i].end_orig === this.gdes[ii].end_orig)
+				&& (this.gdes[i].step_orig === this.gdes[ii].step_orig)) {
+					this.data_need_fetch.push(ii + 2);
+					break;
+			}
+		}
+		this.data_need_fetch.push(0);
+	 }
+
+	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
+		if (this.data_need_fetch[i] == 0) {
+			this.data_need_fetch[i] = this.data.fetch_async(this.gdes[i], this.gdes[i].step, this.data_fetch_async_callback, {this: this, j:i});
+		}
 	}
 };
 
@@ -2833,6 +2920,12 @@ RrdGraph.prototype.graph_paint = function ()
 	if (this.data_fetch() === -1)
 		return -1;
 	return this.graph_paint_draw()
+};
+
+RrdGraph.prototype.graph_paint_async = function ()
+{
+	this.graph_paint_init()
+	this.data_fetch_async()
 };
 
 RrdGraph.prototype.find_var = function(key)
