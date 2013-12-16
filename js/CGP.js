@@ -62,7 +62,7 @@ var mouse_scroll = function (e) {
 	return false;
 };
 
-function draw(id) {
+function prepare_draw(id) {
 	RrdGraph.prototype.mousex = 0;
 	RrdGraph.prototype.mousedown = false;
 
@@ -103,6 +103,12 @@ function draw(id) {
 	}
 	if (i === gfx.canvas.stlen) gfx.canvas.stidx = gfx.canvas.stlen-1;
 	else gfx.canvas.stidx = i;
+
+	return rrdgraph;
+}
+
+function draw(id) {
+	var rrdgraph = prepare_draw(id);
 
 	try {
 		rrdgraph.graph_paint();
