@@ -1400,7 +1400,7 @@ RrdGraph.prototype.data_fetch_async = function ()
 
 	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
 		if (this.data_need_fetch[i] == 0) {
-			this.data.fetch_async(this.gdes[i], this.gdes[i].step, this.data_fetch_async_callback, {this: this, j:i});
+			this.data_need_fetch[i] = this.data.fetch_async(this.gdes[i], this.gdes[i].step, this.data_fetch_async_callback, {this: this, j:i});
 		}
 	}
 };

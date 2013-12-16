@@ -154,7 +154,7 @@ RrdDataFile.prototype = {
 	fetch_async: function(gdp, ft_step, callback, callback_arg)
 	{
 		var rrd;
-		if (gdp.rrd == null) return;
+		if (gdp.rrd == null) return -1;
 
 		if (gdp.rrd in this.rrdfiles) {
 			callback(callback_arg, this.build(gdp, ft_step, this.rrdfiles[gdp.rrd]));
@@ -168,5 +168,6 @@ RrdDataFile.prototype = {
 		} else {
 			this.rrdfiles_fetching[gdp.rrd] = FetchBinaryURLAsync(gdp.rrd, this.fetch_async_callback, { this:this, gdp: gdp, ft_step: ft_step, callback: callback, callback_arg: callback_arg });
 		}
+		return 0;
 	}
 };
