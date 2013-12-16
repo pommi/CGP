@@ -26,9 +26,18 @@ $obj->colors = array(
 	'used' => 'ff0000',
 );
 
-$obj->rrd_title = sprintf('Free space (%s)', $obj->args['pinstance']);
-$obj->rrd_vertical = 'Bytes';
-$obj->rrd_format = '%5.1lf%sB';
+switch($obj->args['type']) {
+	case 'df_complex':
+		$obj->rrd_title = sprintf('Free space (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'Bytes';
+		$obj->rrd_format = '%5.1lf%sB';
+		break;
+	case 'df_inodes':
+		$obj->rrd_title = sprintf('Free inodes (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'Inodes';
+		$obj->rrd_format = '%5.1lf%s';
+		break;
+}
 
 # backwards compatibility
 if ($CONFIG['version'] < 5) {
