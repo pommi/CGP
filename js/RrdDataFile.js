@@ -35,7 +35,7 @@ RrdDataFile.prototype = {
 	{
 		this.rrdfiles = {};
 	},
-	fetch: function(gdp, ft_step)
+	build: function(gdp, ft_step, rrd)
 	{
 		var cal_start, cal_end;
 		var best_full_rra = 0, best_part_rra = 0, chosen_rra = 0;
@@ -43,17 +43,8 @@ RrdDataFile.prototype = {
 		var full_match, rra_base;
 		var first_full = 1;
 		var first_part = 1;
-		var rrd;
 		var data_ptr;
 		var rows;
-
-		if (gdp.rrd in this.rrdfiles) {
-			rrd = this.rrdfiles[gdp.rrd];
-		} else {
-			var bf = FetchBinaryURL(gdp.rrd);
-			rrd = new RRDFile(bf);
-			this.rrdfiles[gdp.rrd] = rrd;
-		}
 
 		var cf_idx = gdp.cf;
 		var ds_cnt = rrd.getNrDSs();
@@ -125,5 +116,19 @@ RrdDataFile.prototype = {
 			}
 		}
 		return ft_step;
+	},
+	fetch: function(gdp, ft_step)
+	{
+		var rrd;
+
+		if (gdp.rrd in this.rrdfiles) {
+			rrd = this.rrdfiles[gdp.rrd];
+		} else {
+			var bf = FetchBinaryURL(gdp.rrd);
+			rrd = new RRDFile(bf);
+			this.rrdfiles[gdp.rrd] = rrd;
+		}
+
+		return this.build(gdp, ft_step, rrd);
 	}
 };
