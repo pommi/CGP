@@ -66,6 +66,9 @@ $CONFIG['detail-heigth'] = 350;
 # disabled: NULL
 $CONFIG['socket'] = NULL;
 
+# system default timezone when not set
+$CONFIG['default_timezone'] = 'UTC';
+
 
 # load local configuration
 if (file_exists(dirname(__FILE__).'/config.local.php'))
