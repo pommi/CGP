@@ -54,6 +54,9 @@ $CONFIG['graph_smooth'] = false;
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 
+# page refresh (in seconds)
+$CONFIG['page_refresh'] = '';
+
 # default width/height of the graphs
 $CONFIG['width'] = 400;
 $CONFIG['heigth'] = 175;

@@ -22,6 +22,12 @@ function html_start() {
 	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
 EOT;
+	if (isset($CONFIG['page_refresh']) && is_numeric($CONFIG['page_refresh'])) {
+		echo <<<EOT
+	<meta http-equiv="refresh" content="{$CONFIG['page_refresh']}">
+
+EOT;
+	}
 
 	if ($CONFIG['graph_type'] == 'canvas') {
 		echo <<<EOT
