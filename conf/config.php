@@ -63,6 +63,9 @@ $CONFIG['height'] = 175;
 # default width/height of detailed graphs
 $CONFIG['detail-width'] = 800;
 $CONFIG['detail-height'] = 350;
+# max width/height of a graph (to prevent from OOM)
+$CONFIG['max-width'] = $CONFIG['detail-width'] * 2;
+$CONFIG['max-height'] = $CONFIG['detail-height'] * 2;
 
 # collectd's unix socket (unixsock plugin)
 # enabled: 'unix:///var/run/collectd-unixsock'

@@ -17,6 +17,11 @@ if (!file_exists($CONFIG['webdir'].'/plugin/'.$plugin.'.php')) {
 	error_image();
 }
 
+if ($width > $CONFIG['max-width'] || $height > $CONFIG['max-height']) {
+	error_log('Resquested image is too large. Please configure max-width and max-height.');
+	error_image();
+}
+
 # load plugin
 include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
 
