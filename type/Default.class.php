@@ -18,7 +18,7 @@ class Type_Default {
 	var $rrd_format;
 	var $scale = 1;
 	var $width;
-	var $heigth;
+	var $height;
 	var $graph_type;
 	var $negative_io;
 	var $graph_smooth;
@@ -37,8 +37,8 @@ class Type_Default {
 		$this->identifiers = $this->file2identifier($this->files);
 		$this->width = GET('x');
 		if (empty($this->width)) $this->width = $config['width'];
-		$this->heigth = GET('y');
-		if (empty($this->heigth)) $this->heigth = $config['heigth'];
+		$this->height = GET('y');
+		if (empty($this->height)) $this->height = $config['height'];
 		$this->graph_type = $config['graph_type'];
 		$this->negative_io = $config['negative_io'];
 		$this->graph_smooth = $config['graph_smooth'];
@@ -227,7 +227,7 @@ class Type_Default {
 		if ($this->graph_smooth)
 			$rrdgraph[] = '-E';
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
-		$rrdgraph[] = sprintf('-h %d', is_numeric($this->heigth) ? $this->heigth : 175);
+		$rrdgraph[] = sprintf('-h %d', is_numeric($this->height) ? $this->height : 175);
 		$rrdgraph[] = '-l 0';
 		$rrdgraph[] = sprintf('-t "%s on %s"', $this->rrd_title, $this->args['host']);
 		if ($this->rrd_vertical)

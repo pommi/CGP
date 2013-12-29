@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 if (empty($_GET['x']))
 	$_GET['x'] = $CONFIG['detail-width'];
 if (empty($_GET['y']))
-	$_GET['y'] = $CONFIG['detail-heigth'];
+	$_GET['y'] = $CONFIG['detail-height'];
 
 $host = validate_get(GET('h'), 'host');
 $plugin = validate_get(GET('p'), 'plugin');

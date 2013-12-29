@@ -59,10 +59,10 @@ $CONFIG['page_refresh'] = '';
 
 # default width/height of the graphs
 $CONFIG['width'] = 400;
-$CONFIG['heigth'] = 175;
+$CONFIG['height'] = 175;
 # default width/height of detailed graphs
 $CONFIG['detail-width'] = 800;
-$CONFIG['detail-heigth'] = 350;
+$CONFIG['detail-height'] = 350;
 
 # collectd's unix socket (unixsock plugin)
 # enabled: 'unix:///var/run/collectd-unixsock'
