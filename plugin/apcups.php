@@ -53,7 +53,7 @@ switch($obj->args['type']) {
 		$obj->ds_names = array('value' => 'Time Left');
 		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Time Left');
-		$obj->rrd_vertical = 'Minutes';
+		$obj->rrd_vertical = 'Seconds';
 	break;
 	case 'voltage':
 		$obj->order = array('battery', 'input', 'output');
