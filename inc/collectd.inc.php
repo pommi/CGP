@@ -206,7 +206,8 @@ function build_url($base, $items, $s=NULL) {
 		if ($value == 'NULL')
 			continue;
 
-		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&', $key, $value);
+        $escaped_val = urlencode( $value );
+		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&', $key, $escaped_val);
 		$i++;
 	}
 	if (!isset($items['s']))
