@@ -19,6 +19,27 @@ function collectd_hosts() {
 	return($dir);
 }
 
+
+# return files in directory. this will recurse into subdirs
+# infinite loop may occur
+function get_host_rrd_files($dir) {
+
+	$files = array();
+
+	$objects = new RecursiveIteratorIterator(
+		new RecursiveDirectoryIterator($dir),
+		RecursiveIteratorIterator::SELF_FIRST);
+
+	foreach($objects as $name => $object) {
+		if ( $object->getExtension() == 'rrd') {
+			$files[] = $object->getPathname();
+		}
+	}
+
+	return $files;
+}
+
+
 # returns an array of plugins/pinstances/types/tinstances
 function collectd_plugindata($host, $plugin=NULL) {
 	global $CONFIG;
@@ -26,8 +47,8 @@ function collectd_plugindata($host, $plugin=NULL) {
 	if (!is_dir($CONFIG['datadir'].'/'.$host))
 		return false;
 
-	chdir($CONFIG['datadir'].'/'.$host);
-	$files = glob("*/*.rrd");
+	$hostdir = $CONFIG['datadir'].'/'.$host;
+	$files = get_host_rrd_files( $hostdir );
 	if (!$files)
 		return false;
 
