@@ -1367,10 +1367,8 @@ RrdGraph.prototype.data_fetch_async_callback = function (args, ft_step)
 				}
 		}
 
-		if (that.gdes[i].ds === -1) {
-			alert("No DS called '"+that.gdes[i].ds_nam+"' in '"+that.gdes[i].rrd+"'");
-			return;
-		}
+		if (that.gdes[i].ds === -1)
+			throw new RrdGraphError("No DS called '"+that.gdes[i].ds_nam+"' in '"+that.gdes[i].rrd+"'");
 	}
 	that.graph_paint_draw();
 };
