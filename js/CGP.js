@@ -62,7 +62,7 @@ var mouse_scroll = function (e) {
 	return false;
 };
 
-function draw(id) {
+function prepare_draw(id) {
 	RrdGraph.prototype.mousex = 0;
 	RrdGraph.prototype.mousedown = false;
 
@@ -104,21 +104,5 @@ function draw(id) {
 	if (i === gfx.canvas.stlen) gfx.canvas.stidx = gfx.canvas.stlen-1;
 	else gfx.canvas.stidx = i;
 
-	try {
-		rrdgraph.graph_paint();
-	} catch (e) {
-		alert(e+"\n"+e.stack);
-	}
+	return rrdgraph;
 }
-
-function drawAll()
-{
-	var list=[];
-	var a=document.getElementsByClassName('rrd');
-	for (var i=0,l=a.length;i<l;i++)
-	{
-		draw(a[i].getAttribute('id'))
-	}
-}
-
-window.onload = drawAll()
