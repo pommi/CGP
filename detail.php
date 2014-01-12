@@ -11,6 +11,10 @@ if (empty($_GET['x']))
 if (empty($_GET['y']))
 	$_GET['y'] = $CONFIG['detail-height'];
 
+# set graph_type to canvas if hybrid
+if ($CONFIG['graph_type'] == 'hybrid')
+	$CONFIG['graph_type'] = 'canvas';
+
 $host = validate_get(GET('h'), 'host');
 $plugin = validate_get(GET('p'), 'plugin');
 $pinstance = validate_get(GET('pi'), 'pinstance');
