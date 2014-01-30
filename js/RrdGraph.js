@@ -1825,7 +1825,7 @@ RrdGraph.prototype.axis_paint = function()
 	if (this.second_axis_scale != 0){
 		this.gfx.line (this.xorigin+this.xsize,this.yorigin+4,
 			this.xorigin+this.xsize,this.yorigin-this.ysize-4,
-			MGRIDWIDTH, this.graph_col[this.GRC.AXIS]);
+			this.MGRIDWIDTH, this.GRC.AXIS);
 		this.gfx.new_area (this.xorigin+this.xsize-2,  this.yorigin-this.ysize-2,
 			this.xorigin+this.xsize+3,  this.yorigin-this.ysize-2,
 			this.xorigin+this.xsize,    this.yorigin-this.ysize-7, /* LINEOFFSET */
@@ -2294,7 +2294,7 @@ RrdGraph.prototype.draw_horizontal_grid = function()
 				nlabels++;
 				if (this.second_axis_scale != 0){
 					var graph_label_right;
-					sval = this.ygrid_scale.gridstep*i*this.second_axis_scale+this.second_axis_shift;
+					var sval = this.ygrid_scale.gridstep*i*this.second_axis_scale+this.second_axis_shift;
 					if (!this.second_axis_format){
 						if (!second_axis_magfact){
 							var dummy = this.ygrid_scale.gridstep*(sgrid+egrid)/2.0*this.second_axis_scale+this.second_axis_shift;
