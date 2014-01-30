@@ -2520,8 +2520,7 @@ RrdGraph.prototype.graph_size_location = function (elements)
 		this.ysize = Ymain;
 	} else {
 		if (elements) {
-//		Xmain = this.xsize; // + Xspacing;
-			Xmain = this.xsize + Xspacing; //FIXME ???
+			Xmain = this.xsize;
 			Ymain = this.ysize;
 		}
 		this.ximg = Xmain + Xylabel;
