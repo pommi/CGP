@@ -70,12 +70,12 @@ class Type_Default {
 	# parse $_GET values
 	function parse_get() {
 		$this->args = array(
-			'host' => GET('h'),
-			'plugin' => GET('p'),
-			'pinstance' => GET('pi'),
-			'category' => GET('c'),
-			'type' => GET('t'),
-			'tinstance' => GET('ti'),
+			'host' => urldecode( GET('h') ),
+			'plugin' => urldecode( GET('p') ),
+			'pinstance' => urldecode( GET('pi') ),
+			'category' => urldecode( GET('c') ),
+			'type' => urldecode( GET('t') ),
+			'tinstance' => urldecode( GET('ti') ),
 		);
 		$this->seconds = GET('s');
 	}
@@ -113,11 +113,13 @@ class Type_Default {
 	function rrd_escape($value) {
 		if ($this->graph_type == 'canvas') {
 			# http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html#IEscaping_the_colon
-			return str_replace(':', '\:', $value);
+			$str = str_replace(':', '\:', $value);
 		} else {
 			# php needs it double escaped to execute rrdtool correctly
-			return str_replace(':', '\\\:', $value);
-		}
+			$str = str_replace(':', '\\\:', $value);
+        }
+        $escaped = escapeshellcmd( $str );
+        return $escaped;
 	}
 
 	function parse_filename($file) {
