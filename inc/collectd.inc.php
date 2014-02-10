@@ -206,11 +206,11 @@ function build_url($base, $items, $s=NULL) {
 		if ($value == 'NULL')
 			continue;
 
-		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&', $key, $value);
+		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&amp;', $key, $value);
 		$i++;
 	}
 	if (!isset($items['s']))
-		$base .= '&s='.$s;
+		$base .= '&amp;s='.$s;
 
 	return $base;
 }

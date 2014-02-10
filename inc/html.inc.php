@@ -109,7 +109,7 @@ EOT;
 function plugin_header($host, $plugin) {
 	global $CONFIG;
 
-	return printf("<h2><a href='%shost.php?h=%s&p=%s'>%s</a></h2>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
+	return printf("<h2><a href='%shost.php?h=%s&amp;p=%s'>%s</a></h2>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
 }
 
 function plugins_list($host, $selected_plugins = array()) {
@@ -130,7 +130,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	# first the ones defined as ordered
 	foreach($CONFIG['overview'] as $plugin) {
 		if (in_array($plugin, $plugins)) {
-			printf("<li><a %s href='%shost.php?h=%s&p=%s'>%4\$s</a></li>\n",
+			printf("<li><a %s href='%shost.php?h=%s&amp;p=%s'>%4\$s</a></li>\n",
 				selected_plugin($plugin, $selected_plugins),
 				$CONFIG['weburl'],
 				$host,
@@ -142,7 +142,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	# other plugins
 	foreach($plugins as $plugin) {
 		if (!in_array($plugin, $CONFIG['overview'])) {
-			printf("<li><a %s href='%shost.php?h=%s&p=%s'>%4\$s</a></li>\n",
+			printf("<li><a %s href='%shost.php?h=%s&amp;p=%s'>%4\$s</a></li>\n",
 				selected_plugin($plugin, $selected_plugins),
 				$CONFIG['weburl'],
 				$host,
