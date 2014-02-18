@@ -219,6 +219,29 @@ function build_url($base, $items, $s=NULL) {
 function collectd_flush($identifier) {
 	global $CONFIG;
 
+	/**
+	 * A hack to issue FLUSH commands to rrdcached as well.
+	 */
+	if (!empty($_SERVER['RRDCACHED_ADDRESS'])) {
+		$ids = '';
+		if (is_array($identifier)) {
+			foreach ($identifier as $id) {
+				$count = 1;
+				$id = str_replace($CONFIG['datadir'], '', $id, $count);
+				$ids .= ' "'.$id.'.rrd"';
+			}
+		}
+		else {
+			$count = 1;
+			$id = str_replace($CONFIG['datadir'], '', $id, $count);
+			$ids = '"'.$id.'.rrd"';
+		}
+		chdir($CONFIG['datadir']);
+		$cmd = sprintf('%s flushcached --daemon %s %s', $CONFIG['rrdtool'], $_SERVER['RRDCACHED_ADDRESS'], $ids);
+		#error_log("DEBUG: \$cmd: $cmd");
+		system($cmd);
+	}
+
 	if (!$CONFIG['socket'])
 		return FALSE;
 
