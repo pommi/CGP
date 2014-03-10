@@ -4,7 +4,7 @@ require_once 'conf/common.inc.php';
 require_once 'inc/functions.inc.php';
 require_once 'inc/html.inc.php';
 
-if ($file = validateRRDPath($CONFIG['datadir'], $_SERVER['PATH_INFO'])) {
+if ( $file = validateRRDPath($CONFIG['datadir'], urldecode($_SERVER["QUERY_STRING"])) ) {
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename='.basename($file));
 	header("Expires: " .date(DATE_RFC822,strtotime($CONFIG['cache']." seconds")));
