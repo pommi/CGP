@@ -122,9 +122,9 @@ class Type_Default {
 
 	function parse_filename($file) {
 		if ($this->graph_type == 'canvas') {
-			$file = 'rrd.php/' . str_replace($this->datadir . '/', '', $file);
+			$file = str_replace($this->datadir . '/', '', $file);
 			# rawurlencode all but /
-			$file = str_replace('%2F', '/', rawurlencode($file));
+			$file = 'rrd.php?' . str_replace('%2F', '/', rawurlencode($file));
 		} else {
 			# escape characters
 			$file = str_replace(array(' ', '(', ')'), array('\ ', '\(', '\)'), $file);
