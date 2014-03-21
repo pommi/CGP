@@ -51,12 +51,14 @@ class Type_GenericIO extends Type_Base {
 			$i++;
 		}
 
-		$rrdgraph[] = sprintf('AREA:overlap#%s',
-			$this->get_faded_color(
-				$this->get_faded_color($this->colors[$sources[0]]),
-				$this->get_faded_color($this->colors[$sources[1]])
-			)
-		);
+		if (!$this->negative_io) {
+			$rrdgraph[] = sprintf('AREA:overlap#%s',
+				$this->get_faded_color(
+					$this->get_faded_color($this->colors[$sources[0]]),
+					$this->get_faded_color($this->colors[$sources[1]])
+				)
+			);
+		}
 
 		$i = 0;
 		foreach($sources as $source) {
