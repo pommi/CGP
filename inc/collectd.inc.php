@@ -23,17 +23,16 @@ function collectd_hosts() {
 # return files in directory. this will recurse into subdirs
 # infinite loop may occur
 function get_host_rrd_files($dir) {
-
 	$files = array();
 
-	$objects = new RecursiveIteratorIterator(
+	$objects = new RegexIterator(
+		new RecursiveIteratorIterator(
 		new RecursiveDirectoryIterator($dir),
-		RecursiveIteratorIterator::SELF_FIRST);
+		RecursiveIteratorIterator::SELF_FIRST),
+		'/\.rrd$/');
 
-	foreach($objects as $name => $object) {
-		if ( $object->getExtension() == 'rrd') {
-			$files[] = $object->getPathname();
-		}
+	foreach($objects as $object) {
+		$files[] = str_replace($dir.'/', '', $object->getPathname());
 	}
 
 	return $files;
@@ -48,7 +47,7 @@ function collectd_plugindata($host, $plugin=NULL) {
 		return false;
 
 	$hostdir = $CONFIG['datadir'].'/'.$host;
-	$files = get_host_rrd_files( $hostdir );
+	$files = get_host_rrd_files($hostdir);
 	if (!$files)
 		return false;
 
