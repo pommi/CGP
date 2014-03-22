@@ -34,7 +34,6 @@ class Type_Default {
 		$this->cache = $config['cache'];
 		$this->parse_get();
 		$this->rrd_files();
-		$this->identifiers = $this->file2identifier($this->files);
 		$this->width = GET('x');
 		if (empty($this->width)) $this->width = $config['width'];
 		$this->height = GET('y');
@@ -143,10 +142,12 @@ class Type_Default {
 
 			$this->tinstances[] = $instance;
 			$this->files[$instance] = $filename;
+			$this->identifiers[$instance] = preg_replace("#^$this->datadir/(.*)\.rrd$#", '$1', $filename);
 		}
 
 		sort($this->tinstances);
 		ksort($this->files);
+		ksort($this->identifiers);
 	}
 
 	function get_filenames() {
@@ -162,17 +163,6 @@ class Type_Default {
 		$wildcard = strlen($this->args['tinstance']) ? '.' : '[-.]*';
 
 		$files = glob($this->datadir .'/'. $identifier . $wildcard . 'rrd');
-
-		return $files;
-	}
-
-	function file2identifier($files) {
-		foreach($files as $key => $file) {
-			if (is_file($file)) {
-				$files[$key] = preg_replace("#^$this->datadir/#u", '', $files[$key]);
-				$files[$key] = preg_replace('#\.rrd$#', '', $files[$key]);
-			}
-		}
 
 		return $files;
 	}
