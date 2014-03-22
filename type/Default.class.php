@@ -159,6 +159,7 @@ class Type_Default {
 			$this->args['type'],
 			strlen($this->args['tinstance']) ? '-' : '', $this->args['tinstance']
 		);
+		$identifier = str_replace(array('[', ']'), array('\[', '\]'), $identifier);
 
 		$wildcard = strlen($this->args['tinstance']) ? '.' : '[-.]*';
 
