@@ -72,8 +72,13 @@ $CONFIG['max-height'] = $CONFIG['detail-height'] * 2;
 
 # collectd's unix socket (unixsock plugin)
 # enabled: 'unix:///var/run/collectd-unixsock'
+# enabled (rrdcached): 'unix:///var/run/rrdcached.sock'
 # disabled: NULL
 $CONFIG['socket'] = NULL;
+
+# flush rrd data to disk using "collectd" (unixsock plugin)
+# or a "rrdcached" server
+$CONFIG['flush_type'] = 'collectd';
 
 # system default timezone when not set
 $CONFIG['default_timezone'] = 'UTC';
