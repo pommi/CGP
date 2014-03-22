@@ -19,6 +19,61 @@ function collectd_hosts() {
 	return($dir);
 }
 
+
+function extract_plugin_data( $plugin_data ) {
+    $data = array();
+    $exploded = explode('-', $plugin_data, 2);
+    $data['name'] = $exploded[0];
+    $data['instance'] = array_key_exists(1, $exploded) ? $exploded[1] : '';
+    return $data;
+}
+
+
+function extract_type_data( $type_data ) {
+    $data = array();
+    # get rid off .rrd extension
+    $type_data = pathinfo($type_data);
+    $type_data = $type_data['filename'];
+
+    $exploded = explode('-', $type_data, 2);
+    $data['name'] = $exploded[0];
+    $data['instance'] = array_key_exists(1, $exploded) ? $exploded[1] : '';
+    return $data;
+}
+
+
+# this function will extract plugin,plugin instance, type, type instance from specified array of files
+# https://collectd.org/wiki/index.php/Naming_schema
+function extract_host_serialization($host, $file_names) {
+    $data = array();
+
+    foreach( $file_names as $file_name ) {
+        # /PATH_TO_RRD_FILES/HOSTNAME/cpu-0/cpu-nice.rrd
+        $serialization = explode( $host, $file_name );
+
+        # below will assign /cpu-0/cpu-nice.rrd
+        $serialozation = $serialization[1];
+
+        $plugin_type_data = explode('/', $serialozation);
+        $plugindata = extract_plugin_data($plugin_type_data[1]);
+        $typedata = extract_type_data($plugin_type_data[2]);
+
+        $data[] = array(
+            'p' => $plugindata['name'],
+            'c' => '',
+            'pi' => $plugindata['instance'],
+            't' => $typedata['name'],
+            'ti' => $typedata['instance'],
+        );
+
+    }
+
+    return $data;
+
+}
+
+
+
 # returns an array of plugins/pinstances/types/tinstances
 function collectd_plugindata($host, $plugin=NULL) {
 	global $CONFIG;
@@ -31,27 +86,7 @@ function collectd_plugindata($host, $plugin=NULL) {
 	if (!$files)
 		return false;
 
-	$data = array();
-	foreach($files as $item) {
-		preg_match('`
-			(?P<p>[\w_]+)      # plugin
-			(?:(?<=varnish)(?:\-(?P<c>[\w]+)))? # category
-			(?:\-(?P<pi>.+))?  # plugin instance
-			/
-			(?P<t>[\w_]+)      # type
-			(?:\-(?P<ti>.+))?  # type instance
-			\.rrd
-		`x', $item, $matches);
-
-		$data[] = array(
-			'p'  => $matches['p'],
-			'c'  => isset($matches['c']) ? $matches['c'] : '',
-			'pi' => isset($matches['pi']) ? $matches['pi'] : '',
-			't'  => $matches['t'],
-			'ti' => isset($matches['ti']) ? $matches['ti'] : '',
-		);
-	}
-
+	$data = extract_host_serialization( $host, $files );
 	# only return data about one plugin
 	if (!is_null($plugin)) {
 		$pdata = array();
