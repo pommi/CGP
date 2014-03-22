@@ -31,6 +31,11 @@ function validate_get($value, $type) {
 }
 
 function validateRRDPath($base, $path) {
+	$base = preg_replace('/\/$/', '', $base);
+
+	# resolve possible symlink
+	$base = realpath($base);
+
 	$realpath = realpath(sprintf('%s/%s', $base, $path));
 
 	if (strpos($realpath, $base) === false)
