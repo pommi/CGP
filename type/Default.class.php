@@ -196,6 +196,14 @@ class Type_Default {
 				print_r($graphdata);
 				print '</pre>';
 			break;
+			case 'svg':
+				# caching
+				if (is_numeric($this->cache) && $this->cache > 0)
+					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
+				header("content-type: image/svg+xml");
+				$graphdata = implode(' ', $graphdata);
+				echo `$graphdata`;
+			break;
 			case 'png':
 			default:
 				# caching
@@ -209,9 +217,18 @@ class Type_Default {
 	}
 
 	function rrd_options() {
-		if ($this->graph_type != 'canvas') {
-			$rrdgraph[] = $this->rrdtool;
-			$rrdgraph[] = 'graph - -a PNG';
+		switch ($this->graph_type) {
+			case 'png':
+			case 'hybrid':
+				$rrdgraph[] = $this->rrdtool;
+				$rrdgraph[] = 'graph - -a PNG';
+			break;
+			case 'svg':
+				$rrdgraph[] = $this->rrdtool;
+				$rrdgraph[] = 'graph - -a SVG';
+			break;
+			default:
+			break;
 		}
 		if ($this->rrdtool_opts != '')
 			$rrdgraph[] = $this->rrdtool_opts;

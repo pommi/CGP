@@ -42,7 +42,7 @@ $CONFIG['term'] = array(
 # show graphs in bits or bytes
 $CONFIG['network_datasize'] = 'bytes';
 
-# "png", "canvas" or "hybrid" (canvas on detail page, png on the others) graphs
+# "png", "svg", "canvas" or "hybrid" (canvas on detail page, png on the others) graphs
 $CONFIG['graph_type'] = 'png';
 
 # For canvas graphs, use 'async' or 'sync' fetch method

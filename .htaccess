@@ -1,9 +1,10 @@
 Options -Indexes
 
 <IfModule mod_deflate.c>
-<Files "rrd.php">
-	SetOutputFilter DEFLATE
-</Files>
+	AddOutputFilterByType DEFLATE image/svg+xml
+	<Files "rrd.php">
+		SetOutputFilter DEFLATE
+	</Files>
 </IfModule>
 
 RewriteEngine On
