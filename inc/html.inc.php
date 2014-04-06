@@ -191,8 +191,6 @@ function host_summary($cat, $hosts) {
 	foreach($hosts as $host) {
 		$host_counter++;
 
-		$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
-
 		printf('<tr class="%s">', $row_style[$host_counter % 2]);
 		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
 			$CONFIG['weburl'],$host, $host);
@@ -208,6 +206,8 @@ function host_summary($cat, $hosts) {
 			if (isset($rrd_info['ds[shortterm].last_ds']) &&
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
+
+				$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
 
 				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
 					$class = '';
