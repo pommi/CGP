@@ -1,0 +1,88 @@
+{
+	"df_complex": {
+		"title": "bcache usage ({{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"unused": {
+				"name": "Unused",
+				"color": "00ff00"
+			},
+			"dirty_data": {
+				"name": "Dirty Data",
+				"color": "ffb000"
+			},
+			"used": {
+				"name": "Used",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%sB"
+	},
+	"bytes": {
+		"title": "bcache bypassed I/O ({{PI}})",
+		"vertical": "Bytes (5 min avg)",
+		"type": "stacked",
+		"legend": {
+			"bypassed": {
+				"name": "Bypassed",
+				"color": "195aa7"
+			}
+		},
+		"legend_format": "%5.1lf%sB"
+	},
+	"cache_ratio": {
+		"title": "bcache cache hit ratio ({{PI}})",
+		"vertical": "Percent",
+		"legend": {
+			"five_minute": {
+				"name": "5 min",
+				"color": "59db84"
+			},
+			"hour": {
+				"name": "hour",
+				"color": "195aa7"
+			},
+			"day": {
+				"name": "day",
+				"color": "e5279b"
+			},
+			"total": {
+				"name": "total",
+				"color": "ff7f00"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"requests": {
+		"title": "bcache access stats ({{PI}})",
+		"vertical": "Cache access (5 min avg)",
+		"legend": {
+			"hits": {
+				"name": "Hits",
+				"color": "00e000"
+			},
+			"bypass_hits": {
+				"name": "Bypass Hits",
+				"color": "ffb000"
+			},
+			"bypass_misses": {
+				"name": "Bypass Misses",
+				"color": "ff5e00"
+			},
+			"misses": {
+				"name": "Misses",
+				"color": "ff0000"
+			},
+			"miss_collisions": {
+				"name": "Miss Collisions",
+				"color": "a000a0"
+			},
+			"readaheads": {
+				"name": "Read-aheads",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}
