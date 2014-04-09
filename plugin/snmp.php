@@ -27,7 +27,7 @@ switch(GET('t')) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG);
 		$obj->rrd_title = sprintf('SNMP: %s (%s)', $obj->args['type'], $obj->args['tinstance']);
-	return;
+	break;
 }
 
 $obj->rrd_format = '%5.1lf%s';
