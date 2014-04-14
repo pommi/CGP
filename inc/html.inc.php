@@ -219,7 +219,31 @@ function host_summary($cat, $hosts) {
 					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
 				}
 			}
-		}
+        }
+
+        if ($CONFIG['showmem']) {
+            $rrd_info_mu = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/memory/memory-used.rrd');
+            $rrd_info_mf = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/memory/memory-free.rrd');
+            $rrd_info_bf = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/memory/memory-buffered.rrd');
+            $rrd_info_ca = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/memory/memory-cached.rrd');
+            
+            # ignore if file does not exist
+            if (!$rrd_info_mu || !$rrd_info_mf || !$rrd_info_bf || !$rrd_info_ca)
+                continue;
+
+            $info='ds[value].last_ds';
+            if (isset($rrd_info_mu[$info]) && isset($rrd_info_mf[$info]) && isset($rrd_info_bf[$info]) && isset($rrd_info_ca[$info]) ) {
+                $percent_mem =  $rrd_info_mu[$info] * 100 / ($rrd_info_mu[$info] + $rrd_info_mf[$info] + $rrd_info_bf[$info] + $rrd_info_ca[$info]);
+
+                $class = '';
+                if ($percent_mem > 90)
+                    $class = ' class="crit"';
+                elseif ($percent_mem > 70)
+                    $class = ' class="warn"';
+
+                printf('<td%s>%d</td>', $class, $percent_mem);
+            }
+        }
 
 		print "</tr>\n";
 	}
