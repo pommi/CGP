@@ -26,9 +26,10 @@ $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 $CONFIG['time_range']['default'] = 86400;
 $CONFIG['time_range']['uptime']  = 31536000;
 
-# show load averages and used memory on overview page
+# show load averages, memory and rootfs usage on overview page
 $CONFIG['showload'] = true;
 $CONFIG['showmem'] = true;
+$CONFIG['showroot'] = true;
 
 $CONFIG['term'] = array(
 	'2hour'	 => 3600 * 2,

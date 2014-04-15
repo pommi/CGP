@@ -245,6 +245,29 @@ function host_summary($cat, $hosts) {
             }
         }
 
+        if ($CONFIG['showroot']) {
+            $rrd_info_df = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df/df-root.rrd');
+            
+            # ignore if file does not exist
+            if (!$rrd_info_df)
+                continue;
+
+            if (isset($rrd_info_df["ds[free].last_ds"])) {
+                $total_disk = $rrd_info_df["ds[used].last_ds"] + $rrd_info_df["ds[free].last_ds"];
+                # We assume 5% is allocated only for root because this is the default setting.
+                $percent_disk = ( $rrd_info_df["ds[used].last_ds"] + 5 * $total_disk / 100 ) * 100 / $total_disk;
+
+                $class = '';
+                if ($percent_disk > 90)
+                    $class = ' class="crit"';
+                elseif ($percent_disk > 70)
+                    $class = ' class="warn"';
+
+                printf('<td%s>%d</td>', $class, $percent_disk);
+            }
+        }
+
+
 		print "</tr>\n";
 	}
 
