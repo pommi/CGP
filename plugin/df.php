@@ -28,6 +28,7 @@ $obj->colors = array(
 
 switch($obj->args['type']) {
 	case 'df_complex':
+	default:
 		$obj->rrd_title = sprintf('Free space (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Bytes';
 		$obj->rrd_format = '%5.1lf%sB';
