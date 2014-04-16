@@ -235,13 +235,13 @@ function host_summary($cat, $hosts) {
 			if (isset($rrd_info_mu[$info]) && isset($rrd_info_mf[$info]) && isset($rrd_info_bf[$info]) && isset($rrd_info_ca[$info]) ) {
 				$percent_mem =	$rrd_info_mu[$info] * 100 / ($rrd_info_mu[$info] + $rrd_info_mf[$info] + $rrd_info_bf[$info] + $rrd_info_ca[$info]);
 
-				$class = '';
+				$data_val = '<td>'.(int)$percent_mem.'%</td>';
 				if ($percent_mem > 90)
-					$class = ' class="crit"';
+					$data_val = '<td class="crit"><a href="#" class="tooltip">'.(int)$percent_mem.'%<span><img src="graph.php?p=memory&c=&pi=&t=memory&h='.$host.'"></span></a></td>';
 				elseif ($percent_mem > 70)
-					$class = ' class="warn"';
+					$data_val = '<td class="warn"><a href="#" class="tooltip">'.(int)$percent_mem.'%<span><img src="graph.php?p=memory&c=&pi=&t=memory&h='.$host.'"></span></a></td>';
 
-				printf('<td%s>%d%%</td>', $class, $percent_mem);
+				print($data_val);
 			}
 		}
 
