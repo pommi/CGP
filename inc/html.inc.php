@@ -245,6 +245,51 @@ function host_summary($cat, $hosts) {
 			}
 		}
 
+		if ($CONFIG['showroot']) {
+			if ($CONFIG['version'] == 4) {
+				$rrd_info_df = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df/df-root.rrd');
+
+				# ignore if file does not exist
+				if (!$rrd_info_df)
+					continue;
+
+				if (isset($rrd_info_df["ds[free].last_ds"])) {
+					$total_disk = $rrd_info_df["ds[used].last_ds"] + $rrd_info_df["ds[free].last_ds"];
+					# We assume 5% is allocated only for root because this is the default setting.
+					$percent_disk = ( $rrd_info_df["ds[used].last_ds"] + 5 * $total_disk / 100 ) * 100 / $total_disk;
+
+					$data_val = '<td>'.(int)$percent_disk.'%</td>';
+					if ($percent_disk > 90)
+						$data_val = '<td class="crit"><a href="#" class="tooltip">'.(int)$percent_disk.'%<span><img src="graph.php?p=df&t=df&ti=root&h='.$host.'"></span></a></td>';
+					elseif ($percent_disk > 70)
+						$data_val = '<td class="warn"><a href="#" class="tooltip">'.(int)$percent_disk.'%<span><img src="graph.php?p=df&t=df&ti=root&h='.$host.'"></span></a></td>';
+
+					print($data_val);
+				}
+
+			} elseif ($CONFIG['version'] == 5) {
+				$rrd_info_dff = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df-root/df_complex-free.rrd');
+				$rrd_info_dfu = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df-root/df_complex-reserved.rrd');
+				$rrd_info_dfr = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df-root/df_complex-used.rrd');
+
+				# ignore if file does not exist
+				if (!$rrd_info_dff || !$rrd_info_dfu || !$rrd_info_dfr)
+					continue;
+
+				if (isset($rrd_info_dff["ds[value].last_ds"]) && isset($rrd_info_dfu["ds[value].last_ds"]) && isset($rrd_info_dfr["ds[value].last_ds"])) {
+					$percent_disk = ($rrd_info_dfu["ds[value].last_ds"] + $rrd_info_dfr["ds[value].last_ds"]) * 100 / ($rrd_info_dff["ds[value].last_ds"] + $rrd_info_dfu["ds[value].last_ds"] + $rrd_info_dfr["ds[value].last_ds"]);
+
+					$data_val = '<td>'.(int)$percent_disk.'%</td>';
+					if ($percent_disk > 90)
+						$data_val = '<td class="crit"><a href="#" class="tooltip">'.(int)$percent_disk.'%<span><img src="graph.php?p=df&pi=root&t=df_complex&h='.$host.'"></span></a></td>';
+					elseif ($percent_disk > 70)
+						$data_val = '<td class="warn"><a href="#" class="tooltip">'.(int)$percent_disk.'%<span><img src="graph.php?p=df&pi=root&t=df_complex&h='.$host.'"></span></a></td>';
+
+					print($data_val);
+				}
+			}
+		}
+
 		print "</tr>\n";
 	}
 
