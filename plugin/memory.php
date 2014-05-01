@@ -14,7 +14,7 @@ require_once 'inc/collectd.inc.php';
 # memory/memory-used.rrd
 
 $obj = new Type_GenericStacked($CONFIG);
-$obj->order = array('free', 'buffered', 'cached', 'locked', 'used');
+$obj->order = array('free', 'inactive', 'buffered', 'cached', 'cache', 'locked', 'used', 'active', 'wired');
 $obj->ds_names = array(
 	'free'     => 'Free',
 	'inactive' => 'Inactive',
@@ -34,7 +34,7 @@ $obj->colors = array(
 	'buffered' => 'ffb000',
 	'locked' => 'ff00ff',
 	'used' => 'ff0000',
-	'active' => 'ff4300',
+	'active' => 'ff00ff',
 	'wired' => 'ff0000',
 );
 
