@@ -88,6 +88,8 @@ function collectd_plugindata($host, $plugin=NULL) {
 # returns an array of all plugins of a host
 function collectd_plugins($host) {
 	$plugindata = collectd_plugindata($host);
+	if (!$plugindata)
+		return array();
 
 	$plugins = array();
 	foreach ($plugindata as $item) {
