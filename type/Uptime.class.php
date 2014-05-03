@@ -1,8 +1,8 @@
 <?php
 
-require_once 'Default.class.php';
+require_once 'Base.class.php';
 
-class Type_Uptime extends Type_Default {
+class Type_Uptime extends Type_Base {
 
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
