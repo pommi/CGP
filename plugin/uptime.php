@@ -10,7 +10,7 @@ require_once 'type/Uptime.class.php';
 
 $obj = new Type_Uptime($CONFIG, $_GET);
 $obj->data_sources = array('value');
-$obj->ds_names = array(
+$obj->legend = array(
 	'value' => 'Current',
 );
 $obj->colors = array(

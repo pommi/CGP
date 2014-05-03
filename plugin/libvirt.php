@@ -20,7 +20,7 @@ $obj = new Type_GenericIO($CONFIG, $_GET);
 switch($obj->args['type']) {
 	case 'disk_octets':
 		$obj->data_sources = array('read', 'write');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'read' => 'Read',
 			'write' => 'Written',
 		);
@@ -34,7 +34,7 @@ switch($obj->args['type']) {
 	break;
 	case 'disk_ops':
 		$obj->data_sources = array('read', 'write');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'read' => 'Read',
 			'write' => 'Written',
 		);
@@ -48,7 +48,7 @@ switch($obj->args['type']) {
 	break;
 	case 'if_dropped':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -61,7 +61,7 @@ switch($obj->args['type']) {
 	break;
 	case 'if_errors':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -74,7 +74,7 @@ switch($obj->args['type']) {
 	break;
 	case 'if_octets':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -88,7 +88,7 @@ switch($obj->args['type']) {
 	break;
 	case 'if_packets':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -104,7 +104,7 @@ switch($obj->args['type']) {
 		$obj = new Type_Default($CONFIG, $_GET);
 
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'CPU time',
 		);
 		$obj->colors = array(
@@ -118,7 +118,7 @@ switch($obj->args['type']) {
 		$obj = new Type_Default($CONFIG, $_GET);
 
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'VCPU time',
 		);
 		$obj->colors = array(
@@ -134,8 +134,8 @@ $obj->rrd_format = '%5.1lf%s';
 if ($CONFIG['version'] < 5 && count($obj->data_sources) == 1) {
 	$obj->data_sources = array('ns');
 
-	$obj->ds_names['ns'] = $obj->ds_names['value'];
-	unset($obj->ds_names['value']);
+	$obj->legend['ns'] = $obj->legend['value'];
+	unset($obj->legend['value']);
 
 	$obj->colors['ns'] = $obj->colors['value'];
 	unset($obj->colors['value']);

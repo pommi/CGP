@@ -20,14 +20,14 @@ switch($obj->args['type']) {
 		$obj->data_sources = array('minflt', 'majflt');
 		$obj->colors = array('minflt' => '0000f0',
 		                     'majflt' => 'f00000');
-		$obj->ds_names = array('minflt' => 'Minor',
+		$obj->legend = array('minflt' => 'Minor',
 		                       'majflt' => 'Major');
 		$obj->rrd_title = 'Page faults';
 		$obj->rrd_vertical = '';
 		break;
 	case 'vmpage_io':
 		$obj->data_sources = array('in', 'out');
-		$obj->ds_names = array('memory-in'  => 'Memory (in)',
+		$obj->legend = array('memory-in'  => 'Memory (in)',
 		                       'memory-out' => 'Memory (out)',
 		                       'swap-in'    => 'Swap (in)',
 		                       'swap-out'   => 'Swap (out)');

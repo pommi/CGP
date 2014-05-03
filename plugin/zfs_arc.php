@@ -35,7 +35,7 @@ switch($obj->args['type']) {
 			'hits-prefetch_metadata' => 'ff00ff',
 			'misses-prefetch_metadata' => '888800',
 		);
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'hits-demand_data' => 'data hits',
 			'misses-demand_data' => 'metadata misses',
 			'hits-demand_metadata' => 'metadata hits',
@@ -64,7 +64,7 @@ switch($obj->args['type']) {
 			'write',
 			'read',
 		);
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'write' => 'Write',
 			'read'  => 'Read',
 		);
@@ -79,7 +79,7 @@ switch($obj->args['type']) {
 		$obj->data_sources = array(
 			'value',
 		);
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value'   => 'Bytes',
 		);
 		$obj->colors = array(

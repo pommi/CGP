@@ -10,7 +10,7 @@ require_once 'type/Default.class.php';
 
 $obj = new Type_Default($CONFIG, $_GET);
 $obj->data_sources = array('shortterm', 'midterm', 'longterm');
-$obj->ds_names = array(
+$obj->legend = array(
 	'shortterm' => ' 1 min',
 	'midterm' => ' 5 min',
 	'longterm' => '15 min',

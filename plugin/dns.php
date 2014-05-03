@@ -20,7 +20,7 @@ switch($obj->args['type']) {
 			'queries',
 			'responses',
 		);
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'queries'   => 'Queries',
 			'responses' => 'Responses',
 		);

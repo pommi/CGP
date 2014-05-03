@@ -21,42 +21,42 @@ $obj = new Type_Default($CONFIG, $_GET);
 switch($obj->args['type']) {
 	case 'charge':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Charge');
+		$obj->legend = array('value' => 'Charge');
 		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Charge');
 		$obj->rrd_vertical = 'Ampere hours';
 	break;
 	case 'frequency':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Input Frequency');
+		$obj->legend = array('value' => 'Input Frequency');
 		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Input Frequency');
 		$obj->rrd_vertical = 'Hertz';
 	break;
 	case 'percent':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Load');
+		$obj->legend = array('value' => 'Load');
 		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Load');
 		$obj->rrd_vertical = 'Percent';
 	break;
 	case 'temperature':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Temperature');
+		$obj->legend = array('value' => 'Temperature');
 		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Temperature');
 		$obj->rrd_vertical = 'Celsius';
 	break;
 	case 'timeleft':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Time Left');
+		$obj->legend = array('value' => 'Time Left');
 		$obj->colors = array('value' => '0000f0');
 		$obj->rrd_title = sprintf('UPS Time Left');
 		$obj->rrd_vertical = 'Seconds';
 	break;
 	case 'voltage':
 		$obj->order = array('battery', 'input', 'output');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'battery' => 'Battery Voltage',
 			'input' => 'Input Voltage',
 			'output' => 'Output Voltage'
@@ -78,8 +78,8 @@ if ($CONFIG['version'] < 5 &&
 
 	$obj->data_sources = array($obj->args['type']);
 
-	$obj->ds_names[$obj->args['type']] = $obj->ds_names['value'];
-	unset($obj->ds_names['value']);
+	$obj->legend[$obj->args['type']] = $obj->legend['value'];
+	unset($obj->legend['value']);
 
 	$obj->colors[$obj->args['type']] = $obj->colors['value'];
 	unset($obj->colors['value']);

@@ -10,7 +10,7 @@ switch(GET('t')) {
 		require_once 'type/GenericIO.class.php';
 		$obj = new Type_GenericIO($CONFIG, $_GET);
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);

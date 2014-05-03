@@ -47,9 +47,9 @@ class Type_Default extends Type_Base {
 
 		$c = 0;
 		foreach ($sources as $source) {
-			$dsname = empty($this->ds_names[$source]) ? $source : $this->ds_names[$source];
+			$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-			$rrdgraph[] = sprintf('"LINE1:avg_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
+			$rrdgraph[] = sprintf('"LINE1:avg_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($legend));
 			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);

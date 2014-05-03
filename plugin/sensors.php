@@ -12,7 +12,7 @@ require_once 'type/Default.class.php';
 # sensors-XXXX/voltage-XXXX.rrd
 
 $obj = new Type_Default($CONFIG, $_GET);
-$obj->ds_names = array(
+$obj->legend = array(
 	'value' => 'Value',
 );
 switch($obj->args['type']) {

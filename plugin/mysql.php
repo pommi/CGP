@@ -11,7 +11,7 @@ $obj->rrd_format = '%5.1lf%s';
 switch($obj->args['type'])
 {
 	case 'cache_result':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'qcache-not_cached' => 'Not Cached',
 			'qcache-inserts' => 'Inserts',
 			'qcache-hits' => 'Hits',
@@ -27,7 +27,7 @@ switch($obj->args['type'])
 		$obj->rrd_vertical = 'Queries/s';
 	break;
 	case 'cache_size':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'qcache' => 'Queries',
 		);
 		$obj->rrd_title = sprintf('MySQL query cache size (%s)', $obj->args['pinstance']);
@@ -65,7 +65,7 @@ switch($obj->args['type'])
 	break;
 	case 'mysql_octets':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -77,7 +77,7 @@ switch($obj->args['type'])
 		$obj->rrd_vertical = 'Bits per second';
 	break;
 	case 'threads':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'cached' => 'Cached',
 			'connected' => 'Connected',
 			'running' => 'Running',
@@ -91,7 +91,7 @@ switch($obj->args['type'])
 		$obj->rrd_vertical = 'Threads';
 	break;
 	case 'total_threads':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'created' => 'Created',
 		);
 		$obj->rrd_title = sprintf('MySQL created threads (%s)', $obj->args['pinstance']);
@@ -100,7 +100,7 @@ switch($obj->args['type'])
 	# mysql_qcache is removed since commit collectd-4.10.0-104-g9ae3541
 	case 'mysql_qcache':
 		$obj->data_sources = array('not_cached', 'inserts', 'hits', 'lowmem_prunes', 'queries_in_cache');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'not_cached' => 'Not Cached',
 			'inserts' => 'Inserts',
 			'hits' => 'Hits',
@@ -120,7 +120,7 @@ switch($obj->args['type'])
 	# mysql_threads is removed since commit collectd-4.10.0-105-g6c48fca
 	case 'mysql_threads':
 		$obj->data_sources = array('cached', 'connected', 'running', 'created');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'cached' => 'Cached',
 			'connected' => 'Connected',
 			'running' => 'Running',

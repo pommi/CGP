@@ -17,17 +17,17 @@ $obj->colors = array(
 );
 switch($obj->args['type']) {
 	case 'charge':
-		$obj->ds_names = array('value' => 'Charge');
+		$obj->legend = array('value' => 'Charge');
 		$obj->rrd_title = sprintf('Charge (Battery %s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Ampere hours';
 	break;
 	case 'current':
-		$obj->ds_names = array('value' => 'Current');
+		$obj->legend = array('value' => 'Current');
 		$obj->rrd_title = sprintf('Current (Battery %s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Ampere';
 	break;
 	case 'voltage':
-		$obj->ds_names = array('value' => 'Voltage');
+		$obj->legend = array('value' => 'Voltage');
 		$obj->rrd_title = sprintf('Voltage (Battery %s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Volt';
 	break;

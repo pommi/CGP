@@ -34,7 +34,7 @@ switch($obj->args['type']) {
 		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('vm', 'vml', 'rss', 'anon');
 		# http://oldwiki.linux-vserver.org/Memory+Allocation
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'vm' => "Virtual memory pages",
 			'vml' => "Pages locked into memory",
 			'rss' => "Resident set size",
@@ -57,7 +57,7 @@ switch($obj->args['type']) {
 		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('running', 'uninterruptable', 'onhold', 'total');
 		# http://linux-vserver.org/ProcFS
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'onhold' => "Number of threads on hold",
 			'running' => "Number of running threads",
 			'total' => "Total number of threads",
@@ -78,7 +78,7 @@ switch($obj->args['type']) {
 		break;
 	case 'if_octets':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'inet-rx' => 'IPv4 Receive',
 			'inet-tx' => 'IPv4 Transmit',
 			'inet6-rx' => 'IPv6 Receive',
@@ -105,7 +105,7 @@ switch($obj->args['type']) {
 		break;
 	case 'vs_processes':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Processes',
 		);
 		$obj->rrd_title = sprintf('Processes on Vserver %s', $obj->args['pinstance']);

@@ -14,7 +14,7 @@ require_once 'type/GenericIO.class.php';
 
 $obj = new Type_GenericIO($CONFIG, $_GET);
 $obj->data_sources = array('read', 'write');
-$obj->ds_names = array(
+$obj->legend = array(
 	'read' => 'Read',
 	'write' => 'Written',
 );

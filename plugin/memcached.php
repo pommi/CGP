@@ -27,7 +27,7 @@ switch(GET('t')) {
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('used', 'free');
 		$obj->order = array('used', 'free');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'used' => 'Used',
 			'free' => 'Free',
 		);
@@ -44,7 +44,7 @@ switch(GET('t')) {
 		require_once 'type/GenericStacked.class.php';
 		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('flush', 'get', 'set');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'flush' => 'Flush',
 			'get'   => 'Get',
 			'set'   => 'Set',
@@ -63,7 +63,7 @@ switch(GET('t')) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Connections',
 		);
 		$obj->colors = array(
@@ -78,7 +78,7 @@ switch(GET('t')) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value ' => 'Items',
 		);
 		$obj->colors = array(
@@ -94,7 +94,7 @@ switch(GET('t')) {
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -111,7 +111,7 @@ switch(GET('t')) {
 		require_once 'type/GenericStacked.class.php';
 		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('evictions', 'hits', 'misses');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'evictions' => 'Evictions',
 			'hits'	  => 'Hits',
 			'misses'	=> 'Misses',
@@ -130,7 +130,7 @@ switch(GET('t')) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('percent');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'percent ' => 'Percentage',
 		);
 		$obj->colors = array(
@@ -145,7 +145,7 @@ switch(GET('t')) {
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('threads');
 		$obj->order = array('threads');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'threads' => 'Threads',
 		);
 		$obj->colors = array(
@@ -161,7 +161,7 @@ switch(GET('t')) {
 		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('user', 'syst');
 		$obj->order = array('user', 'syst');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'user' => 'User',
 			'syst' => 'System',
 		);

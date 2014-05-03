@@ -21,7 +21,7 @@ switch($obj->args['type'])
 {
 	case 'connections':
 		$obj->order = array('accepted', 'handled');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'accepted'  => 'Accepted',
 			'handled' => 'Handled',
 		);
@@ -34,7 +34,7 @@ switch($obj->args['type'])
 	break;
 	case 'nginx_connections':
 		$obj->order = array('active', 'reading', 'waiting', 'writing');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'active'  => 'Active',
 			'reading' => 'Reading',
 			'waiting' => 'Waiting',
@@ -50,7 +50,7 @@ switch($obj->args['type'])
 		$obj->rrd_vertical = 'Connections/s';
 	break;
 	case 'nginx_requests':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Requests',
 		);
 		$obj->colors = array(

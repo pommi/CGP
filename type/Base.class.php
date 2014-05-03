@@ -11,7 +11,7 @@ class Type_Base {
 	var $seconds;
 	var $data_sources = array('value');
 	var $order;
-	var $ds_names;
+	var $legend;
 	var $colors;
 	var $rrd_title;
 	var $rrd_vertical;
@@ -281,26 +281,26 @@ class Type_Base {
 				$sources = $this->data_sources;
 			}
 		}
-		$this->parse_ds_names($sources);
+		$this->parse_legend($sources);
 		return $sources;
 	}
 
-	function parse_ds_names($sources) {
-		# fill ds_names if not defined by plugin
-		if (!is_array($this->ds_names))
-			$this->ds_names = array_combine($sources, $sources);
+	function parse_legend($sources) {
+		# fill legend if not defined by plugin
+		if (!is_array($this->legend))
+			$this->legend = array_combine($sources, $sources);
 
-		# detect length of longest ds_name
+		# detect length of longest legend
 		$max = 0;
-		foreach ($this->ds_names as $ds_name) {
-			if(strlen((string)$ds_name) > $max)
-				$max = strlen((string)$ds_name);
+		foreach ($this->legend as $legend) {
+			if(strlen((string)$legend) > $max)
+				$max = strlen((string)$legend);
 		}
 
-		# make all ds_names equal in lenght
+		# make all legend equal in lenght
 		$format = sprintf("%%-%ds", $max);
-		foreach ($this->ds_names as $index => $value) {
-			$this->ds_names[$index] = sprintf($format, $value);
+		foreach ($this->legend as $index => $value) {
+			$this->legend[$index] = sprintf($format, $value);
 		}
 	}
 

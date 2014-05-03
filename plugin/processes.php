@@ -20,7 +20,7 @@ $obj->rrd_format = '%5.1lf%s';
 switch($obj->args['type'])
 {
 	case 'ps_state':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'paging' => 'Paging',
 			'blocked' => 'Blocked',
 			'zombies' => 'Zombies',
@@ -42,7 +42,7 @@ switch($obj->args['type'])
 	break;
 
 	case 'fork_rate':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Forks',
 		);
 		$obj->colors = array(
@@ -53,7 +53,7 @@ switch($obj->args['type'])
 	break;
 
 	case 'ps_code':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'TRS',
 		);
 		$obj->colors = array(
@@ -65,7 +65,7 @@ switch($obj->args['type'])
 
 	case 'ps_count':
 		$obj->data_sources = array('processes', 'threads');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'processes' => 'Processes',
 			'threads' => 'Threads',
 		);
@@ -79,7 +79,7 @@ switch($obj->args['type'])
 
 	case 'ps_cputime':
 		$obj->data_sources = array('user', 'syst');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'user' => 'User',
 			'syst' => 'System',
 		);
@@ -93,7 +93,7 @@ switch($obj->args['type'])
 
 	case 'ps_disk_octets':
 		$obj->data_sources = array('read', 'write');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'read'  => 'Read',
 			'write' => 'Write',
 		);
@@ -107,7 +107,7 @@ switch($obj->args['type'])
 
 	case 'ps_disk_ops':
 		$obj->data_sources = array('read', 'write');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'read'  => 'Read',
 			'write' => 'Write',
 		);
@@ -120,7 +120,7 @@ switch($obj->args['type'])
 	break;
 
 	case 'ps_data':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'DRS',
 		);
 		$obj->colors = array(
@@ -132,7 +132,7 @@ switch($obj->args['type'])
 
 	case 'ps_pagefaults':
 		$obj->data_sources = array('minflt', 'majflt');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'minflt' => 'Minor',
 			'majflt' => 'Major',
 		);
@@ -145,7 +145,7 @@ switch($obj->args['type'])
 	break;
 
 	case 'ps_rss':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'RSS',
 		);
 		$obj->colors = array(
@@ -156,7 +156,7 @@ switch($obj->args['type'])
 	break;
 
 	case 'ps_stacksize':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Stacksize',
 		);
 		$obj->colors = array(
@@ -167,7 +167,7 @@ switch($obj->args['type'])
 	break;
 
 	case 'ps_vm':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Memory',
 		);
 		$obj->colors = array(

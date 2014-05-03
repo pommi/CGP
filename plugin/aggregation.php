@@ -15,7 +15,7 @@ switch($pi[0]) {
 		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->data_sources = array('value');
 		$obj->order = array('idle', 'nice', 'user', 'wait', 'system', 'softirq', 'interrupt', 'steal');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'idle' => 'Idle',
 			'nice' => 'Nice',
 			'user' => 'User',

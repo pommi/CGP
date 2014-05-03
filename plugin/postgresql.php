@@ -25,7 +25,7 @@ $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {
 	case 'pg_blks':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'heap_hit'   => 'Heap hit',
 			'heap_read'  => 'Heap read',
 			'idx_hit'    => 'Index hit',
@@ -40,7 +40,7 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Blocks';
 	break;
 	case 'pg_db_size':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Size',
 		);
 		$obj->colors = array(
@@ -57,7 +57,7 @@ switch($obj->args['type']) {
 			'hot_upd',
 			'del',
 		);
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'ins'     => 'Insert',
 			'upd'     => 'Update',
 			'hot_upd' => 'Hot Update',
@@ -75,7 +75,7 @@ switch($obj->args['type']) {
 	break;
 	case 'pg_n_tup_g':
 		$obj->order = array('live', 'dead');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'live' => 'Live',
 			'dead' => 'Dead',
 		);
@@ -88,7 +88,7 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Rows';
 	break;
 	case 'pg_numbackends':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Backends',
 		);
 		$obj->colors = array(
@@ -99,7 +99,7 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Number';
 	break;
 	case 'pg_scan':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'seq'           => 'Sequential',
 			'seq_tup_read'  => 'Sequential rows',
 			'idx'           => 'Index',
@@ -110,7 +110,7 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Scans / Rows';
 	break;
 	case 'pg_xact':
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'commit'   => 'Commit',
 			'rollback' => 'Rollback',
 		);

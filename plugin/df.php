@@ -14,7 +14,7 @@ require_once 'type/GenericStacked.class.php';
 $obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->order = array('reserved', 'free', 'used');
-$obj->ds_names = array(
+$obj->legend = array(
 	'reserved' => 'Reserved',
 	'free' => 'Free',
 	'used' => 'Used',

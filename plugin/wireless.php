@@ -7,7 +7,7 @@ require_once 'type/GenericStacked.class.php';
 
 $obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->data_sources = array('value');
-$obj->ds_names = array('value' => 'Value');
+$obj->legend = array('value' => 'Value');
 $obj->colors = array('value' => '0000f0');
 $obj->rrd_format = '%6.1lf';
 

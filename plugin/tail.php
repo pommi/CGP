@@ -15,9 +15,9 @@ $obj->rrd_format = '%5.1lf%s';
 if ($CONFIG['version'] < 5) {
 	if (strcmp($obj->args['type'], 'gauge') != 0) {
 		$obj->data_sources = array('count');
-		if (count($obj->ds_names) == 1) {
-			$obj->ds_names['count'] = $obj->ds_names['value'];
-			unset($obj->ds_names['value']);
+		if (count($obj->legend) == 1) {
+			$obj->legend['count'] = $obj->legend['value'];
+			unset($obj->legend['value']);
 		}
 		if (count($obj->colors) == 1) {
 			$obj->colors['count'] = $obj->colors['value'];

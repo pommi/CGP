@@ -17,7 +17,7 @@ $obj = new Type_Default($CONFIG, $_GET);
 switch ($obj->args['type']) {
 	case 'apache_bytes':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => sprintf('%s/s', ucfirst($CONFIG['network_datasize'])),
 		);
 		$obj->colors = array(
@@ -30,7 +30,7 @@ switch ($obj->args['type']) {
 	break;
 	case 'apache_connections':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Conns/s',
 		);
 		$obj->colors = array(
@@ -42,7 +42,7 @@ switch ($obj->args['type']) {
 	break;
 	case 'apache_idle_workers':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Workers',
 		);
 		$obj->colors = array(
@@ -54,7 +54,7 @@ switch ($obj->args['type']) {
 	break;
 	case 'apache_requests':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'value' => 'Requests/s',
 		);
 		$obj->colors = array(
@@ -93,7 +93,7 @@ switch ($obj->args['type']) {
 			'read',
 			'request_start',
 		);
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'open'      => 'Open (empty)',
 			'waiting'   => 'Waiting',
 			'starting'  => 'Starting up',
@@ -154,9 +154,9 @@ $obj->rrd_format = '%5.1lf';
 # backwards compatibility
 if ($CONFIG['version'] < 5) {
 	$obj->data_sources = array('count');
-	if (count($obj->ds_names) == 1) {
-		$obj->ds_names['count'] = $obj->ds_names['value'];
-		unset($obj->ds_names['value']);
+	if (count($obj->legend) == 1) {
+		$obj->legend['count'] = $obj->legend['value'];
+		unset($obj->legend['value']);
 	}
 	if (count($obj->colors) == 1) {
 		$obj->colors['count'] = $obj->colors['value'];

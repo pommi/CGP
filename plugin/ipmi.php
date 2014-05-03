@@ -19,7 +19,7 @@ require_once 'type/Default.class.php';
 # voltage-VBAT system_board (7.1).rrd
 
 $obj = new Type_Default($CONFIG, $_GET);
-$obj->ds_names = array(
+$obj->legend = array(
 	'value' => 'Value',
 );
 switch($obj->args['type']) {

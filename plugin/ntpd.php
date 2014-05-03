@@ -13,7 +13,7 @@ require_once 'type/Default.class.php';
 # ntpd/time_offset-<host>.rrd
 
 $obj = new Type_Default($CONFIG, $_GET);
-$obj->ds_names = array('ping' => 'Ping time',
+$obj->legend = array('ping' => 'Ping time',
                        'ping_stddev' => 'Ping stddev',
                        'ping_droprate' => 'Ping droprate');
 $obj->rrd_format = '%5.1lf%s';

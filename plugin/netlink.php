@@ -12,14 +12,14 @@ $obj->rrd_format = '%5.1lf%s';
 switch($obj->args['type']) {
 	case 'if_collisions':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Collisions');
+		$obj->legend = array('value' => 'Collisions');
 		$obj->colors = array('value' => '0000ff');
 		$obj->rrd_title = sprintf('Collisions (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Collisions/s';
 		break;
 	case 'if_dropped':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -32,7 +32,7 @@ switch($obj->args['type']) {
 		break;
 	case 'if_errors':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -45,14 +45,14 @@ switch($obj->args['type']) {
 		break;
 	case 'if_multicast':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('value' => 'Packets');
+		$obj->legend = array('value' => 'Packets');
 		$obj->colors = array('value' => '0000ff');
 		$obj->rrd_title = sprintf('Multicast Packets (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Packets/s';
 		break;
 	case 'if_octets':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -66,7 +66,7 @@ switch($obj->args['type']) {
 		break;
 	case 'if_packets':
 		$obj->data_sources = array('rx', 'tx');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'rx' => 'Receive',
 			'tx' => 'Transmit',
 		);
@@ -79,7 +79,7 @@ switch($obj->args['type']) {
 		break;
 	case 'if_rx_errors':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'crc'    => 'CRC',
 			'fifo'   => 'FiFo',
 			'frame'  => 'Frame',
@@ -100,7 +100,7 @@ switch($obj->args['type']) {
 		break;
 	case 'if_tx_errors':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array(
+		$obj->legend = array(
 			'aborted'  => 'Aborted',
 			'carrier'  => 'Carrier',
 			'fifo'     => 'FiFo',

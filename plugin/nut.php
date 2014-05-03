@@ -21,7 +21,7 @@ switch($obj->args['type']) {
 		} else {
 			$obj->data_sources = array('value');
 		}
-		$obj->ds_names = array('output' => 'Output');
+		$obj->legend = array('output' => 'Output');
 		$obj->rrd_title = sprintf('Frequency (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Hz';
 		$obj->rrd_format = '%5.1lf%s';
@@ -32,7 +32,7 @@ switch($obj->args['type']) {
 		} else {
 			$obj->data_sources = array('value');
 		}
-		$obj->ds_names = array('charge' => 'Charge',
+		$obj->legend = array('charge' => 'Charge',
 		                       'load' => 'Load');
 		$obj->rrd_title = sprintf('Charge & load (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = '%';
@@ -40,14 +40,14 @@ switch($obj->args['type']) {
 	break;
 	case 'power':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('ups' => 'UPS');
+		$obj->legend = array('ups' => 'UPS');
 		$obj->rrd_title = sprintf('Power (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'VA';
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'temperature':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('battery' => 'Battery');
+		$obj->legend = array('battery' => 'Battery');
 		$obj->rrd_title = sprintf('Temperature (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = '°C';
 		$obj->rrd_format = '%5.1lf%s';
@@ -58,14 +58,14 @@ switch($obj->args['type']) {
 		} else {
 			$obj->data_sources = array('value');
 		}
-		$obj->ds_names = array('timeleft' => 'Timeleft');
+		$obj->legend = array('timeleft' => 'Timeleft');
 		$obj->rrd_title = sprintf('Timeleft (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Seconds';
 		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'voltage':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('battery' => 'Battery',
+		$obj->legend = array('battery' => 'Battery',
 		                       'input' => 'Input',
 		                       'output' => 'Output');
 		$obj->rrd_title = sprintf('Voltage (%s)', $obj->args['pinstance']);

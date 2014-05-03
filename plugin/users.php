@@ -10,7 +10,7 @@ require_once 'type/Default.class.php';
 
 $obj = new Type_Default($CONFIG, $_GET);
 $obj->data_sources = array('value');
-$obj->ds_names = array(
+$obj->legend = array(
 	'value' => 'Users',
 );
 $obj->colors = array(
@@ -24,8 +24,8 @@ $obj->rrd_format = '%.1lf';
 if ($CONFIG['version'] < 5) {
 	$obj->data_sources = array('users');
 
-	$obj->ds_names['users'] = $obj->ds_names['value'];
-	unset($obj->ds_names['value']);
+	$obj->legend['users'] = $obj->legend['value'];
+	unset($obj->legend['value']);
 
 	$obj->colors['users'] = $obj->colors['value'];
 	unset($obj->colors['value']);
