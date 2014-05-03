@@ -11,8 +11,8 @@ class Type_Base {
 	var $seconds;
 	var $data_sources = array('value');
 	var $order;
-	var $legend;
-	var $colors;
+	var $legend = array();
+	var $colors
 	var $rrd_title;
 	var $rrd_vertical;
 	var $rrd_format = '%5.1lf%s';
@@ -256,7 +256,7 @@ class Type_Base {
 		if (is_array($this->files) && count($this->files)>1) {
 			# and must it be ordered?
 			if (is_array($this->order)) {
-				$this->tinstances = array_merge(array_intersect($this->order, $this->tinstances));
+				$this->tinstances = array_merge(array_unique(array_merge(array_intersect($this->order, $this->tinstances), $this->tinstances)));
 			}
 			# use tinstances as sources
 			if(is_array($this->data_sources) && count($this->data_sources)>1) {
@@ -286,9 +286,8 @@ class Type_Base {
 	}
 
 	function parse_legend($sources) {
-		# fill legend if not defined by plugin
-		if (!is_array($this->legend))
-			$this->legend = array_combine($sources, $sources);
+		# fill up legend by items that are not defined by plugin
+		$this->legend = array_merge(array_combine($sources, $sources), $this->legend);
 
 		# detect length of longest legend
 		$max = 0;
