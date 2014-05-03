@@ -15,7 +15,7 @@ class Type_Base {
 	var $colors;
 	var $rrd_title;
 	var $rrd_vertical;
-	var $rrd_format;
+	var $rrd_format = '%5.1lf%s';
 	var $scale = 1;
 	var $width;
 	var $height;
@@ -36,6 +36,7 @@ class Type_Base {
 		$this->rrdtool_opts = $config['rrdtool_opts'];
 		$this->cache = $config['cache'];
 		$this->parse_get($_get);
+		$this->rrd_title = $this->args['plugin'];
 		$this->rrd_files();
 		$this->width = isset($_get['x']) ? $_get['x'] : $config['width'];
 		$this->height = isset($_get['y']) ? $_get['y'] : $config['height'];
