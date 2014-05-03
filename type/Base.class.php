@@ -12,7 +12,7 @@ class Type_Base {
 	var $data_sources = array('value');
 	var $order;
 	var $legend = array();
-	var $colors
+	var $colors = array();
 	var $rrd_title;
 	var $rrd_vertical;
 	var $rrd_format = '%5.1lf%s';
@@ -175,8 +175,9 @@ class Type_Base {
 	function rrd_graph($debug = false) {
 		$this->collectd_flush();
 
-		if (!$this->colors)
-			$this->rainbow_colors();
+		$colors = $this->colors;
+		$this->rainbow_colors();
+		$this->colors = array_merge($this->colors, $colors);
 
 		$graphdata = $this->rrd_gen_graph();
 
