@@ -269,4 +269,71 @@ function breadcrumbs() {
 	return $path;
 }
 
-?>
+# generate graph url's for a plugin of a host
+function graphs_from_plugin($host, $plugin, $overview=false) {
+	global $CONFIG;
+
+	if (!$plugindata = collectd_plugindata($host, $plugin))
+		return false;
+	if (!$plugindata = group_plugindata($plugindata))
+		return false;
+	if (!$plugindata = plugin_sort($plugindata))
+		return false;
+
+	foreach ($plugindata as $items) {
+
+		if (
+			$overview && isset($CONFIG['overview_filter'][$plugin]) &&
+			$CONFIG['overview_filter'][$plugin] !== array_intersect_assoc($CONFIG['overview_filter'][$plugin], $items)
+		) {
+			continue;
+		}
+
+		$items['h'] = $host;
+
+		$time = array_key_exists($plugin, $CONFIG['time_range'])
+			? $CONFIG['time_range'][$plugin]
+			: $CONFIG['time_range']['default'];
+
+		if ($CONFIG['graph_type'] == 'canvas') {
+			chdir($CONFIG['webdir']);
+			isset($items['p']) ? $_GET['p'] = $items['p'] : $_GET['p'] = '';
+			isset($items['pi']) ? $_GET['pi'] = $items['pi'] : $_GET['pi'] = '';
+			isset($items['t']) ? $_GET['t'] = $items['t'] : $_GET['t'] = '';
+			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
+			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+		} else {
+			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
+				$CONFIG['weburl'],
+				build_url('detail.php', $items, $time),
+				$CONFIG['weburl'],
+				build_url('graph.php', $items, $time)
+			);
+		}
+	}
+}
+
+# generate an url with GET values from $items
+function build_url($base, $items, $s=NULL) {
+	global $CONFIG;
+
+	if (!is_array($items))
+		return false;
+
+	if (!is_numeric($s))
+		$s = $CONFIG['time_range']['default'];
+
+	$i=0;
+	foreach ($items as $key => $value) {
+		# don't include empty values
+		if ($value == 'NULL')
+			continue;
+
+		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&amp;', $key, $value);
+		$i++;
+	}
+	if (!isset($items['s']))
+		$base .= '&amp;s='.$s;
+
+	return $base;
+}
