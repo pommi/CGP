@@ -30,9 +30,7 @@ html_start();
 printf('<fieldset id="%s">', $host);
 printf('<legend>%s</legend>', $host);
 
-$plugins = collectd_plugins($host);
-
-if(!$plugins) {
+if (!$plugins = collectd_plugins($host)) {
 	echo "Unknown host\n";
 	return false;
 }

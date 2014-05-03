@@ -16,7 +16,8 @@ function collectd_hosts() {
 		if(!is_dir($CONFIG['datadir'].'/'.$v))
 			unset($dir[$k]);
 	}
-	return($dir);
+
+	return $dir ? $dir : false;
 }
 
 
@@ -35,7 +36,7 @@ function get_host_rrd_files($dir) {
 		$files[] = str_replace($dir.'/', '', $object->getPathname());
 	}
 
-	return $files;
+	return $files ? $files : false;
 }
 
 
@@ -47,8 +48,7 @@ function collectd_plugindata($host, $plugin=NULL) {
 		return false;
 
 	$hostdir = $CONFIG['datadir'].'/'.$host;
-	$files = get_host_rrd_files($hostdir);
-	if (!$files)
+	if (!$files = get_host_rrd_files($hostdir))
 		return false;
 
 	$data = array();
@@ -82,12 +82,13 @@ function collectd_plugindata($host, $plugin=NULL) {
 		$data = $pdata;
 	}
 
-	return($data);
+	return $data ? $data : false;
 }
 
 # returns an array of all plugins of a host
 function collectd_plugins($host) {
-	$plugindata = collectd_plugindata($host);
+	if (!$plugindata = collectd_plugindata($host))
+		return false;
 
 	$plugins = array();
 	foreach ($plugindata as $item) {
@@ -95,7 +96,7 @@ function collectd_plugins($host) {
 			$plugins[] = $item['p'];
 	}
 
-	return $plugins;
+	return $plugins ? $plugins : false;
 }
 
 # returns an array of all pi/t/ti of an plugin
@@ -104,7 +105,8 @@ function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
 	if (!in_array($detail, $details))
 		return false;
 
-	$plugindata = collectd_plugindata($host);
+	if (!$plugindata = collectd_plugindata($host))
+		return false;
 
 	$return = array();
 	foreach ($plugindata as $item) {
@@ -124,10 +126,7 @@ function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
 		}
 	}
 
-	if (empty($return))
-		return false;
-
-	return $return;
+	return $return ? $return : false;
 }
 
 # group plugin files for graph generation
@@ -173,9 +172,12 @@ function plugin_sort($data) {
 function graphs_from_plugin($host, $plugin, $overview=false) {
 	global $CONFIG;
 
-	$plugindata = collectd_plugindata($host, $plugin);
-	$plugindata = group_plugindata($plugindata);
-	$plugindata = plugin_sort($plugindata);
+	if (!$plugindata = collectd_plugindata($host, $plugin))
+		return false;
+	if (!$plugindata = group_plugindata($plugindata))
+		return false;
+	if (!$plugindata = plugin_sort($plugindata))
+		return false;
 
 	foreach ($plugindata as $items) {
 
