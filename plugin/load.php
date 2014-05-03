@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # load/load.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->data_sources = array('shortterm', 'midterm', 'longterm');
 $obj->ds_names = array(
 	'shortterm' => ' 1 min',

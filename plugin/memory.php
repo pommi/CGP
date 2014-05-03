@@ -13,7 +13,7 @@ require_once 'inc/collectd.inc.php';
 # memory/memory-free.rrd
 # memory/memory-used.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->order = array('free', 'inactive', 'buffered', 'cached', 'cache', 'locked', 'used', 'active', 'wired');
 $obj->ds_names = array(
 	'free'     => 'Free',

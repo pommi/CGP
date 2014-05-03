@@ -15,7 +15,7 @@ require_once 'inc/collectd.inc.php';
 # zfs_arc/arc_ratio-L2.rrd
 # zfs_arc/arc_size.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {

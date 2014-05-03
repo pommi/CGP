@@ -6,7 +6,7 @@ require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
 require_once 'inc/collectd.inc.php';
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 
 $obj->rrd_format = '%5.1lf%s';
 

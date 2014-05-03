@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 switch(GET('t')) {
 	case 'if_octets':
 		require_once 'type/GenericIO.class.php';
-		$obj = new Type_GenericIO($CONFIG);
+		$obj = new Type_GenericIO($CONFIG, $_GET);
 		$obj->data_sources = array('rx', 'tx');
 		$obj->ds_names = array(
 			'rx' => 'Receive',
@@ -25,7 +25,7 @@ switch(GET('t')) {
 	break;
 	default:
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->rrd_title = sprintf('SNMP: %s (%s)', $obj->args['type'], $obj->args['tinstance']);
 	break;
 }

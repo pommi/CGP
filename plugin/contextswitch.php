@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # contextswitch/contextswitch.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->ds_names = array(
 	'value' => 'Context switches',

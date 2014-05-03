@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # thermal-XXXX/
 # thermal-XXXX/gauge.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->ds_names = array(
 	'value' => 'Temperature',
 );

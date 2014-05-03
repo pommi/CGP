@@ -14,7 +14,7 @@ require_once 'inc/collectd.inc.php';
 # nut-XXXX/timeleft-XXXX.rrd
 # nut-XXXX/voltage-XXXX.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 switch($obj->args['type']) {
 	case 'frequency':
 		if ($CONFIG['version'] < 5) {

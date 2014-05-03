@@ -16,7 +16,7 @@ require_once 'inc/collectd.inc.php';
 # nginx/nginx_connections-writing.rrd
 # nginx/nginx_requests.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 
 switch($obj->args['type'])
 {

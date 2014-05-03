@@ -17,7 +17,7 @@ require_once 'inc/collectd.inc.php';
 # interface-XXXX/if_octets.rrd
 # interface-XXXX/if_packets.rrd
 
-$obj = new Type_GenericIO($CONFIG);
+$obj = new Type_GenericIO($CONFIG, $_GET);
 $obj->data_sources = array('rx', 'tx');
 $obj->ds_names = array(
 	'rx' => 'Receive',

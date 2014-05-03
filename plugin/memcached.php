@@ -25,7 +25,7 @@ switch(GET('t')) {
 # df-cache.rrd
 	case 'df':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('used', 'free');
 		$obj->order = array('used', 'free');
 		$obj->ds_names = array(
@@ -43,7 +43,7 @@ switch(GET('t')) {
 # memcached_command-(flush|get|set).rrd
 	case 'memcached_command':
 		require_once 'type/GenericStacked.class.php';
-		$obj = new Type_GenericStacked($CONFIG);
+		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('flush', 'get', 'set');
 		$obj->ds_names = array(
 			'flush' => 'Flush',
@@ -62,7 +62,7 @@ switch(GET('t')) {
 # memcached_connections-current.rrd
 	case 'memcached_connections':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
 			'value' => 'Connections',
@@ -77,7 +77,7 @@ switch(GET('t')) {
 # memcached_items-current.rrd
 	case 'memcached_items':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
 			'value ' => 'Items',
@@ -92,7 +92,7 @@ switch(GET('t')) {
 # memcached_octets.rrd
 	case 'memcached_octets':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
 		$obj->ds_names = array(
@@ -110,7 +110,7 @@ switch(GET('t')) {
 # memcached_ops-(evictions|hits|misses).rrd
 	case 'memcached_ops':
 		require_once 'type/GenericStacked.class.php';
-		$obj = new Type_GenericStacked($CONFIG);
+		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('evictions', 'hits', 'misses');
 		$obj->ds_names = array(
 			'evictions' => 'Evictions',
@@ -129,7 +129,7 @@ switch(GET('t')) {
 # percent-hitratio.rrd
 	case 'percent':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('percent');
 		$obj->ds_names = array(
 			'percent ' => 'Percentage',
@@ -143,7 +143,7 @@ switch(GET('t')) {
 # ps_count.rrd
 	case 'ps_count':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('threads');
 		$obj->order = array('threads');
 		$obj->ds_names = array(
@@ -159,7 +159,7 @@ switch(GET('t')) {
 # ps_cputime.rrd
 	case 'ps_cputime':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 		$obj->data_sources = array('user', 'syst');
 		$obj->order = array('user', 'syst');
 		$obj->ds_names = array(

@@ -13,7 +13,7 @@ require_once 'inc/collectd.inc.php';
 # apache[-X]/apache_requests-X.rrd
 # apache[-X]/apache_scoreboard-X.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 
 switch ($obj->args['type']) {
 	case 'apache_bytes':
@@ -67,7 +67,7 @@ switch ($obj->args['type']) {
 	break;
 	case 'apache_scoreboard':
 		require_once 'type/GenericStacked.class.php';
-		$obj = new Type_GenericStacked($CONFIG);
+		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->data_sources = array('value');
 		$obj->order = array(
 			'open',

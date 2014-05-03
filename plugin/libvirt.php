@@ -16,7 +16,7 @@ require_once 'inc/collectd.inc.php';
 # libvirt/virt_cpu_total.rrd
 
 require_once 'type/GenericIO.class.php';
-$obj = new Type_GenericIO($CONFIG);
+$obj = new Type_GenericIO($CONFIG, $_GET);
 
 switch($obj->args['type']) {
 	case 'disk_octets':
@@ -102,7 +102,7 @@ switch($obj->args['type']) {
 	break;
 	case 'virt_cpu_total':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(
@@ -116,7 +116,7 @@ switch($obj->args['type']) {
 	break;
 	case 'virt_vcpu':
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG);
+		$obj = new Type_Default($CONFIG, $_GET);
 
 		$obj->data_sources = array('value');
 		$obj->ds_names = array(

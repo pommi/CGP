@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # nfs-XX/nfs_procedure-YY.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->data_sources = array('value');
 switch($obj->args['pinstance']) {
 	case 'v2client':

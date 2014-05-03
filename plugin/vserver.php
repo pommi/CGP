@@ -25,14 +25,14 @@ require_once 'inc/collectd.inc.php';
 # vserver-XXXX/vs_threads-total.rrd
 # vserver-XXXX/vs_threads-uninterruptable.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 
 switch($obj->args['type']) {
 	case 'load':
 		require_once "plugin/load.php";
 		break;
 	case 'vs_memory':
-		$obj = new Type_GenericStacked($CONFIG);
+		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('vm', 'vml', 'rss', 'anon');
 		# http://oldwiki.linux-vserver.org/Memory+Allocation
 		$obj->ds_names = array(
@@ -56,7 +56,7 @@ switch($obj->args['type']) {
 		$obj->rrd_graph();
 		break;
 	case 'vs_threads':
-		$obj = new Type_GenericStacked($CONFIG);
+		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->order = array('running', 'uninterruptable', 'onhold', 'total');
 		# http://linux-vserver.org/ProcFS
 		$obj->ds_names = array(

@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # irq/
 # irq/irq-XX.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 
 $obj->rrd_title = 'Interrupts';
 $obj->rrd_vertical = 'IRQs/s';

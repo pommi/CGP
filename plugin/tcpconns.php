@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # tcpconns-XXXX/
 # tcpconns-XXXX/tcp_connections-XXXX.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->rrd_title = sprintf('TCP Connections (%s)', $obj->args['pinstance']);
 $obj->rrd_vertical = '#';
 $obj->rrd_format = '%5.1lf';

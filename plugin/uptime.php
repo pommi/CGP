@@ -9,7 +9,7 @@ require_once 'inc/collectd.inc.php';
 ## LAYOUT
 # uptime/uptime.rrd
 
-$obj = new Type_Uptime($CONFIG);
+$obj = new Type_Uptime($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->ds_names = array(
 	'value' => 'Current',

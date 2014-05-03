@@ -13,7 +13,7 @@ require_once 'inc/collectd.inc.php';
 # ntpd/time_dispersion-<host>.rrd
 # ntpd/time_offset-<host>.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->ds_names = array('ping' => 'Ping time',
                        'ping_stddev' => 'Ping stddev',
                        'ping_droprate' => 'Ping droprate');

@@ -17,7 +17,7 @@ require_once 'inc/collectd.inc.php';
 # apcups/voltage-input.rrd
 # apcups/voltage-output.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 
 switch($obj->args['type']) {
 	case 'charge':

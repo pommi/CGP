@@ -17,7 +17,7 @@ require_once 'inc/collectd.inc.php';
 # cpu-X/cpu-user.rrd
 # cpu-X/cpu-wait.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->order = array('idle', 'nice', 'user', 'wait', 'system', 'softirq', 'interrupt', 'steal');
 $obj->ds_names = array(

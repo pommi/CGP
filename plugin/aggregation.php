@@ -13,7 +13,7 @@ $pi = explode("-", GET('pi'));
 switch($pi[0]) {
 	case 'cpu':
 		require_once 'type/GenericStacked.class.php';
-		$obj = new Type_GenericStacked($CONFIG);
+		$obj = new Type_GenericStacked($CONFIG, $_GET);
 		$obj->data_sources = array('value');
 		$obj->order = array('idle', 'nice', 'user', 'wait', 'system', 'softirq', 'interrupt', 'steal');
 		$obj->ds_names = array(

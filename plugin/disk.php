@@ -13,7 +13,7 @@ require_once 'inc/collectd.inc.php';
 # disk-XXXX/disk_ops.rrd
 # disk-XXXX/disk_time.rrd
 
-$obj = new Type_GenericIO($CONFIG);
+$obj = new Type_GenericIO($CONFIG, $_GET);
 $obj->data_sources = array('read', 'write');
 $obj->ds_names = array(
 	'read' => 'Read',

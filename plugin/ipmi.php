@@ -19,7 +19,7 @@ require_once 'inc/collectd.inc.php';
 # voltage-+12 V system_board (7.1).rrd
 # voltage-VBAT system_board (7.1).rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->ds_names = array(
 	'value' => 'Value',
 );

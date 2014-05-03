@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 # ping/ping_stddev-<host>.rrd
 # ping/ping_droprate-<host>.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->ds_names = array('ping' => 'Ping time',
                        'ping_stddev' => 'Ping stddev',

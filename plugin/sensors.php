@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 # sensors-XXXX/temerature-XXXX.rrd
 # sensors-XXXX/voltage-XXXX.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->ds_names = array(
 	'value' => 'Value',
 );

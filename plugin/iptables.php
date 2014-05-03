@@ -10,7 +10,7 @@ require_once 'inc/collectd.inc.php';
 # iptables/ipt_bytes-XXX.rrd
 # iptables/ipt_packets-XXX.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 
 $obj->data_sources = array('value');
 switch($_GET['t']) {

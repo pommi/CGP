@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 # df-X/df_complex-reserved.rrd
 # df-X/df_complex-used.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->order = array('reserved', 'free', 'used');
 $obj->ds_names = array(

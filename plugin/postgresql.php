@@ -21,7 +21,7 @@ require_once 'inc/collectd.inc.php';
 # postgresql-X/pg_n_tup_c-ins.rrd
 # postgresql-X/pg_n_tup_c-upd.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {

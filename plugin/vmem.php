@@ -13,7 +13,7 @@ require_once 'inc/collectd.inc.php';
 # vmem/vmpage_io-swapy.rrd
 # vmem/vmpage_number-<type>.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->rrd_format = '%5.1lf%s';
 
 switch($obj->args['type']) {

@@ -11,7 +11,7 @@ require_once 'inc/collectd.inc.php';
 # filecount-X/bytes.rrd
 # filecount-X/files.rrd
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 
 $obj->rrd_format = '%5.1lf%s';
 $obj->data_sources = array('value');

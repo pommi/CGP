@@ -12,7 +12,7 @@ require_once 'inc/collectd.inc.php';
 # battery-X/current.rrd
 # battery-X/voltage.rrd
 
-$obj = new Type_Default($CONFIG);
+$obj = new Type_Default($CONFIG, $_GET);
 $obj->colors = array(
 	'value' => '0000f0',
 );

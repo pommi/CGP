@@ -6,7 +6,7 @@ require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
 require_once 'inc/collectd.inc.php';
 
-$obj = new Type_GenericStacked($CONFIG);
+$obj = new Type_GenericStacked($CONFIG, $_GET);
 $obj->data_sources = array('value');
 $obj->ds_names = array('value' => 'Value');
 $obj->colors = array('value' => '0000f0');

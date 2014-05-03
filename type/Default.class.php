@@ -27,17 +27,15 @@ class Type_Default {
 	var $tinstances;
 	var $identifiers;
 
-	function __construct($config) {
+	function __construct($config, $_get) {
 		$this->datadir = $config['datadir'];
 		$this->rrdtool = $config['rrdtool'];
 		$this->rrdtool_opts = $config['rrdtool_opts'];
 		$this->cache = $config['cache'];
-		$this->parse_get();
+		$this->parse_get($_get);
 		$this->rrd_files();
-		$this->width = GET('x');
-		if (empty($this->width)) $this->width = $config['width'];
-		$this->height = GET('y');
-		if (empty($this->height)) $this->height = $config['height'];
+		$this->width = isset($_get['x']) ? $_get['x'] : $config['width'];
+		$this->height = isset($_get['y']) ? $_get['y'] : $config['height'];
 		$this->graph_type = $config['graph_type'];
 		$this->negative_io = $config['negative_io'];
 		$this->graph_smooth = $config['graph_smooth'];
@@ -67,16 +65,16 @@ class Type_Default {
 	}
 
 	# parse $_GET values
-	function parse_get() {
+	function parse_get($_get) {
 		$this->args = array(
-			'host' => GET('h'),
-			'plugin' => GET('p'),
-			'pinstance' => GET('pi'),
-			'category' => GET('c'),
-			'type' => GET('t'),
-			'tinstance' => GET('ti'),
+			'host' => isset($_get['h']) ? $_get['h'] : null,
+			'plugin' => isset($_get['p']) ? $_get['p'] : null,
+			'pinstance' => isset($_get['pi']) ? $_get['pi'] : null,
+			'category' => isset($_get['c']) ? $_get['c'] : null,
+			'type' => isset($_get['t']) ? $_get['t'] : null,
+			'tinstance' => isset($_get['ti']) ? $_get['ti'] : null,
 		);
-		$this->seconds = GET('s');
+		$this->seconds = isset($_get['s']) ? $_get['s'] : null;
 	}
 
 	function validate_color($color) {
