@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # processes/
@@ -181,5 +180,4 @@ switch($obj->args['type'])
 }
 
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

@@ -3,7 +3,6 @@
 # Collectd libvirt plugin
 
 require_once 'conf/common.inc.php';
-require_once 'inc/collectd.inc.php';
 
 # LAYOUT
 # libvirt/
@@ -142,5 +141,4 @@ if ($CONFIG['version'] < 5 && count($obj->data_sources) == 1) {
 	unset($obj->colors['value']);
 }
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

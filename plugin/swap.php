@@ -3,7 +3,6 @@
 # Collectd Swap plugin
 
 require_once 'conf/common.inc.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # swap/
@@ -48,5 +47,4 @@ switch(GET('t')) {
 
 $obj->rrd_format = '%5.1lf%s';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

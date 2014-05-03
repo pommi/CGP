@@ -3,7 +3,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # zfs_arc/
@@ -95,5 +94,4 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'ratio';
 		break;
 }
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

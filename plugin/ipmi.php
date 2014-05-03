@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT (similar to sensors plugin)
 #
@@ -41,5 +40,4 @@ switch($obj->args['type']) {
 	break;
 }
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

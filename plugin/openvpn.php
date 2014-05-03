@@ -3,7 +3,6 @@
 # Collectd OpenVPN plugin
 
 require_once 'conf/common.inc.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # openvpn-XXXX/
@@ -40,5 +39,4 @@ switch(GET('t')) {
 	break;
 }
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

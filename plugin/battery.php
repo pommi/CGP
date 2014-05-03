@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # battery-X/
@@ -35,6 +34,5 @@ switch($obj->args['type']) {
 }
 $obj->rrd_format = '%4.1lf';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();
 

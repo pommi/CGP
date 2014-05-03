@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # irq/
@@ -16,5 +15,4 @@ $obj->rrd_title = 'Interrupts';
 $obj->rrd_vertical = 'IRQs/s';
 $obj->rrd_format = '%6.1lf';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

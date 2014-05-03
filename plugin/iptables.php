@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # iptables/ipt_bytes-XXX.rrd
@@ -24,5 +23,4 @@ switch($_GET['t']) {
 $obj->rrd_vertical = '';
 $obj->rrd_format = '%5.1lf%s';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

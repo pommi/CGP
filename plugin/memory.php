@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # memory/
@@ -42,5 +41,4 @@ $obj->rrd_title = 'Physical memory utilization';
 $obj->rrd_vertical = 'Bytes';
 $obj->rrd_format = '%5.1lf%s';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

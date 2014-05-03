@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
-require_once 'inc/collectd.inc.php';
 
 
 $obj = new Type_Default($CONFIG, $_GET);
@@ -27,5 +26,4 @@ if ($CONFIG['version'] < 5) {
 	}
 }
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

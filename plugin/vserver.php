@@ -5,7 +5,6 @@
 require_once 'conf/common.inc.php';
 require_once 'type/GenericIO.class.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 # LAYOUT
 # vserver-XXXX
@@ -52,7 +51,6 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Bytes';
 		$obj->rrd_format = '%5.1lf%s';
 
-		collectd_flush($obj->identifiers);
 		$obj->rrd_graph();
 		break;
 	case 'vs_threads':
@@ -76,7 +74,6 @@ switch($obj->args['type']) {
 		$obj->rrd_vertical = 'Numbers';
 		$obj->rrd_format = '%5.1lf%s';
 
-		collectd_flush($obj->identifiers);
 		$obj->rrd_graph();
 		break;
 	case 'if_octets':
@@ -104,7 +101,6 @@ switch($obj->args['type']) {
 			$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
 		$obj->rrd_format = '%5.1lf%s';
 
-		collectd_flush($obj->identifiers);
 		$obj->rrd_graph();
 		break;
 	case 'vs_processes':
@@ -117,7 +113,6 @@ switch($obj->args['type']) {
 
 		$obj->rrd_format = '%5.1lf%s';
 
-		collectd_flush($obj->identifiers);
 		$obj->rrd_graph();
 		break;
 

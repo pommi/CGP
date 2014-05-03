@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Uptime.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # uptime/uptime.rrd
@@ -21,5 +20,4 @@ $obj->rrd_title = 'Uptime';
 $obj->rrd_vertical = 'Days';
 $obj->rrd_format = '%.1lf';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

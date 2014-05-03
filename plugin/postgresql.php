@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # postgresql-X/pg_blks-heap_hit.rrd
@@ -128,5 +127,4 @@ switch($obj->args['type']) {
 	break;
 }
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # tcpconns-XXXX/
@@ -15,5 +14,4 @@ $obj->rrd_title = sprintf('TCP Connections (%s)', $obj->args['pinstance']);
 $obj->rrd_vertical = '#';
 $obj->rrd_format = '%5.1lf';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

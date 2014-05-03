@@ -3,7 +3,6 @@
 # Collectd aggregation plugin
 
 require_once 'conf/common.inc.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # aggregation-(plugin)-(calculate)/(type)-(type-instance).rrd
@@ -42,7 +41,6 @@ switch($pi[0]) {
 		$obj->rrd_format = '%7.2lf';
 		$obj->rrdtool_opts .= ' -u 100';
 
-		collectd_flush($obj->identifiers);
 		$obj->rrd_graph();
 	break;
 }

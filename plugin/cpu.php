@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 # cpu-X/
@@ -46,5 +45,4 @@ $obj->rrd_vertical = 'Jiffies';
 $obj->rrd_format = '%5.2lf';
 $obj->rrdtool_opts .= ' -u 100';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/Default.class.php';
-require_once 'inc/collectd.inc.php';
 
 ## LAYOUT
 #varnish-default-backend/connections-failures.rrd
@@ -27,5 +26,4 @@ $obj->rrd_format = '%5.1lf%s';
 $obj->rrd_title = sprintf('%s (%s)', ucfirst($obj->args['pinstance']), $obj->args['category']);
 $obj->rrd_vertical = 'hits';
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

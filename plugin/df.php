@@ -4,7 +4,6 @@
 
 require_once 'conf/common.inc.php';
 require_once 'type/GenericStacked.class.php';
-require_once 'inc/collectd.inc.php';
 
 # LAYOUT
 #
@@ -46,5 +45,4 @@ if ($CONFIG['version'] < 5) {
 	$obj->rrd_title = sprintf('Free space (%s)', $obj->args['tinstance']);
 }
 
-collectd_flush($obj->identifiers);
 $obj->rrd_graph();

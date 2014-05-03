@@ -196,7 +196,11 @@ function host_summary($cat, $hosts) {
 			$CONFIG['weburl'],$host, $host);
 
 		if ($CONFIG['showload']) {
-			collectd_flush(sprintf('%s/load/load', $host));
+			require_once 'type/Default.class.php';
+			$load = array('h' => $host, 'p' => 'load', 't' => 'load');
+			$obj = new Type_Default($CONFIG, $load);
+			$obj->collectd_flush();
+
 			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
 
 			# ignore if file does not exist
