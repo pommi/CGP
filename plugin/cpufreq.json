@@ -1,0 +1,7 @@
+{
+	"cpufreq": {
+		"title": "CPU frequency scaling",
+		"vertical": "Hz",
+		"legend_format": "%5.1lf%s"
+	}
+}

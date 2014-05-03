@@ -1,0 +1,35 @@
+{
+	"charge": {
+		"title": "Charge (Battery {{PI}})",
+		"vertical": "Ampere hours",
+		"legend": {
+			"value": {
+				"name": "Charge",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"current": {
+		"title": "Current (Battery {{PI}})",
+		"vertical": "Ampere",
+		"legend": {
+			"value": {
+				"name": "Current",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"voltage": {
+		"title": "Voltage (Battery {{PI}})",
+		"vertical": "Volt",
+		"legend": {
+			"value": {
+				"name": "Voltage",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

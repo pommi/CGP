@@ -1,0 +1,14 @@
+{
+	"uptime": {
+		"title": "Uptime",
+		"vertical": "Days",
+		"type": "uptime",
+		"legend": {
+			"value": {
+				"name": "Current",
+				"color": "00e000"
+			}
+		},
+		"legend_format": ".1lf"
+	}
+}

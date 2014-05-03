@@ -1,0 +1,115 @@
+{
+	"disk_octets": {
+		"title": "Disk Traffic ({{TI}})",
+		"vertical": "Bytes per second",
+		"type": "io",
+		"legend": {
+			"read": {
+				"name": "Read",
+				"color": "0000ff"
+			},
+			"write": {
+				"name": "Write",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"disk_ops": {
+		"title": "Disk Operations ({{TI}})",
+		"vertical": "Ops per second",
+		"type": "io",
+		"legend": {
+			"read": {
+				"name": "Read",
+				"color": "0000ff"
+			},
+			"write": {
+				"name": "Write",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_dropped": {
+		"title": "Interface Packets Dropped ({{TI}})",
+		"vertical": "Packets/s",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_errors": {
+		"title": "Interface Errors ({{TI}})",
+		"vertical": "Errors/s",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_octets": {
+		"title": "Interface Traffic ({{TI}})",
+		"vertical": "{{ND}} per second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	},
+	"if_packets": {
+		"title": "Interface Packets ({{TI}})",
+		"vertical": "Packets per second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"virt_cpu_total": {
+		"title": "CPU usage",
+		"vertical": "CPU time",
+		"legend": {
+			"value": {
+				"name": "CPU time",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf"
+	},
+	"virt_vcpu": {
+		"title": "vCPU usage",
+		"vertical": "vCPU time",
+		"legend_format": "%5.1lf"
+	}
+}

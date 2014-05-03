@@ -1,0 +1,143 @@
+{
+	"apache_bytes": {
+		"title": "Webserver Traffic ({{PI}})",
+		"vertical": "{{ND}}/s",
+		"legend": {
+			"value": {
+				"name": "Traffic",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf"
+	},
+	"apache_connections": {
+		"title": "Webserver Connections ({{PI}})",
+		"vertical": "Conns/s",
+		"legend": {
+			"value": {
+				"name": "Conns/s",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf"
+	},
+	"apache_idle_workers": {
+		"title": "Webserver Idle Workers ({{PI}})",
+		"vertical": "Workers",
+		"legend": {
+			"value": {
+				"name": "Workers",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf"
+	},
+	"apache_requests": {
+		"title": "Webserver Requests ({{PI}})",
+		"vertical": "Requests/s",
+		"legend": {
+			"value": {
+				"name": "Requests/s",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf"
+	},
+	"apache_scoreboard": {
+		"title": "Webserver Scoreboard ({{PI}})",
+		"vertical": "Slots",
+		"type": "stacked",
+		"legend": {
+			"open": {
+				"name": "Open (empty)",
+				"color": "e0e0e0"
+			},
+			"idle_cleanup": {
+				"name": "Idle cleanup",
+				"color": "ffff00"
+			},
+			"finishing": {
+				"name": "Finishing",
+				"color": "008080"
+			},
+			"logging": {
+				"name": "Logging",
+				"color": "a000a0"
+			},
+			"closing": {
+				"name": "Closing",
+				"color": "000080"
+			},
+			"dnslookup": {
+				"name": "DNS Lookup",
+				"color": "ff0000"
+			},
+			"keepalive": {
+				"name": "Keepalive",
+				"color": "0080ff"
+			},
+			"sending": {
+				"name": "Sending reply",
+				"color": "00e000"
+			},
+			"reading": {
+				"name": "Reading request",
+				"color": "0000ff"
+			},
+			"starting": {
+				"name": "Starting up",
+				"color": "ff00ff"
+			},
+			"waiting": {
+				"name": "Waiting",
+				"color": "ffb000"
+			},
+
+			"connect": {
+				"name": "Connect (empty)",
+				"color": "e0e0e0"
+			},
+			"hard_error": {
+				"name": "Hard error",
+				"color": "ff0000"
+			},
+			"close": {
+				"name": "Close",
+				"color": "008080"
+			},
+			"response_end": {
+				"name": "Request end",
+				"color": "a000a0"
+			},
+			"write": {
+				"name": "Write",
+				"color": "000080"
+			},
+			"response_start": {
+				"name": "Response start",
+				"color": "ffff00"
+			},
+			"handle_request": {
+				"name": "Handle request",
+				"color": "0080ff"
+			},
+			"read_post": {
+				"name": "Read POST",
+				"color": "00e000"
+			},
+			"request_end": {
+				"name": "Request end",
+				"color": "0000ff"
+			},
+			"read": {
+				"name": "Read",
+				"color": "ff00ff"
+			},
+			"request_start": {
+				"name": "Request start",
+				"color": "ffb000"
+			}
+		},
+		"legend_format": "%5.2lf"
+	}
+}

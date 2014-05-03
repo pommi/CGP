@@ -1,0 +1,151 @@
+{
+	"if_collisions": {
+		"title": "Collisions ({{PI}})",
+		"vertical": "Collisions/s",
+		"type": "stacked",
+		"legend": {
+			"value": {
+				"name": "Collisions"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_dropped": {
+		"title": "Dropped Packets ({{PI}})",
+		"vertical": "Packets/s",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_errors": {
+		"title": "Interface Errors ({{PI}})",
+		"vertical": "Errors/s",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_multicast": {
+		"title": "Multicast Packets ({{PI}})",
+		"vertical": "Packets/s",
+		"type": "stacked",
+		"legend": {
+			"value": {
+				"name": "Packets",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_octets": {
+		"title": "Interface Traffic ({{PI}})",
+		"vertical": "{{ND}}/second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	},
+	"if_packets": {
+		"title": "Interface Packets ({{PI}})",
+		"vertical": "Packets/s",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_rx_errors": {
+		"title": "Interface receive errors ({{PI}})",
+		"vertical": "Errors/s",
+		"type": "stacked",
+		"legend": {
+			"crc": {
+				"name": "CRC",
+				"color": "00e000"
+			},
+			"fifo": {
+				"name": "FiFo",
+				"color": "f000c0"
+			},
+			"frame": {
+				"name": "Frame",
+				"color": "ffb000"
+			},
+			"length": {
+				"name": "Lenght",
+				"color": "f00000"
+			},
+			"missed": {
+				"name": "Missed",
+				"color": "0000f0"
+			},
+			"over": {
+				"name": "Over",
+				"color": "00e0ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_tx_errors": {
+		"title": "Interface transmit errors ({{PI}})",
+		"vertical": "Errors/s",
+		"type": "stacked",
+		"legend": {
+			"aborted": {
+				"name": "Aborted",
+				"color": "f00000"
+			},
+			"carrier": {
+				"name": "Carrier",
+				"color": "00e0ff"
+			},
+			"fifo": {
+				"name": "FiFo",
+				"color": "00e000"
+			},
+			"heartbeat": {
+				"name": "Heartbeat",
+				"color": "ffb000"
+			},
+			"window": {
+				"name": "Window",
+				"color": "f000c0"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}
+

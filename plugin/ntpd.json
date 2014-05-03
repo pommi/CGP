@@ -1,0 +1,22 @@
+{
+	"delay": {
+		"title": "Delay",
+		"vertical": "Seconds",
+		"legend_format": "%5.1lf%s"
+	},
+	"frequency_offset": {
+		"title": "Frequency offset",
+		"vertical": "ppm",
+		"legend_format": "%5.1lf%s"
+	},
+	"time_dispersion": {
+		"title": "Time dispersion",
+		"vertical": "Seconds",
+		"legend_format": "%5.1lf%s"
+	},
+	"time_offset": {
+		"title": "Time offset",
+		"vertical": "Seconds",
+		"legend_format": "%5.1lf%s"
+	}
+}

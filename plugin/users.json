@@ -1,0 +1,12 @@
+{
+	"users": {
+		"title": "Users",
+		"legend": {
+			"value": {
+				"name": "Users",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%.1lf"
+	}
+}

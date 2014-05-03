@@ -1,0 +1,134 @@
+{
+	"pg_blks": {
+		"title": "PostgreSQL Disk I/O ({{PI}})",
+		"vertical": "Blocks",
+		"type": "stacked",
+		"legend": {
+			"heap_hit": {
+				"name": "Heap hit"
+			},
+			"heap_read": {
+				"name": "Heap read"
+			},
+			"idx_hit": {
+				"name": "Index hit"
+			},
+			"idx_read": {
+				"name": "Index read"
+			},
+			"tidx_hit": {
+				"name": "Toast index hit"
+			},
+			"tidx_read": {
+				"name": "Toast index read"
+			},
+			"toast_hit": {
+				"name": "Toast hit"
+			},
+			"toast_read": {
+				"name": "Toast read"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"pg_db_size": {
+		"title": "PostgreSQL DB size ({{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"value": {
+				"name": "Size",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"pg_n_tup_c": {
+		"title": "PostgreSQL Row actions ({{PI}})",
+		"vertical": "Rows",
+		"type": "stacked",
+		"legend": {
+			"ins": {
+				"name": "Insert",
+				"color": "00ff00"
+			},
+			"upd": {
+				"name": "Update",
+				"color": "ff7c00"
+			},
+			"hot_upd": {
+				"name": "Hot Update",
+				"color": "0000ff"
+			},
+			"del": {
+				"name": "Delete",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"pg_n_tup_g": {
+		"title": "PostgreSQL Table states ({{PI}})",
+		"vertical": "Rows",
+		"type": "stacked",
+		"legend": {
+			"live": {
+				"name": "Live",
+				"color": "00ff00"
+			},
+			"dead": {
+				"name": "Dead",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"pg_numbackends": {
+		"title": "PostgreSQL Backends ({{PI}})",
+		"vertical": "Backends",
+		"type": "stacked",
+		"legend": {
+			"value": {
+				"name": "Backends",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"pg_scan": {
+		"title": "PostgreSQL Scans ({{PI}})",
+		"vertical": "Scans / Rows",
+		"type": "stacked",
+		"legend": {
+			"seq": {
+				"name": "Sequential"
+			},
+			"seq_tup_read": {
+				"name": "Sequential rows"
+			},
+			"idx": {
+				"name": "Index"
+			},
+			"idx_tup_fetch": {
+				"name": "Index Rows"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"pg_xact": {
+		"title": "PostgreSQL Transactions ({{PI}})",
+		"vertical": "Transactions",
+		"type": "stacked",
+		"legend": {
+			"commit": {
+				"name": "Commit",
+				"color": "00ff00"
+			},
+			"rollback": {
+				"name": "Rollback",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf"
+	}
+}

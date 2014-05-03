@@ -1,0 +1,22 @@
+{
+	"load": {
+		"title": "System load",
+		"vertical": "System load",
+		"type": "default",
+		"legend": {
+			"shortterm": {
+				"name": " 1 min",
+				"color": "00ff00"
+			},
+			"midterm": {
+				"name": " 5 min",
+				"color": "0000ff"
+			},
+			"longterm": {
+				"name": "15 min",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%.2lf"
+	}
+}

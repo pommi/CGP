@@ -1,0 +1,8 @@
+{
+	"irq": {
+		"type": "stacked",
+		"title": "Interrupts",
+		"vertical": "IRQs/s",
+		"legend_format": "%6.1lf"
+	}
+}

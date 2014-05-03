@@ -1,0 +1,32 @@
+{
+	"frequency": {
+		"title": "Frequency ({{PI}})",
+		"vertical": "Hz",
+		"legend_format": "%5.1lf%s"
+	},
+	"percent": {
+		"title": "Charge & load ({{PI}})",
+		"vertical": "Percent",
+		"legend_format": "%5.1lf"
+	},
+	"power": {
+		"title": "Power ({{PI}})",
+		"vertical": "VA",
+		"legend_format": "%5.1lf%s"
+	},
+	"temperature": {
+		"title": "Temperature ({{PI}})",
+		"vertical": "°C",
+		"legend_format": "%5.1lf%s"
+	},
+	"timeleft": {
+		"title": "Time Left ({{PI}})",
+		"vertical": "Seconds",
+		"legend_format": "%5.1lf"
+	},
+	"voltage": {
+		"title": "Voltage {{PI}}",
+		"vertical": "Voltage",
+		"legend_format": "%5.1lf"
+	}
+}

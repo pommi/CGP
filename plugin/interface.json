@@ -1,0 +1,51 @@
+{
+	"if_octets": {
+		"title": "Interface Traffic ({{PI}})",
+		"vertical": "{{ND}} per second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	},
+	"if_errors": {
+		"title": "Interface Errors ({{PI}})",
+		"vertical": "Errors per second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_packets": {
+		"title": "Interface Packets ({{PI}})",
+		"vertical": "Packets per second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

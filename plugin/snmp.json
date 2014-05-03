@@ -1,0 +1,19 @@
+{
+	"if_octets": {
+		"title": "Interface Traffic ({{TI}})",
+		"vertical": "{{ND}} per second",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	}
+}

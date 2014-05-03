@@ -1,0 +1,84 @@
+{
+	"load": {
+		"title": "System load",
+		"vertical": "System load",
+		"type": "default",
+		"legend": {
+			"shortterm": {
+				"name": " 1 min",
+				"color": "00ff00"
+			},
+			"midterm": {
+				"name": " 5 min",
+				"color": "0000ff"
+			},
+			"longterm": {
+				"name": "15 min",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%.2lf"
+	},
+	"vs_memory": {
+		"title": "Memory utilization ({{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"vm": {
+				"name": "Virtual memory pages",
+				"color": "0000ff"
+			},
+			"vml": {
+				"name": "Pages locked into memory",
+				"color": "0000ff"
+			},
+			"rss": {
+				"name": "Resident set size",
+				"color": "ffb000"
+			},
+			"anon": {
+				"name": "Anonymous memory pages",
+				"color": "ff00ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"vs_threads": {
+		"title": "Threads ({{PI}})",
+		"type": "stacked",
+		"legend": {
+			"running": {
+				"name": "Running",
+				"color": "0000ff"
+			},
+			"uninterruptable": {
+				"name": "Uninterruptible",
+				"color": "ff00ff"
+			},
+			"onhold": {
+				"name": "On Hold",
+				"color": "00e000"
+			},
+			"total": {
+				"name": "Total",
+				"color": "Total"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"if_octets": {
+		"title": "Interface Traffic ({{PI}})",
+		"vertical": "{{ND}} per second",
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	},
+	"vs_processes": {
+		"title": "Processes ({{PI}})",
+		"legend": {
+			"value": {
+				"name": "Processes"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

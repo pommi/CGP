@@ -1,0 +1,42 @@
+{
+	"df_complex": {
+		"title": "Free space ({{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"reserved": {
+				"name": "Reserved",
+				"color": "aaaaaa"
+			},
+			"free": {
+				"name": "Free",
+				"color": "00ff00"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%sB"
+	},
+	"df_inodes": {
+		"title": "Free inodes ({{PI}})",
+		"vertical": "Inodes",
+		"type": "stacked",
+		"legend": {
+			"reserved": {
+				"name": "Reserved",
+				"color": "aaaaaa"
+			},
+			"free": {
+				"name": "Free",
+				"color": "00ff00"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

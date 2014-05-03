@@ -1,0 +1,7 @@
+{
+	"md_disks": {
+		"title": "MD (md-{{PI}})",
+		"vertical": "Disks",
+		"legend_format": "%2.0lf"
+	}
+}

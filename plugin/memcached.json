@@ -1,0 +1,134 @@
+{
+	"df": {
+		"title": "Memcached Memory Usage",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"free": {
+				"name": "Free",
+				"color": "00ff00"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"memcached_command": {
+		"title": "Memcached Commands",
+		"vertical": "Commands",
+		"type": "stacked",
+		"legend": {
+			"flush": {
+				"name": "Flush",
+				"color": "00e000"
+			},
+			"get": {
+				"name": "Get",
+				"color": "0000ff"
+			},
+			"set": {
+				"name": "Set",
+				"color": "ffb000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"memcached_connections": {
+		"title": "Memcached Number of Connections",
+		"vertical": "Connections",
+		"legend": {
+			"value": {
+				"name": "Connections",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"memcached_items": {
+		"title": "Number of Items in Memcached",
+		"vertical": "Items",
+		"legend": {
+			"value": {
+				"name": "Items",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"memcached_octets": {
+		"title": "Memcached Network Traffic",
+		"vertical": "{{ND}}",
+		"type": "io",
+		"legend": {
+			"rx": {
+				"name": "Receive",
+				"color": "0000ff"
+			},
+			"tx": {
+				"name": "Transmit",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	},
+	"memcached_ops": {
+		"title": "Memcached Operations",
+		"vertical": "Commands",
+		"type": "stacked",
+		"legend": {
+			"evictions": {
+				"name": "Evictions",
+				"color": "00e000"
+			},
+			"hits": {
+				"name": "Hits",
+				"color": "0000ff"
+			},
+			"misses": {
+				"name": "Misses",
+				"color": "ffb000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"percent": {
+		"title": "Memcached Hit Ratio",
+		"vertical": "Percent",
+		"legend": {
+			"value": {
+				"name": "Percent",
+				"color": "00e000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"ps_count": {
+		"title": "Memcached number of Threads",
+		"vertical": "Threads",
+		"legend": {
+			"value": {
+				"name": "Threads",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"ps_cputime": {
+		"title": "CPU Time consumed by Memcached",
+		"vertical": "CPU Time",
+		"legend": {
+			"user": {
+				"name": "User",
+				"color": "00e000"
+			},
+			"syst": {
+				"name": "System",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

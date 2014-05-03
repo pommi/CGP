@@ -1,0 +1,38 @@
+{
+	"swap": {
+		"title": "Swap utilization",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"free": {
+				"name": "Free",
+				"color": "00e000"
+			},
+			"cached": {
+				"name": "Cached",
+				"color": "0000ff"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"swap_io": {
+		"title": "Swapped I/O pages",
+		"vertical": "Pages",
+		"type": "io",
+		"legend": {
+			"out": {
+				"name": "Out",
+				"color": "0000ff"
+			},
+			"in": {
+				"name": "In",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

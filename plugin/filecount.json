@@ -1,0 +1,26 @@
+{
+	"bytes": {
+		"title": "Filecount: size ({{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"value": {
+				"name": "Size",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"files": {
+		"title": "Filecount: number of files ({{PI}})",
+		"vertical": "Files",
+		"type": "stacked",
+		"legend": {
+			"value": {
+				"name": "Files",
+				"color": "f0a000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

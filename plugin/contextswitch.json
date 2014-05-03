@@ -1,0 +1,13 @@
+{
+	"contextswitch": {
+		"title": "Context switches",
+		"vertical": "switch per second Bits",
+		"legend": {
+			"value": {
+				"name": "Switches",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%4.0lf"
+	}
+}

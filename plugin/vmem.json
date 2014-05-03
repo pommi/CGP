@@ -1,0 +1,27 @@
+{
+	"vmpage_faults": {
+		"title": "Page faults",
+		"type": "stacked",
+		"legend": {
+			"minflt": {
+				"name": "Minor",
+				"color": "0000f0"
+			},
+			"majflt": {
+				"name": "Major",
+				"color": "f00000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"vmpage_io": {
+		"title": "Page IO ({{TI}})",
+		"type": "stacked",
+		"legend_format": "%5.1lf%s"
+	},
+	"vmpage_number": {
+		"title": "Pages",
+		"type": "stacked",
+		"legend_format": "%5.1lf%s"
+	}
+}

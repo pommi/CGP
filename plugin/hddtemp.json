@@ -1,0 +1,7 @@
+{
+	"temperature": {
+		"title": "HDD Temperature",
+		"vertical": "°C",
+		"legend_format": "%5.1lf%s"
+	}
+}

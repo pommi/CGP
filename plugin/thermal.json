@@ -1,0 +1,12 @@
+{
+	"gauge": {
+		"title": "Temperature ({{PI}})",
+		"vertical": "°C",
+		"legend": {
+			"value": {
+				"name": "Temperature"
+			}
+		},
+		"legend_format": "%.1lf"
+	}
+}

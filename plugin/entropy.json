@@ -1,0 +1,13 @@
+{
+	"entropy": {
+		"title": "Available entropy",
+		"vertical": "Bits",
+		"legend": {
+			"value": {
+				"name": "Entropy bits",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%4.0lf"
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"signal_noise": {
+		"title": "Noise level ({{PI}})",
+		"vertical": "dBm",
+		"legend": {
+			"value": {
+				"name": "Noise level",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%6.1lf"
+	},
+	"signal_power": {
+		"title": "Signal level ({{PI}})",
+		"vertical": "dBm",
+		"legend": {
+			"value": {
+				"name": "Signal level",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%6.1lf"
+	},
+	"signal_quality": {
+		"title": "Link Quality ({{PI}})",
+		"vertical": "quality",
+		"legend": {
+			"value": {
+				"name": "Link quality",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%6.1lf"
+	}
+}

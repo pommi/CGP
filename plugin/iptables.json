@@ -1,0 +1,15 @@
+{
+	"ipt_bytes": {
+		"title": "IP-Tables Traffic",
+		"vertical": "{{ND}}",
+		"type": "stacked",
+		"legend_format": "%5.1lf%s",
+		"datasize": true
+	},
+	"ipt_packets": {
+		"title": "IP-Tables Packets",
+		"vertical": "Packets",
+		"type": "stacked",
+		"legend_format": "%5.1lf%s"
+	}
+}

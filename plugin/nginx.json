@@ -1,0 +1,51 @@
+{
+	"connections": {
+		"title": "Nginx connections",
+		"vertical": "Connections/s",
+		"legend": {
+			"accepted": {
+				"name": "Accepted",
+				"color": "ff0000"
+			},
+			"handled": {
+				"name": "Handled",
+				"color": "0000ff"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"nginx_connections": {
+		"title": "Nginx connection states",
+		"vertical": "Connections/s",
+		"legend": {
+			"active": {
+				"name": "Active",
+				"color": "005d57"
+			},
+			"reading": {
+				"name": "Reading",
+				"color": "4444ff"
+			},
+			"waiting": {
+				"name": "Waiting",
+				"color": "f24ac8"
+			},
+			"writing": {
+				"name": "Writing",
+				"color": "00cf00"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"nginx_requests": {
+		"title": "Nginx requests",
+		"vertical": "Requests/s",
+		"legend": {
+			"value": {
+				"name": "Requests",
+				"color": "00aa00"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

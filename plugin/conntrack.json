@@ -1,0 +1,13 @@
+{
+	"conntrack": {
+		"title": "Conntrack entries",
+		"vertical": "Entries",
+		"legend": {
+			"value": {
+				"name": "Entries",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%.1lf"
+	}
+}
