@@ -36,7 +36,19 @@ class Type_Base {
 		$this->rrdtool_opts = $config['rrdtool_opts'];
 		$this->cache = $config['cache'];
 		$this->parse_get($_get);
-		$this->rrd_title = $this->args['plugin'];
+		$this->rrd_title = sprintf(
+			'%s%s%s%s',
+			$this->args['plugin'],
+			$this->args['type'] != $this->args['plugin']
+				? sprintf(' %s', $this->args['type'])
+				: '',
+			(isset($this->args['pinstance']) and $this->args['pinstance'] != '')
+				? sprintf(' (%s)', $this->args['pinstance'])
+				: '',
+			(isset($this->args['category']) and $this->args['category'] != '')
+				? sprintf(' (%s)', $this->args['category'])
+				: ''
+		);
 		$this->rrd_files();
 		$this->width = isset($_get['x']) ? $_get['x'] : $config['width'];
 		$this->height = isset($_get['y']) ? $_get['y'] : $config['height'];
