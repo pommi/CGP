@@ -20,6 +20,14 @@
 				"name": "Sleeping",
 				"color": "0000ff"
 			},
+			"wait": {
+				"name": "Wait",
+				"color": "ffdd00"
+			},
+			"idle": {
+				"name": "Idle",
+				"color": "00d8ff"
+			},
 			"stopped": {
 				"name": "Stopped",
 				"color": "a000a0"
