@@ -16,6 +16,10 @@
 				"name": "Cached",
 				"color": "0000ff"
 			},
+			"cache": {
+				"name": "Cache",
+				"color": "0000ff"
+			},
 			"buffered": {
 				"name": "Buffered",
 				"color": "ffb000"
