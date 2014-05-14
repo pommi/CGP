@@ -305,7 +305,7 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			isset($items['pi']) ? $_GET['pi'] = $items['pi'] : $_GET['pi'] = '';
 			isset($items['t']) ? $_GET['t'] = $items['t'] : $_GET['t'] = '';
 			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
-			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+			include $CONFIG['webdir'].'/graph.php';
 		} else {
 			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
 				$CONFIG['weburl'],
