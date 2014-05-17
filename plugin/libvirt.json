@@ -98,18 +98,20 @@
 	},
 	"virt_cpu_total": {
 		"title": "CPU usage",
-		"vertical": "CPU time",
+		"vertical": "Milliseconds",
 		"legend": {
 			"value": {
 				"name": "CPU time",
 				"color": "0000ff"
 			}
 		},
-		"legend_format": "%5.1lf"
+		"legend_format": "%5.1lf",
+		"scale": 0.000001
 	},
 	"virt_vcpu": {
 		"title": "vCPU usage",
-		"vertical": "vCPU time",
-		"legend_format": "%5.1lf"
+		"vertical": "Milliseconds",
+		"legend_format": "%5.1lf",
+		"scale": 0.000001
 	}
 }
