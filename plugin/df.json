@@ -17,7 +17,8 @@
 				"color": "ff0000"
 			}
 		},
-		"legend_format": "%5.1lf%sB"
+		"legend_format": "%5.1lf%sB",
+		"base": "1024"
 	},
 	"df_inodes": {
 		"title": "Free inodes ({{PI}})",

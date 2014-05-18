@@ -92,6 +92,9 @@ if (isset($plugin_json[$type]['datasize']) and $plugin_json[$type]['datasize'])
 if (isset($plugin_json[$type]['scale']))
 	$obj->scale = $plugin_json[$type]['scale'];
 
+if (isset($plugin_json[$type]['base']))
+	$obj->base = $plugin_json[$type]['base'];
+
 if (isset($plugin_json[$type]['legend_format']))
 	$obj->rrd_format = $plugin_json[$type]['legend_format'];
 
