@@ -17,6 +17,7 @@ class Type_Base {
 	var $rrd_vertical;
 	var $rrd_format = '%5.1lf%s';
 	var $scale = 1;
+	var $base; 
 	var $width;
 	var $height;
 	var $graph_type;
@@ -253,6 +254,8 @@ class Type_Base {
 			$rrdgraph[] = $this->rrdtool_opts;
 		if ($this->graph_smooth)
 			$rrdgraph[] = '-E';
+		if ($this->base)
+			$rrdgraph[] = '--base '.$this->base;
 		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
 		$rrdgraph[] = sprintf('-h %d', is_numeric($this->height) ? $this->height : 175);
 		$rrdgraph[] = '-l 0';

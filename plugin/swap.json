@@ -17,7 +17,8 @@
 				"color": "ff0000"
 			}
 		},
-		"legend_format": "%5.1lf%s"
+		"legend_format": "%5.1lf%s",
+		"base": "1024"
 	},
 	"swap_io": {
 		"title": "Swapped I/O pages",
