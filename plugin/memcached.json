@@ -13,7 +13,8 @@
 				"color": "ff0000"
 			}
 		},
-		"legend_format": "%5.1lf%s"
+		"legend_format": "%5.1lf%s",
+		"base": "1024"
 	},
 	"memcached_command": {
 		"title": "Memcached Commands",
