@@ -52,7 +52,7 @@ print "</ul>\n";
 
 if ($CONFIG['graph_type'] == 'canvas') {
 	chdir($CONFIG['webdir']);
-	include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
+	include $CONFIG['webdir'].'/graph.php';
 } else {
 	printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
 }
