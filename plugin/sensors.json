@@ -4,7 +4,7 @@
 		"vertical": "RPM",
 		"legend_format": "%5.1lf"
 	},
-	"temerature": {
+	"temperature": {
 		"title": "Temperature ({{PI}})",
 		"vertical": "Celsius",
 		"legend_format": "%5.1lf%s"
