@@ -35,6 +35,9 @@ if (file_exists('plugin/'.$plugin.'.json')) {
 		error_log('CGP Error: invalid json in plugin/'.$plugin.'.json');
 }
 
+if (!isset($plugin_json[$type]['type']))
+	$plugin_json[$type]['type'] = 'default';
+
 switch ($plugin_json[$type]['type']) {
 	case 'stacked':
 		require_once 'type/GenericStacked.class.php';
