@@ -7,7 +7,7 @@ $CONFIG['version'] = 5;
 $CONFIG['datadir'] = '/var/lib/collectd/rrd';
 
 # location of the types.db file
-$CONFIG['typesdb'] = '/usr/share/collectd/types.db';
+$CONFIG['typesdb'][] = '/usr/share/collectd/types.db';
 
 # rrdtool executable
 $CONFIG['rrdtool'] = '/usr/bin/rrdtool';

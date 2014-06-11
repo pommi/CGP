@@ -168,25 +168,32 @@ function plugin_sort($data) {
 	return $data;
 }
 
-function parse_typesdb_file($file = '/usr/share/collectd/types.db') {
-	if (!file_exists($file))
-		$file = 'inc/types.db';
+function parse_typesdb_file($file = array('/usr/share/collectd/types.db')) {
+	if (!is_array($file))
+		$file = array($file);
+	if (!file_exists($file[0]))
+		$file[0] = 'inc/types.db';
 
 	$types = array();
-	foreach (file($file) as $type) {
-		if(!preg_match('/^(?P<dataset>[\w_]+)\s+(?P<datasources>.*)/', $type, $matches))
+	foreach ($file as $single_file)
+	{
+		if (!file_exists($single_file))
 			continue;
-		$dataset = $matches['dataset'];
-		$datasources = explode(', ', $matches['datasources']);
+		foreach (file($single_file) as $type) {
+			if(!preg_match('/^(?P<dataset>[\w_]+)\s+(?P<datasources>.*)/', $type, $matches))
+				continue;
+			$dataset = $matches['dataset'];
+			$datasources = explode(', ', $matches['datasources']);
 
-		foreach ($datasources as $ds) {
-			if (!preg_match('/^(?P<dsname>\w+):(?P<dstype>[\w]+):(?P<min>[\-\dU\.]+):(?P<max>[\dU\.]+)/', $ds, $matches))
-				error_log(sprintf('CGP Error: DS "%s" from dataset "%s" did not match', $ds, $dataset));
-			$types[$dataset][$matches['dsname']] = array(
-				'dstype' => $matches['dstype'],
-				'min' => $matches['min'],
-				'max' => $matches['max'],
-			);
+			foreach ($datasources as $ds) {
+				if (!preg_match('/^(?P<dsname>\w+):(?P<dstype>[\w]+):(?P<min>[\-\dU\.]+):(?P<max>[\dU\.]+)/', $ds, $matches))
+					error_log(sprintf('CGP Error: DS "%s" from dataset "%s" did not match', $ds, $dataset));
+				$types[$dataset][$matches['dsname']] = array(
+					'dstype' => $matches['dstype'],
+					'min' => $matches['min'],
+					'max' => $matches['max'],
+				);
+			}
 		}
 	}
 	return $types;
