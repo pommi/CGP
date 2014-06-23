@@ -1,0 +1,15 @@
+{
+	"df_complex": {
+		"title": "Logical volumes for {{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"free": {
+				"name": "Free",
+				"color": "00ff00"
+			}
+		},
+		"legend_format": "%5.1lf%sB",
+		"base": "1024"
+	}
+}
