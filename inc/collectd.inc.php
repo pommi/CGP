@@ -95,6 +95,7 @@ function collectd_plugins($host) {
 		if (!in_array($item['p'], $plugins))
 			$plugins[] = $item['p'];
 	}
+	sort($plugins);
 
 	return $plugins ? $plugins : false;
 }
