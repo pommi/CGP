@@ -92,6 +92,9 @@ if (isset($plugin_json[$type]['rrdtool_opts'])) {
 if (isset($plugin_json[$type]['datasize']) and $plugin_json[$type]['datasize'])
 	$obj->scale = $CONFIG['network_datasize'] == 'bits' ? 8 : 1;
 
+if ($type == 'if_octets')
+	$obj->percentile = $CONFIG['percentile'];
+
 if (isset($plugin_json[$type]['scale']))
 	$obj->scale = $plugin_json[$type]['scale'];
 

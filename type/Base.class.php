@@ -22,6 +22,7 @@ class Type_Base {
 	var $height;
 	var $graph_type;
 	var $negative_io;
+	var $percentile = false;
 	var $graph_smooth;
 
 	var $files;
