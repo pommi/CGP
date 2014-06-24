@@ -11,8 +11,8 @@ $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
 html_start();
 
-printf("<fieldset id=\"%s\">", $host);
-printf("<legend>%s</legend>", $host);
+printf("<fieldset id=\"%s\">", htmlentities($host));
+printf("<legend>%s</legend>", htmlentities($host));
 
 
 if (!$plugins = collectd_plugins($host)) {
