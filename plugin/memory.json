@@ -28,6 +28,10 @@
 				"name": "Locked",
 				"color": "ff00ff"
 			},
+			"slab": {
+				"name": "Slab",
+				"color": "ff00ff"
+			},
 			"used": {
 				"name": "Used",
 				"color": "ff0000"
