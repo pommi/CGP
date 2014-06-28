@@ -191,7 +191,7 @@ class Type_Base {
 
 		$colors = $this->colors;
 		$this->rainbow_colors();
-		$this->colors = array_merge($this->colors, $colors);
+		$this->colors = $colors + $this->colors;
 
 		$graphdata = $this->rrd_gen_graph();
 
@@ -304,7 +304,7 @@ class Type_Base {
 
 	function parse_legend($sources) {
 		# fill up legend by items that are not defined by plugin
-		$this->legend = array_merge(array_combine($sources, $sources), $this->legend);
+		$this->legend = $this->legend + array_combine($sources, $sources);
 
 		# detect length of longest legend
 		$max = 0;
