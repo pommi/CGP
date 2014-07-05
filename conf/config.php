@@ -62,6 +62,9 @@ $CONFIG['percentile'] = false;
 # create smooth graphs (rrdtool -E)
 $CONFIG['graph_smooth'] = false;
 
+# draw min/max spikes in a lighter color in graphs with type default
+$CONFIG['graph_minmax'] = false;
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 

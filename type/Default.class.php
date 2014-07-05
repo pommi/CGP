@@ -35,13 +35,12 @@ class Type_Default extends Type_Base {
 			}
 		}
 
-		if(count($this->files)<=1) {
+		if ($this->graph_minmax) {
 			$c = 0;
 			foreach ($sources as $source) {
 				$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-				$rrdgraph[] = sprintf('AREA:max_%s#%s', crc32hex($source), $this->get_faded_color($color));
-				$rrdgraph[] = sprintf('AREA:min_%s#%s', crc32hex($source), 'ffffff');
-				break; # only 1 area to draw
+				$rrdgraph[] = sprintf('LINE1:max_%s#%s', crc32hex($source), $this->get_faded_color($color));
+				$rrdgraph[] = sprintf('LINE1:min_%s#%s', crc32hex($source), $this->get_faded_color($color));
 			}
 		}
 

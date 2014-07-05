@@ -24,6 +24,7 @@ class Type_Base {
 	var $negative_io;
 	var $percentile = false;
 	var $graph_smooth;
+	var $graph_minmax;
 
 	var $files;
 	var $tinstances;
@@ -57,6 +58,7 @@ class Type_Base {
 		$this->graph_type = $config['graph_type'];
 		$this->negative_io = $config['negative_io'];
 		$this->graph_smooth = $config['graph_smooth'];
+		$this->graph_minmax = $config['graph_minmax'];
 		$this->flush_socket = $config['socket'];
 		$this->flush_type = $config['flush_type'];
 	}
