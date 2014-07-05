@@ -379,7 +379,9 @@ RrdGraphDesc.prototype.vrule = function (graph, time, color, legend)
 RrdGraphDesc.prototype.hrule = function (graph, value, color, legend)
 {
 	this.gf = RrdGraphDesc.GF_HRULE;
-	this.yrule = value;
+	this.vidx = graph.find_var(value);
+	if (this.vidx == -1)
+		this.yrule = value;
 	this.col = color;
 	if (legend === undefined) this.legend = '';
 	else this.legend = '  '+legend;
