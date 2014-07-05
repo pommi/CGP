@@ -34,7 +34,7 @@ class Type_GenericIO extends Type_Base {
 						$rrdgraph[] = sprintf('CDEF:avg_%s_neg=avg_%1$s_raw,%s%s,*', crc32hex($sources[$i]), $this->negative_io ? '-' : '', $this->scale);
 					$rrdgraph[] = sprintf('VDEF:tot_%1$s=avg_%1$s,TOTAL', crc32hex($sources[$i]));
 					if ($this->percentile)
-						$rrdgraph[] = sprintf('VDEF:pct_%1$s=avg_%1$s_raw,%2$s,PERCENT', crc32hex($sources[$i]), $this->percentile);
+						$rrdgraph[] = sprintf('VDEF:pct_%1$s=avg_%1$s,%2$s,PERCENT', crc32hex($sources[$i]), $this->percentile);
 					$i++;
 				}
 			}
