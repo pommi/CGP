@@ -86,7 +86,7 @@ if (isset($plugin_json[$type]['vertical'])) {
 }
 
 if (isset($plugin_json[$type]['rrdtool_opts'])) {
-	$obj->rrdtool_opts = $plugin_json[$type]['rrdtool_opts'];
+	$obj->rrdtool_opts[] = $plugin_json[$type]['rrdtool_opts'];
 }
 
 if (isset($plugin_json[$type]['datasize']) and $plugin_json[$type]['datasize'])

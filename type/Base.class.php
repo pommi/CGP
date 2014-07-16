@@ -5,7 +5,7 @@
 class Type_Base {
 	var $datadir;
 	var $rrdtool;
-	var $rrdtool_opts;
+	var $rrdtool_opts = array();
 	var $cache;
 	var $args;
 	var $seconds;
@@ -36,7 +36,8 @@ class Type_Base {
 	function __construct($config, $_get) {
 		$this->datadir = $config['datadir'];
 		$this->rrdtool = $config['rrdtool'];
-		$this->rrdtool_opts = $config['rrdtool_opts'];
+		if (!empty($config['rrdtool_opts']))
+			$this->rrdtool_opts[] = $config['rrdtool_opts'];
 		$this->cache = $config['cache'];
 		$this->parse_get($_get);
 		$this->rrd_title = sprintf(
@@ -253,8 +254,9 @@ class Type_Base {
 			default:
 			break;
 		}
-		if ($this->rrdtool_opts != '')
-			$rrdgraph[] = $this->rrdtool_opts;
+		if (!empty($this->rrdtool_opts))
+			foreach($this->rrdtool_opts as $opt)
+				$rrdgraph[] = $opt;
 		if ($this->graph_smooth)
 			$rrdgraph[] = '-E';
 		if ($this->base)
