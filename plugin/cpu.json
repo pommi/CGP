@@ -2,7 +2,7 @@
 	"cpu": {
 		"title": "CPU-{{PI}} usage",
 		"vertical": "Jiffies",
-		"rrdtool_opts": "-u 100",
+		"rrdtool_opts": ["-u", "100"],
 		"type": "stacked",
 		"legend": {
 			"idle": {

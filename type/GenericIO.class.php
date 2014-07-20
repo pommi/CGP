@@ -59,21 +59,21 @@ class Type_GenericIO extends Type_Base {
 		$i = 0;
 		foreach($sources as $source) {
 			$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
-			$rrdgraph[] = sprintf('"LINE1:avg_%s%s#%s:%s"', crc32hex($source), $i == 1 ? '_neg' : '', $this->colors[$source], $this->rrd_escape($legend));
-			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:avg_%s:LAST:%s Last"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:tot_%s:%s Total\l"',crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('LINE1:avg_%s%s#%s:%s', crc32hex($source), $i == 1 ? '_neg' : '', $this->colors[$source], $this->rrd_escape($legend));
+			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:%s Min,', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:%s Avg,', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:%s Max,', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:%s Last', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:tot_%s:%s Total\l',crc32hex($source), $this->rrd_format);
 			$i++;
 		}
-		
+
 		if ($this->percentile) {
-			$rrdgraph[] = sprintf('"COMMENT: \l"');
+			$rrdgraph[] = 'COMMENT: \l';
 			foreach($sources as $source) {
 				$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
-				$rrdgraph[] = sprintf('"HRULE:pct_%s#%s:%sth Percentile %s"', crc32hex($source), $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
-				$rrdgraph[] = sprintf('"GPRINT:pct_%s:%s\l"', crc32hex($source), $this->rrd_format);
+				$rrdgraph[] = sprintf('HRULE:pct_%s#%s:%sth Percentile %s', crc32hex($source), $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
+				$rrdgraph[] = sprintf('GPRINT:pct_%s:%s\l', crc32hex($source), $this->rrd_format);
 			}
 		}
 

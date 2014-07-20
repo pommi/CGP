@@ -36,8 +36,14 @@ class Type_Base {
 	function __construct($config, $_get) {
 		$this->datadir = $config['datadir'];
 		$this->rrdtool = $config['rrdtool'];
-		if (!empty($config['rrdtool_opts']))
-			$this->rrdtool_opts[] = $config['rrdtool_opts'];
+		if (!empty($config['rrdtool_opts'])) {
+			if (is_array($config['rrdtool_opts'])) {
+				$this->rrdtool_opts = $config['rrdtool_opts'];
+			} else {
+				$this->rrdtool_opts = explode(' ',
+						$config['rrdtool_opts']);
+			}
+		}
 		$this->cache = $config['cache'];
 		$this->parse_get($_get);
 		$this->rrd_title = sprintf(
@@ -200,78 +206,90 @@ class Type_Base {
 		$this->rainbow_colors();
 		$this->colors = $colors + $this->colors;
 
-		$graphdata = $this->rrd_gen_graph();
+		$graphoptions = $this->rrd_gen_graph();
+		# $shellcmd contains escaped rrdtool arguments
+		$shellcmd = array();
+		foreach ($graphoptions as $arg)
+			$shellcmd[] = escapeshellarg($arg);
 
 		$style = $debug !== false ? $debug : $this->graph_type;
 		switch ($style) {
 			case 'cmd':
 				print '<pre>';
-				foreach ($graphdata as $d) {
+				foreach ($shellcmd as $d) {
 					printf("%s \\\n", htmlentities($d));
 				}
 				print '</pre>';
 			break;
 			case 'canvas':
-				printf('<canvas id="%s" class="rrd">', sha1(serialize($graphdata)));
-				foreach ($graphdata as $d) {
-					printf("%s\n", htmlentities($d));
+				printf('<canvas id="%s" class="rrd">', sha1(serialize($graphoptions)));
+				foreach ($graphoptions as $d) {
+					printf("\"%s\"\n", htmlentities($d));
 				}
 				print '</canvas>';
 			break;
 			case 'debug':
 			case 1:
 				print '<pre>';
-				print_r($graphdata);
+				htmlentities(print_r($shellcmd, TRUE));
 				print '</pre>';
 			break;
 			case 'svg':
-				# caching
-				if (is_numeric($this->cache) && $this->cache > 0)
-					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
-				header("content-type: image/svg+xml");
-				$graphdata = implode(' ', $graphdata);
-				echo `$graphdata`;
-			break;
 			case 'png':
 			default:
 				# caching
 				if (is_numeric($this->cache) && $this->cache > 0)
 					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
-				header("content-type: image/png");
-				$graphdata = implode(' ', $graphdata);
-				echo `$graphdata`;
+
+				if ($style === 'svg')
+					header("content-type: image/svg+xml");
+				else
+					header("content-type: image/png");
+
+				$shellcmd = array_merge(
+					$this->rrd_graph_command($style),
+					$shellcmd
+				);
+				$shellcmd = implode(' ', $shellcmd);
+				passthru($shellcmd);
 			break;
 		}
 	}
 
+	function rrd_graph_command($imgformat) {
+		if (!in_array($imgformat, array('png', 'svg')))
+			$imgformat = 'png';
+
+		return array(
+			$this->rrdtool,
+			'graph',
+			'-',
+			'-a', strtoupper($imgformat)
+		);
+	}
+
 	function rrd_options() {
-		switch ($this->graph_type) {
-			case 'png':
-			case 'hybrid':
-				$rrdgraph[] = $this->rrdtool;
-				$rrdgraph[] = 'graph - -a PNG';
-			break;
-			case 'svg':
-				$rrdgraph[] = $this->rrdtool;
-				$rrdgraph[] = 'graph - -a SVG';
-			break;
-			default:
-			break;
-		}
-		if (!empty($this->rrdtool_opts))
-			foreach($this->rrdtool_opts as $opt)
-				$rrdgraph[] = $opt;
+		$rrdgraph = array();
+		foreach($this->rrdtool_opts as $opt)
+			$rrdgraph[] = $opt;
 		if ($this->graph_smooth)
 			$rrdgraph[] = '-E';
-		if ($this->base)
-			$rrdgraph[] = '--base '.$this->base;
-		$rrdgraph[] = sprintf('-w %d', is_numeric($this->width) ? $this->width : 400);
-		$rrdgraph[] = sprintf('-h %d', is_numeric($this->height) ? $this->height : 175);
-		$rrdgraph[] = '-l 0';
-		$rrdgraph[] = sprintf('-t "%s on %s"', $this->rrd_title, $this->args['host']);
-		if ($this->rrd_vertical)
-			$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
-		$rrdgraph[] = sprintf('-s e-%d', is_numeric($this->seconds) ? $this->seconds : 86400);
+		if ($this->base) {
+			$rrdgraph[] = '--base';
+			$rrdgraph[] = $this->base;
+		}
+		$rrdgraph = array_merge($rrdgraph, array(
+			'-w', is_numeric($this->width) ? $this->width : 400,
+			'-h', is_numeric($this->height) ? $this->height : 175,
+			'-l', '0',
+			'-t', "{$this->rrd_title} on {$this->args['host']}"
+		));
+		if ($this->rrd_vertical) {
+			$rrdgraph[] = '-v';
+			$rrdgraph[] = $this->rrd_vertical;
+		}
+		$rrdgraph[] = '-s';
+		$rrdgraph[] = sprintf('e-%d', is_numeric($this->seconds) ? $this->seconds : 86400);
 
 		return $rrdgraph;
 	}

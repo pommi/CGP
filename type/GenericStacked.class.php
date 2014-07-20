@@ -51,11 +51,11 @@ class Type_GenericStacked extends Type_Base {
 		foreach ($sources as $source) {
 			$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
-			$rrdgraph[] = sprintf('"LINE1:area_%s#%s:%s"', crc32hex($source), $this->validate_color($color), $this->rrd_escape($legend));
-			$rrdgraph[] = sprintf('"GPRINT:min_%s:MIN:%s Min,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:avg_%s:AVERAGE:%s Avg,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:max_%s:MAX:%s Max,"', crc32hex($source), $this->rrd_format);
-			$rrdgraph[] = sprintf('"GPRINT:avg_%s:LAST:%s Last\\l"', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('LINE1:area_%s#%s:%s', crc32hex($source), $this->validate_color($color), $this->rrd_escape($legend));
+			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:%s Min,', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:%s Avg,', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:%s Max,', crc32hex($source), $this->rrd_format);
+			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:%s Last\\l', crc32hex($source), $this->rrd_format);
 		}
 
 		return $rrdgraph;

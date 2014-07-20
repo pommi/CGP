@@ -86,7 +86,16 @@ if (isset($plugin_json[$type]['vertical'])) {
 }
 
 if (isset($plugin_json[$type]['rrdtool_opts'])) {
-	$obj->rrdtool_opts[] = $plugin_json[$type]['rrdtool_opts'];
+	$rrdtool_extra_opts = $plugin_json[$type]['rrdtool_opts'];
+	# compatibility with plugins which specify arguments as string
+	if (is_string($rrdtool_extra_opts)) {
+		$rrdtool_extra_opts = explode(' ', $rrdtool_extra_opts);
+	}
+
+	$obj->rrdtool_opts = array_merge(
+		$obj->rrdtool_opts,
+		$rrdtool_extra_opts
+	);
 }
 
 if (isset($plugin_json[$type]['datasize']) and $plugin_json[$type]['datasize'])

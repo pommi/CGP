@@ -12,8 +12,8 @@ $CONFIG['typesdb'][] = '/usr/share/collectd/types.db';
 # rrdtool executable
 $CONFIG['rrdtool'] = '/usr/bin/rrdtool';
 
-# rrdtool special options
-$CONFIG['rrdtool_opts'] = '';
+# rrdtool special command-line options
+$CONFIG['rrdtool_opts'] = [];
 
 # category of hosts to show on main page
 #$CONFIG['cat']['category1'] = array('host1', 'host2');
