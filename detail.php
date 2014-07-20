@@ -46,7 +46,10 @@ foreach($CONFIG['term'] as $key => $s) {
 	$args['s'] = $s;
 	$selected = selected_timerange($seconds, $s);
 	printf('<li><a %s href="%s%s">%s</a></li>'."\n",
-		$selected, $CONFIG['weburl'], build_url('detail.php', $args), $key);
+		$selected,
+		htmlentities($CONFIG['weburl']),
+		htmlentities(build_url('detail.php', $args)),
+		htmlentities($key));
 }
 print "</ul>\n";
 
@@ -54,7 +57,9 @@ if ($CONFIG['graph_type'] == 'canvas') {
 	chdir($CONFIG['webdir']);
 	include $CONFIG['webdir'].'/graph.php';
 } else {
-	printf('<img src="%s%s">'."\n", $CONFIG['weburl'], build_url('graph.php', $_GET));
+	printf("<img src=\"%s%s\">\n",
+		htmlentities($CONFIG['weburl']),
+		htmlentities(build_url('graph.php', $_GET)));
 }
 echo '</div>';
 echo "</fieldset>\n";

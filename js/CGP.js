@@ -66,7 +66,7 @@ function prepare_draw(id) {
 	RrdGraph.prototype.mousex = 0;
 	RrdGraph.prototype.mousedown = false;
 
-	var cmdline = document.getElementById(id).innerHTML;
+	var cmdline = document.getElementById(id).textContent;
 	var gfx = new RrdGfxCanvas(id);
 	var fetch = new RrdDataFile();
 	var rrdcmdline = null;

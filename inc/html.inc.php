@@ -11,14 +11,15 @@ function html_start() {
 	global $CONFIG;
 
 	$path = htmlentities(breadcrumbs());
+	$html_weburl = htmlentities($CONFIG['weburl']);
 
 	echo <<<EOT
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
 	<title>CGP{$path}</title>
-	<link rel="stylesheet" href="{$CONFIG['weburl']}layout/style.css" type="text/css">
+	<link rel="stylesheet" href="{$html_weburl}layout/style.css" type="text/css">
 	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
 EOT;
@@ -31,16 +32,16 @@ EOT;
 
 	if ($CONFIG['graph_type'] == 'canvas') {
 		echo <<<EOT
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/sprintf.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/strftime.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdRpn.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdTime.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGraph.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdGfxCanvas.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/binaryXHR.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/rrdFile.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdDataFile.js"></script>
-	<script type="text/javascript" src="{$CONFIG['weburl']}js/RrdCmdLine.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/sprintf.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/strftime.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/RrdRpn.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/RrdTime.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/RrdGraph.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/RrdGfxCanvas.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/binaryXHR.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/rrdFile.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/RrdDataFile.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/RrdCmdLine.js"></script>
 
 EOT;
 	}
@@ -50,7 +51,7 @@ echo <<<EOT
 <body>
 
 <div id="header">
-  <h1><a href="{$CONFIG['weburl']}">Collectd Graph Panel</a></h1>
+  <h1><a href="{$html_weburl}">Collectd Graph Panel</a></h1>
 </div>
 
 <div id="content">
@@ -74,27 +75,29 @@ function html_end() {
 		$version = 'v'.$version[0];
 	}
 
+	$html_weburl = htmlentities($CONFIG['weburl']);
+
 	echo <<<EOT
 </div>
 <div id="footer">
-<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$CONFIG['weburl']}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
+<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$html_weburl}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
 </div>
 
 EOT;
 
 	if ($CONFIG['graph_type'] == 'canvas') {
 		echo <<<EOT
-<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP.js"></script>
+<script type="text/javascript" src="{$html_weburl}js/CGP.js"></script>
 
 EOT;
 		if ($CONFIG['rrd_fetch_method'] == 'async') {
 		echo <<<EOT
-<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP-async.js"></script>
+<script type="text/javascript" src="{$html_weburl}js/CGP-async.js"></script>
 
 EOT;
 		} else {
 		echo <<<EOT
-<script type="text/javascript" src="{$CONFIG['weburl']}js/CGP-sync.js"></script>
+<script type="text/javascript" src="{$html_weburl}js/CGP-sync.js"></script>
 
 EOT;
 		}
@@ -109,7 +112,11 @@ EOT;
 function plugin_header($host, $plugin) {
 	global $CONFIG;
 
-	return printf("<h2><a href='%shost.php?h=%s&amp;p=%s'>%s</a></h2>\n", $CONFIG['weburl'], $host, $plugin, $plugin);
+	printf("<h2><a href=\"%shost.php?h=%s&amp;p=%s\">%s</a></h2>\n",
+		htmlentities($CONFIG['weburl']),
+		urlencode($host),
+		urlencode($plugin),
+		htmlentities($plugin));
 }
 
 function plugins_list($host, $selected_plugins = array()) {
@@ -121,20 +128,21 @@ function plugins_list($host, $selected_plugins = array()) {
 	echo '<h2>Plugins</h2>';
 	echo '<ul>';
 
-	printf("<li><a %s href='%shost.php?h=%s'>overview</a></li>\n",
+	printf("<li><a %s href=\"%shost.php?h=%s\">overview</a></li>\n",
 		selected_overview($selected_plugins),
-		$CONFIG['weburl'],
-		$host
+		htmlentities($CONFIG['weburl']),
+		urlencode($host)
 	);
 
 	# first the ones defined as ordered
 	foreach($CONFIG['overview'] as $plugin) {
 		if (in_array($plugin, $plugins)) {
-			printf("<li><a %s href='%shost.php?h=%s&amp;p=%s'>%4\$s</a></li>\n",
+			printf("<li><a %s href=\"%shost.php?h=%s&amp;p=%s\">%s</a></li>\n",
 				selected_plugin($plugin, $selected_plugins),
-				$CONFIG['weburl'],
-				$host,
-				$plugin
+				htmlentities($CONFIG['weburl']),
+				urlencode($host),
+				urlencode($plugin),
+				htmlentities($plugin)
 			);
 		}
 	}
@@ -142,11 +150,12 @@ function plugins_list($host, $selected_plugins = array()) {
 	# other plugins
 	foreach($plugins as $plugin) {
 		if (!in_array($plugin, $CONFIG['overview'])) {
-			printf("<li><a %s href='%shost.php?h=%s&amp;p=%s'>%4\$s</a></li>\n",
+			printf("<li><a %s href=\"%shost.php?h=%s&amp;p=%s\">%s</a></li>\n",
 				selected_plugin($plugin, $selected_plugins),
-				$CONFIG['weburl'],
-				$host,
-				$plugin
+				htmlentities($CONFIG['weburl']),
+				urlencode($host),
+				urlencode($plugin),
+				htmlentities($plugin)
 			);
 		}
 	}
@@ -181,8 +190,8 @@ function host_summary($cat, $hosts) {
 
 	$rrd = new RRDTool($CONFIG['rrdtool']);
 
-	printf('<fieldset id="%s">', $cat);
-	printf('<legend>%s</legend>', $cat);
+	printf('<fieldset id="%s">', htmlentities($cat));
+	printf('<legend>%s</legend>', htmlentities($cat));
 	echo "<table class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
@@ -193,7 +202,9 @@ function host_summary($cat, $hosts) {
 
 		printf('<tr class="%s">', $row_style[$host_counter % 2]);
 		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
-			$CONFIG['weburl'],$host, $host);
+			htmlentities($CONFIG['weburl']),
+			urlencode($host),
+			htmlentities($host));
 
 		if ($CONFIG['showload']) {
 			require_once 'type/Default.class.php';
@@ -308,11 +319,10 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			$_GET['s'] = $time;
 			include $CONFIG['webdir'].'/graph.php';
 		} else {
-			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",
-				$CONFIG['weburl'],
-				build_url('detail.php', $items, $time),
-				$CONFIG['weburl'],
-				build_url('graph.php', $items, $time)
+			printf('<a href="%1$s%2$s"><img src="%1$s%3$s"></a>'."\n",
+				htmlentities($CONFIG['weburl']),
+				htmlentities(build_url('detail.php', $items, $time)),
+				htmlentities(build_url('graph.php', $items, $time))
 			);
 		}
 	}
@@ -328,17 +338,11 @@ function build_url($base, $items, $s=NULL) {
 	if (!is_numeric($s))
 		$s = $CONFIG['time_range']['default'];
 
-	$i=0;
-	foreach ($items as $key => $value) {
-		# don't include empty values
-		if ($value == 'NULL')
-			continue;
+	// Remove all empty values
+	$items = array_filter($items, 'strlen');
 
-		$base .= sprintf('%s%s=%s', $i==0 ? '?' : '&amp;', $key, $value);
-		$i++;
-	}
 	if (!isset($items['s']))
-		$base .= '&amp;s='.$s;
+		$items['s'] = $s;
 
-	return $base;
+	return "$base?" . http_build_query($items, '', '&');
 }

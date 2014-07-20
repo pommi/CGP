@@ -203,14 +203,14 @@ class Type_Base {
 			case 'cmd':
 				print '<pre>';
 				foreach ($graphdata as $d) {
-					printf("%s \\\n", $d);
+					printf("%s \\\n", htmlentities($d));
 				}
 				print '</pre>';
 			break;
 			case 'canvas':
 				printf('<canvas id="%s" class="rrd">', sha1(serialize($graphdata)));
 				foreach ($graphdata as $d) {
-					printf("%s\n", $d);
+					printf("%s\n", htmlentities($d));
 				}
 				print '</canvas>';
 			break;
