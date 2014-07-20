@@ -14,8 +14,13 @@ class RRDTool {
 
 	function rrd_info($rrdfile) {
 		if (file_exists($rrdfile)) {
-			$raw_info = shell_exec($this->rrdtool.' info '.$rrdfile);
+			$raw_info = shell_exec(
+				escapeshellarg($this->rrdtool)
+				. " info " .
+				escapeshellarg($rrdfile)
+			);
 			$raw_array = explode("\n", $raw_info);
+			$info_array = array();
 			foreach ($raw_array as $key => $info) {
 				if ($info != "") {
 					$item_info = explode(" = ", $info);
@@ -23,7 +28,7 @@ class RRDTool {
 					$info_array[$item_info[0]] = $item_info[1];
 				}
 			}
-			return($info_array);
+			return $info_array;
 		} else {
 			return false;
 		}
