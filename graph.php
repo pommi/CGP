@@ -23,7 +23,7 @@ $typesdb = parse_typesdb_file($CONFIG['typesdb']);
 
 if ($plugin == 'aggregation') {
 	$pi = explode("-", GET('pi'));
-	$plugin = $_GET['p'] = $pi[0];
+	$plugin = $_GET['p'] = validate_get($pi[0], 'plugin');
 }
 
 # plugin json
