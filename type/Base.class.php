@@ -251,7 +251,10 @@ class Type_Base {
 					$shellcmd
 				);
 				$shellcmd = implode(' ', $shellcmd);
-				passthru($shellcmd);
+				passthru($shellcmd, $exitcode);
+				if ($exitcode !== 0) {
+					header('HTTP/1.1 500 Internal Server Error');
+				}
 			break;
 		}
 	}
