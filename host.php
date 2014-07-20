@@ -15,7 +15,7 @@ printf("<fieldset id=\"%s\">", htmlentities($host));
 printf("<legend>%s</legend>", htmlentities($host));
 
 
-if (!$plugins = collectd_plugins($host)) {
+if (!strlen($host) || !$plugins = collectd_plugins($host)) {
 	echo "Unknown host\n";
 	return false;
 }
