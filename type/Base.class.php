@@ -155,6 +155,10 @@ class Type_Base {
 	function rrd_files() {
 		$files = $this->get_filenames();
 
+		$this->tinstances = array();
+		$this->files = array();
+		$this->identifiers = array();
+
 		foreach($files as $filename) {
 			$basename=basename($filename,'.rrd');
 			$instance = strpos($basename,'-')
@@ -186,7 +190,7 @@ class Type_Base {
 
 		$files = glob($this->datadir .'/'. $identifier . $wildcard . 'rrd');
 
-		return $files;
+		return $files ? $files : array();
 	}
 
 	function rrd_graph($debug = false) {

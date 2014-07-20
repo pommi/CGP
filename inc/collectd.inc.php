@@ -9,7 +9,7 @@ function collectd_hosts() {
 	global $CONFIG;
 
 	if (!is_dir($CONFIG['datadir']))
-		return false;
+		return array();
 
 	$dir = array_diff(scandir($CONFIG['datadir']), array('.', '..'));
 	foreach($dir as $k => $v) {
@@ -17,7 +17,7 @@ function collectd_hosts() {
 			unset($dir[$k]);
 	}
 
-	return $dir ? $dir : false;
+	return $dir;
 }
 
 
@@ -36,7 +36,7 @@ function get_host_rrd_files($dir) {
 		$files[] = str_replace($dir.'/', '', $object->getPathname());
 	}
 
-	return $files ? $files : false;
+	return $files;
 }
 
 
