@@ -234,7 +234,7 @@ class Type_Base {
 			case 'debug':
 			case 1:
 				print '<pre>';
-				htmlentities(print_r($shellcmd, TRUE));
+				print htmlentities(print_r($shellcmd, TRUE));
 				print '</pre>';
 			break;
 			case 'svg':
