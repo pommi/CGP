@@ -6,11 +6,11 @@ require_once 'inc/collectd.inc.php';
 
 $plugin = validate_get(GET('p'), 'plugin');
 $type = validate_get(GET('t'), 'type');
-$width = GET('x') ? filter_input(INPUT_GET, 'x', FILTER_VALIDATE_INT, array(
+$width = GET('x') ? filter_var(GET('x'), FILTER_VALIDATE_INT, array(
 	'min_range' => 10,
 	'max_range' => $CONFIG['max-width']
 )) : $CONFIG['width'];
-$height = GET('y') ? filter_input(INPUT_GET, 'y', FILTER_VALIDATE_INT, array(
+$height = GET('y') ? filter_var(GET('y'), FILTER_VALIDATE_INT, array(
 	'min_range' => 10,
 	'max_range' => $CONFIG['max-height']
 )) : $CONFIG['height'];
