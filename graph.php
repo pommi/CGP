@@ -6,16 +6,24 @@ require_once 'inc/collectd.inc.php';
 
 $plugin = validate_get(GET('p'), 'plugin');
 $type = validate_get(GET('t'), 'type');
-$width = empty($_GET['x']) ? $CONFIG['width'] : $_GET['x'];
-$height = empty($_GET['y']) ? $CONFIG['height'] : $_GET['y'];
+$width = GET('x') ? filter_input(INPUT_GET, 'x', FILTER_VALIDATE_INT, array(
+	'min_range' => 10,
+	'max_range' => $CONFIG['max-width']
+)) : $CONFIG['width'];
+$height = GET('y') ? filter_input(INPUT_GET, 'y', FILTER_VALIDATE_INT, array(
+	'min_range' => 10,
+	'max_range' => $CONFIG['max-height']
+)) : $CONFIG['height'];
 
-if (validate_get(GET('h'), 'host') === NULL) {
-	error_log('CGP Error: plugin contains unknown characters');
+if ($width === NULL || $height === NULL) {
+	error_log(sprintf('Invalid image dimension, x="%s", y="%s"',
+		urlencode(GET('x')),
+		urlencode(GET('y'))));
 	error_image();
 }
 
-if ($width > $CONFIG['max-width'] || $height > $CONFIG['max-height']) {
-	error_log('Resquested image is too large. Please configure max-width and max-height.');
+if (validate_get(GET('h'), 'host') === NULL) {
+	error_log('Invalid host: "' . urlencode(GET('h')) . '"');
 	error_image();
 }
 

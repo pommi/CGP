@@ -55,7 +55,7 @@ function crc32hex($str) {
 }
 
 function error_image() {
-	header("Content-Type: image/png");
+	header("Content-Type: image/png", true, 400);
 	readfile('layout/error.png');
 	exit;
 }
