@@ -48,7 +48,9 @@ function parse_file_path($path) {
 	$path = explode('.rrd', $path)[0];
 
 	list($plugin_data, $type_data) = explode('/', $path);
-	$plugin_data = explode('-', $plugin_data);
+	# Explode by first occurence of '-'
+	$plugin_data = explode('-', $plugin_data, 2);
+	# Explode by first occurence of '-'
 	$type_data = explode('-', $type_data, 2);
 
 	$data['p'] = $plugin_data[0];
