@@ -128,7 +128,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	echo '<h2>Plugins</h2>';
 	echo '<ul>';
 
-	printf("<li><a %s href=\"%shost.php?h=%s\">overview</a></li>\n",
+	printf("<li><a %shref=\"%shost.php?h=%s\">overview</a></li>\n",
 		selected_overview($selected_plugins),
 		htmlentities($CONFIG['weburl']),
 		urlencode($host)
@@ -137,7 +137,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	# first the ones defined as ordered
 	foreach($CONFIG['overview'] as $plugin) {
 		if (in_array($plugin, $plugins)) {
-			printf("<li><a %s href=\"%shost.php?h=%s&amp;p=%s\">%s</a></li>\n",
+			printf("<li><a %shref=\"%shost.php?h=%s&amp;p=%s\">%s</a></li>\n",
 				selected_plugin($plugin, $selected_plugins),
 				htmlentities($CONFIG['weburl']),
 				urlencode($host),
@@ -150,7 +150,7 @@ function plugins_list($host, $selected_plugins = array()) {
 	# other plugins
 	foreach($plugins as $plugin) {
 		if (!in_array($plugin, $CONFIG['overview'])) {
-			printf("<li><a %s href=\"%shost.php?h=%s&amp;p=%s\">%s</a></li>\n",
+			printf("<li><a %shref=\"%shost.php?h=%s&amp;p=%s\">%s</a></li>\n",
 				selected_plugin($plugin, $selected_plugins),
 				htmlentities($CONFIG['weburl']),
 				urlencode($host),
@@ -166,21 +166,21 @@ function plugins_list($host, $selected_plugins = array()) {
 
 function selected_overview($selected_plugins) {
 	if (count($selected_plugins) > 1) {
-		return 'class="selected"';
+		return 'class="selected" ';
 	}
 	return '';
 }
 
 function selected_plugin($plugin, $selected_plugins) {
 	if (in_array($plugin, $selected_plugins)) {
-		return 'class="selected"';
+		return 'class="selected" ';
 	}
 	return '';
 }
 
 function selected_timerange($value1, $value2) {
 	if ($value1 == $value2) {
-		return 'class="selected"';
+		return 'class="selected" ';
 	}
 	return '';
 }
