@@ -27,5 +27,3 @@ if ($uhosts) {
 }
 
 html_end();
-
-?>

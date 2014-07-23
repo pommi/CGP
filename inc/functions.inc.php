@@ -59,5 +59,3 @@ function error_image() {
 	readfile('layout/error.png');
 	exit;
 }
-
-?>

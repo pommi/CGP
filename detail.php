@@ -65,5 +65,3 @@ echo '</div>';
 echo "</fieldset>\n";
 
 html_end();
-
-?>

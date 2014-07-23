@@ -98,5 +98,3 @@ $CONFIG['default_timezone'] = 'UTC';
 # load local configuration
 if (file_exists(dirname(__FILE__).'/config.local.php'))
 	include_once 'config.local.php';
-
-?>
