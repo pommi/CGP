@@ -72,43 +72,30 @@ RrdCmdLine.prototype = {
 				this.parse_textaling(arg);
 			} else if (/^SHIFT:/.test(arg)) {
 				this.parse_shift(arg);
-      } else if (arg.charAt(0) === '-') {
+			} else if (arg.charAt(0) === '-') {
 				var strip = 1;
 				if (arg.length > 1 && arg.charAt(1) === '-') {
 					strip = 2;
 				}
 				var option = arg.substr(strip);
-				var value = undefined;
-
-				if (option.indexOf('=') !== -1) {
-					var index = option.indexOf('=');
-					value = option.substr(index+1);
-					option = option.substr(0,index);
-				} else if (i+1 < len) {
-					if (lines[i+1].charAt(0) !== '-' &&
-							!/^"?LINE[0-9.]+:/.test(lines[i+1]) &&
-							!/^"?AREA:/.test(lines[i+1]) &&
-							!/^"?DEF:/.test(lines[i+1]) &&
-							!/^"?CDEF:/.test(lines[i+1]) &&
-							!/^"?VDEF:/.test(lines[i+1]) &&
-							!/^"?GPRINT:/.test(lines[i+1]) &&
-							!/^"?COMMENT:/.test(lines[i+1]) &&
-							!/^"?HRULE:/.test(lines[i+1]) &&
-							!/^"?VRULE:/.test(lines[i+1]) &&
-							!/^"?TICK:/.test(lines[i+1]) &&
-							!/^"?TEXTALING:/.test(lines[i+1]) &&
-							!/^"?SHIFT:/.test(lines[i+1])
-							) {
-						i++;
+				/* try to parse a flag, otherwise assume --option=value */
+				if (!this.set_flag(option)) {
+					var value;
+					if (option.indexOf('=') !== -1) {
+						var index = option.indexOf('=');
+						value = option.substr(index + 1);
+						option = option.substr(0, index);
+					} else if (i + 1 < len) {
+						++i;
 						if (lines[i].charAt(0) === '"' && lines[i].charAt(lines[i].length-1) === '"')
 							value = lines[i].substr(1,lines[i].length-2);
 						else
 							value = lines[i];
 					}
+					this.set_option(option, value);
 				}
-				this.set_option(option, value);
 			} else {
-				throw "Unknow argument: "+arg;
+				throw "Unknown argument: "+arg;
 			}
 			i++;
 		}
@@ -116,13 +103,88 @@ RrdCmdLine.prototype = {
 		this.graph.start = start_end[0];
 		this.graph.end = start_end[1];
 	},
-	set_option: function(option, value)
-	{
-		switch(option) {
+	/** Returns true when the option is a flag that got consumed. */
+	set_flag: function(option) {
+		switch (option) {
 			case 'alt-autoscale':
 			case 'A':
 				this.graph.alt_autoscale = true;
-				break;
+				return true;
+			case 'full-size-mode':
+			case 'D':
+				this.graph.full_size_mode = true;
+				return true;
+			case 'slope-mode':
+			case 'E':
+				this.graph.slopemode = true;
+				return true;
+			case 'force-rules-legend':
+			case 'F':
+				this.graph.force_rules_legend = true;
+				return true;
+			case 'no-legend':
+			case 'g':
+				this.graph.no_legend = true;
+				return true;
+			case 'no-minor':
+			case 'I':
+				this.graph.no_minor = false;
+				return true;
+			case 'interlaced':
+			case 'i':
+				return true;
+			case 'alt-autoscale-min':
+			case 'J':
+				this.graph.alt_autoscale_min = true;
+				return true;
+			case 'only-graph':
+			case 'j':
+				this.graph.only_graph = true;
+				return true;
+			case 'alt-autoscale-max':
+			case 'M':
+				this.graph.alt_autoscale_max = true;
+				return true;
+			case 'no-gridfit':
+			case 'N':
+				this.graph.gridfit = true;
+				return true;
+			case 'logarithmic':
+			case 'o':
+				this.graph.logarithmic = true;
+				return true;
+			case 'pango-markup':
+			case 'P':
+				// im->with_markup = 1;
+				return true;
+			case 'rigid':
+			case 'r':
+				this.graph.rigid = true;
+				return true;
+			case 'alt-y-grid':
+			case 'Y':
+				this.graph.alt_ygrid = true;
+				return true;
+			case 'lazy':
+			case 'z':
+				this.graph.lazy = true;
+				return true;
+			case 'alt-y-mrtg':
+				return true;
+			case 'disable-rrdtool-tag':
+				this.graph.no_rrdtool_tag = true;
+				return true;
+			case 'dynamic-labels':
+				this.graph.dynamic_labels = true;
+				return true;
+			default:
+				/* unrecognized flag, maybe it is an option? */
+				return false;
+		}
+	},
+	set_option: function(option, value)
+	{
+		switch(option) {
 			case 'base':
 			case 'b':
 				this.graph.base = parseInt(value, 10);
@@ -139,22 +201,10 @@ RrdCmdLine.prototype = {
 					throw "invalid color name '"+name+"'"
 				this.graph.GRC[name] = value.substr(index); // FIXME check color
 				break;
-			case 'full-size-mode':
-			case 'D':
-				this.graph.full_size_mode = true;
-				break;
-			case 'slope-mode':
-			case 'E':
-				this.graph.slopemode = true;
-				break;
 			case 'end':
 			case 'e':
 				this.graph.end_t = new RrdTime(value);
 //				this.graph.end = parseInt(value, 10);
-				break;
-			case 'force-rules-legend':
-			case 'F':
-				this.graph.force_rules_legend = true;
 				break;
 			case 'imginfo':
 			case 'f':
@@ -164,28 +214,9 @@ RrdCmdLine.prototype = {
 			case 'G':
 			 // im->graph_antialias
 				break;
-			case 'no-legend':
-			case 'g':
-				this.graph.no_legend = true;
-				break;
 			case 'height':
 			case 'h':
 				this.graph.ysize = parseInt(value, 10);
-				break;
-			case 'no-minor':
-			case 'I':
-				this.graph.no_minor = false;
-				break;
-			case 'interlaced':
-			case 'i':
-				break;
-			case 'alt-autoscale-min':
-			case 'J':
-				this.graph.alt_autoscale_min = true;
-				break;
-			case 'only-graph':
-			case 'j':
-				this.graph.only_graph = true;
 				break;
 			case 'units-length':
 			case 'L':
@@ -196,19 +227,11 @@ RrdCmdLine.prototype = {
 			case 'l':
 				this.graph.setminval = parseFloat(value)
 				break;
-			case 'alt-autoscale-max':
-			case 'M':
-				this.graph.alt_autoscale_max = true;
-				break;
 			case 'zoom':
 			case 'm':
 				this.graph.zoom = parseFloat(value);
 				if (this.graph.zoom <= 0.0)
 					throw "zoom factor must be > 0";
-				break;
-			case 'no-gridfit':
-			case 'N':
-				this.graph.gridfit = true;
 				break;
 			case 'font':
 			case 'n':
@@ -222,21 +245,9 @@ RrdCmdLine.prototype = {
 				if (args[2])
 					this.graph.TEXT[args[0]].font = args[2];
 				break;
-			case 'logarithmic':
-			case 'o':
-				this.graph.logarithmic = true;
-				break;
-			case 'pango-markup':
-			case 'P':
-				// im->with_markup = 1;
-				break;
 			case 'font-render-mode':
 			case 'R':
 				// im->font_options: normal light mono
-				break;
-			case 'rigid':
-			case 'r':
-				this.graph.rigid = true;
 				break;
 			case 'step':
 				this.graph.step = parseInt(value, 10);
@@ -302,10 +313,6 @@ RrdCmdLine.prototype = {
 					this.graph.xlab_user.stst = this.graph.xlab_form;
 				}
 				break;
-			case 'alt-y-grid':
-			case 'Y':
-				this.graph.alt_ygrid = true;
-				break;
 			case 'y-grid':
 			case 'y':
 				if (value === 'none')  {
@@ -322,10 +329,6 @@ RrdCmdLine.prototype = {
 						throw "label factor must be > 0";
 				}
 				break;
-			case 'lazy':
-			case 'z':
-				this.graph.lazy = 1;
-				break;
 			case 'units':
 				if (this.graph.force_units)
 					throw "--units can only be used once!";
@@ -333,11 +336,6 @@ RrdCmdLine.prototype = {
 					this.graph.force_units_si = true;
 				else
 					throw "invalid argument for --units: "+value;
-				break;
-			case 'alt-y-mrtg':
-				break;
-			case 'disable-rrdtool-tag':
-				this.graph.no_rrdtool_tag = true;
 				break;
 			case 'right-axis':
 				var index = value.indexOf(':');
@@ -386,11 +384,8 @@ RrdCmdLine.prototype = {
 				this.graph.grid_dash_on = parseFloat(value.substr(0,index));
 				this.graph.grid_dash_off = parseFloat(value.substr(index+1));
 				break;
-			case 'dynamic-labels':
-				this.graph.dynamic_labels = true;
-				break;
 			default:
-				throw 'Unknow option "'+option+'"';
+				throw 'Unknown option "'+option+'"';
 		}
 
 	},
