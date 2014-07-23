@@ -33,7 +33,10 @@ function get_host_rrd_files($dir) {
 		'/\.rrd$/');
 
 	foreach($objects as $object) {
-		$files[] = str_replace($dir.'/', '', $object->getPathname());
+		$relativePathName = str_replace($dir.'/', '', $object->getPathname());
+		if (!preg_match('/^.+\/.+\.rrd$/', $relativePathName))
+			continue;
+		$files[] = $relativePathName;
 	}
 
 	return $files;
