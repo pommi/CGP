@@ -60,5 +60,3 @@ class Type_Uptime extends Type_Base {
 		return $rrdgraph;
 	}
 }
-
-?>

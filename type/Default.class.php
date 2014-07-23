@@ -58,5 +58,3 @@ class Type_Default extends Type_Base {
 		return $rrdgraph;
 	}
 }
-
-?>

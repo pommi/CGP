@@ -33,5 +33,3 @@ echo '</div>';
 printf("</fieldset>");
 
 html_end();
-
-?>
