@@ -40,6 +40,28 @@ function get_host_rrd_files($dir) {
 }
 
 
+# Parse given path and explode its contents according to
+# https://collectd.org/wiki/index.php/Naming_schema
+function parse_file_path($path) {
+
+	$data = array('c' => '');
+	$path = explode('.rrd', $path)[0];
+
+	list($plugin_data, $type_data) = explode('/', $path);
+	$plugin_data = explode('-', $plugin_data);
+	$type_data = explode('-', $type_data, 2);
+
+	$data['p'] = $plugin_data[0];
+	$data['pi'] = array_key_exists(1, $plugin_data) ? $plugin_data[1] : '';
+	$data['t'] = $type_data[0];
+	$data['ti'] = array_key_exists(1, $type_data) ? $type_data[1] : '';
+
+	return $data;
+
+}
+
+
+
 # returns an array of plugins/pinstances/types/tinstances
 function collectd_plugindata($host, $plugin=NULL) {
 	global $CONFIG;
@@ -53,23 +75,9 @@ function collectd_plugindata($host, $plugin=NULL) {
 
 	$data = array();
 	foreach($files as $item) {
-		preg_match('`
-			(?P<p>[\w_]+)      # plugin
-			(?:(?<=varnish)(?:\-(?P<c>[\w]+)))? # category
-			(?:\-(?P<pi>.+))?  # plugin instance
-			/
-			(?P<t>[\w_]+)      # type
-			(?:\-(?P<ti>.+))?  # type instance
-			\.rrd
-		`x', $item, $matches);
 
-		$data[] = array(
-			'p'  => $matches['p'],
-			'c'  => isset($matches['c']) ? $matches['c'] : '',
-			'pi' => isset($matches['pi']) ? $matches['pi'] : '',
-			't'  => $matches['t'],
-			'ti' => isset($matches['ti']) ? $matches['ti'] : '',
-		);
+		$data[] = parse_file_path($item);
+
 	}
 
 	# only return data about one plugin
