@@ -137,13 +137,8 @@ class Type_Base {
 	}
 
 	function rrd_escape($value) {
-		if ($this->graph_type == 'canvas') {
-			# http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html#IEscaping_the_colon
-			return str_replace(':', '\:', $value);
-		} else {
-			# php needs it double escaped to execute rrdtool correctly
-			return str_replace(':', '\\\:', $value);
-		}
+		# http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html#IEscaping_the_colon
+		return str_replace(':', '\:', $value);
 	}
 
 	function parse_filename($file) {
@@ -151,9 +146,6 @@ class Type_Base {
 			$file = str_replace($this->datadir . '/', '', $file);
 			# rawurlencode all but /
 			$file = 'rrd.php?' . str_replace('%2F', '/', rawurlencode($file));
-		} else {
-			# escape characters
-			$file = str_replace(array(' ', '(', ')'), array('\ ', '\(', '\)'), $file);
 		}
 		return $this->rrd_escape($file);
 	}
