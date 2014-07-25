@@ -271,16 +271,16 @@ RrdJson.prototype = {
 				case 'TEXTALIGN':
 					switch (gdes[i].align) {
 						case 'left':
-							this.graph.gdes_add_textaling(RrdGraphDesc.TXA_LEFT);
+							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_LEFT);
 							break
 						case 'right':
-							this.graph.gdes_add_textaling(RrdGraphDesc.TXA_RIGHT);
+							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_RIGHT);
 							break
 						case 'justified':
-							this.graph.gdes_add_textaling(RrdGraphDesc.TXA_JUSTIFIED);
+							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_JUSTIFIED);
 							break
 						case 'center':
-							this.graph.gdes_add_textaling(RrdGraphDesc.TXA_CENTER);
+							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_CENTER);
 							break
 					}
 				break;

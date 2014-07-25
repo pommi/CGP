@@ -69,7 +69,7 @@ RrdCmdLine.prototype = {
 			} else if (/^TICK:/.test(arg)) {
 				this.parse_tick(arg);
 			} else if (/^TEXTALIGN:/.test(arg)) {
-				this.parse_textaling(arg);
+				this.parse_textalign(arg);
 			} else if (/^SHIFT:/.test(arg)) {
 				this.parse_shift(arg);
 			} else if (arg.charAt(0) === '-') {
@@ -488,10 +488,10 @@ RrdCmdLine.prototype = {
 		this.graph.gdes_add_comment(line.substr(index+1));
 	},
 	// TEXTALIGN:{left|right|justified|center}
-	parse_textaling: function (line)
+	parse_textalign: function (line)
 	{
 		var index = line.indexOf(':');
-		this.graph.gdes_add_textaling(line.substr(index+1));
+		this.graph.gdes_add_textalign(line.substr(index+1));
 	},
 	// VRULE:time#color[:legend][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
 	parse_vrule: function (line)

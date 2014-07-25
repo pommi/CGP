@@ -115,7 +115,7 @@ var RrdGraphDesc = function (graph)
 			this.tick.apply(this, args);
 			break;
 		case RrdGraphDesc.GF_TEXTALIGN:
-			this.textaling.apply(this, args);
+			this.textalign.apply(this, args);
 			break;
 		case RrdGraphDesc.GF_DEF:
 			this.def.apply(this, args);
@@ -2987,7 +2987,7 @@ RrdGraph.prototype.gdes_add_comment = function (text)
 
 RrdGraph.prototype.gdes_add_textalign = function (align)
 {
-	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_TEXTALING, align));
+	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_TEXTALIGN, align));
 };
 
 RrdGraph.prototype.gdes_add_vrule = function (time, color, legend)
