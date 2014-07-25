@@ -37,6 +37,8 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 	var doubleMantExpLo=Math.pow(2,-52);
 	var doubleMantExpFast=Math.pow(2,-20);
 
+	var switch_endian = false;
+
 	this.getRawData = function() {
 		return data;
 	}
@@ -57,6 +59,13 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 	  throw new InvalidBinaryFile("Unsupported type " + (typeof strData));
 	}
 
+	this.getEndianByteAt = function(iOffset,width,delta) {
+	  if (this.switch_endian) 
+	    return this.getByteAt(iOffset+width-delta-1);
+	  else
+	    return this.getByteAt(iOffset+delta);
+	}
+
 	this.getLength = function() {
 		return dataLength;
 	}
@@ -70,7 +79,7 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 	}
 
 	this.getShortAt = function(iOffset) {
-		var iShort = (this.getByteAt(iOffset + 1) << 8) + this.getByteAt(iOffset)
+	        var iShort = (this.getEndianByteAt(iOffset,2,1) << 8) + this.getEndianByteAt(iOffset,2,0)
 		if (iShort < 0) iShort += 65536;
 		return iShort;
 	}
@@ -82,10 +91,10 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 			return iUShort;
 	}
 	this.getLongAt = function(iOffset) {
-		var iByte1 = this.getByteAt(iOffset),
-			iByte2 = this.getByteAt(iOffset + 1),
-			iByte3 = this.getByteAt(iOffset + 2),
-			iByte4 = this.getByteAt(iOffset + 3);
+	        var iByte1 = this.getEndianByteAt(iOffset,4,0),
+	             iByte2 = this.getEndianByteAt(iOffset,4,1),
+	             iByte3 = this.getEndianByteAt(iOffset,4,2),
+	             iByte4 = this.getEndianByteAt(iOffset,4,3);
 
 		var iLong = (((((iByte4 << 8) + iByte3) << 8) + iByte2) << 8) + iByte1;
 		if (iLong < 0) iLong += 4294967296;
@@ -117,14 +126,14 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 
 	// Added
 	this.getDoubleAt = function(iOffset) {
-		var iByte1 = this.getByteAt(iOffset),
-			iByte2 = this.getByteAt(iOffset + 1),
-			iByte3 = this.getByteAt(iOffset + 2),
-		        iByte4 = this.getByteAt(iOffset + 3),
-		        iByte5 = this.getByteAt(iOffset + 4),
-			iByte6 = this.getByteAt(iOffset + 5),
-			iByte7 = this.getByteAt(iOffset + 6),
-			iByte8 = this.getByteAt(iOffset + 7);
+	        var iByte1 = this.getEndianByteAt(iOffset,8,0),
+	             iByte2 = this.getEndianByteAt(iOffset,8,1),
+	             iByte3 = this.getEndianByteAt(iOffset,8,2),
+	             iByte4 = this.getEndianByteAt(iOffset,8,3),
+	             iByte5 = this.getEndianByteAt(iOffset,8,4),
+	             iByte6 = this.getEndianByteAt(iOffset,8,5),
+	             iByte7 = this.getEndianByteAt(iOffset,8,6),
+	             iByte8 = this.getEndianByteAt(iOffset,8,7);
 		var iSign=iByte8 >> 7;
 		var iExpRaw=((iByte8 & 0x7F)<< 4) + (iByte7 >> 4);
 		var iMantHi=((((((iByte7 & 0x0F) << 8) + iByte6) << 8) + iByte5) << 8) + iByte4;
@@ -141,10 +150,10 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 	// added
 	// Extracts only 4 bytes out of 8, loosing in precision (20 bit mantissa)
 	this.getFastDoubleAt = function(iOffset) {
-		var iByte5 = this.getByteAt(iOffset + 4),
-			iByte6 = this.getByteAt(iOffset + 5),
-			iByte7 = this.getByteAt(iOffset + 6),
-			iByte8 = this.getByteAt(iOffset + 7);
+	        var iByte5 = this.getEndianByteAt(iOffset,8,4),
+		     iByte6 = this.getEndianByteAt(iOffset,8,5),
+		     iByte7 = this.getEndianByteAt(iOffset,8,6),
+		     iByte8 = this.getEndianByteAt(iOffset,8,7);
 		var iSign=iByte8 >> 7;
 		var iExpRaw=((iByte8 & 0x7F)<< 4) + (iByte7 >> 4);
 		var iMant=((((iByte7 & 0x0F) << 8) + iByte6) << 8) + iByte5;
@@ -190,10 +199,17 @@ function FetchBinaryURL(url) {
   }
   request.send(null);
 
-  var response=request.responseBody;
-  if (response==undefined){ // responseBody is non standard, but the only way to make it work in IE
-    response=request.responseText;
+  var response=this.responseText;
+  try {
+    // for older IE versions, the value in responseText is not usable
+    if (IEBinary_getLength(this.responseBody)>0) {
+      // will get here only for older verson of IE
+      response=this.responseBody;
+    }
+  } catch (err) {
+    // not IE, do nothing
   }
+
   var bf=new BinaryFile(response);
   return bf;
 }
@@ -208,10 +224,17 @@ function FetchBinaryURL(url) {
 function FetchBinaryURLAsync(url, callback, callback_arg) {
   var callback_wrapper = function() {
     if(this.readyState == 4) {
-      var response=this.responseBody;
-      if (response==undefined){ // responseBody is non standard, but the only way to make it work in IE
-	response=this.responseText;
+      var response=this.responseText;
+      try {
+        // for older IE versions, the value in responseText is not usable
+        if (IEBinary_getLength(this.responseBody)>0) {
+          // will get here only for older verson of IE
+          response=this.responseBody;
+        }
+      } catch (err) {
+       // not IE, do nothing
       }
+
       var bf=new BinaryFile(response);
       if (callback_arg!=null) {
 	callback(bf,callback_arg);

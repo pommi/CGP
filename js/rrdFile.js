@@ -5,7 +5,7 @@
  *                         Igor Sfiligoi, isfiligoi@ucsd.edu
  *
  * Original repository: http://javascriptrrd.sourceforge.net/
- *
+ * 
  * MIT License [http://www.opensource.org/licenses/mit-license.php]
  *
  */
@@ -17,10 +17,10 @@
  *
  * This software can be used to read files produced by the RRDTool
  * but has been developed independently.
- *
+ * 
  * Limitations:
  *
- * This version of the module assumes RRD files created on linux
+ * This version of the module assumes RRD files created on linux 
  * with intel architecture and supports both 32 and 64 bit CPUs.
  * All integers in RRD files are suppoes to fit in 32bit values.
  *
@@ -33,7 +33,7 @@
 
 /*
  * Dependencies:
- *
+ *   
  * The data provided to this module require an object of a class
  * that implements the following methods:
  *   getByteAt(idx)            - Return a 8 bit unsigned integer at offset idx
@@ -89,13 +89,16 @@ RRDDS.prototype.getMax = function() {
 // ============================================================
 // RRD RRA Info class
 function RRDRRAInfo(rrd_data,rra_def_idx,
-		    rrd_align,row_cnt,pdp_step,my_idx) {
+		    int_align,row_cnt,pdp_step,my_idx) {
   this.rrd_data=rrd_data;
   this.rra_def_idx=rra_def_idx;
-  this.rrd_align=rrd_align;
+  this.int_align=int_align;
   this.row_cnt=row_cnt;
   this.pdp_step=pdp_step;
   this.my_idx=my_idx;
+
+  // char nam[20], uint row_cnt, uint pdp_cnt
+  this.rra_pdp_cnt_idx=rra_def_idx+Math.ceil(20/int_align)*int_align+int_align;
 }
 
 RRDRRAInfo.prototype.getIdx = function() {
@@ -110,10 +113,7 @@ RRDRRAInfo.prototype.getNrRows = function() {
 // Get number of slots used for consolidation
 // Mostly for internal use
 RRDRRAInfo.prototype.getPdpPerRow = function() {
-  if (this.rrd_align==32)
-    return this.rrd_data.getLongAt(this.rra_def_idx+24,20);
-  else
-    return this.rrd_data.getLongAt(this.rra_def_idx+32,20);
+  return this.rrd_data.getLongAt(this.rra_pdp_cnt_idx);
 }
 
 // Get RRA step (expressed in seconds)
@@ -158,7 +158,7 @@ function RRDRRA(rrd_data,rra_ptr_idx,
       }
     } else {
       throw RangeError("Row idx ("+ row_idx +") out of range [0-" + this.row_cnt +").");
-    }
+    }	
   }
 }
 
@@ -199,43 +199,89 @@ RRDRRA.prototype.getElFast = function(row_idx,ds_idx) {
 function RRDHeader(rrd_data) {
   this.rrd_data=rrd_data;
   this.validate_rrd();
-  this.load_header();
   this.calc_idxs();
 }
 
 // Internal, used for initialization
 RRDHeader.prototype.validate_rrd = function() {
+  if (this.rrd_data.getLength()<1) throw new InvalidRRD("Empty file.");
+  if (this.rrd_data.getLength()<16) throw new InvalidRRD("File too short.");
   if (this.rrd_data.getCStringAt(0,4)!=="RRD") throw new InvalidRRD("Wrong magic id.");
 
   this.rrd_version=this.rrd_data.getCStringAt(4,5);
-  if ((this.rrd_version!=="0003")&&(this.rrd_version!=="0004")) {
+  if ((this.rrd_version!=="0003")&&(this.rrd_version!=="0004")&&(this.rrd_version!=="0001")) {
     throw new InvalidRRD("Unsupported RRD version "+this.rrd_version+".");
   }
 
-  if (this.rrd_data.getDoubleAt(12)==8.642135e+130) {
-    this.rrd_align=32;
-  } else if (this.rrd_data.getDoubleAt(16)==8.642135e+130) {
-    this.rrd_align=64;
+  this.float_width=8;
+  if (this.rrd_data.getLongAt(12)==0) {
+    // not a double here... likely 64 bit
+    this.float_align=8;
+    if (! (this.rrd_data.getDoubleAt(16)==8.642135e+130)) {
+      // uhm... wrong endian?
+      this.rrd_data.switch_endian=true;
+    }
+    if (this.rrd_data.getDoubleAt(16)==8.642135e+130) {
+      // now, is it all 64bit or only float 64 bit?
+      if (this.rrd_data.getLongAt(28)==0) {
+	// true 64 bit align
+	this.int_align=8;
+	this.int_width=8;
+      } else {
+	// integers are 32bit aligned
+	this.int_align=4;
+	this.int_width=4;
+      }
+    } else {
+      throw new InvalidRRD("Magic float not found at 16.");
+    }
   } else {
-    throw new InvalidRRD("Unsupported platform.");
+    /// should be 32 bit alignment
+    if (! (this.rrd_data.getDoubleAt(12)==8.642135e+130)) {
+      // uhm... wrong endian?
+      this.rrd_data.switch_endian=true;
+    }
+    if (this.rrd_data.getDoubleAt(12)==8.642135e+130) {
+      this.float_align=4;
+      this.int_align=4;
+      this.int_width=4;
+    } else {
+      throw new InvalidRRD("Magic float not found at 12.");
+    }
   }
-}
+  this.unival_width=this.float_width;
+  this.unival_align=this.float_align;
 
-// Internal, used for initialization
-RRDHeader.prototype.load_header = function() {
-  if (this.rrd_align==32) {
-    this.ds_cnt=this.rrd_data.getLongAt(20,false);
-    this.rra_cnt=this.rrd_data.getLongAt(24,false);
-    this.pdp_step=this.rrd_data.getLongAt(28,false);
-    // 8*10 unused values follow
-    this.top_header_size=112;
-  } else {
-    //get only the low 32 bits, the high 32 should always be 0
-    this.ds_cnt=this.rrd_data.getLongAt(24,false);
-    this.rra_cnt=this.rrd_data.getLongAt(32,false);
-    this.pdp_step=this.rrd_data.getLongAt(40,false);
-    // 8*10 unused values follow
-    this.top_header_size=128;
+  // process the header here, since I need it for validation
+
+  // char magic[4], char version[5], double magic_float
+
+  // long ds_cnt, long rra_cnt, long pdp_step, unival par[10]
+  this.ds_cnt_idx=Math.ceil((4+5)/this.float_align)*this.float_align+this.float_width;
+  this.rra_cnt_idx=this.ds_cnt_idx+this.int_width;
+  this.pdp_step_idx=this.rra_cnt_idx+this.int_width;
+
+  //always get only the low 32 bits, the high 32 on 64 bit archs should always be 0
+  this.ds_cnt=this.rrd_data.getLongAt(this.ds_cnt_idx);
+  if (this.ds_cnt<1) {
+    throw new InvalidRRD("ds count less than 1.");
+  }
+
+  this.rra_cnt=this.rrd_data.getLongAt(this.rra_cnt_idx);
+  if (this.ds_cnt<1) {
+    throw new InvalidRRD("rra count less than 1.");
+  }
+
+  this.pdp_step=this.rrd_data.getLongAt(this.pdp_step_idx);
+  if (this.pdp_step<1) {
+    throw new InvalidRRD("pdp step less than 1.");
+  }
+
+  // best guess, assuming no weird align problems
+  this.top_header_size=Math.ceil((this.pdp_step_idx+this.int_width)/this.unival_align)*this.unival_align+10*this.unival_width;
+  var t=this.rrd_data.getLongAt(this.top_header_size);
+  if (t==0) {
+    throw new InvalidRRD("Could not find first DS name.");
   }
 }
 
@@ -243,43 +289,29 @@ RRDHeader.prototype.load_header = function() {
 RRDHeader.prototype.calc_idxs = function() {
   this.ds_def_idx=this.top_header_size;
   // char ds_nam[20], char dst[20], unival par[10]
-  this.ds_el_size=120;
+  this.ds_el_size=Math.ceil((20+20)/this.unival_align)*this.unival_align+10*this.unival_width;
 
   this.rra_def_idx=this.ds_def_idx+this.ds_el_size*this.ds_cnt;
   // char cf_nam[20], uint row_cnt, uint pdp_cnt, unival par[10]
-  this.row_cnt_idx;
-  if (this.rrd_align==32) {
-    this.rra_def_el_size=108;
-    this.row_cnt_idx=20;
-  } else {
-    this.rra_def_el_size=120;
-    this.row_cnt_idx=24;
-  }
+  this.row_cnt_idx=Math.ceil(20/this.int_align)*this.int_align;
+  this.rra_def_el_size=Math.ceil((this.row_cnt_idx+2*this.int_width)/this.unival_align)*this.unival_align+10*this.unival_width;
 
   this.live_head_idx=this.rra_def_idx+this.rra_def_el_size*this.rra_cnt;
   // time_t last_up, int last_up_usec
-  if (this.rrd_align==32) {
-    this.live_head_size=8;
-  } else {
-    this.live_head_size=16;
-  }
+  this.live_head_size=2*this.int_width;
 
   this.pdp_prep_idx=this.live_head_idx+this.live_head_size;
   // char last_ds[30], unival scratch[10]
-  this.pdp_prep_el_size=112;
+  this.pdp_prep_el_size=Math.ceil(30/this.unival_align)*this.unival_align+10*this.unival_width;
 
   this.cdp_prep_idx=this.pdp_prep_idx+this.pdp_prep_el_size*this.ds_cnt;
   // unival scratch[10]
-  this.cdp_prep_el_size=80;
+  this.cdp_prep_el_size=10*this.unival_width;
 
   this.rra_ptr_idx=this.cdp_prep_idx+this.cdp_prep_el_size*this.ds_cnt*this.rra_cnt;
   // uint cur_row
-  if (this.rrd_align==32) {
-    this.rra_ptr_el_size=4;
-  } else {
-    this.rra_ptr_el_size=8;
-  }
-
+  this.rra_ptr_el_size=1*this.int_width;
+  
   this.header_size=this.rra_ptr_idx+this.rra_ptr_el_size*this.rra_cnt;
 }
 
@@ -325,7 +357,7 @@ RRDHeader.prototype.getDSbyIdx = function(idx) {
     return new RRDDS(this.rrd_data,this.ds_def_idx+this.ds_el_size*idx,idx);
   } else {
     throw RangeError("DS idx ("+ idx +") out of range [0-" + this.ds_cnt +").");
-  }
+  }	
 }
 RRDHeader.prototype.getDSbyName = function(name) {
   for (var idx=0; idx<this.ds_cnt; idx++) {
@@ -344,20 +376,23 @@ RRDHeader.prototype.getRRAInfo = function(idx) {
   if ((idx>=0) && (idx<this.rra_cnt)) {
     return new RRDRRAInfo(this.rrd_data,
 			  this.rra_def_idx+idx*this.rra_def_el_size,
-			  this.rrd_align,this.rra_def_row_cnts[idx],this.pdp_step,
+			  this.int_align,this.rra_def_row_cnts[idx],this.pdp_step,
 			  idx);
   } else {
     throw RangeError("RRA idx ("+ idx +") out of range [0-" + this.rra_cnt +").");
-  }
+  }	
 }
 
 // ============================================================
 // RRDFile class
 //   Given a BinaryFile, gives access to the RRD archive fields
-//
+// 
 // Arguments:
 //   bf must be an object compatible with the BinaryFile interface
-function RRDFile(bf) {
+//   file_options - currently no semantics... introduced for future expandability
+function RRDFile(bf,file_options) {
+  this.file_options=file_options;
+
   var rrd_data=bf
 
   this.rrd_header=new RRDHeader(rrd_data);
@@ -396,7 +431,7 @@ function RRDFile(bf) {
   }
 
   this.getRRA = function(idx) {
-    var rra_info=this.rrd_header.getRRAInfo(idx);
+    rra_info=this.rrd_header.getRRAInfo(idx);
     return new RRDRRA(rrd_data,
 		      this.rrd_header.rra_ptr_idx+idx*this.rrd_header.rra_ptr_el_size,
 		      rra_info,
