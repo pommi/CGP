@@ -2426,9 +2426,9 @@ RrdGraph.prototype.grid_paint = function()
 				} else {
 					this.gfx.new_area(X0, Y0 - boxV, X0, Y0, X0 + boxH, Y0, this.GRC.BACK);
 					this.gfx.add_point(X0 + boxH, Y0 - boxV);
-			  	this.gfx.close_path();
-		  		this.gfx.new_area(X0, Y0 - boxV, X0, Y0, X0 + boxH, Y0, this.gdes[i].col);
-			  	this.gfx.add_point(X0 + boxH, Y0 - boxV);
+					this.gfx.close_path();
+					this.gfx.new_area(X0, Y0 - boxV, X0, Y0, X0 + boxH, Y0, this.gdes[i].col);
+					this.gfx.add_point(X0 + boxH, Y0 - boxV);
 					this.gfx.close_path();
 					if (this.gdes[i].dash) this.gfx.set_dash([ 3.0 ], 1, 0.0);
 					this.gfx.rectangle(X0, Y0, X0 + boxH, Y0 - boxV, 1.0, this.GRC.FRAME);
