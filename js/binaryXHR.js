@@ -199,7 +199,7 @@ function FetchBinaryURL(url) {
   }
   request.send(null);
 
-  var response=this.responseText;
+  var response=request.responseText;
   try {
     // for older IE versions, the value in responseText is not usable
     if (IEBinary_getLength(this.responseBody)>0) {
