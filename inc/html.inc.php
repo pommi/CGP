@@ -54,6 +54,19 @@ echo <<<EOT
   <h1><a href="{$html_weburl}">Collectd Graph Panel</a></h1>
 </div>
 
+EOT;
+
+	if(!function_exists('json_decode')) {
+		echo <<<EOT
+<div id="warnheader">
+	Your php version doesn't support <a href="http://php.net/json">JSON</a>. Your graphs would have looked more beautiful if it did.
+</div>
+
+EOT;
+
+	}
+
+echo <<<EOT
 <div id="content">
 
 EOT;

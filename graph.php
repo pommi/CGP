@@ -35,7 +35,7 @@ if ($plugin == 'aggregation') {
 }
 
 # plugin json
-if (file_exists('plugin/'.$plugin.'.json')) {
+if (function_exists('json_decode') && file_exists('plugin/'.$plugin.'.json')) {
 	$json = file_get_contents('plugin/'.$plugin.'.json');
 	$plugin_json = json_decode($json, true);
 
