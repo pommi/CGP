@@ -63,12 +63,15 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 		throw new InvalidBinaryFile("Unsupported type " + (typeof strData));
 	}
 
-	this.getEndianByteAt = function(iOffset,width,delta) {
-		if (this.switch_endian)
-			return this.getByteAt(iOffset+width-delta-1);
-		else
-			return this.getByteAt(iOffset+delta);
-	};
+	if (switch_endian) {
+		this.getEndianByteAt = function(iOffset, width, delta) {
+			return this.getByteAt(iOffset + width - delta - 1);
+		};
+	} else {
+		this.getEndianByteAt = function(iOffset, width, delta) {
+			return this.getByteAt(iOffset + delta);
+		};
+	}
 
 	this.getLength = function() {
 		return dataLength;
