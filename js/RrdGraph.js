@@ -1697,9 +1697,14 @@ RrdGraph.prototype.leg_place = function (calc_width)
 				if (this.gdes[i].gf === RrdGraphDesc.GF_VRULE && (this.gdes[i].xrule < this.start || this.gdes[i].xrule > this.end))
 					this.gdes[i].legend = null;
 			}
-			this.gdes[i].legend = this.gdes[i].legend.replace(/\\t/gi, "\t") /* turn \\t into tab */
 
-			leg_cc = this.gdes[i].legend.length;
+			if (this.gdes[i].legend != null) {
+				this.gdes[i].legend = this.gdes[i].legend.replace(/\\t/gi, "\t") /* turn \\t into tab */
+				leg_cc = this.gdes[i].legend.length;
+			} else {
+				leg_cc = 0;
+			}
+
 			/* is there a controle code at the end of the legend string ? */
 			if (leg_cc >= 2 && this.gdes[i].legend.charAt(leg_cc - 2) === '\\') {
 				prt_fctn = this.gdes[i].legend.charAt(leg_cc - 1);
