@@ -26,11 +26,11 @@
  */
 var RrdJson = function() {
 	if (arguments.length == 1) {
-	  this.init1.apply(this, arguments);
+		this.init1.apply(this, arguments);
 	} else if (arguments.length == 2) {
-	  this.init2.apply(this, arguments);
+		this.init2.apply(this, arguments);
 	} else if (arguments.length == 3) {
-	  this.init3.apply(this, arguments);
+		this.init3.apply(this, arguments);
 	}
 };
 
@@ -40,12 +40,12 @@ RrdJson.prototype = {
 
 	init1: function (rrdgraph)
 	{
-		this.graph = rrdgraph
+		this.graph = rrdgraph;
 	},
 	init2: function (rrdgraph, jsonstr)
 	{
 		this.json =  JSON.parse(jsonstr);
-		this.graph = rrdgraph
+		this.graph = rrdgraph;
 	},
 	init3: function (gfx, fetch, jsonstr)
 	{
@@ -69,7 +69,7 @@ RrdJson.prototype = {
 						if (color in this.graph.GRC) {
 							this.graph.GRC[color] = this.json.color[color];
 						} else {
-							throw "invalid color name '"+name+"'";
+							throw "invalid color '" + color + "'";
 						}
 					}
 					break;
@@ -191,16 +191,21 @@ RrdJson.prototype = {
 					this.graph.second_axis_format = this.json.right_axis_format;
 					break;
 				case 'legend_position':
-					if (this.json.legend_position === "north") {
-						this.graph.legendposition = this.graph.LEGEND_POS.NORTH;
-					} else if (this.json.legend_position === "west") {
-						this.graph.legendposition = this.graph.LEGEND_POS.WEST;
-					} else if (this.json.legend_position === "south") {
-						this.graph.legendposition = this.graph.LEGEND_POS.SOUTH;
-					} else if (this.json.legend_position === "east") {
-						this.graph.legendposition = this.graph.LEGEND_POS.EAST;
-					} else {
-						throw "unknown legend-position '"+value+"'";
+					switch (this.json.legend_position) {
+						case "north":
+							this.graph.legendposition = this.graph.LEGEND_POS.NORTH;
+							break;
+						case "west":
+							this.graph.legendposition = this.graph.LEGEND_POS.WEST;
+							break;
+						case "south":
+							this.graph.legendposition = this.graph.LEGEND_POS.SOUTH;
+							break;
+						case "east":
+							this.graph.legendposition = this.graph.LEGEND_POS.EAST;
+							break;
+						default:
+							throw "unknown legend-position '" + this.json.legend_position + "'";
 					}
 					break;
 				case 'legend_direction':
@@ -209,7 +214,7 @@ RrdJson.prototype = {
 					} else if (this.json.legend_direction === "bottomup") {
 						this.graph.legenddirection = this.graph.LEGEND_DIR.BOTTOM_UP;
 					} else {
-						throw "unknown legend-position '"+value+"'";
+						throw "unknown legend-direction'" + this.json.legend_direction + "'";
 					}
 					break;
 				case 'border':
@@ -272,21 +277,21 @@ RrdJson.prototype = {
 					switch (gdes[i].align) {
 						case 'left':
 							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_LEFT);
-							break
+							break;
 						case 'right':
 							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_RIGHT);
-							break
+							break;
 						case 'justified':
 							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_JUSTIFIED);
-							break
+							break;
 						case 'center':
 							this.graph.gdes_add_textalign(RrdGraphDesc.TXA_CENTER);
-							break
+							break;
 					}
 				break;
 //	 		DEF:<vname>=<rrdfile>:<ds-name>:<CF>[:step=<step>][:start=<time>][:end=<time>][:reduce=<CF>]
 				case 'DEF':
-					this.graph.gdes_add_def(gdes[i].vname, gdes[i].rrdfile, gdes[i].name, gdes[i].cf, gdes[i].step, gdes[i].start, gdes[i].end, gdes[i].reduce)
+					this.graph.gdes_add_def(gdes[i].vname, gdes[i].rrdfile, gdes[i].name, gdes[i].cf, gdes[i].step, gdes[i].start, gdes[i].end, gdes[i].reduce);
 				break;
 //	 		CDEF:vname=RPN expression
 				case 'CDEF':
@@ -311,7 +316,7 @@ RrdJson.prototype = {
 
 		if (this.graph.alt_autoscale != false || full) 
 			this.json.alt_autoscale = this.graph.alt_autoscale;
-		
+
 		if (this.graph.base != 1000 || full)
 			this.json.base = this.graph.base;
 
@@ -338,7 +343,7 @@ RrdJson.prototype = {
 		if (this.graph.GRC.FRAME != 'rgba(0, 0, 0, 1.0)' || full)
 			this.json.color.FRAME = this.graph.GRC.FRAME;
 
-		if (Object.keys(this.json.color) == 0)  delete this.json.color;
+		if (!Object.keys(this.json.color).length)  delete this.json.color;
 
 		if (this.graph.full_size_mode != false || full)
 			this.json.full_size_mode = this.graph.full_size_mode;
@@ -351,10 +356,10 @@ RrdJson.prototype = {
 
 		if (this.graph.force_rules_legend != false || full)
 			this.json.force_rules_legend = this.graph.force_rules_legend;
-		
+
 		if (this.graph.no_legend != false || full)
 			this.json.no_legend = this.graph.no_legend;
-	
+
 		this.json.width = this.graph.xsize;
 		this.json.height = this.graph.ysize;
 
@@ -363,10 +368,10 @@ RrdJson.prototype = {
 
 		if (this.graph.alt_autoscale_min != false || full)
 			this.json.alt_autoscale_min = this.graph.alt_autoscale_min;
-	
+
 		if (this.graph.only_graph != false || full)
 			this.json.only_graph = this.graph.only_graph;
-	
+
 		if (this.graph.unitslength != 6 || full)
 			this.json.units_length = this.graph.unitslength;
 
@@ -381,7 +386,7 @@ RrdJson.prototype = {
 
 		if (this.graph.gridfit != true || full)
 			this.json.no_gridfit = this.graph.gridfit;
-		
+
 		this.json.font = {};
 		if (this.graph.TEXT.DEFAULT.size != 11 || this.graph.TEXT.LEGEND.font != this.graph.DEFAULT_FONT || full)
 			this.json.font.DEFAULT = { size: this.graph.TEXT.DEFAULT.size, font: this.graph.TEXT.DEFAULT.font};
@@ -396,31 +401,31 @@ RrdJson.prototype = {
 		if (this.graph.TEXT.WATERMARK.size != 8 || this.graph.TEXT.WATERMARK.font != this.graph.DEFAULT_FONT || full)
 			this.json.font.WATERMARK = { size: this.graph.TEXT.WATERMARK.size, font: this.graph.TEXT.WATERMARK.font};
 
-		if (Object.keys(this.json.font) == 0)  delete this.json.font;
+		if (!Object.keys(this.json.font).length)  delete this.json.font;
 
 		if (this.graph.logarithmic != false || full)
 			this.json.logarithmic = this.graph.logarithmic;
 
 		if (this.graph.rigid != false || full)
 			this.json.rigid = this.graph.rigid;
-			
-//	this.json.step = this.graph.step; // FIXME
-	
-		if (this.graph.tabwidth != 40 || full)
-			this.json.tabwidth = this.graph.tabwidth;	
 
-		if (this.graph.title != '' || full) 
+//	this.json.step = this.graph.step; // FIXME
+
+		if (this.graph.tabwidth != 40 || full)
+			this.json.tabwidth = this.graph.tabwidth;
+
+		if (this.graph.title != '' || full)
 			this.json.title = this.graph.title;
 
 		if (!isNaN(this.graph.setmaxval) || full)
 			this.json.upper_limit = this.graph.setmaxval;
-			
+
 		if (this.graph.ylegend != null || full)
 			this.json.vertical_label = this.graph.ylegend;
-	
+
 		if (this.graph.watermark != null || full)
 			this.json.watermark = this.graph.watermark;
-		
+
 		if (this.graph.unitsexponent != 9999 || full)
 			this.json.units_exponent = this.graph.unitsexponent;
 
@@ -432,10 +437,10 @@ RrdJson.prototype = {
 //		this.json.y_grid =  // FIXME
 
 //		this.json.lazy = this.graph.lazy;
-	
+
 		if (this.graph.force_units_si != false || full)
 			this.json.units = 'si'; // FIXME
-	
+
 		if (this.graph.no_rrdtool_tag != false || full)
 			this.json.disable_rrdtool_tag = this.graph.no_rrdtool_tag;
 
@@ -451,13 +456,13 @@ RrdJson.prototype = {
 
 		if (this.graph.draw_3d_border != 2 || full)
 			this.json.border = this.graph.draw_3d_border;
-	
+
 		if (this.graph.grid_dash_on != 1 || this.graph.grid_dash_off != 1 || full)
-			this.json.grid_dash = [this.graph.grid_dash_on, this.graph.grid_dash_off]
-	
+			this.json.grid_dash = [this.graph.grid_dash_on, this.graph.grid_dash_off];
+
 		if (this.graph.dynamic_labels != false || full)
 			this.json.dynamic_labels = this.graph.dynamic_labels;
-	
+
 		this.json.gdes = [];
 		for (var i = 0, gdes_c = this.graph.gdes.length; i < gdes_c; i++) {
 			switch (this.graph.gdes[i].gf) {
@@ -465,7 +470,7 @@ RrdJson.prototype = {
 				case RrdGraphDesc.GF_GPRINT:
 					this.json.gdes.push({
 						type: 'GPRINT',
-						vname: this.graph.gdes[i].vname, 
+						vname: this.graph.gdes[i].vname,
 						cf:	RrdGraphDesc.cf2str(this.graph.gdes[i].cf),
 						format: this.graph.gdes[i].format,
 						strftm: (this.graph.gdes[i].strftm === false ? undefined : this.graph.gdes[i].strftm) });
@@ -526,16 +531,16 @@ RrdJson.prototype = {
 					switch (this.graph.gdes[i].txtalign) {
 						case RrdGraphDesc.TXA_LEFT:
 							align = 'left';	
-							break
+							break;
 						case RrdGraphDesc.TXA_RIGHT:
 							align = 'right';
-							break
+							break;
 						case RrdGraphDesc.TXA_JUSTIFIED:
 							align = 'justified';
-							break
+							break;
 						case RrdGraphDesc.TXA_CENTER:
 							align = 'center';
-							break
+							break;
 					}
 
 					this.json.gdes.push({
@@ -559,7 +564,7 @@ RrdJson.prototype = {
 			//			reduce: RrdGraphDesc.cf2str(this.graph.gdes[i].cf_reduce)
 						reduce: undefined
 					});
-				
+
 					break;
 // 			CDEF:vname=RPN expression
 				case RrdGraphDesc.GF_CDEF:

@@ -88,7 +88,7 @@ var RrdGraphDesc = function (graph)
 
 	/** ** **/
 	var args = []; // FIXME other way ¿?
-	var type = arguments[1]
+	var type = arguments[1];
 	args[0] = arguments[0];
 	for(var i = 2; i < arguments.length; i++) args[i-1] = arguments[i];
 
@@ -707,7 +707,7 @@ var RrdGraph = function (gfx, data)
 {
 	this.gfx = gfx; /* graphics object */
 	this.data = data; /* fetch data object */
-	this.data_need_fetch = [] /* List of data that need to be fetched */
+	this.data_need_fetch = []; /* List of data that need to be fetched */
 
 	this.minval = Number.NaN; /* extreme values in the data */
 	this.maxval = Number.NaN;
@@ -1197,13 +1197,13 @@ RrdGraph.prototype.print_calc = function()
 			case RrdGraphDesc.GF_HRULE:
 				if (isNaN(this.gdes[i].yrule)) { /* we must set this here or the legend printer can not decide to print the legend */
 					this.gdes[i].yrule = this.gdes[vidx].vf.val;
-				};
+				}
 				graphelement = 1;
 				break;
 			case RrdGraphDesc.GF_VRULE:
 				if (this.gdes[i].xrule === 0) {   /* again ... the legend printer needs it */
 					this.gdes[i].xrule = this.gdes[vidx].vf.when;
-				};
+				}
 				graphelement = 1;
 				break;
 			case RrdGraphDesc.GF_COMMENT:
@@ -1216,7 +1216,6 @@ RrdGraph.prototype.print_calc = function()
 				break;
 			case RrdGraphDesc.GF_STACK:
 				throw new RrdGraphError("STACK should already be turned into LINE or AREA here");
-				break;
 		}
 	}
 	return graphelement;
@@ -1287,7 +1286,7 @@ RrdGraph.prototype.reduce_data = function(gdes, cur_step)
 							newval = gdes.data[srcptr + i*gdes.ds_cnt + col];
 							break;
 					}
-		                }
+				}
 			}
 
 			if (validval === 0) {
@@ -1316,8 +1315,8 @@ RrdGraph.prototype.reduce_data = function(gdes, cur_step)
 		row_cnt -= reduce_factor;
 	}
 	if (end_offset) {
-	        for (col = 0; col < gdes.ds_cnt; col++)
-          			gdes.data[dstptr++] = Number.NaN;
+		for (col = 0; col < gdes.ds_cnt; col++)
+			gdes.data[dstptr++] = Number.NaN;
 	}
 };
 
@@ -1396,7 +1395,7 @@ RrdGraph.prototype.data_fetch_async = function ()
 			}
 		}
 		this.data_need_fetch.push(0);
-	 }
+	}
 
 	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
 		if (this.data_need_fetch[i] == 0) {
@@ -1619,7 +1618,6 @@ RrdGraph.prototype.data_proc = function()
 					break;
 				case RrdGraphDesc.GF_STACK:
 					throw new RrdGraphError("STACK should already be turned into LINE or AREA here");
-					break;
 				default:
 					break;
 			}
@@ -1699,7 +1697,7 @@ RrdGraph.prototype.leg_place = function (calc_width)
 			}
 
 			if (this.gdes[i].legend != null) {
-				this.gdes[i].legend = this.gdes[i].legend.replace(/\\t/gi, "\t") /* turn \\t into tab */
+				this.gdes[i].legend = this.gdes[i].legend.replace(/\\t/gi, "\t"); /* turn \\t into tab */
 				leg_cc = this.gdes[i].legend.length;
 			} else {
 				leg_cc = 0;
@@ -1863,7 +1861,7 @@ RrdGraph.prototype.horizontal_log_grid = function ()
 		[ 1.0, 2.0, 4.0, 6.0, 8.0, 10., 0.0, 0.0, 0.0, 0.0 ],
 		[ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10. ],
 		[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] /* last line */
-	    ];
+	];
 	var i, j, val_exp, min_exp;
 	var nex;      /* number of decades in data */
 	var logscale; /* scale in logarithmic space */
@@ -1885,7 +1883,7 @@ RrdGraph.prototype.horizontal_log_grid = function ()
 	/* major spacing for less dynamic data */
 	do {
 		mid++;
-		for (i = 0; yloglab[mid][i + 1] < 10.0; i++) {};
+		for (i = 0; yloglab[mid][i + 1] < 10.0; i++) ;
 		mspac = logscale * Math.log(10.0 / yloglab[mid][i])/Math.LN10;
 	} while (mspac > 1.56 * this.TEXT.LEGEND.size && yloglab[mid][0] > 0); // FIXME 2->1.56 ??
 	if (mid) mid--;
@@ -1966,7 +1964,7 @@ RrdGraph.prototype.horizontal_log_grid = function ()
 		if (mid < 4 && exfrac === 1) { /* minor grid */
 			if (flab === 0) { /* find first and last minor line behind current major line * i is the first line and j tha last */
 				min_exp = val_exp - 1;
-				for (i = 1; yloglab[mid][i] < 10.0; i++) {};
+				for (i = 1; yloglab[mid][i] < 10.0; i++) ;
 				i = yloglab[mid][i - 1] + 1;
 				j = 10;
 			} else {
@@ -2002,7 +2000,7 @@ RrdGraph.prototype.horizontal_log_grid = function ()
 	if (mid < 4 && exfrac === 1) { /* draw minor lines after highest major line */
 		if (flab === 0) { /* find first and last minor line below current major line * i is the first line and j tha last */
 			min_exp = val_exp - 1;
-			for (i = 1; yloglab[mid][i] < 10.0; i++) {};
+			for (i = 1; yloglab[mid][i] < 10.0; i++) ;
 			i = yloglab[mid][i - 1] + 1;
 			j = 10;
 		} else {
@@ -2386,20 +2384,20 @@ RrdGraph.prototype.grid_paint = function()
 	         this.GRC.FONT, this.TEXT.TITLE, this.tabwidth, 0.0, RrdGraph.GFX_H_CENTER, RrdGraph.GFX_V_TOP, this.title);
 	/* rrdtool 'logo' */
 	if (!this.no_rrdtool_tag){
-	    var color = this.parse_color(this.GRC.FONT);
-			color[3] = 0.3;
-			var water_color = this.color2rgba(color);
-	    var xpos = this.legendposition === RrdGraph.LEGEND_POS_EAST ? this.xOriginLegendY : this.ximg - 4;
-	    this.gfx.text(xpos, 5, water_color, this.TEXT.WATERMARK, this.tabwidth,
-	    	 -90, RrdGraph.GFX_H_LEFT, RrdGraph.GFX_V_TOP, "RRDTOOL / TOBI OETIKER");
+		var color = this.parse_color(this.GRC.FONT);
+		color[3] = 0.3;
+		var water_color = this.color2rgba(color);
+		var xpos = this.legendposition === RrdGraph.LEGEND_POS_EAST ? this.xOriginLegendY : this.ximg - 4;
+		this.gfx.text(xpos, 5, water_color, this.TEXT.WATERMARK, this.tabwidth,
+				-90, RrdGraph.GFX_H_LEFT, RrdGraph.GFX_V_TOP, "RRDTOOL / TOBI OETIKER");
 	}
 	/* graph watermark */
 	if (this.watermark) {
-	    var color = this.parse_color(this.GRC.FONT)
-			color[3] = 0.3;
-			var water_color = this.color2rgba(color);
-	    this.gfx.text(this.ximg / 2, this.yimg - 6, water_color, this.TEXT.WATERMARK , this.tabwidth, 0,
-	    	 RrdGraph.GFX_H_CENTER, RrdGraph.GFX_V_BOTTOM, this.watermark);
+		var color = this.parse_color(this.GRC.FONT);
+		color[3] = 0.3;
+		var water_color = this.color2rgba(color);
+		this.gfx.text(this.ximg / 2, this.yimg - 6, water_color, this.TEXT.WATERMARK , this.tabwidth, 0,
+				RrdGraph.GFX_H_CENTER, RrdGraph.GFX_V_BOTTOM, this.watermark);
 	}
 	/* graph labels */
 	if (!(this.no_legend) && !(this.only_graph)) {
@@ -2664,11 +2662,11 @@ RrdGraph.prototype.graph_paint_init = function()
 //	this.gdes[i].end_orig = this.end;
 	}
 
-}
+};
 
 RrdGraph.prototype.graph_paint_draw = function()
 {
-	var areazero = 0.0
+	var areazero = 0.0;
 	var lastgdes = null;
 
 	if (this.data_calc() === -1)
@@ -2773,7 +2771,7 @@ RrdGraph.prototype.graph_paint_draw = function()
 									this.gfx.moveTo(x, y);
 									x = ii + this.xorigin;
 									y = last_y;
-									this.gfx.lineTo(x, y)
+									this.gfx.lineTo(x, y);
 								} else {
 									var x = ii - 1 + this.xorigin;
 									var y = this.ytr(this.gdes[i].p_data[ii - 1]);
@@ -2886,7 +2884,6 @@ RrdGraph.prototype.graph_paint_draw = function()
 				break;
 			case RrdGraphDesc.GF_STACK:
 				throw new RrdGraphError("STACK should already be turned into LINE or AREA here");
-				break;
 		}
 	}
 //cairo_reset_clip(this.cr);
@@ -2920,16 +2917,16 @@ RrdGraph.prototype.graph_paint_draw = function()
 
 RrdGraph.prototype.graph_paint = function ()
 {
-	this.graph_paint_init()
+	this.graph_paint_init();
 	if (this.data_fetch() === -1)
 		return -1;
-	return this.graph_paint_draw()
+	return this.graph_paint_draw();
 };
 
 RrdGraph.prototype.graph_paint_async = function ()
 {
-	this.graph_paint_init()
-	this.data_fetch_async()
+	this.graph_paint_init();
+	this.data_fetch_async();
 };
 
 RrdGraph.prototype.find_var = function(key)

@@ -19,60 +19,55 @@
 "use strict";
 
 function sprintf()
-{		
+{
 	var argc = 0;
 	var args = arguments;
 	var fmt = args[argc++];
-	
-	function lpad (str, padString, length) 
-	{ 
-		while (str.length < length) 
-			str = padString + str; 
-		return str; 
-	};
+
+	function lpad (str, padString, length)
+	{
+		while (str.length < length)
+			str = padString + str;
+		return str;
+	}
 
 	function format (match, width, dot, precision, length, conversion)
 	{
-		if (match === '%%') return '%';		
+		if (match === '%%') return '%';
 
 		var value = args[argc++];
 		var prefix;
 
-		if (width === undefined) 
+		if (width === undefined)
 			width = 0;
-		else 
+		else
 			width = +width;
-		
+
 		if (precision === undefined)
 			precision = conversion == 'd' ? 0 : 6;
-		else 
+		else
 			precision = +precision;
 
 		switch (conversion) {
 			case 's':
 			case 'c':
 				return value;
-				break;
 			case 'd':
 				return parseInt(value, 10);
-				break;
 			case 'e':
 				prefix = value < 0 ? '-' : '';
 				return lpad(prefix+Math.abs(value).toExponential(precision),' ',width);
-				break;
 			case 'F':
 			case 'f':
 				prefix = value < 0 ? '-' : '';
 				return lpad(prefix+Math.abs(value).toFixed(precision),' ',width);
-				break;
 			case 'g':
 				prefix = value < 0 ? '-' : '';
 				return lpad(prefix+Math.abs(value).toPrecision(precision),' ',width);
-				break;
 			default:
 				return match;
 		}
 
-	};
+	}
 	return fmt.replace(/%(\d+)?(\.(\d+))?(l?)([%scdfFeg])/g,format);
-};
+}

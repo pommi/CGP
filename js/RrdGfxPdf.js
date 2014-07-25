@@ -267,7 +267,7 @@ RrdGfxPdf.prototype.moveTo = function (x,y)
 
 RrdGfxPdf.prototype.lineTo = function (x,y)
 {
-	this._lineTo(x, y)
+	this._lineTo(x, y);
 };
 
 RrdGfxPdf.prototype.text = function (x, y, color, font, tabwidth, angle, h_align, v_align, text)
@@ -319,7 +319,7 @@ RrdGfxPdf.prototype.text = function (x, y, color, font, tabwidth, angle, h_align
 	}
 
 	x = x*this.k;
-	y = (this.h-y)*this.k
+	y = (this.h-y)*this.k;
 
 	var tm = [];
 	tm[0] = Math.cos(angle*Math.PI/180.0);
@@ -834,7 +834,7 @@ RrdGfxPdf.prototype._putstream = function(s)
 	this._out('stream');
 	this._out(s);
 	this._out('endstream');
-},
+};
 
 RrdGfxPdf.prototype._out = function(s)
 {
@@ -964,7 +964,7 @@ RrdGfxPdf.prototype._putcatalog = function()
 		this._out('/OpenAction [3 0 R /FitH null]');
 	else if(this.ZoomMode=='real')
 		this._out('/OpenAction [3 0 R /XYZ null null 1]');
-	else if(!(typeof this.ZoomMode === 'string'))
+	else if(typeof this.ZoomMode !== 'string')
 		this._out('/OpenAction [3 0 R /XYZ null null '+sprintf('%.2F',this.ZoomMode/100)+']');
 
 	if(this.LayoutMode=='single')

@@ -25,7 +25,7 @@
  * @constructor
  */
 var RrdGfxSvg = function(svgId) {
-	this.svg = document.getElementById(svgId)
+	this.svg = document.getElementById(svgId);
 	this.svgns = "http://www.w3.org/2000/svg";
 	this.xmlns = "http://www.w3.org/XML/1998/namespace";
 	this.path = null;

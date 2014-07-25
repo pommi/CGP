@@ -27,80 +27,57 @@ function strftime (fmt, time)
 	var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
 	var fmonths = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-	function pad2 (number) 
-	{ 
-		return (number < 10 ? '0' : '') + number 
-	};
-
-	function pad3(number) 
-	{ 
-		return (number < 10 ? '00' : number < 100 ? '0' : '') + number 
-	};
-
-	function lpad (str, padString, length) 
-	{ 
-		while (str.length < length) 
-			str = padString + str; 
-		return str; 
-	};
-		
-	function format(match, opt) 
+	function pad2 (number)
 	{
-		if (match === '%%') return '%';		
+		return (number < 10 ? '0' : '') + number;
+	}
+
+	function pad3(number)
+	{
+		return (number < 10 ? '00' : number < 100 ? '0' : '') + number;
+	}
+
+	function format(match, opt)
+	{
+		if (match === '%%') return '%';
 
 		switch (opt) {
 			case 'a':
 				return days[d.getDay()];
-				break;
 			case 'A':
 				return fdays[d.getDay()];
-				break;
 			case 'b':
 				return months[d.getMonth()];
-				break;
 			case 'B':
 				return fmonths[d.getMonth()];
-				break;
 			case 'c':
 				return d.toLocaleString();
-				break;
 			case 'd':
-				return pad2(d.getDate());	
-				break;
+				return pad2(d.getDate());
 			case 'H':
-				return pad2(d.getHours());	
-				break;
-			case 'I':	
+				return pad2(d.getHours());
+			case 'I':
 				var hours = d.getHours()%12;
 				return pad2(hours === 0 ? 12 : hours);
-				break;
 			case 'j':
 				var d01 = new Date (d.getFullYear(), 0, 1);
 				return pad3(Math.ceil((d.getTime()-d01.getTime())/86400000)+1);
-				break;
-			case 'm':	
+			case 'm':
 				return pad2(d.getMonth());
-				break;
 			case 'M':
 				return pad2(d.getMinutes());
-				break;
 			case 'p':
 				return d.getHours() >= 12 ? 'PM' : 'AM';
-				break;
 			case 's':
 				return pad2(d.getSeconds());
-				break;
 			case 'S':
 				return d.getTime()/1000;
-				break;
 			case 'u':
 				return d.getDay() === 0 ? 7 : d.getDay();
-				break;
-			case 'U': 
+			case 'U':
 				var d01 = new Date(d.getFullYear(),0,1);
-				return pad2(Math.round((Math.ceil((d.getTime()-d01.getTime())/86400000)+1 + 6 - d.getDay())/7)); 
-				break;
-			case 'V': 
+				return pad2(Math.round((Math.ceil((d.getTime()-d01.getTime())/86400000)+1 + 6 - d.getDay())/7));
+			case 'V':
 				var d01 = new Date(d.getFullYear(), 0, 1);
 				var w = Math.round((Math.ceil((d.getTime()-d01.getTime())/86400000)+1 + 7 - (d.getDay() === 0 ? 7 : d.getDay()))/7);
 				var d31 = new Date(d.getFullYear(), 11, 31);
@@ -115,32 +92,24 @@ function strftime (fmt, time)
 					if (w === 53 && d31.getDay() < 4) w = 1;
 				}
 				return pad2(w);
-				break;
 			case 'w':
 				return d.getDay();
-				break;
-			case 'W': 
-				var d01 = new Date(d.getFullYear(),0,1); 
+			case 'W':
+				var d01 = new Date(d.getFullYear(),0,1);
 				return pad2(Math.round((Math.ceil((d.getTime()-d01.getTime())/86400000)+1 + 7 - (d.getDay() === 0 ? 7 : d.getDay()))/7));
-				break;
 			case 'x':
-				return pad2(d.getDate())+'/'+pad2(d.getMonth())+'/'+d.getFullYear()
-				break;
+				return pad2(d.getDate())+'/'+pad2(d.getMonth())+'/'+d.getFullYear();
 			case 'X':
 				return pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds());
-				break;
-			case 'y':	
+			case 'y':
 				return pad2(d.getFullYear()%100);
-				break;
 			case 'Y':
 				return d.getFullYear();
-				break;
 			case 'Z':
 				return d.toString().replace(/^.*\(([^)]+)\)$/, '$1');
-				break;
 			default:
 				return match;
 		}
-	};
+	}
 	return fmt.replace(/%([aAbBcdHIjmMpsSUVwWxXyYZ%])/g, format);
-};
+}

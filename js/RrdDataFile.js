@@ -42,21 +42,23 @@ RrdDataFile.prototype = {
 		var cal_start, cal_end;
 		var best_full_rra = 0, best_part_rra = 0, chosen_rra = 0;
 		var best_full_step_diff = 0, best_part_step_diff = 0, tmp_step_diff = 0, tmp_match = 0, best_match = 0;
-		var full_match, rra_base;
+		var full_match;
 		var first_full = 1;
 		var first_part = 1;
 		var data_ptr;
 		var rows;
+		var rra;
+		var i, ii;
 
 		var cf_idx = gdp.cf;
 		var ds_cnt = rrd.getNrDSs();
 		var rra_cnt = rrd.getNrRRAs();
 
-		for (var i = 0; i < ds_cnt; i++)
+		for (i = 0; i < ds_cnt; i++)
 			gdp.ds_namv[i] = rrd.rrd_header.getDSbyIdx(i).getName();
 
-		for (var i = 0; i < rra_cnt; i++) {
-			var rra = rrd.getRRAInfo(i);
+		for (i = 0; i < rra_cnt; i++) {
+			rra = rrd.getRRAInfo(i);
 			if (RrdGraphDesc.cf_conv(rra.getCFName()) === cf_idx) {
 				cal_end = (rrd.getLastUpdate() - (rrd.getLastUpdate() % (rra.getPdpPerRow() * rra.pdp_step)));
 				cal_start = (cal_end - (rra.getPdpPerRow() * rra.row_cnt * rra.pdp_step));
@@ -87,7 +89,7 @@ RrdDataFile.prototype = {
 		else throw "the RRD does not contain an RRA matching the chosen CF";
 
 		var rra_info = rrd.getRRAInfo(chosen_rra);
-		var rra = rrd.getRRA(chosen_rra);
+		rra = rrd.getRRA(chosen_rra);
 
 		ft_step = rrd.rrd_header.pdp_step * rra_info.getPdpPerRow();
 		gdp.start -= (gdp.start % ft_step);
@@ -107,13 +109,13 @@ RrdDataFile.prototype = {
 
 		for (i = start_offset; i < rra.row_cnt - end_offset; i++) {
 			if (i < 0) {
-				for (var ii = 0; ii < ds_cnt; ii++)
+				for (ii = 0; ii < ds_cnt; ii++)
 					gdp.data[data_ptr++] = Number.NaN;
 			} else if (i >= rra.row_cnt) {
-				for (var ii = 0; ii < ds_cnt; ii++)
+				for (ii = 0; ii < ds_cnt; ii++)
 					gdp.data[data_ptr++] = Number.NaN;
 			} else {
-				for (var ii = 0; ii < ds_cnt; ii++)
+				for(ii = 0; ii < ds_cnt; ii++)
 					gdp.data[data_ptr++] = rra.getEl(i, ii);
 			}
 		}
@@ -153,8 +155,7 @@ RrdDataFile.prototype = {
 	},
 	fetch_async: function(gdp, ft_step, callback, callback_arg)
 	{
-		var rrd;
-		if (gdp.rrd == null) return -1;
+		if (gdp.rrd === null) return -1;
 
 		if (gdp.rrd in this.rrdfiles) {
 			callback(callback_arg, this.build(gdp, ft_step, this.rrdfiles[gdp.rrd]));

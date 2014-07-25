@@ -431,7 +431,7 @@ function RRDFile(bf,file_options) {
   }
 
   this.getRRA = function(idx) {
-    rra_info=this.rrd_header.getRRAInfo(idx);
+    var rra_info = this.rrd_header.getRRAInfo(idx);
     return new RRDRRA(rrd_data,
 		      this.rrd_header.rra_ptr_idx+idx*this.rrd_header.rra_ptr_el_size,
 		      rra_info,

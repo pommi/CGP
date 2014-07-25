@@ -25,12 +25,12 @@
  * RrdTimeError
  * @constructor
  */
-var RrdTimeError = function (message) 
-{  
-    this.prototype = Error.prototype;  
-    this.name = "RrdTimeError";  
-    this.message = (message) ? message : "Error";  
-};  
+var RrdTimeError = function (message)
+{
+	this.prototype = Error.prototype;
+	this.name = "RrdTimeError";
+	this.message = (message) ? message : "Error";
+};
 
 /**
  * RrdTime
@@ -40,7 +40,7 @@ var RrdTime = function(tspec) /* parser */
 {
 	var date = new Date();
 	var hr = 0;
-	
+
 	this.tspec = tspec;
 
 	this.tokens = (tspec+'').match(/[0-9]+|[A-Za-z]+|[:.+-\/]/g);
@@ -70,18 +70,20 @@ var RrdTime = function(tspec) /* parser */
 			break;          /* jump to OFFSET-SPEC part */
 		case RrdTime.EPOCH:
 			this.type = RrdTime.RELATIVE_TO_EPOCH;
+			/* falls through */
 		case RrdTime.START:
 		case RrdTime.END:
 			if (this.tokid === RrdTime.EPOCH)
 				this.type = RrdTime.RELATIVE_TO_START_TIME;
 			else
-			        this.type = RrdTime.RELATIVE_TO_END_TIME;
+				this.type = RrdTime.RELATIVE_TO_END_TIME;
 			this.tm_sec = 0;
 			this.tm_min = 0;
 			this.tm_hour = 0;
 			this.tm_mday = 0;
 			this.tm_mon = 0;
 			this.tm_year = 0;
+			/* falls through */
 		case RrdTime.NOW:
 			var time_reference = this.tokid;
 			this.gettok();
@@ -126,8 +128,10 @@ var RrdTime = function(tspec) /* parser */
 			break;
 		case RrdTime.TEATIME:
 			hr += 4;
+			/* falls through */
 		case RrdTime.NOON:
 			hr += 12;
+			/* falls through */
 		case RrdTime.MIDNIGHT:
 			this.tm_hour = hr;
 			this.tm_min = 0;
@@ -137,7 +141,6 @@ var RrdTime = function(tspec) /* parser */
 			break;
 		default:
 			throw new RrdTimeError("unparsable time: "+this.token+" "+this.sct);
-			break;
 	} /* ugly case statement */
 
 	/*
@@ -303,7 +306,7 @@ RrdTime.RELATIVE_TO_START_TIME = 1;
 RrdTime.RELATIVE_TO_END_TIME = 2;
 RrdTime.RELATIVE_TO_EPOCH = 3;
 
-RrdTime.prototype.gettok = function () 
+RrdTime.prototype.gettok = function ()
 {
 	if (this.tokidx >= this.toklen) {
 		this.tokid = RrdTime.EOF;
@@ -332,7 +335,7 @@ RrdTime.prototype.gettok = function ()
 	return this.tokid;
 };
 
-RrdTime.prototype.plus_minus = function (doop) 
+RrdTime.prototype.plus_minus = function (doop)
 {
 	var op = RrdTime.PLUS;
 	var prev_multiplier = -1;
@@ -377,6 +380,7 @@ RrdTime.prototype.plus_minus = function (doop)
 			return;
 		case RrdTime.WEEKS:
 			delta *= 7;
+			/* falls through */
 		case RrdTime.DAYS:
 			this.tm_mday += ( op == RrdTime.PLUS) ? delta : -delta;
 			return;
@@ -446,12 +450,12 @@ RrdTime.prototype.tod = function() /* tod() computes the time of day (TIME-OF-DA
 	this.tm_min = minute;
 	this.tm_sec = 0;
 	if (this.tm_hour == 24) {
-	    this.tm_hour = 0;
-	    this.tm_mday++;
+		this.tm_hour = 0;
+		this.tm_mday++;
 	}
 };
 
-RrdTime.prototype.assign_date = function(mday, mon, year) 
+RrdTime.prototype.assign_date = function(mday, mon, year)
 {
 	if (year > 138) {
 		if (year > 1970) {
@@ -472,14 +476,14 @@ RrdTime.prototype.assign_date = function(mday, mon, year)
 	this.tm_year = year;
 };
 
-RrdTime.prototype.day = function () 
+RrdTime.prototype.day = function ()
 {
 	var mday = 0, wday, mon, year = this.tm_year;
-	var tlen;
 
 	switch (this.tokid) {
 		case RrdTime.YESTERDAY:
 			this.tm_mday--;
+			/* falls through */
 		case RrdTime.TODAY:
 			this.gettok();
 			break;
@@ -565,7 +569,7 @@ RrdTime.prototype.day = function ()
 	}
 };
 
-RrdTime.prototype.localtime = function (tm) 
+RrdTime.prototype.localtime = function (tm)
 {
 	var date = new Date(tm*1000);
 	this.tm_sec = date.getSeconds();
@@ -577,13 +581,13 @@ RrdTime.prototype.localtime = function (tm)
 	this.tm_wday = date.getDay();
 };
 
-RrdTime.prototype.mktime = function() 
+RrdTime.prototype.mktime = function()
 {
 	var date = new Date(this.tm_year+1900, this.tm_mon, this.tm_mday, this.tm_hour, this.tm_min, this.tm_sec);
 	return Math.round(date.getTime()/1000.0);
 };
 
-RrdTime.proc_start_end = function(start_t, end_t) 
+RrdTime.proc_start_end = function(start_t, end_t)
 {
 	var start, end;
 
