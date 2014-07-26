@@ -30,11 +30,9 @@ InvalidBinaryFile.prototype.toString = function() {
 // =====================================================================
 // BinaryFile class
 //   Allows access to element inside a binary stream
-function BinaryFile(strData, iDataOffset, iDataLength) {
+function BinaryFile(data) {
 	"use strict";
-	var data = strData;
-	var dataOffset = iDataOffset || 0;
-	var dataLength = 0;
+	var dataLength;
 	// added 
 	var doubleMantExpHi=Math.pow(2,-28);
 	var doubleMantExpLo=Math.pow(2,-52);
@@ -46,21 +44,21 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 		return data;
 	};
 
-	if (typeof strData === "string") {
-		dataLength = iDataLength || data.length;
+	if (typeof data === "string") {
+		dataLength = data.length;
 
 		this.getByteAt = function(iOffset) {
-			return data.charCodeAt(iOffset + dataOffset) & 0xFF;
+			return data.charCodeAt(iOffset) & 0xFF;
 		};
-	} else if (typeof strData === "unknown") {
+	} else if (typeof data === "unknown") {
 		// Correct. "unknown" as type. MS JScript 8 added this.
-		dataLength = iDataLength || IEBinary_getLength(data);
+		dataLength = IEBinary_getLength(data);
 
 		this.getByteAt = function(iOffset) {
-			return IEBinary_getByteAt(data, iOffset + dataOffset);
+			return IEBinary_getByteAt(data, iOffset);
 		};
 	} else {
-		throw new InvalidBinaryFile("Unsupported type " + (typeof strData));
+		throw new InvalidBinaryFile("Unsupported type " + (typeof data));
 	}
 
 	if (switch_endian) {
