@@ -33,12 +33,8 @@ InvalidBinaryFile.prototype.toString = function() {
 function BinaryFile(data) {
 	"use strict";
 	var dataLength;
-	// added 
-	var doubleMantExpHi=Math.pow(2,-28);
-	var doubleMantExpLo=Math.pow(2,-52);
-	var doubleMantExpFast=Math.pow(2,-20);
-
-	var switch_endian = false;
+	// whether the data is in little endian format
+	var littleEndian = true;
 
 	this.getRawData = function() {
 		return data;
@@ -61,19 +57,31 @@ function BinaryFile(data) {
 		throw new InvalidBinaryFile("Unsupported type " + (typeof data));
 	}
 
-	if (switch_endian) {
-		this.getEndianByteAt = function(iOffset, width, delta) {
-			return this.getByteAt(iOffset + width - delta - 1);
-		};
-	} else {
-		this.getEndianByteAt = function(iOffset, width, delta) {
-			return this.getByteAt(iOffset + delta);
-		};
-	}
-
 	this.getLength = function() {
 		return dataLength;
 	};
+
+	// antique browser, use slower fallback implementation
+	this.extendWithFallback(data, littleEndian);
+}
+
+BinaryFile.prototype.extendWithFallback = function(data, littleEndian) {
+	"use strict";
+	var doubleMantExpHi = Math.pow(2,-28);
+	var doubleMantExpLo = Math.pow(2,-52);
+	var doubleMantExpFast = Math.pow(2,-20);
+
+	// private function for getting bytes depending on endianess
+	var that = this, getEndianByteAt;
+	if (littleEndian) {
+		getEndianByteAt = function(iOffset, width, delta) {
+			return that.getByteAt(iOffset + delta);
+		};
+	} else {
+		getEndianByteAt = function(iOffset, width, delta) {
+			return that.getByteAt(iOffset + width - delta - 1);
+		};
+	}
 
 	this.getSByteAt = function(iOffset) {
 		var iByte = this.getByteAt(iOffset);
@@ -82,9 +90,8 @@ function BinaryFile(data) {
 		else
 			return iByte;
 	};
-
 	this.getShortAt = function(iOffset) {
-		var iShort = (this.getEndianByteAt(iOffset,2,1) << 8) + this.getEndianByteAt(iOffset,2,0);
+		var iShort = (getEndianByteAt(iOffset,2,1) << 8) + getEndianByteAt(iOffset,2,0);
 		if (iShort < 0) iShort += 65536;
 		return iShort;
 	};
@@ -96,10 +103,10 @@ function BinaryFile(data) {
 			return iUShort;
 	};
 	this.getLongAt = function(iOffset) {
-		var iByte1 = this.getEndianByteAt(iOffset,4,0),
-			iByte2 = this.getEndianByteAt(iOffset,4,1),
-			iByte3 = this.getEndianByteAt(iOffset,4,2),
-			iByte4 = this.getEndianByteAt(iOffset,4,3);
+		var iByte1 = getEndianByteAt(iOffset,4,0),
+			iByte2 = getEndianByteAt(iOffset,4,1),
+			iByte3 = getEndianByteAt(iOffset,4,2),
+			iByte4 = getEndianByteAt(iOffset,4,3);
 
 		var iLong = (((((iByte4 << 8) + iByte3) << 8) + iByte2) << 8) + iByte1;
 		if (iLong < 0) iLong += 4294967296;
@@ -112,15 +119,9 @@ function BinaryFile(data) {
 		else
 			return iULong;
 	};
-	this.getStringAt = function(iOffset, iLength) {
-		var aStr = [];
-		for (var i=iOffset,j=0;i<iOffset+iLength;i++,j++) {
-			aStr[j] = String.fromCharCode(this.getByteAt(i));
-		}
-		return aStr.join("");
+	this.getCharAt = function(iOffset) {
+		return String.fromCharCode(this.getByteAt(iOffset));
 	};
-
-	// Added
 	this.getCStringAt = function(iOffset, iMaxLength) {
 		var aStr = [];
 		for (var i=iOffset,j=0;(i<iOffset+iMaxLength) && (this.getByteAt(i)>0);i++,j++) {
@@ -128,17 +129,15 @@ function BinaryFile(data) {
 		}
 		return aStr.join("");
 	};
-
-	// Added
 	this.getDoubleAt = function(iOffset) {
-		var iByte1 = this.getEndianByteAt(iOffset,8,0),
-			iByte2 = this.getEndianByteAt(iOffset,8,1),
-			iByte3 = this.getEndianByteAt(iOffset,8,2),
-			iByte4 = this.getEndianByteAt(iOffset,8,3),
-			iByte5 = this.getEndianByteAt(iOffset,8,4),
-			iByte6 = this.getEndianByteAt(iOffset,8,5),
-			iByte7 = this.getEndianByteAt(iOffset,8,6),
-			iByte8 = this.getEndianByteAt(iOffset,8,7);
+		var iByte1 = getEndianByteAt(iOffset,8,0),
+			iByte2 = getEndianByteAt(iOffset,8,1),
+			iByte3 = getEndianByteAt(iOffset,8,2),
+			iByte4 = getEndianByteAt(iOffset,8,3),
+			iByte5 = getEndianByteAt(iOffset,8,4),
+			iByte6 = getEndianByteAt(iOffset,8,5),
+			iByte7 = getEndianByteAt(iOffset,8,6),
+			iByte8 = getEndianByteAt(iOffset,8,7);
 		var iSign=iByte8 >> 7;
 		var iExpRaw=((iByte8 & 0x7F)<< 4) + (iByte7 >> 4);
 		var iMantHi=((((((iByte7 & 0x0F) << 8) + iByte6) << 8) + iByte5) << 8) + iByte4;
@@ -152,13 +151,12 @@ function BinaryFile(data) {
 		var dDouble = ((iSign==1)?-1:1)*Math.pow(2,iExp)*(1.0 + iMantLo*doubleMantExpLo + iMantHi*doubleMantExpHi);
 		return dDouble;
 	};
-	// added
 	// Extracts only 4 bytes out of 8, loosing in precision (20 bit mantissa)
 	this.getFastDoubleAt = function(iOffset) {
-		var iByte5 = this.getEndianByteAt(iOffset,8,4),
-			iByte6 = this.getEndianByteAt(iOffset,8,5),
-			iByte7 = this.getEndianByteAt(iOffset,8,6),
-			iByte8 = this.getEndianByteAt(iOffset,8,7);
+		var iByte5 = getEndianByteAt(iOffset,8,4),
+			iByte6 = getEndianByteAt(iOffset,8,5),
+			iByte7 = getEndianByteAt(iOffset,8,6),
+			iByte8 = getEndianByteAt(iOffset,8,7);
 		var iSign=iByte8 >> 7;
 		var iExpRaw=((iByte8 & 0x7F)<< 4) + (iByte7 >> 4);
 		var iMant=((((iByte7 & 0x0F) << 8) + iByte6) << 8) + iByte5;
@@ -172,11 +170,8 @@ function BinaryFile(data) {
 		dDouble *= Math.pow(2,iExp) * (1.0 + iMant*doubleMantExpFast);
 		return dDouble;
 	};
+};
 
-	this.getCharAt = function(iOffset) {
-		return String.fromCharCode(this.getByteAt(iOffset));
-	};
-}
 
 
 // Use document.write only for stone-age browsers.
