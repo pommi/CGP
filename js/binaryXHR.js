@@ -181,6 +181,8 @@ function BinaryFile(strData, iDataOffset, iDataLength) {
 }
 
 
+// Use document.write only for stone-age browsers.
+/*@cc on
 document.write(
 	"<script type='text/vbscript'>\r\n"
 	+ "Function IEBinary_getByteAt(strBinary, iOffset)\r\n"
@@ -191,7 +193,7 @@ document.write(
 	+ "End Function\r\n"
 	+ "</script>\r\n"
 );
-
+@*/
 
 
 // ===============================================================
