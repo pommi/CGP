@@ -46,6 +46,8 @@ function BinaryFile(data) {
 		this.getByteAt = function(iOffset) {
 			return data.charCodeAt(iOffset) & 0xFF;
 		};
+	} else if (typeof DataView != "undefined" && data instanceof ArrayBuffer) {
+		dataLength = data.dataLength;
 	} else if (typeof data === "unknown") {
 		// Correct. "unknown" as type. MS JScript 8 added this.
 		dataLength = IEBinary_getLength(data);
@@ -61,8 +63,15 @@ function BinaryFile(data) {
 		return dataLength;
 	};
 
-	// antique browser, use slower fallback implementation
-	this.extendWithFallback(data, littleEndian);
+	if (typeof DataView != "undefined" && data instanceof ArrayBuffer) {
+		// not an antique browser, use faster TypedArrays
+		this.extendWithDataView(data, littleEndian);
+		// other functions here do not need these
+		data = null;
+	} else {
+		// antique browser, use slower fallback implementation
+		this.extendWithFallback(data, littleEndian);
+	}
 }
 
 BinaryFile.prototype.extendWithFallback = function(data, littleEndian) {
@@ -172,6 +181,42 @@ BinaryFile.prototype.extendWithFallback = function(data, littleEndian) {
 	};
 };
 
+BinaryFile.prototype.extendWithDataView = function(data, littleEndian) {
+	"use strict";
+	var dv = new DataView(data);
+
+	this.getByteAt = dv.getUint8.bind(dv);
+	this.getSByteAt = dv.getInt8.bind(dv);
+	this.getShortAt = function(iOffset) {
+		return dv.getUint16(iOffset, littleEndian);
+	};
+	this.getSShortAt = function(iOffset) {
+		return dv.getInt16(iOffset, littleEndian);
+	};
+	this.getLongAt = function(iOffset) {
+		return dv.getUint32(iOffset, littleEndian);
+	};
+	this.getSLongAt = function(iOffset) {
+		return dv.getInt32(iOffset, littleEndian);
+	};
+	this.getCharAt = function(iOffset) {
+		return String.fromCharCode(this.getByteAt(iOffset));
+	};
+	this.getCStringAt = function(iOffset, iMaxLength) {
+		var str = "";
+		do {
+			var b = this.getByteAt(iOffset++);
+			if (b === 0)
+				break;
+			str += String.fromCharCode(b);
+		} while (--iMaxLength > 0);
+		return str;
+	};
+	this.getDoubleAt = function(iOffset) {
+		return dv.getFloat64(iOffset, littleEndian);
+	};
+	this.getFastDoubleAt = this.getDoubleAt.bind(this);
+};
 
 
 // Use document.write only for stone-age browsers.
@@ -203,7 +248,7 @@ function FetchBinaryURL(url) {
 	}
 	request.send(null);
 
-	var response=request.responseText;
+	var response = request.responseText;
 	try {
 		// for older IE versions, the value in responseText is not usable
 		if (IEBinary_getLength(this.responseBody)>0) {
@@ -214,7 +259,18 @@ function FetchBinaryURL(url) {
 		// not IE, do nothing
 	}
 
-	var bf=new BinaryFile(response);
+	// cannot use responseType == "arraybuffer" for synchronous requests, so
+	// convert it afterwards
+	if (typeof ArrayBuffer != "undefined") {
+		var buffer = new ArrayBuffer(response.length);
+		var bv = new Uint8Array(buffer);
+		for (var i = 0; i < response.length; i++) {
+			bv[i] = response.charCodeAt(i);
+		}
+		response = buffer;
+	}
+
+	var bf = new BinaryFile(response);
 	return bf;
 }
 
@@ -229,7 +285,8 @@ function FetchBinaryURLAsync(url, callback, callback_arg) {
 	"use strict";
 	var callback_wrapper = function() {
 		if(this.readyState === 4) {
-			var response=this.responseText;
+			// ArrayBuffer response or just the response as string
+			var response = this.response || this.responseText;
 			try {
 				// for older IE versions, the value in responseText is not usable
 				if (IEBinary_getLength(this.responseBody)>0) {
@@ -240,7 +297,7 @@ function FetchBinaryURLAsync(url, callback, callback_arg) {
 				// not IE, do nothing
 			}
 
-			var bf=new BinaryFile(response);
+			var bf = new BinaryFile(response);
 			if (callback_arg) {
 				callback(bf, callback_arg);
 			} else {
@@ -251,7 +308,9 @@ function FetchBinaryURLAsync(url, callback, callback_arg) {
 
 	var request =  new XMLHttpRequest();
 	request.onreadystatechange = callback_wrapper;
-	request.open("GET", url,true);
+	request.open("GET", url, true);
+	// Supported since Chrome 10, FF 6, IE 10, Opera 11.60 (source: MDN)
+	request.responseType = "arraybuffer";
 	try {
 		request.overrideMimeType('text/plain; charset=x-user-defined');
 	} catch (err) {
