@@ -211,7 +211,7 @@ RrdGfxCanvas.prototype.text = function (x, y, color, font, tabwidth, angle, h_al
 	y = Math.round(y);
 
 	this.ctx.save();
-	this.ctx.font = font.size+'px '+"'"+font.font+"'";
+	this.ctx.font = font.size+'px '+font.font;
 
 	switch (h_align) {
 		case RrdGraph.GFX_H_LEFT:
@@ -247,7 +247,7 @@ RrdGfxCanvas.prototype.text = function (x, y, color, font, tabwidth, angle, h_al
 RrdGfxCanvas.prototype.get_text_width = function(start, font, tabwidth, text)
 {
 	this.ctx.save();
-	this.ctx.font = font.size+"px "+font.font;
+	this.ctx.font = font.size+'px '+font.font;
 	var width = this.ctx.measureText(text);
 	this.ctx.restore();
 	return width.width;
