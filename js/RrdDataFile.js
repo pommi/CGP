@@ -60,11 +60,13 @@ RrdDataFile.prototype = {
 		for (i = 0; i < rra_cnt; i++) {
 			rra = rrd.getRRAInfo(i);
 			if (RrdGraphDesc.cf_conv(rra.getCFName()) === cf_idx) {
-				cal_end = (rrd.getLastUpdate() - (rrd.getLastUpdate() % (rra.getPdpPerRow() * rra.pdp_step)));
-				cal_start = (cal_end - (rra.getPdpPerRow() * rra.row_cnt * rra.pdp_step));
+				/* covered seconds in this RRA */
+				var range_secs = rra.getStep();
+				cal_end = rrd.getLastUpdate() - (rrd.getLastUpdate() % range_secs);
+				cal_start = cal_end - (range_secs * rra.row_cnt);
 				full_match = gdp.end - gdp.start;
 
-				tmp_step_diff = Math.abs(ft_step - (rrd.getMinStep() * rra.pdp_cnt));
+				tmp_step_diff = Math.abs(ft_step - range_secs);
 				if (cal_start <= gdp.start) {
 					if (first_full || (tmp_step_diff < best_full_step_diff)) {
 						first_full = 0;
@@ -91,7 +93,7 @@ RrdDataFile.prototype = {
 		var rra_info = rrd.getRRAInfo(chosen_rra);
 		rra = rrd.getRRA(chosen_rra);
 
-		ft_step = rrd.rrd_header.pdp_step * rra_info.getPdpPerRow();
+		ft_step = rra_info.getStep();
 		gdp.start -= (gdp.start % ft_step);
 		gdp.end += (ft_step - gdp.end % ft_step);
 		rows = (gdp.end - gdp.start) / ft_step + 1;
