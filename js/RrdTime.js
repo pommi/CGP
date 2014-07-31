@@ -27,10 +27,10 @@
  */
 var RrdTimeError = function (message)
 {
-	this.prototype = Error.prototype;
 	this.name = "RrdTimeError";
 	this.message = (message) ? message : "Error";
 };
+RrdTimeError.prototype = new Error();
 
 /**
  * RrdTime

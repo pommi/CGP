@@ -24,10 +24,10 @@
  */
 var ColorError = function (message)
 {
-    this.prototype = Error.prototype;
     this.name = "ColorError";
     this.message = (message) ? message : "Error";
 };
+ColorError.prototype = new Error();
 
 /**
  * Color

@@ -27,10 +27,10 @@
  */
 var RrdGraphDescError = function (message)
 {
-    this.prototype = Error.prototype;
     this.name = "RrdGraphDescError";
     this.message = (message) ? message : "Error";
 };
+RrdGraphDescError.prototype = new Error();
 
 /**
  * RrdGraphDesc
@@ -393,10 +393,11 @@ RrdGraphDesc.prototype.hrule = function (graph, value, color, legend)
  */
 var RrdVdefError = function (message)
 {
-    this.prototype = Error.prototype;
     this.name = "RrdVdefError";
     this.message = (message) ? message : "Error";
 };
+RrdVdefError.prototype = new Error();
+
 
 /**
  * RrdVdef
@@ -694,10 +695,10 @@ RrdVdef.prototype.calc = function(src)
  */
 var RrdGraphError = function (message)
 {
-    this.prototype = Error.prototype;
     this.name = "RrdGraphError";
     this.message = (message) ? message : "Error";
 };
+RrdGraphError.prototype = new Error();
 
 /**
  * RrdGraph

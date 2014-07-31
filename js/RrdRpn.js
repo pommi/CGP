@@ -27,10 +27,10 @@
  */
 var RrdRpnError = function (message) 
 {
-    this.prototype = Error.prototype;
     this.name = "RrdRpnError";
     this.message = (message) ? message : "RPN stack underflow";
 };
+RrdRpnError.prototype = new Error();
 
 /**
  * RrdRpn
