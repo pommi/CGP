@@ -1330,7 +1330,7 @@ RrdGraph.prototype.data_fetch_async_callback = function (args, ft_step)
 	if (ft_step < 0)
 		return -1;
 	that.gdes[j].data_first = 1;
-//	that.gdes[j].step = Math.max(that.gdes[j].step, that.step); // FIXME
+	that.gdes[j].step = Math.max(that.gdes[j].step, that.step);
 	if (ft_step < that.gdes[j].step) {
 		that.reduce_data(that.gdes[j], ft_step);
 	} else {
@@ -1438,7 +1438,7 @@ RrdGraph.prototype.data_fetch = function()
 			if (ft_step < 0)
 				return -1;
 			this.gdes[i].data_first = 1;
-//			this.gdes[i].step = Math.max(this.gdes[i].step, this.step); // FIXME
+			this.gdes[i].step = Math.max(this.gdes[i].step, this.step);
 			if (ft_step < this.gdes[i].step) {
 					this.reduce_data(this.gdes[i], ft_step);
 			} else {
