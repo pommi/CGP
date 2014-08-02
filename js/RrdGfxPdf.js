@@ -776,7 +776,7 @@ RrdGfxPdf.prototype._beginpage = function(orientation, size)
 	this.FontFamily = '';
 	// Check page size and orientation
 	if(orientation=='') orientation = this.DefOrientation;
-	else orientation = strtoupper(orientation[0]);
+	else orientation = orientation[0].toUpperCase();
 
 	if(size=='') size = this.DefPageSize;
 	else size = this._getpagesize(size);
