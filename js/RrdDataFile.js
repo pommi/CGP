@@ -49,6 +49,7 @@ RrdDataFile.prototype = {
 		var rows;
 		var rra;
 		var i, ii;
+		var last_update = rrd.getLastUpdate();
 
 		var cf_idx = gdp.cf;
 		var ds_cnt = rrd.getNrDSs();
@@ -57,12 +58,23 @@ RrdDataFile.prototype = {
 		for (i = 0; i < ds_cnt; i++)
 			gdp.ds_namv[i] = rrd.rrd_header.getDSbyIdx(i).getName();
 
+		/* if the requested graph starts after the last available data point,
+		 * return one big NaN instead of taking the finest (step=1) RRA */
+		if (gdp.start > last_update) {
+			ft_step = gdp.end - gdp.start;
+			gdp.ds_cnt = ds_cnt;
+			gdp.data = [];
+			for (ii = 0; ii < ds_cnt; ii++)
+				gdp.data[ii] = Number.NaN;
+			return ft_step;
+		}
+
 		for (i = 0; i < rra_cnt; i++) {
 			rra = rrd.getRRAInfo(i);
 			if (RrdGraphDesc.cf_conv(rra.getCFName()) === cf_idx) {
 				/* covered seconds in this RRA */
 				var range_secs = rra.getStep();
-				cal_end = rrd.getLastUpdate() - (rrd.getLastUpdate() % range_secs);
+				cal_end = last_update - (last_update % range_secs);
 				cal_start = cal_end - (range_secs * rra.row_cnt);
 				full_match = gdp.end - gdp.start;
 
@@ -101,7 +113,7 @@ RrdDataFile.prototype = {
 		gdp.ds_cnt = ds_cnt;
 		data_ptr = 0;
 
-		var rra_end_time = (rrd.getLastUpdate() - (rrd.getLastUpdate() % ft_step));
+		var rra_end_time = (last_update - (last_update % ft_step));
 		var rra_start_time = (rra_end_time - (ft_step * (rra_info.row_cnt - 1)));
 		/* here's an error by one if we don't be careful */
 		var start_offset = (gdp.start + ft_step - rra_start_time) / ft_step;
