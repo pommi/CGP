@@ -266,10 +266,10 @@ RrdGraphDesc.prototype.fshift = function (graph, vname, offset)
 
 	this.shidx = graph.find_var(offset);
 	if (this.shidx >= 0) {
-		if  (graph.gdes[gdp.shidx].gf === RrdGraphDesc.GF_DEF || graph.gdes[gdp.shidx].gf === RrdGraphDesc.GF_CDEF)
-			throw new RrdGraphDescError("Offset cannot be a (C)DEF: '"+graph.gdes[gdp.shidx].gf+"'");
-		if  (graph.gdes[gdp.shidx].gf !== RrdGraphDesc.GF_VDEF)
-			throw new RrdGraphDescError("Encountered unknown type variable '"+graph.gdes[gdp.shidx].vname+"'");
+		if  (graph.gdes[this.shidx].gf === RrdGraphDesc.GF_DEF || graph.gdes[this.shidx].gf === RrdGraphDesc.GF_CDEF)
+			throw new RrdGraphDescError("Offset cannot be a (C)DEF: '"+graph.gdes[this.shidx].gf+"'");
+		if  (graph.gdes[this.shidx].gf !== RrdGraphDesc.GF_VDEF)
+			throw new RrdGraphDescError("Encountered unknown type variable '"+graph.gdes[this.shidx].vname+"'");
 	} else {
 		this.shval = parseInt(offset, 10); // FIXME check
 		this.shidx = -1;
@@ -323,6 +323,9 @@ RrdGraphDesc.prototype.gprint = function (graph, vname, cf, format, strftimefmt)
 	this.vname = vname;
 	this.vidx = graph.find_var(vname);
 	this.legend = '';
+	if (this.vidx == -1) {
+		throw new RrdGraphDescError("Cannot find var name: " + vname);
+	}
 	if (!format) {
 		this.format = cf;
 		switch (graph.gdes[this.vidx].gf) {
@@ -437,7 +440,7 @@ var RrdVdef = function(vname, str) /* parse */
 	else if (func === 'LSLINT') this.op = RrdVdef.VDEF_LSLINT;
 	else if (func === 'LSLCORREL') this.op = RrdVdef.VDEF_LSLCORREL;
 	else {
-		throw new RrdVdefError('Unknown function "'+func+'" in VDEF "'+vame+'"');
+		throw new RrdVdefError('Unknown function "'+func+'" in VDEF "'+vname+'"');
 	}
 
 	switch (this.op) {
@@ -511,15 +514,15 @@ RrdVdef.prototype.calc = function(src)
 {
 	var data;
 	var step, steps;
+	var array = [];
+	var field;
+	var cnt = 0;
 
 	data = src.data;
 	steps = (src.end - src.start) / src.step;
 
 	switch (this.op) {
 		case RrdVdef.VDEF_PERCENT:
-			var array = [];
-			var field;
-
 			for (step = 0; step < steps; step++) {
 				array[step] = data[step * src.ds_cnt];
 			}
@@ -529,18 +532,15 @@ RrdVdef.prototype.calc = function(src)
 			this.when = 0;   /* no time component */
 			break;
 		case RrdVdef.VDEF_PERCENTNAN:
-			var array = [];
-			var field;
-
 			field=0;
 			for (step = 0; step < steps; step++) {
 				if (!isNaN(data[step * src.ds_cnt])) {
 					array[field] = data[step * src.ds_cnt];
 				}
 			}
-			array.sort(vdef_percent_compar);
+			array.sort(this.vdef_percent_compar);
 			field = Math.round(this.param * (field - 1) / 100.0);
-			his.val = array[field];
+			this.val = array[field];
 			this.when = 0;   /* no time component */
 			break;
 		case RrdVdef.VDEF_MAXIMUM:
@@ -566,7 +566,6 @@ RrdVdef.prototype.calc = function(src)
 		case RrdVdef.VDEF_TOTAL:
 		case RrdVdef.VDEF_STDEV:
 		case RrdVdef.VDEF_AVERAGE:
-			var cnt = 0;
 			var sum = 0.0;
 			var average = 0.0;
 
@@ -645,7 +644,6 @@ RrdVdef.prototype.calc = function(src)
 		case RrdVdef.VDEF_LSLSLOPE:
 		case RrdVdef.VDEF_LSLINT:
 		case RrdVdef.VDEF_LSLCORREL:
-			var cnt = 0;
 			var SUMx, SUMy, SUMxy, SUMxx, SUMyy, slope, y_intercept, correl;
 
 			SUMx = 0;
