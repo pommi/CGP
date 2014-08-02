@@ -48,6 +48,7 @@ function BinaryFile(data) {
 		};
 	} else if (typeof DataView != "undefined" && data instanceof ArrayBuffer) {
 		dataLength = data.dataLength;
+	/*@cc_on
 	} else if (typeof data === "unknown") {
 		// Correct. "unknown" as type. MS JScript 8 added this.
 		dataLength = IEBinary_getLength(data);
@@ -55,6 +56,7 @@ function BinaryFile(data) {
 		this.getByteAt = function(iOffset) {
 			return IEBinary_getByteAt(data, iOffset);
 		};
+	@*/
 	} else {
 		throw new InvalidBinaryFile("Unsupported type " + (typeof data));
 	}
@@ -249,6 +251,7 @@ function FetchBinaryURL(url) {
 	request.send(null);
 
 	var response = request.responseText;
+	/*@cc_on
 	try {
 		// for older IE versions, the value in responseText is not usable
 		if (IEBinary_getLength(this.responseBody)>0) {
@@ -256,8 +259,8 @@ function FetchBinaryURL(url) {
 			response=this.responseBody;
 		}
 	} catch (err) {
-		// not IE, do nothing
 	}
+	@*/
 
 	// cannot use responseType == "arraybuffer" for synchronous requests, so
 	// convert it afterwards
@@ -287,6 +290,7 @@ function FetchBinaryURLAsync(url, callback, callback_arg) {
 		if(this.readyState === 4) {
 			// ArrayBuffer response or just the response as string
 			var response = this.response || this.responseText;
+			/*@cc_on
 			try {
 				// for older IE versions, the value in responseText is not usable
 				if (IEBinary_getLength(this.responseBody)>0) {
@@ -294,8 +298,8 @@ function FetchBinaryURLAsync(url, callback, callback_arg) {
 					response=this.responseBody;
 				}
 			} catch (err) {
-				// not IE, do nothing
 			}
+			@*/
 
 			var bf = new BinaryFile(response);
 			if (callback_arg) {
