@@ -99,21 +99,18 @@ function html_end() {
 EOT;
 
 	if ($CONFIG['graph_type'] == 'canvas') {
-		echo <<<EOT
-<script type="text/javascript" src="{$html_weburl}js/CGP.js"></script>
-
-EOT;
 		if ($CONFIG['rrd_fetch_method'] == 'async') {
-		echo <<<EOT
-<script type="text/javascript" src="{$html_weburl}js/CGP-async.js"></script>
-
-EOT;
+			$js_async = 'true';
 		} else {
+			$js_async = 'false';
+		}
 		echo <<<EOT
-<script type="text/javascript" src="{$html_weburl}js/CGP-sync.js"></script>
+<script src="{$html_weburl}js/CGP.js"></script>
+<script>
+CGP.drawAll($js_async);
+</script>
 
 EOT;
-		}
 	}
 
 echo <<<EOT
