@@ -40,11 +40,10 @@ RrdDataFile.prototype = {
 	build: function(gdp, ft_step, rrd)
 	{
 		var cal_start, cal_end;
-		var best_full_rra = 0, best_part_rra = 0, chosen_rra = 0;
-		var best_full_step_diff = 0, best_part_step_diff = 0, tmp_step_diff = 0, tmp_match = 0, best_match = 0;
+		var best_full_rra = -1, best_part_rra = -1, chosen_rra = 0;
+		var best_full_step_diff = Infinity, best_part_step_diff = Infinity;
+		var tmp_step_diff = 0, tmp_match = 0, best_match = -1;
 		var full_match;
-		var first_full = 1;
-		var first_part = 1;
 		var data_ptr;
 		var rows;
 		var rra;
@@ -80,16 +79,15 @@ RrdDataFile.prototype = {
 
 				tmp_step_diff = Math.abs(ft_step - range_secs);
 				if (cal_start <= gdp.start) {
-					if (first_full || (tmp_step_diff < best_full_step_diff)) {
-						first_full = 0;
+					if (tmp_step_diff < best_full_step_diff) {
 						best_full_step_diff = tmp_step_diff;
 						best_full_rra = i;
 					}
 				} else {
 					tmp_match = full_match;
 					if (cal_start > gdp.start) tmp_match -= (cal_start - gdp.start);
-					if (first_part || (best_match < tmp_match) || (best_match === tmp_match && tmp_step_diff < best_part_step_diff)) {
-						first_part = 0;
+					if (best_match < tmp_match || (best_match === tmp_match &&
+								tmp_step_diff < best_part_step_diff)) {
 						best_match = tmp_match;
 						best_part_step_diff = tmp_step_diff;
 						best_part_rra = i;
@@ -98,8 +96,8 @@ RrdDataFile.prototype = {
 			}
 		}
 
-		if (first_full === 0) chosen_rra = best_full_rra;
-		else if (first_part === 0) chosen_rra = best_part_rra;
+		if (best_full_rra >= 0) chosen_rra = best_full_rra;
+		else if (best_part_rra >= 0) chosen_rra = best_part_rra;
 		else throw "the RRD does not contain an RRA matching the chosen CF";
 
 		var rra_info = rrd.getRRAInfo(chosen_rra);
