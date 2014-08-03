@@ -252,6 +252,7 @@ RrdCmdLine.prototype = {
 				break;
 			case 'step':
 				this.graph.step = parseInt(value, 10);
+				this.graph.step_orig = this.graph.step;
 				break;
 			case 'start':
 			case 's':

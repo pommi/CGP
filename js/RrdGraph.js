@@ -210,8 +210,10 @@ RrdGraphDesc.prototype.def = function (graph, vname, rrdfile, name, cf, step, st
 	this.ds_nam = name;
 	this.cf = RrdGraphDesc.cf_conv(cf);
 
-	if (step != undefined && step != null)
+	if (step != undefined && step != null) {
 		this.step = step;
+		this.step_orig = step;
+	}
 	if (start != undefined && start != null)
 		start_t = new RrdTime(start);
 	if (end != undefined && end != null)
@@ -757,6 +759,7 @@ var RrdGraph = function (gfx, data)
 	this.watermark = null; /* watermark for graph */
 	this.tabwidth = 40; /* tabwdith */
 	this.step = 0; /* any preference for the default step ? */
+	this.step_orig = 0; /* any preference for the default step ? */
 	this.setminval = Number.NaN; /* extreme values in the data */
 	this.setmaxval = Number.NaN;
 	this.rigid = false;    /* do not expand range even with values outside */
@@ -2650,11 +2653,10 @@ RrdGraph.prototype.graph_paint_init = function()
 	this.minval = this.setminval;
 	this.maxval = this.setmaxval;
 
-	this.step = Math.max(this.step, (this.end - this.start) / this.xsize);
+	this.step = Math.max(this.step_orig, (this.end - this.start) / this.xsize);
 
 	for (var i = 0, gdes_c = this.gdes.length; i < gdes_c; i++) {
-		this.gdes[i].step = 0;  // FIXME 0?
-		this.gdes[i].step_orig = this.step;
+		this.gdes[i].step = this.gdes[i].step_orig;
 		this.gdes[i].start = this.start; // FIXME SHIFT
 //	this.gdes[i].start_orig = this.start;
 		this.gdes[i].end = this.end; // FIXME SHIFT

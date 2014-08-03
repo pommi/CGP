@@ -139,6 +139,7 @@ RrdJson.prototype = {
 					break;
 				case 'step':
 					this.graph.step = this.json.step;
+					this.graph.step_orig = this.json.step;
 					break;
 				case 'start':
 					this.graph.start_t = new RrdTime(this.json.start);
