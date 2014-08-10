@@ -65,6 +65,11 @@ $CONFIG['graph_smooth'] = false;
 # draw min/max spikes in a lighter color in graphs with type default
 $CONFIG['graph_minmax'] = false;
 
+# The URL that provides RRD files for the "canvas" graph type. Examples:
+# 'rrd/{file}' is replaced by 'rrd/example.com/load/load.rrd'
+# 'rrd.php?path={file_escaped}' becomes 'rrd.php?path=host%3Fload%3Fload.rrd'
+$CONFIG['rrd_url'] = 'rrd.php?path={file_escaped}';
+
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 90;
 

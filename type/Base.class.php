@@ -6,6 +6,7 @@ class Type_Base {
 	var $datadir;
 	var $rrdtool;
 	var $rrdtool_opts = array();
+	var $rrd_url;
 	var $cache;
 	var $args;
 	var $seconds;
@@ -44,6 +45,7 @@ class Type_Base {
 						$config['rrdtool_opts']);
 			}
 		}
+		$this->rrd_url = $config['rrd_url'];
 		$this->cache = $config['cache'];
 		$this->parse_get($_get);
 		$this->rrd_title = sprintf(
@@ -137,6 +139,9 @@ class Type_Base {
 	}
 
 	function rrd_escape($value) {
+		# In case people have really bizarre URLs in $CONFIG['rrd_url'],
+		# it should not be dropped.
+		return str_replace('\\', '\\\\', $value);
 		# http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html#IEscaping_the_colon
 		return str_replace(':', '\:', $value);
 	}
@@ -144,10 +149,11 @@ class Type_Base {
 	function parse_filename($file) {
 		if ($this->graph_type == 'canvas') {
 			$file = str_replace($this->datadir . '/', '', $file);
-			# rawurlencode all but /
-			$file = 'rrd.php?' . str_replace('%2F', '/', rawurlencode($file));
+			$rrd_url = str_replace('{file}', $file, $this->rrd_url);
+			$rrd_url = str_replace('{file_escaped}',
+					urlencode($file), $rrd_url);
 		}
-		return $this->rrd_escape($file);
+		return $this->rrd_escape($rrd_url);
 	}
 
 	function rrd_files() {
