@@ -149,11 +149,13 @@ class Type_Base {
 	function parse_filename($file) {
 		if ($this->graph_type == 'canvas') {
 			$file = str_replace($this->datadir . '/', '', $file);
-			$rrd_url = str_replace('{file}', $file, $this->rrd_url);
-			$rrd_url = str_replace('{file_escaped}',
-					urlencode($file), $rrd_url);
+			$file = str_replace(
+				array('{file}', '{file_escaped}'),
+				array($file, urlencode($file)),
+				$this->rrd_url
+			);
 		}
-		return $this->rrd_escape($rrd_url);
+		return $this->rrd_escape($file);
 	}
 
 	function rrd_files() {
