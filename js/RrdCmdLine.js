@@ -389,11 +389,13 @@ RrdCmdLine.prototype = {
 	// DEF:<vname>=<rrdfile>:<ds-name>:<CF>[:step=<step>][:start=<time>][:end=<time>][:reduce=<CF>]
 	parse_def: function (line)
 	{
-		var args = line.split(/:/);
-		var n=1;
-		var vnames = args[n++].split('=');
-		var vname = vnames[0];
-		var rrdfile = vnames[1];
+		// Every character (except ':' and '\') are allowed within a value. The
+		// two exceptions must be escaped with a slash.
+		var args = line.match(/(\\.|[^:\\])+/g);
+		var n = 1;
+		var vnames = args[n++];
+		var vname = vnames.substr(0, vnames.indexOf("="));
+		var rrdfile = vnames.substr(vname.length + 1).replace(/\\(.)/g, "$1");
 		var name = args[n++];
 		var cf = args[n++];
 		var step, reduce, start, end;
