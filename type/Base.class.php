@@ -18,7 +18,7 @@ class Type_Base {
 	var $rrd_vertical;
 	var $rrd_format = '%5.1lf%s';
 	var $scale = 1;
-	var $base; 
+	var $base;
 	var $width;
 	var $height;
 	var $graph_type;
@@ -288,7 +288,7 @@ class Type_Base {
 			'-w', is_numeric($this->width) ? $this->width : 400,
 			'-h', is_numeric($this->height) ? $this->height : 175,
 			'-l', '0',
-			'-t', "{$this->rrd_title} on {$this->args['host']}"
+			'-t', $this->rrd_title
 		));
 		if ($this->rrd_vertical) {
 			$rrdgraph[] = '-v';

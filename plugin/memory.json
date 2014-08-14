@@ -1,6 +1,6 @@
 {
 	"memory": {
-		"title": "Physical memory utilization",
+		"title": "Physical memory utilization on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {

@@ -1,7 +1,7 @@
 {
 	"irq": {
 		"type": "stacked",
-		"title": "Interrupts",
+		"title": "Interrupts on {{HOST}}",
 		"vertical": "IRQs/s",
 		"legend_format": "%6.1lf"
 	}

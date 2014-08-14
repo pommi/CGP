@@ -1,13 +1,13 @@
 {
 	"ipt_bytes": {
-		"title": "IP-Tables Traffic",
+		"title": "IP-Tables Traffic on {{HOST}}",
 		"vertical": "{{ND}}",
 		"type": "stacked",
 		"legend_format": "%5.1lf%s",
 		"datasize": true
 	},
 	"ipt_packets": {
-		"title": "IP-Tables Packets",
+		"title": "IP-Tables Packets on {{HOST}}",
 		"vertical": "Packets",
 		"type": "stacked",
 		"legend_format": "%5.1lf%s"

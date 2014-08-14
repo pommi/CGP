@@ -1,6 +1,6 @@
 {
 	"vmpage_faults": {
-		"title": "Page faults",
+		"title": "Page faults on {{HOST}}",
 		"type": "stacked",
 		"legend": {
 			"minflt": {
@@ -15,12 +15,12 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"vmpage_io": {
-		"title": "Page IO ({{TI}})",
+		"title": "Page IO ({{TI}}) on {{HOST}}",
 		"type": "stacked",
 		"legend_format": "%5.1lf%s"
 	},
 	"vmpage_number": {
-		"title": "Pages",
+		"title": "Pages on {{HOST}}",
 		"type": "stacked",
 		"legend_format": "%5.1lf%s"
 	}

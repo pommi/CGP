@@ -1,6 +1,6 @@
 {
 	"load": {
-		"title": "System load",
+		"title": "System load on {{HOST}}",
 		"vertical": "System load",
 		"type": "default",
 		"legend": {

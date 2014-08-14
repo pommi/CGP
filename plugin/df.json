@@ -1,6 +1,6 @@
 {
 	"df_complex": {
-		"title": "Free space ({{PI}})",
+		"title": "Free space ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -21,7 +21,7 @@
 		"base": "1024"
 	},
 	"df_inodes": {
-		"title": "Free inodes ({{PI}})",
+		"title": "Free inodes ({{PI}}) on {{HOST}}",
 		"vertical": "Inodes",
 		"type": "stacked",
 		"legend": {

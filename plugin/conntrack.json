@@ -1,6 +1,6 @@
 {
 	"conntrack": {
-		"title": "Conntrack entries",
+		"title": "Conntrack entries on {{HOST}}",
 		"vertical": "Entries",
 		"legend": {
 			"value": {

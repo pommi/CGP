@@ -1,6 +1,6 @@
 {
 	"uptime": {
-		"title": "Uptime",
+		"title": "Uptime on {{HOST}}",
 		"vertical": "Days",
 		"type": "uptime",
 		"legend": {

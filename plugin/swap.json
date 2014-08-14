@@ -1,6 +1,6 @@
 {
 	"swap": {
-		"title": "Swap utilization",
+		"title": "Swap utilization on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -21,7 +21,7 @@
 		"base": "1024"
 	},
 	"swap_io": {
-		"title": "Swapped I/O pages",
+		"title": "Swapped I/O pages on {{HOST}}",
 		"vertical": "Pages",
 		"type": "io",
 		"legend": {

@@ -1,6 +1,6 @@
 {
 	"contextswitch": {
-		"title": "Context switches",
+		"title": "Context switches on {{HOST}}",
 		"vertical": "switch per second Bits",
 		"legend": {
 			"value": {

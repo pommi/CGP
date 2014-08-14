@@ -1,21 +1,21 @@
 {
 	"delay": {
-		"title": "Delay",
+		"title": "Delay on {{HOST}}",
 		"vertical": "Seconds",
 		"legend_format": "%5.1lf%s"
 	},
 	"frequency_offset": {
-		"title": "Frequency offset",
+		"title": "Frequency offset on {{HOST}}",
 		"vertical": "ppm",
 		"legend_format": "%5.1lf%s"
 	},
 	"time_dispersion": {
-		"title": "Time dispersion",
+		"title": "Time dispersion on {{HOST}}",
 		"vertical": "Seconds",
 		"legend_format": "%5.1lf%s"
 	},
 	"time_offset": {
-		"title": "Time offset",
+		"title": "Time offset on {{HOST}}",
 		"vertical": "Seconds",
 		"legend_format": "%5.1lf%s"
 	}

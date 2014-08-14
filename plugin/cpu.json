@@ -1,6 +1,6 @@
 {
 	"cpu": {
-		"title": "CPU-{{PI}} usage",
+		"title": "CPU-{{PI}} usage on {{HOST}}",
 		"vertical": "Jiffies",
 		"rrdtool_opts": ["-u", "100"],
 		"type": "stacked",

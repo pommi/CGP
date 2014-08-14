@@ -1,6 +1,6 @@
 {
 	"entropy": {
-		"title": "Available entropy",
+		"title": "Available entropy on {{HOST}}",
 		"vertical": "Bits",
 		"legend": {
 			"value": {

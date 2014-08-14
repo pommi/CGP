@@ -1,6 +1,6 @@
 {
 	"connections": {
-		"title": "Nginx connections",
+		"title": "Nginx connections on {{HOST}}",
 		"vertical": "Connections/s",
 		"legend": {
 			"accepted": {
@@ -15,7 +15,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"nginx_connections": {
-		"title": "Nginx connection states",
+		"title": "Nginx connection states on {{HOST}}",
 		"vertical": "Connections/s",
 		"legend": {
 			"active": {
@@ -38,7 +38,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"nginx_requests": {
-		"title": "Nginx requests",
+		"title": "Nginx requests on {{HOST}}",
 		"vertical": "Requests/s",
 		"legend": {
 			"value": {

@@ -1,6 +1,6 @@
 {
 	"cpufreq": {
-		"title": "CPU frequency scaling",
+		"title": "CPU frequency scaling on {{HOST}}",
 		"vertical": "Hz",
 		"legend_format": "%5.1lf%s"
 	}

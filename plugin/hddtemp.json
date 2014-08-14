@@ -1,6 +1,6 @@
 {
 	"temperature": {
-		"title": "HDD Temperature",
+		"title": "HDD Temperature on {{HOST}}",
 		"vertical": "°C",
 		"legend_format": "%5.1lf%s"
 	}

@@ -83,9 +83,11 @@ if (isset($plugin_json[$type]['legend'])) {
 }
 
 if (isset($plugin_json[$type]['title'])) {
-	$obj->rrd_title = $plugin_json[$type]['title'];
-	$obj->rrd_title = str_replace('{{PI}}', GET('pi'), $obj->rrd_title);
-	$obj->rrd_title = str_replace('{{TI}}', GET('ti'), $obj->rrd_title);
+	$obj->rrd_title = str_replace(
+		array('{{PI}}', '{{TI}}', '{{HOST}}'),
+		array(GET('pi'), GET('ti'), GET('h')),
+		$plugin_json[$type]['title']
+	);
 }
 
 if (isset($plugin_json[$type]['vertical'])) {

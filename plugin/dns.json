@@ -1,6 +1,6 @@
 {
 	"dns_octets": {
-		"title": "DNS traffic",
+		"title": "DNS traffic on {{HOST}}",
 		"vertical": "Bit/s",
 		"type": "stacked",
 		"legend": {
@@ -15,17 +15,17 @@
 		}
 	},
 	"dns_opcode": {
-		"title": "DNS Opcode Query",
+		"title": "DNS Opcode Query on {{HOST}}",
 		"vertical": "Queries/s",
 		"type": "stacked"
 	},
 	"dns_qtype": {
-		"title": "DNS QType",
+		"title": "DNS QType on {{HOST}}",
 		"vertical": "Queries/s",
 		"type": "stacked"
 	},
 	"dns_rcode": {
-		"title": "DNS Reply code",
+		"title": "DNS Reply code on {{HOST}}",
 		"vertical": "Queries/s",
 		"type": "stacked"
 	}

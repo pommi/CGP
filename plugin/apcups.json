@@ -1,6 +1,6 @@
 {
 	"charge": {
-		"title": "UPS Charge",
+		"title": "UPS Charge on {{HOST}}",
 		"vertical": "Ampere hours",
 		"legend": {
 			"value": {
@@ -11,7 +11,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"frequency": {
-		"title": "UPS Input Frequency",
+		"title": "UPS Input Frequency on {{HOST}}",
 		"vertical": "Hertz",
 		"legend": {
 			"value": {
@@ -22,7 +22,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"percent": {
-		"title": "UPS Load",
+		"title": "UPS Load on {{HOST}}",
 		"vertical": "Load",
 		"legend": {
 			"value": {
@@ -33,7 +33,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"temperature": {
-		"title": "UPS Temperature",
+		"title": "UPS Temperature on {{HOST}}",
 		"vertical": "Celsius",
 		"legend": {
 			"value": {
@@ -43,7 +43,7 @@
 		}
 	},
 	"timeleft": {
-		"title": "UPS Time Left",
+		"title": "UPS Time Left on {{HOST}}",
 		"vertical": "Seconds",
 		"legend": {
 			"value": {
@@ -54,7 +54,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"voltage": {
-		"title": "UPS Voltage {{TI}}",
+		"title": "UPS Voltage {{TI}} on {{HOST}}",
 		"vertical": "Volt",
 		"legend": {
 			"value": {

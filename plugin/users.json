@@ -1,6 +1,6 @@
 {
 	"users": {
-		"title": "Users",
+		"title": "Users on {{HOST}}",
 		"legend": {
 			"value": {
 				"name": "Users",

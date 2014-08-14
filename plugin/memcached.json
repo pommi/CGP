@@ -1,6 +1,6 @@
 {
 	"df": {
-		"title": "Memcached Memory Usage",
+		"title": "Memcached Memory Usage on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -17,7 +17,7 @@
 		"base": "1024"
 	},
 	"memcached_command": {
-		"title": "Memcached Commands",
+		"title": "Memcached Commands on {{HOST}}",
 		"vertical": "Commands",
 		"type": "stacked",
 		"legend": {
@@ -37,7 +37,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"memcached_connections": {
-		"title": "Memcached Number of Connections",
+		"title": "Memcached Number of Connections on {{HOST}}",
 		"vertical": "Connections",
 		"legend": {
 			"value": {
@@ -48,7 +48,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"memcached_items": {
-		"title": "Number of Items in Memcached",
+		"title": "Number of Items in Memcached on {{HOST}}",
 		"vertical": "Items",
 		"legend": {
 			"value": {
@@ -59,7 +59,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"memcached_octets": {
-		"title": "Memcached Network Traffic",
+		"title": "Memcached Network Traffic on {{HOST}}",
 		"vertical": "{{ND}}",
 		"type": "io",
 		"legend": {
@@ -76,7 +76,7 @@
 		"datasize": true
 	},
 	"memcached_ops": {
-		"title": "Memcached Operations",
+		"title": "Memcached Operations on {{HOST}}",
 		"vertical": "Commands",
 		"type": "stacked",
 		"legend": {
@@ -96,7 +96,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"percent": {
-		"title": "Memcached Hit Ratio",
+		"title": "Memcached Hit Ratio on {{HOST}}",
 		"vertical": "Percent",
 		"legend": {
 			"value": {
@@ -107,7 +107,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_count": {
-		"title": "Memcached number of Threads",
+		"title": "Memcached number of Threads on {{HOST}}",
 		"vertical": "Threads",
 		"legend": {
 			"value": {
@@ -118,7 +118,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_cputime": {
-		"title": "CPU Time consumed by Memcached",
+		"title": "CPU Time consumed by Memcached on {{HOST}}",
 		"vertical": "CPU Time",
 		"legend": {
 			"user": {
