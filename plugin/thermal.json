@@ -1,6 +1,6 @@
 {
 	"gauge": {
-		"title": "Temperature ({{PI}})",
+		"title": "Temperature ({{PI}}) on {{HOST}}",
 		"vertical": "°C",
 		"legend": {
 			"value": {

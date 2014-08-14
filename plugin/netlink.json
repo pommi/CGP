@@ -1,6 +1,6 @@
 {
 	"if_collisions": {
-		"title": "Collisions ({{PI}})",
+		"title": "Collisions ({{PI}}) on {{HOST}}",
 		"vertical": "Collisions/s",
 		"type": "stacked",
 		"legend": {
@@ -11,7 +11,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_dropped": {
-		"title": "Dropped Packets ({{PI}})",
+		"title": "Dropped Packets ({{PI}}) on {{HOST}}",
 		"vertical": "Packets/s",
 		"type": "io",
 		"legend": {
@@ -27,7 +27,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_errors": {
-		"title": "Interface Errors ({{PI}})",
+		"title": "Interface Errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "io",
 		"legend": {
@@ -43,7 +43,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_multicast": {
-		"title": "Multicast Packets ({{PI}})",
+		"title": "Multicast Packets ({{PI}}) on {{HOST}}",
 		"vertical": "Packets/s",
 		"type": "stacked",
 		"legend": {
@@ -55,7 +55,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_octets": {
-		"title": "Interface Traffic ({{PI}})",
+		"title": "Interface Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "{{ND}}/second",
 		"type": "io",
 		"legend": {
@@ -72,7 +72,7 @@
 		"datasize": true
 	},
 	"if_packets": {
-		"title": "Interface Packets ({{PI}})",
+		"title": "Interface Packets ({{PI}}) on {{HOST}}",
 		"vertical": "Packets/s",
 		"type": "io",
 		"legend": {
@@ -88,7 +88,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_rx_errors": {
-		"title": "Interface receive errors ({{PI}})",
+		"title": "Interface receive errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "stacked",
 		"legend": {
@@ -120,7 +120,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_tx_errors": {
-		"title": "Interface transmit errors ({{PI}})",
+		"title": "Interface transmit errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "stacked",
 		"legend": {

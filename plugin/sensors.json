@@ -1,16 +1,16 @@
 {
 	"fanspeed": {
-		"title": "Fanspeed ({{PI}})",
+		"title": "Fanspeed ({{PI}}) on {{HOST}}",
 		"vertical": "RPM",
 		"legend_format": "%5.1lf"
 	},
 	"temperature": {
-		"title": "Temperature ({{PI}})",
+		"title": "Temperature ({{PI}}) on {{HOST}}",
 		"vertical": "Celsius",
 		"legend_format": "%5.1lf%s"
 	},
 	"voltage": {
-		"title": "Voltage ({{PI}})",
+		"title": "Voltage ({{PI}}) on {{HOST}}",
 		"vertical": "Volt",
 		"legend_format": "%5.1lf"
 	}

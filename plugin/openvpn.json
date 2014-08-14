@@ -1,6 +1,6 @@
 {
 	"if_octets": {
-		"title": "Traffic ({{PI}})",
+		"title": "Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "{{ND}} per second",
 		"type": "io",
 		"legend": {
@@ -17,7 +17,7 @@
 		"datasize": true
 	},
 	"users": {
-		"title": "Users ({{PI}})",
+		"title": "Users ({{PI}}) on {{HOST}}",
 		"vertical": "Users",
 		"legend": {
 			"value": {

@@ -1,6 +1,6 @@
 {
 	"apache_bytes": {
-		"title": "Webserver Traffic ({{PI}})",
+		"title": "Webserver Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "{{ND}}/s",
 		"legend": {
 			"value": {
@@ -11,7 +11,7 @@
 		"legend_format": "%5.1lf"
 	},
 	"apache_connections": {
-		"title": "Webserver Connections ({{PI}})",
+		"title": "Webserver Connections ({{PI}}) on {{HOST}}",
 		"vertical": "Conns/s",
 		"legend": {
 			"value": {
@@ -22,7 +22,7 @@
 		"legend_format": "%5.1lf"
 	},
 	"apache_idle_workers": {
-		"title": "Webserver Idle Workers ({{PI}})",
+		"title": "Webserver Idle Workers ({{PI}}) on {{HOST}}",
 		"vertical": "Workers",
 		"legend": {
 			"value": {
@@ -33,7 +33,7 @@
 		"legend_format": "%5.1lf"
 	},
 	"apache_requests": {
-		"title": "Webserver Requests ({{PI}})",
+		"title": "Webserver Requests ({{PI}}) on {{HOST}}",
 		"vertical": "Requests/s",
 		"legend": {
 			"value": {
@@ -44,7 +44,7 @@
 		"legend_format": "%5.1lf"
 	},
 	"apache_scoreboard": {
-		"title": "Webserver Scoreboard ({{PI}})",
+		"title": "Webserver Scoreboard ({{PI}}) on {{HOST}}",
 		"vertical": "Slots",
 		"type": "stacked",
 		"legend": {

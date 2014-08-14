@@ -1,6 +1,6 @@
 {
 	"disk_merged": {
-		"title": "Disk Merged Operations ({{PI}})",
+		"title": "Disk Merged Operations ({{PI}}) on {{HOST}}",
 		"vertical": "Merged operations/s",
 		"type": "io",
 		"legend": {
@@ -16,7 +16,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"disk_octets": {
-		"title": "Disk Traffic ({{PI}})",
+		"title": "Disk Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes per second",
 		"type": "io",
 		"legend": {
@@ -32,7 +32,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"disk_ops": {
-		"title": "Disk Operations ({{PI}})",
+		"title": "Disk Operations ({{PI}}) on {{HOST}}",
 		"vertical": "Ops per second",
 		"type": "io",
 		"legend": {
@@ -48,7 +48,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"disk_time": {
-		"title": "Disk time per operation ({{PI}})",
+		"title": "Disk time per operation ({{PI}}) on {{HOST}}",
 		"vertical": "Avg. Time/Op",
 		"type": "io",
 		"legend": {

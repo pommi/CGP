@@ -1,6 +1,6 @@
 {
 	"signal_noise": {
-		"title": "Noise level ({{PI}})",
+		"title": "Noise level ({{PI}}) on {{HOST}}",
 		"vertical": "dBm",
 		"legend": {
 			"value": {
@@ -11,7 +11,7 @@
 		"legend_format": "%6.1lf"
 	},
 	"signal_power": {
-		"title": "Signal level ({{PI}})",
+		"title": "Signal level ({{PI}}) on {{HOST}}",
 		"vertical": "dBm",
 		"legend": {
 			"value": {
@@ -22,7 +22,7 @@
 		"legend_format": "%6.1lf"
 	},
 	"signal_quality": {
-		"title": "Link Quality ({{PI}})",
+		"title": "Link Quality ({{PI}}) on {{HOST}}",
 		"vertical": "quality",
 		"legend": {
 			"value": {

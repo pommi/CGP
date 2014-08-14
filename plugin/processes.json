@@ -52,7 +52,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_code": {
-		"title": "Text Resident Set ({{PI}})",
+		"title": "Text Resident Set ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -64,7 +64,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_count": {
-		"title": "Number of Processes/Threads ({{PI}})",
+		"title": "Number of Processes/Threads ({{PI}}) on {{HOST}}",
 		"vertical": "Amount",
 		"type": "stacked",
 		"legend": {
@@ -80,7 +80,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_cputime": {
-		"title": "CPU time ({{PI}})",
+		"title": "CPU time ({{PI}}) on {{HOST}}",
 		"vertical": "CPU time [s]",
 		"type": "stacked",
 		"legend": {
@@ -96,7 +96,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_disk_octets": {
-		"title": "Disk Traffic ({{PI}})",
+		"title": "Disk Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes per second",
 		"type": "io",
 		"legend": {
@@ -112,7 +112,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_disk_ops": {
-		"title": "Disk Operations ({{PI}})",
+		"title": "Disk Operations ({{PI}}) on {{HOST}}",
 		"vertical": "Ops per second",
 		"type": "io",
 		"legend": {
@@ -128,7 +128,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_data": {
-		"title": "Data Resident Set ({{PI}})",
+		"title": "Data Resident Set ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -140,7 +140,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_pagefaults": {
-		"title": "PageFaults ({{PI}})",
+		"title": "PageFaults ({{PI}}) on {{HOST}}",
 		"vertical": "Pagefaults",
 		"type": "stacked",
 		"legend": {
@@ -156,7 +156,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_rss": {
-		"title": "Resident Segment Size ({{PI}})",
+		"title": "Resident Segment Size ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -168,7 +168,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_stacksize": {
-		"title": "Stacksize ({{PI}})",
+		"title": "Stacksize ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -180,7 +180,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"ps_vm": {
-		"title": "Virtual Memory ({{PI}})",
+		"title": "Virtual Memory ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {

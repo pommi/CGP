@@ -1,6 +1,6 @@
 {
 	"if_octets": {
-		"title": "Interface Traffic ({{PI}})",
+		"title": "Interface Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "{{ND}} per second",
 		"type": "io",
 		"legend": {
@@ -17,7 +17,7 @@
 		"datasize": true
 	},
 	"if_errors": {
-		"title": "Interface Errors ({{PI}})",
+		"title": "Interface Errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors per second",
 		"type": "io",
 		"legend": {
@@ -33,7 +33,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_packets": {
-		"title": "Interface Packets ({{PI}})",
+		"title": "Interface Packets ({{PI}}) on {{HOST}}",
 		"vertical": "Packets per second",
 		"type": "io",
 		"legend": {

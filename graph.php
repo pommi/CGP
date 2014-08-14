@@ -86,6 +86,7 @@ if (isset($plugin_json[$type]['title'])) {
 	$obj->rrd_title = $plugin_json[$type]['title'];
 	$obj->rrd_title = str_replace('{{PI}}', GET('pi'), $obj->rrd_title);
 	$obj->rrd_title = str_replace('{{TI}}', GET('ti'), $obj->rrd_title);
+	$obj->rrd_title = str_replace('{{HOST}}', GET('h'), $obj->rrd_title);
 }
 
 if (isset($plugin_json[$type]['vertical'])) {

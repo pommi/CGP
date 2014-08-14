@@ -15,7 +15,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"vmpage_io": {
-		"title": "Page IO ({{TI}})",
+		"title": "Page IO ({{TI}}) on {{HOST}}",
 		"type": "stacked",
 		"legend_format": "%5.1lf%s"
 	},
