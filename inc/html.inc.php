@@ -58,8 +58,19 @@ EOT;
 
 	if(!function_exists('json_decode')) {
 		echo <<<EOT
-<div id="warnheader">
+<div class="warnheader">
 	Your php version doesn't support <a href="http://php.net/json">JSON</a>. Your graphs would have looked more beautiful if it did.
+</div>
+
+EOT;
+
+	}
+
+	if($CONFIG['version'] == 4) {
+		echo <<<EOT
+<div class="warnheader">
+	You are using Collectd 4, which is deprecated by CGP. Graphs like
+	<code>df</code> and <code>interfaces</code> may be incomplete.
 </div>
 
 EOT;

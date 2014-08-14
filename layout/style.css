@@ -15,7 +15,7 @@ body {
 	text-decoration: none;
 }
 
-#warnheader {
+.warnheader {
 	background: #ffe583;
 	padding: 8px 8px 8px 18px;
 	border-bottom: 1px solid #d5ad14;
@@ -154,4 +154,10 @@ legend {
 	color: red;
 	font-weight: normal;
 	text-shadow: 0 0 1px red;
+}
+
+code {
+	font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	background-color: rgba(0,0,0,0.1);
+	padding: 0 0.2em;
 }
