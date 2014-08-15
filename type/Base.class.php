@@ -288,7 +288,7 @@ class Type_Base {
 			'-w', is_numeric($this->width) ? $this->width : 400,
 			'-h', is_numeric($this->height) ? $this->height : 175,
 			'-l', '0',
-			'-t', "{$this->rrd_title}"
+			'-t', $this->rrd_title
 		));
 		if ($this->rrd_vertical) {
 			$rrdgraph[] = '-v';
