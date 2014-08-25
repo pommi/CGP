@@ -141,7 +141,7 @@ class Type_Base {
 	function rrd_escape($value) {
 		# In case people have really bizarre URLs in $CONFIG['rrd_url'],
 		# it should not be dropped.
-		return str_replace('\\', '\\\\', $value);
+		$value = str_replace('\\', '\\\\', $value);
 		# http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html#IEscaping_the_colon
 		return str_replace(':', '\:', $value);
 	}
