@@ -1,6 +1,6 @@
 {
 	"disk_octets": {
-		"title": "Disk Traffic ({{TI}})",
+		"title": "Disk Traffic ({{TI}}) on {{HOST}}",
 		"vertical": "Bytes per second",
 		"type": "io",
 		"legend": {
@@ -16,7 +16,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"disk_ops": {
-		"title": "Disk Operations ({{TI}})",
+		"title": "Disk Operations ({{TI}}) on {{HOST}}",
 		"vertical": "Ops per second",
 		"type": "io",
 		"legend": {
@@ -32,7 +32,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_dropped": {
-		"title": "Interface Packets Dropped ({{TI}})",
+		"title": "Interface Packets Dropped ({{TI}}) on {{HOST}}",
 		"vertical": "Packets/s",
 		"type": "io",
 		"legend": {
@@ -48,7 +48,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_errors": {
-		"title": "Interface Errors ({{TI}})",
+		"title": "Interface Errors ({{TI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "io",
 		"legend": {
@@ -64,7 +64,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_octets": {
-		"title": "Interface Traffic ({{TI}})",
+		"title": "Interface Traffic ({{TI}}) on {{HOST}}",
 		"vertical": "{{ND}} per second",
 		"type": "io",
 		"legend": {
@@ -81,7 +81,7 @@
 		"datasize": true
 	},
 	"if_packets": {
-		"title": "Interface Packets ({{TI}})",
+		"title": "Interface Packets ({{TI}}) on {{HOST}}",
 		"vertical": "Packets per second",
 		"type": "io",
 		"legend": {

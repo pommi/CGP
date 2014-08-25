@@ -1,6 +1,6 @@
 {
 	"bytes": {
-		"title": "Filecount: size ({{PI}})",
+		"title": "Filecount: size ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -12,7 +12,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"files": {
-		"title": "Filecount: number of files ({{PI}})",
+		"title": "Filecount: number of files ({{PI}}) on {{HOST}}",
 		"vertical": "Files",
 		"type": "stacked",
 		"legend": {

@@ -1,6 +1,6 @@
 {
 	"if_octets": {
-		"title": "Interface Traffic ({{TI}})",
+		"title": "Interface Traffic ({{TI}}) on {{HOST}}",
 		"vertical": "{{ND}} per second",
 		"type": "io",
 		"legend": {

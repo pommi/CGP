@@ -20,7 +20,7 @@
 		"legend_format": "%.2lf"
 	},
 	"vs_memory": {
-		"title": "Memory utilization ({{PI}})",
+		"title": "Memory utilization ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -44,7 +44,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"vs_threads": {
-		"title": "Threads ({{PI}})",
+		"title": "Threads ({{PI}}) on {{HOST}}",
 		"type": "stacked",
 		"legend": {
 			"running": {
@@ -67,13 +67,13 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_octets": {
-		"title": "Interface Traffic ({{PI}})",
+		"title": "Interface Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "{{ND}} per second",
 		"legend_format": "%5.1lf%s",
 		"datasize": true
 	},
 	"vs_processes": {
-		"title": "Processes ({{PI}})",
+		"title": "Processes ({{PI}}) on {{HOST}}",
 		"legend": {
 			"value": {
 				"name": "Processes"

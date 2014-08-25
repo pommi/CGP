@@ -1,6 +1,6 @@
 {
 	"pg_blks": {
-		"title": "PostgreSQL Disk I/O ({{PI}})",
+		"title": "PostgreSQL Disk I/O ({{PI}}) on {{HOST}}",
 		"vertical": "Blocks",
 		"type": "stacked",
 		"legend": {
@@ -32,7 +32,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"pg_db_size": {
-		"title": "PostgreSQL DB size ({{PI}})",
+		"title": "PostgreSQL DB size ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
@@ -44,7 +44,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"pg_n_tup_c": {
-		"title": "PostgreSQL Row actions ({{PI}})",
+		"title": "PostgreSQL Row actions ({{PI}}) on {{HOST}}",
 		"vertical": "Rows",
 		"type": "stacked",
 		"legend": {
@@ -68,7 +68,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"pg_n_tup_g": {
-		"title": "PostgreSQL Table states ({{PI}})",
+		"title": "PostgreSQL Table states ({{PI}}) on {{HOST}}",
 		"vertical": "Rows",
 		"type": "stacked",
 		"legend": {
@@ -84,7 +84,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"pg_numbackends": {
-		"title": "PostgreSQL Backends ({{PI}})",
+		"title": "PostgreSQL Backends ({{PI}}) on {{HOST}}",
 		"vertical": "Backends",
 		"type": "stacked",
 		"legend": {
@@ -96,7 +96,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"pg_scan": {
-		"title": "PostgreSQL Scans ({{PI}})",
+		"title": "PostgreSQL Scans ({{PI}}) on {{HOST}}",
 		"vertical": "Scans / Rows",
 		"type": "stacked",
 		"legend": {
@@ -116,7 +116,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"pg_xact": {
-		"title": "PostgreSQL Transactions ({{PI}})",
+		"title": "PostgreSQL Transactions ({{PI}}) on {{HOST}}",
 		"vertical": "Transactions",
 		"type": "stacked",
 		"legend": {
