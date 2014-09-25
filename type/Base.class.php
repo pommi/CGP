@@ -405,7 +405,7 @@ class Type_Base {
 		}
 		elseif ($this->flush_type == 'rrdcached') {
 			foreach ($identifier as $val) {
-				$cmd = sprintf("FLUSH %s.rrd\n", $val);
+				$cmd = sprintf("FLUSH %s.rrd\n", str_replace(' ', '\\ ', $val));
 				$this->socket_cmd($socket, $cmd);
 			}
 		}
