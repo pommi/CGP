@@ -338,7 +338,15 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			isset($items['t']) ? $_GET['t'] = $items['t'] : $_GET['t'] = '';
 			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
 			$_GET['s'] = $time;
+			$uuid = generate_uuid();
+			printf('<canvas id="%s" class="rrd">', $uuid);
 			include $CONFIG['webdir'].'/graph.php';
+			print '</canvas>';
+			printf('<a href="%s%s"><img id="%s-img" alt="graph"></a>'."\n",
+				htmlentities($CONFIG['weburl']),
+				htmlentities(build_url('detail.php', $items, $time)),
+				$uuid
+			);
 		} else {
 			printf('<a href="%1$s%2$s"><img src="%1$s%3$s"></a>'."\n",
 				htmlentities($CONFIG['weburl']),
