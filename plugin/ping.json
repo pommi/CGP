@@ -11,6 +11,8 @@
 	},
 	"ping_droprate": {
 		"title": "Ping droprate on {{HOST}}",
-		"legend_format": "%5.1lf"
+		"vertical": "percent",
+		"legend_format": "%5.1lf",
+		"scale": 100
 	}
 }
