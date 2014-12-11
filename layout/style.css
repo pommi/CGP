@@ -49,6 +49,35 @@ a:hover {
 	text-decoration: underline;
 }
 
+a.tooltip {
+    border-bottom: dotted 1px blue;
+}
+
+a.tooltip > span {
+    opacity: 0;
+    visibility: hidden; position: absolute;
+    -webkit-transition-property: opacity, visibility;
+    -webkit-transition-duration: 0.4s, 0.4s;
+    -webkit-transition-timing-function: ease-in-out, ease-in-out;
+    -moz-transition-property: opacity, visibility;
+    -moz-transition-duration: 0.4s, 0.4s;
+    -moz-transition-timing-function: ease-in-out, ease-in-out;
+    -o-transition-property: opacity, visibility;
+    -o-transition-duration: 0.4s, 0.4s;
+    -o-transition-timing-function: ease-in-out, ease-in-out;
+    transition-property: opacity, visibility;
+    transition-duration: 0.4s, 0.4s;
+    transition-timing-function: ease-in-out, ease-in-out;
+}
+
+a.tooltip:hover > span {
+    opacity: 1;
+    text-decoration: none;
+    visibility: visible;
+    overflow: visible;
+    display: inline;
+}
+
 table.summary th {
 	width: 300px;
 	font-weight: normal;
