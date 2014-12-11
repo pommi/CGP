@@ -32,6 +32,7 @@ $CONFIG['time_range']['uptime']  = 31536000;
 # show load averages and used memory on overview page
 $CONFIG['showload'] = true;
 $CONFIG['showmem'] = false;
+$CONFIG['showtime'] = false;
 
 $CONFIG['term'] = array(
 	'2hour'	 => 3600 * 2,

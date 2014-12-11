@@ -68,6 +68,11 @@ table.summary td {
 	text-align: right;
 }
 
+table.summary td.wide {
+	width: 200px;
+	text-align: right;
+}
+
 img {
 	border: 0;
 }
