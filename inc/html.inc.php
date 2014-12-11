@@ -281,6 +281,19 @@ function host_summary($cat, $hosts) {
 			}
 		}
 
+		if ($CONFIG['showtime']) {
+			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
+			$time = time() - $rrd_info['last_update'];
+
+			$class = 'wide';
+			if ($time > 300)
+				$class .= ' crit';
+			elseif ($time > 60)
+				$class .= ' warn';
+
+			printf('<td class="%s">%d seconds ago</td>',$class, $time);
+		}
+
 		print "</tr>\n";
 	}
 
