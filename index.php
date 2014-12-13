@@ -26,7 +26,8 @@ if ($uhosts) {
 	host_summary('uncategorized', $uhosts);
 }
 
-echo <<<EOT
+if ($CONFIG['showtime']) {
+	echo <<<EOT
 <script>
 jQuery(document).ready(function() {
   jQuery("time.timeago").timeago();
@@ -34,5 +35,6 @@ jQuery(document).ready(function() {
 </script>
 
 EOT;
+}
 
 html_end();
