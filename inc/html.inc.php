@@ -47,6 +47,8 @@ EOT;
 	}
 
 echo <<<EOT
+	<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/jquery.timeago.js"></script>
 </head>
 <body>
 
@@ -291,7 +293,8 @@ function host_summary($cat, $hosts) {
 			elseif ($time > 60)
 				$class .= ' warn';
 
-			printf('<td class="%s">%d seconds ago</td>',$class, $time);
+			printf('<td class="%s"><time class="timeago" datetime="%s">%d seconds ago</time></td>',
+				$class, date('c', $rrd_info['last_update']), $time);
 		}
 
 		print "</tr>\n";

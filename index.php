@@ -26,4 +26,13 @@ if ($uhosts) {
 	host_summary('uncategorized', $uhosts);
 }
 
+echo <<<EOT
+<script>
+jQuery(document).ready(function() {
+  jQuery("time.timeago").timeago();
+});
+</script>
+
+EOT;
+
 html_end();
