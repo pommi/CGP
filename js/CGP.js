@@ -44,8 +44,10 @@ var CGP = (function() {
             if (this.stidx < 0) this.stidx = 0;
         }
         if (cstime !== this.stime[this.stidx]) {
-            var middle = this.rrdgraph.start + Math.abs(Math.round((this.rrdgraph.end - this.rrdgraph.start) / 2));
-            this.rrdgraph.start = Math.round(middle - this.stime[this.stidx] / 2);
+            var posx = e.clientX - e.target.getBoundingClientRect().left - this.rrdgraph.xorigin;
+            var relx = this.rrdgraph.xsize / Math.min(Math.max(posx, 0), this.rrdgraph.xsize);
+            var cntr = this.rrdgraph.start + Math.abs(Math.round((this.rrdgraph.end - this.rrdgraph.start) / relx));
+            this.rrdgraph.start = Math.round(cntr - this.stime[this.stidx] / relx);
             this.rrdgraph.end = this.rrdgraph.start + this.stime[this.stidx];
 
             try {
