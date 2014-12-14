@@ -1,7 +1,7 @@
 {
 	"apache_bytes": {
 		"title": "Webserver Traffic ({{PI}}) on {{HOST}}",
-		"vertical": "{{ND}}/s",
+		"vertical": "Bytes/s",
 		"legend": {
 			"value": {
 				"name": "Traffic",
