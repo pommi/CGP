@@ -69,7 +69,7 @@ table.summary td {
 }
 
 table.summary td.wide {
-	width: 200px;
+	width: 125px;
 	text-align: right;
 }
 
@@ -165,4 +165,9 @@ code {
 	font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
 	background-color: rgba(0,0,0,0.1);
 	padding: 0 0.2em;
+}
+
+.timeago {
+	font-size: 0.7em;
+	opacity: 0.6;
 }
