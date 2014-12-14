@@ -16,7 +16,17 @@
 	},
 	"vmpage_io": {
 		"title": "Page IO ({{TI}}) on {{HOST}}",
-		"type": "stacked",
+		"type": "io",
+		"legend": {
+			"in": {
+				"name": "Incoming",
+				"color": "0000ff"
+			},
+			"out": {
+				"name": "Outgoing",
+				"color": "00b000"
+			}
+		},
 		"legend_format": "%5.1lf%s"
 	},
 	"vmpage_number": {
