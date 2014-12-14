@@ -48,7 +48,7 @@ EOT;
 
 	if ($CONFIG['showtime']) {
 		echo <<<EOT
-	<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="{$html_weburl}js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="{$html_weburl}js/jquery.timeago.js"></script>
 
 EOT;
