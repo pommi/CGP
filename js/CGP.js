@@ -132,12 +132,6 @@ var CGP = (function() {
         var canvases = document.getElementsByClassName('rrd');
         for (var i = 0; i < canvases.length; i++) {
             draw(canvases[i].id, async);
-
-            if (document.getElementById(canvases[i].id + '-img')) {
-                document.getElementById(canvases[i].id).style.display = 'none';
-                var dataURL = canvases[i].toDataURL();
-                document.getElementById(canvases[i].id + '-img').src = dataURL;
-            }
         }
     }
 

@@ -55,9 +55,7 @@ print "</ul>\n";
 
 if ($CONFIG['graph_type'] == 'canvas') {
 	chdir($CONFIG['webdir']);
-	printf('<canvas id="%s" class="rrd">', generate_uuid());
 	include $CONFIG['webdir'].'/graph.php';
-	print '</canvas>';
 } else {
 	printf("<img src=\"%s%s\">\n",
 		htmlentities($CONFIG['weburl']),
