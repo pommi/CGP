@@ -45,36 +45,6 @@
 		"vertical": "Invocations",
 		"type": "stacked",
 		"legend": {
-			"commit": {
-				"color": "ff0000"
-			},
-			"delete": {
-				"color": "ff00e7"
-			},
-			"read_first": {
-				"color": "cc00ff"
-			},
-			"read_key": {
-				"color": "3200ff"
-			},
-			"read_next": {
-				"color": "0065ff"
-			},
-			"read_prev": {
-				"color": "00fff3"
-			},
-			"read_rnd": {
-				"color": "00ff65"
-			},
-			"read_rnd_next": {
-				"color": "33ff00"
-			},
-			"update": {
-				"color": "cbff00"
-			},
-			"write": {
-				"color": "ff9800"
-			},
 			"rollback": {
 				"color": "000000"
 			}
