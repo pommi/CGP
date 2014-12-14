@@ -95,7 +95,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"mysql_octets": {
-		"title": "MySQL Traffic ({{TI}}) on {{HOST}}",
+		"title": "MySQL Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "Bits per second",
 		"type": "io",
 		"legend": {
