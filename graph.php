@@ -52,7 +52,6 @@ if(function_exists('json_decode'))
 			error_log('CGP Error: invalid json in conf/plugin/'.$plugin.'.json');
 
 		$plugin_json = array_replace_recursive($plugin_json, $user_plugin_json);
-		//die(var_dump($plugin_json));
 	}
 }
 
