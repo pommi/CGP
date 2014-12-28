@@ -1,0 +1,55 @@
+{
+	"df_complex": {
+		"title": "lvmcache usage ({{PI}})",
+		"vertical": "Bytes",
+		"type": "stacked",
+		"legend": {
+			"cache_free": {
+				"name": "Cache free",
+				"color": "00ff00"
+			},
+			"metadata_free": {
+				"name": "Metadata free",
+				"color": "00ab00"
+			},
+			"dirty": {
+				"name": "Dirty data",
+				"color": "ff5e00"
+			},
+			"metadata_used": {
+				"name": "Metadata used",
+				"color": "ff2f00"
+			},
+			"cache_used": {
+				"name": "Cache used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%sB"
+	},
+	"cache_result": {
+		"title": "lvmcache access stats ({{PI}})",
+		"vertical": "Cache access",
+		"legend": {
+			"read_hits": {
+				"name": "Read hits"
+			},
+			"read_misses": {
+				"name": "Read misses"
+			},
+			"write_hits": {
+				"name": "Write hits"
+			},
+			"write_misses": {
+				"name": "Write misses"
+			},
+			"promotions": {
+				"name": "Promotions"
+			},
+			"demotions": {
+				"name": "Demotions"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}
