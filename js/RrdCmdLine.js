@@ -442,9 +442,9 @@ RrdCmdLine.prototype = {
 	parse_area: function (line)
 	{
 		var args = line.split(/#|:/);
-		var stack = args[3] === 'STACK' ? true : undefined;
+		var stack = args[4] === 'STACK' ? true : undefined;
 		var color = this.graph.parse_color(args[2]);
-		this.graph.gdes_add_area(args[1], this.graph.color2rgba(color), stack);
+		this.graph.gdes_add_area(args[1], this.graph.color2rgba(color), args[3], stack);
 	},
 	// TICK:vname#rrggbb[aa][:fraction[:legend]]
 	parse_tick: function (line)
