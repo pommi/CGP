@@ -1,0 +1,106 @@
+{
+	"haproxy_bytes": {
+		"title": "HAProxy Bandwidth ({{PI}})",
+		"vertical": "Bytes/s",
+		"type": "stacked",
+		"legend": {
+			"in": {
+				"name": "Incoming",
+				"color": "00ff00"
+			},
+			"out": {
+				"name": "Outgoing",
+				"color": "0000ff"
+			}
+		}
+	},
+
+	"haproxy_error": {
+		"title": "HAProxy Errors ({{PI}})",
+		"vertical": "Requests",
+		"type": "stacked",
+		"legend": {
+			"connection": {
+				"name": "Connection",
+				"color": "ff0000"
+			},
+			"response": {
+				"name": "Response",
+				"color": "ffa500"
+			},
+			"redistribute": {
+				"name": "Redistributed",
+				"color": "0000ff"
+			},
+			"retry": {
+				"name": "Retried",
+				"color": "00ffff"
+			}
+		}
+	},
+
+	"haproxy_response": {
+		"title": "HAProxy Responses ({{PI}})",
+		"vertical": "Responses",
+		"type": "stacked",
+		"legend": {
+			"1xx": {
+				"color": "ffff00"
+			},
+			"2xx": {
+				"color": "00ff00"
+			},
+			"3xx": {
+				"color": "0000ff"
+			},
+			"4xx": {
+				"color": "ffa500"
+			},
+			"5xx": {
+				"color": "ff0000"
+			},
+			"other": {
+				"name": "Other",
+				"color": "00ffff"
+			}
+		}
+	},
+
+	"haproxy_sessions": {
+		"title": "HAProxy Sessions ({{PI}})",
+		"vertical": "Sessions",
+		"legend": {
+			"total": {
+				"name": "Total",
+				"color": "00ff00"
+			},
+			"queue": {
+				"name": "Queued",
+				"color": "ffa500"
+			}
+		}
+	},
+
+	"haproxy_time": {
+		"title": "HAProxy Response Times ({{PI}})",
+		"vertical": "Time (ms)",
+		"legend": {
+			"connect": {
+				"name": "Connect",
+				"color": "ff0000"
+			},
+			"queue": {
+				"name": "Queue",
+				"color": "ffa500"
+			},
+			"response": {
+				"name": "Response",
+				"color": "00ff00"
+			},
+			"total": {
+				"name": "Total",
+				"color": "0000ff"
+			}
+		}
+	}
+}
