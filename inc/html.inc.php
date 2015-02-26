@@ -112,7 +112,7 @@ function html_end() {
 	echo <<<EOT
 </div>
 <div id="footer">
-<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$html_weburl}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
+<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$html_weburl}doc/LICENSE" rel="license">GNU General Public License (GPLv3)</a></span>
 </div>
 
 EOT;
