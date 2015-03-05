@@ -131,8 +131,9 @@ class Type_Base {
 
 		foreach ($rgb as $pri) {
 			$c[$pri] = dechex(round($percent * $fg[$pri]) + ((1.0 - $percent) * $bg[$pri]));
-			if ($c[$pri] == '0')
-				$c[$pri] = '00';
+			if (strlen($c[$pri]) == 1) {
+				$c[$pri] = '0' . $c[$pri];
+			}
 		}
 
 		return $c['r'].$c['g'].$c['b'];
