@@ -607,9 +607,8 @@ RrdCmdLine.prototype = {
 			color = this.graph.parse_color(args[1].substr(index+1));
 			color = this.graph.color2rgba(color);
 		}
-
 		var fraction = undefined;
-		if (args.length >= 3 && args[2].legth > 0)
+		if (args.length >= 3 && args[2].length > 0)
 			fraction = parseFloat(args[2]);
 		var legend = undefined;
 		if (args.length == 4)
