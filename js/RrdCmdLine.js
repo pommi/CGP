@@ -25,7 +25,6 @@
  * @constructor
  */
 var RrdCmdLine = function() {
-	// if (arguments.lenght === 3) // XXX
   this.init.apply(this, arguments);
 };
 
@@ -37,7 +36,7 @@ RrdCmdLine.prototype = {
 		this.graph = new RrdGraph(gfx, fetch);
 		this.cmdline(line);
 	},
-	cmdline: function(line) // FIXME
+	cmdline: function(line)
 	{
 		var i = 0;
 		line = line.replace(/\n/g," ");
@@ -48,30 +47,30 @@ RrdCmdLine.prototype = {
 			var arg = lines[i];
 			if (arg.charAt(0) === '"' && arg.charAt(arg.length-1) === '"')
 				arg = arg.substr(1,arg.length-2);
-			if (/^LINE[0-9.]+:/.test(arg)) {
-				this.parse_line(arg);
-			} else if (/^AREA:/.test(arg)) {
-				this.parse_area(arg);
-			} else if (/^DEF:/.test(arg)) {
-				this.parse_def(arg);
-			} else if (/^CDEF:/.test(arg)) {
-				this.parse_cdef(arg);
-			} else if (/^VDEF:/.test(arg)) {
-				this.parse_vdef(arg);
-			} else if (/^GPRINT:/.test(arg)) {
-				this.parse_gprint(arg);
-			} else if (/^COMMENT:/.test(arg)) {
-				this.parse_comment(arg);
-			} else if (/^VRULE:/.test(arg)) {
-				this.parse_vrule(arg);
-			} else if (/^HRULE:/.test(arg)) {
-				this.parse_hrule(arg);
-			} else if (/^TICK:/.test(arg)) {
-				this.parse_tick(arg);
-			} else if (/^TEXTALIGN:/.test(arg)) {
-				this.parse_textalign(arg);
-			} else if (/^SHIFT:/.test(arg)) {
-				this.parse_shift(arg);
+			if (arg.substring(0,4) === 'LINE') {
+				this.parse_line(this.split(arg));
+			} else if (arg.substring(0,5) === 'AREA:') {
+				this.parse_area(this.split(arg));
+			} else if (arg.substring(0,4) === 'DEF:') {
+				this.parse_def(this.split(arg));
+			} else if (arg.substring(0,5) === 'CDEF:') {
+				this.parse_cdef(this.split(arg));
+			} else if (arg.substring(0,5) === 'VDEF:') {
+				this.parse_vdef(this.split(arg));
+			} else if (arg.substring(0,7) === 'GPRINT:') {
+				this.parse_gprint(this.split(arg));
+			} else if (arg.substring(0,8) === 'COMMENT:') {
+				this.parse_comment(this.split(arg));
+			} else if (arg.substring(0,6) === 'VRULE:') {
+				this.parse_vrule(this.split(arg));
+			} else if (arg.substring(0,6) === 'HRULE:') {
+				this.parse_hrule(this.split(arg));
+			} else if (arg.substring(0,5) === 'TICK:') {
+				this.parse_tick(this.split(arg));
+			} else if (arg.substring(0,10) === 'TEXTALIGN:') {
+				this.parse_textalign(this.split(arg));
+			} else if (arg.substring(0,7) === 'SHIFT:') {
+				this.parse_shift(this.split(arg));
 			} else if (arg.charAt(0) === '-') {
 				var strip = 1;
 				if (arg.length > 1 && arg.charAt(1) === '-') {
@@ -99,7 +98,7 @@ RrdCmdLine.prototype = {
 			}
 			i++;
 		}
-		var start_end = RrdTime.proc_start_end(this.graph.start_t, this.graph.end_t); // FIXME here?
+		var start_end = RrdTime.proc_start_end(this.graph.start_t, this.graph.end_t);
 		this.graph.start = start_end[0];
 		this.graph.end = start_end[1];
 	},
@@ -387,79 +386,249 @@ RrdCmdLine.prototype = {
 		}
 
 	},
-	// DEF:<vname>=<rrdfile>:<ds-name>:<CF>[:step=<step>][:start=<time>][:end=<time>][:reduce=<CF>]
-	parse_def: function (line)
+	split: function (line)
 	{
-		// Every character (except ':' and '\') are allowed within a value. The
-		// two exceptions must be escaped with a slash.
-		var args = line.match(/(\\.|[^:\\])+/g);
-		var n = 1;
-		var vnames = args[n++];
-		var vname = vnames.substr(0, vnames.indexOf("="));
-		var rrdfile = vnames.substr(vname.length + 1).replace(/\\(.)/g, "$1");
-		var name = args[n++];
-		var cf = args[n++];
+		return line.replace(/:/g,'\0').replace(/\\\0/g,':').split('\0');
+	},
+	// DEF:<vname>=<rrdfile>:<ds-name>:<CF>[:step=<step>][:start=<time>][:end=<time>][:reduce=<CF>]
+	parse_def: function (args)
+	{
+		if (args.length > 8)
+			throw "Too many options for DEF: "+args.join(':');
+		if (args.length < 4)
+			throw "Too few options for DEF: "+args.join(':');
+
+		var rrdfile;
+		var vname;
+		var index = args[1].indexOf('=');
+		if (index > 0) {
+			vname = args[1].substr(0, index);
+			rrdfile = args[1].substr(index+1);
+		} else {
+			throw "Missing '=' in DEF: "+args[1];
+		}
+		rrdfile = rrdfile.replace(/\\\\/g, '\\');
+
+		var name = args[2];
+		var cf = args[3];
+
 		var step, reduce, start, end;
-		if (args.length > n) {
-			for (var j = n, xlen = args.length ; j < xlen ; j++) {
-				var opts = args[j].split("=");
-				if (opts[0] === "step") step = opts[1];
-				if (opts[0] === "reduce") reduce = opts[1];
-				if (opts[0] === "start") start = opts[1];
-				if (opts[0] === "end") end = opts[1];
+		if (args.length > 4) {
+			for (var n = 4; n == args.length; n++) {
+				if (args[n].substring(0,4) === "step") {
+					index = args[n].indexOf("=");
+					if (index > 0) {
+						step = args[n].substr(index+1);
+					} else {
+						throw "DEF step without value: "+args[n];
+					}
+				} else if (args[n].substring(0,6)  === "reduce") {
+					index = args[n].indexOf("=");
+					if (index > 0) {
+						reduce = args[n].substr(index+1);
+					} else {
+						throw "DEF step without value: "+args[n];
+					}
+				} else if (args[n].substring(0,5)  === "start") {
+					index = args[n].indexOf("=");
+					if (index > 0) {
+						start = args[n].substr(index+1);
+					} else {
+						throw "DEF step without value: "+args[n];
+					}
+				} else if (args[n].substring(0,3)  === "end") {
+					index = args[n].indexOf("=");
+					if (index > 0) {
+						end = args[n].substr(index+1);
+					} else {
+						throw "DEF end without value: "+args[n];
+					}
+				} else {
+					throw "Unknown DEF option: "+args[n];
+				}
 			}
 		}
+
 		this.graph.gdes_add_def(vname, rrdfile, name, cf, step, start, end, reduce);
 	},
 	// CDEF:vname=RPN expression
-	parse_cdef: function (line)
+	parse_cdef: function (args)
 	{
-		var args = line.split(/:|=/);
-		this.graph.gdes_add_cdef(args[1], args[2]);
+		var rpn, vname, index;
+
+		if (args.length != 2)
+			throw "Wrong options for CDEF: "+args.join(':');
+
+		index = args[1].indexOf('=');
+		if (index > 0) {
+			vname = args[1].substr(0, index);
+			rpn = args[1].substr(index+1);
+		} else {
+			throw "Missing '=' in CDEF: "+args[1];
+		}
+
+		this.graph.gdes_add_cdef(vname, rpn);
 	},
 	// VDEF:vname=RPN expression
-	parse_vdef: function (line)
+	parse_vdef: function (args)
 	{
-		var args = line.split(/:|=/);
-		this.graph.gdes_add_vdef(args[1], args[2]);
+		var rpn, vname, index;
+
+		if (args.length != 2)
+			throw "Wrong options for VDEF: "+args.join(':');
+
+		index = args[1].indexOf('=');
+		if (index > 0) {
+			vname = args[1].substr(0, index);
+			rpn = args[1].substr(index+1);
+		} else {
+			throw "Missing '=' in VDEF: "+args[1];
+		}
+
+		this.graph.gdes_add_vdef(vname, rpn);
 	},
 	// SHIFT:vname:offset
-	parse_shift: function (line)
+	parse_shift: function (args)
 	{
-		var args = line.split(':');
+		if (args.length != 3)
+			throw "Wrong options for SHIFT: "+args.join(':');
+
 		this.graph.gdes_add_shift(args[1], args[2]);
 	},
 	// LINE[width]:value[#color][:[legend][:STACK]][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
-	parse_line: function (line)
+	parse_line: function (args)
 	{
-		var args = line.split(/#|:/);
-		var width = parseFloat(args[0].substr(4));
-		var stack = args[4] === 'STACK' ? true : undefined;
-		var color = this.graph.parse_color(args[2]);
-		this.graph.gdes_add_line(width, args[1], this.graph.color2rgba(color), args[3], stack);
+		if (args.length > 6)
+			throw "Too many options for LINE: "+args.join(':');
+		if (args.length < 2)
+			throw "Too few options for LINE: "+args.join(':');
+
+		var width = 1;
+		if (args[0].length > 4)
+			width = parseFloat(args[0].substr(4));
+
+		var color = undefined;
+		var value = args[1];
+		var index = args[1].indexOf('#');
+		if (index > 0) {
+			value = args[1].substr(0, index);
+			color = this.graph.parse_color(args[1].substr(index+1));
+			color = this.graph.color2rgba(color);
+		}
+
+		var stack = false;
+		var legend = undefined;
+		var dashes = undefined;
+		var dash_offset = undefined;
+		if (args.length == 3 && args[2] === 'STACK') {
+			stack = true;
+		} else if (args.length >= 3) {
+			legend = args[2];
+			for (var n = 3; n < args.length; n++) {
+				if (args[n] === 'STACK') {
+					stack = true;
+				} else if (args[n].substring(0,6) ===  'dashes') {
+					index = args[n].indexOf('=');
+					if (index > 0) {
+						dashes = args[n].substr(index+1).split(',');
+					} else {
+						dashes = [5];
+					}
+				} else if (args[n].substring(0,11) === 'dash-offset') {
+					index = args[n].indexOf('=');
+					if (index > 0) {
+						dash_offset = args[n].substr(index+1);
+					} else {
+						throw "LINE dash-offset without value: "+args[n];
+					}
+				} else {
+					throw "Unknown LINE option: "+args[n];
+				}
+			}
+		}
+
+		if (legend != undefined && legend.length === 0)
+			legend = undefined;
+
+		this.graph.gdes_add_line(width, value, color, legend, stack, dashes, dash_offset);
 	},
 	// AREA:value[#color][:[legend][:STACK]]
-	parse_area: function (line)
+	parse_area: function (args)
 	{
-		var args = line.split(/#|:/);
-		var stack = args[4] === 'STACK' ? true : undefined;
-		var color = this.graph.parse_color(args[2]);
-		this.graph.gdes_add_area(args[1], this.graph.color2rgba(color), args[3], stack);
+		if (args.length > 4)
+			throw "Too many options for AREA: "+args.join(':');
+		if (args.length < 2)
+			throw "Too few options for AREA: "+args.join(':');
+
+		var color = undefined;
+		var value = args[1];
+		var index = args[1].indexOf('#');
+		if (index > 0) {
+			value = args[1].substr(0, index);
+			color = this.graph.parse_color(args[1].substr(index+1));
+			color = this.graph.color2rgba(color);
+		}
+
+		var legend = undefined;
+		var stack = false;
+		if (args.length == 3) {
+			if (args[2] === 'STACK') {
+				stack = true;
+			} else {
+				legend = args[2];
+			}
+		} else if (args.length == 4) {
+			legend = args[2];
+			if (args[3] === 'STACK') {
+				stack = true;
+			} else {
+				throw "Unknown AREA option: "+args[3];
+			}
+		}
+
+		if (legend != undefined && legend.length === 0)
+			legend = undefined;
+
+		this.graph.gdes_add_area(value, color, legend, stack);
 	},
 	// TICK:vname#rrggbb[aa][:fraction[:legend]]
-	parse_tick: function (line)
+	parse_tick: function (args)
 	{
-		var args = line.split(/:|#/);
-		var color = this.graph.parse_color(args[2]);
-		this.graph.gdes_add_tick(args[1], this.graph.color2rgba(color), args[3], args[4]);
+		if (args.length > 4)
+			throw "Too many options for TICK: "+args.join(':');
+		if (args.length < 2)
+			throw "Too few options for TICK: "+args.join(':');
+
+		var color = undefined;
+		var vname = args[1];
+		var index = args[1].indexOf('#');
+		if (index > 0) {
+			vname = args[1].substr(0, index);
+			color = this.graph.parse_color(args[1].substr(index+1));
+			color = this.graph.color2rgba(color);
+		}
+
+		var faction = undefined;
+		if (args.length == 3)
+			fraction = args[2];
+
+		var legend = undefined;
+		if (args.length == 4)
+			legend = args[3];
+
+		if (legend != undefined && legend.length === 0)
+			legend = undefined;
+
+		this.graph.gdes_add_tick(vname, color, fraction, legend);
 	},
-	// GPRINT:vname:format
-	parse_gprint: function(line)
+	// GPRINT:vname:format[:strftime]
+	// GPRINT:vname:cf:format[:strftime]
+	parse_gprint: function(args)
 	{
-		var args = line.split(':');
 		var strftime = false;
 		var vname = args[1];
 		var cf = args[2];
+
 		var format = "";
 		if (args.length > 3) {
 			var m=0;
@@ -479,27 +648,120 @@ RrdCmdLine.prototype = {
 		this.graph.gdes_add_gprint(vname, cf, format, strftime);
 	},
 	//COMMENT:text
-	parse_comment: function (line)
+	parse_comment: function (args)
 	{
-		var index = line.indexOf(':');
-		this.graph.gdes_add_comment(line.substr(index+1));
+		if (args.length < 2)
+			throw "Wrong options for COMMENT: "+args.join(':');
+
+		if (args.length > 2) {
+			args.shift();
+			this.graph.gdes_add_comment(args.join(':'));
+		} else {
+			this.graph.gdes_add_comment(args[1]);
+		}
 	},
 	// TEXTALIGN:{left|right|justified|center}
-	parse_textalign: function (line)
+	parse_textalign: function (args)
 	{
-		var index = line.indexOf(':');
-		this.graph.gdes_add_textalign(line.substr(index+1));
+		if (args.length != 2)
+			throw "Wrong options for TESTALIGN: "+args.join(':');
+
+		this.graph.gdes_add_textalign(args[1]);
 	},
 	// VRULE:time#color[:legend][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
-	parse_vrule: function (line)
+	parse_vrule: function (args)
 	{
-		var args = line.split(/:|#/);
-		this.graph.gdes_add_vrule(args[1], '#'+args[2], args[3]);
+		if (args.length > 5)
+			throw "Too many options for VRULE: "+args.join(':');
+		if (args.length < 2)
+			throw "Too few options for VRULE: "+args.join(':');
+
+		var color = undefined;
+		var time = args[1];
+		var index = args[1].indexOf('#');
+		if (index > 0) {
+			time = args[1].substr(0, index);
+			color = this.graph.parse_color(args[1].substr(index+1));
+			color = this.graph.color2rgba(color);
+		}
+
+		var legend = undefined;
+		var dashes = undefined;
+		var dash_offset = undefined;
+		if (args.length >= 3) {
+			legend = args[2];
+			for (var n = 3; n < args.length; n++) {
+				if (args[n].substring(0,6) ===  'dashes') {
+					index = args[n].indexOf('=');
+					if (index > 0) {
+						dashes = args[n].substr(index+1).split(',');
+					} else {
+						dashes = [5];
+					}
+				} else if (args[n].substring(0,11) === 'dash-offset') {
+					index = args[n].indexOf('=');
+					if (index > 0) {
+						dash_offset = args[n].substr(index+1);
+					} else {
+						throw "VRULE dash-offset without value: "+args[n];
+					}
+				} else {
+					throw "Unknown VRULE option: "+args[n];
+				}
+			}
+		}
+
+		if (legend != undefined && legend.length === 0)
+			legend = undefined;
+
+		this.graph.gdes_add_vrule(time, color, legend, dashes, dash_offset);
 	},
 	// HRULE:value#color[:legend][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
-	parse_hrule: function (line)
+	parse_hrule: function (args)
 	{
-		var args = line.split(/:|#/);
-		this.graph.gdes_add_hrule(args[1], '#'+args[2], args[3]);
+		if (args.length > 5)
+			throw "Too many options for HRULE: "+args.join(':');
+		if (args.length < 2)
+			throw "Too few options for HRULE: "+args.join(':');
+
+		var color = undefined;
+		var value = args[1];
+		var index = args[1].indexOf('#');
+		if (index > 0) {
+			value = args[1].substr(0, index);
+			color = this.graph.parse_color(args[1].substr(index+1));
+			color = this.graph.color2rgba(color);
+		}
+
+		var legend = undefined;
+		var dashes = undefined;
+		var dash_offset = undefined;
+		if (args.length >= 3) {
+			legend = args[2];
+			for (var n = 3; n < args.length; n++) {
+				if (args[n].substring(0,6) ===  'dashes') {
+					index = args[n].indexOf('=');
+					if (index > 0) {
+						dashes = args[n].substr(index+1).split(',');
+					} else {
+						dashes = [5];
+					}
+				} else if (args[n].substring(0,11) === 'dash-offset') {
+					index = args[n].indexOf('=');
+					if (index > 0) {
+						dash_offset = args[n].substr(index+1);
+					} else {
+						throw "HRULE dash-offset without value: "+args[n];
+					}
+				} else {
+					throw "Unknown HRULE option: "+args[n];
+				}
+			}
+		}
+
+		if (legend != undefined && legend.length === 0)
+			legend = undefined;
+
+		this.graph.gdes_add_hrule(value, color, legend, dashes, dash_offset);
 	}
 };
