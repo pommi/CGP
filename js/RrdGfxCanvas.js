@@ -95,8 +95,21 @@ RrdGfxCanvas.prototype.dashed_line = function (X0, Y0, X1, Y1, width, color, das
 	this.ctx.save();
 	this.ctx.lineWidth = width;
 	this.ctx.strokeStyle = color;
-
+	this.ctx.setLineDash([ dash_on, dash_off ]);
+	this.ctx.lineDashOffset = dash_on;
 	this.ctx.beginPath();
+
+	if (Y0 === Y1) {
+		Y0 += 0.5;
+		Y1 += 0.5;
+	} else if (X0 === X1) {
+		X0 += 0.5;
+		X1 += 0.5;
+  }
+
+	this.ctx.moveTo(X0, Y0);
+	this.ctx.lineTo(X1, Y1);
+/*
 	if (Y0 === Y1) {
 		Y0 += 0.5;
 		Y1 += 0.5;
@@ -142,6 +155,7 @@ RrdGfxCanvas.prototype.dashed_line = function (X0, Y0, X1, Y1, width, color, das
 		this.ctx.moveTo(X0, Y0);
 		this.ctx.lineTo(X1, Y1);
 	}
+*/
 	this.ctx.stroke();
 	this.ctx.restore();
 };
