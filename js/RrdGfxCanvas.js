@@ -29,7 +29,7 @@ var RrdGfxCanvas = function(canvasId)
 	this.canvas = document.getElementById(canvasId);
 	this.ctx = this.canvas.getContext('2d');
 	this.dash = false;
-  this.dash_offset = null;
+	this.dash_offset = null;
 	this.dash_array = null;
 };
 
