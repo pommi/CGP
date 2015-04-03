@@ -105,7 +105,7 @@ RrdGfxCanvas.prototype.dashed_line = function (X0, Y0, X1, Y1, width, color, das
 	} else if (X0 === X1) {
 		X0 += 0.5;
 		X1 += 0.5;
-  }
+	}
 
 	this.ctx.moveTo(X0, Y0);
 	this.ctx.lineTo(X1, Y1);

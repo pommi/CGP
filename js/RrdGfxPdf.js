@@ -154,20 +154,20 @@ RrdGfxPdf.CORE_FONTS= {
 
 RrdGfxPdf.prototype.parse_color = function(str)
 {
-  var bits;
-  if ((bits = /^#?([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/.exec(str))) {
-    return [parseInt(bits[1]+bits[1], 16), parseInt(bits[2]+bits[2], 16), parseInt(bits[3]+bits[3], 16), 1.0];
-  } else if ((bits = /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/.exec(str))) {
-    return [parseInt(bits[1], 16), parseInt(bits[2], 16), parseInt(bits[3], 16), 1.0];
-  } else if ((bits = /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/.exec(str))) {
-    return [parseInt(bits[1], 16), parseInt(bits[2], 16), parseInt(bits[3], 16), parseInt(bits[4], 16)/255];
-  } else if ((bits = /^rgb\((\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\)$/.exec(str))) {
-    return [parseInt(bits[1], 10), parseInt(bits[2], 10), parseInt(bits[3], 10), 1.0];
-  } else if ((bits = /^rgba\((\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*([0-9.]+)\)$/.exec(str))) {
-    return [parseInt(bits[1], 10), parseInt(bits[2], 10), parseInt(bits[3], 10), parseFloat(bits[4], 10)];
-  } else {
-    throw "Unknow color format '"+str+"'";
-  }
+	var bits;
+	if ((bits = /^#?([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/.exec(str))) {
+		return [parseInt(bits[1]+bits[1], 16), parseInt(bits[2]+bits[2], 16), parseInt(bits[3]+bits[3], 16), 1.0];
+	} else if ((bits = /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/.exec(str))) {
+		return [parseInt(bits[1], 16), parseInt(bits[2], 16), parseInt(bits[3], 16), 1.0];
+	} else if ((bits = /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/.exec(str))) {
+		return [parseInt(bits[1], 16), parseInt(bits[2], 16), parseInt(bits[3], 16), parseInt(bits[4], 16)/255];
+	} else if ((bits = /^rgb\((\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\)$/.exec(str))) {
+		return [parseInt(bits[1], 10), parseInt(bits[2], 10), parseInt(bits[3], 10), 1.0];
+	} else if ((bits = /^rgba\((\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*([0-9.]+)\)$/.exec(str))) {
+		return [parseInt(bits[1], 10), parseInt(bits[2], 10), parseInt(bits[3], 10), parseFloat(bits[4], 10)];
+	} else {
+		throw "Unknow color format '"+str+"'";
+	}
 };
 
 RrdGfxPdf.prototype.size = function (width, height)
@@ -358,12 +358,12 @@ RrdGfxPdf.prototype.text = function (x, y, color, font, tabwidth, angle, h_align
 
 	var tm = [];
 	tm[0] = Math.cos(angle*Math.PI/180.0);
-  tm[1] = Math.sin(angle*Math.PI/180.0);
-  tm[2] = -tm[1];
-  tm[3] = tm[0];
+	tm[1] = Math.sin(angle*Math.PI/180.0);
+	tm[2] = -tm[1];
+	tm[3] = tm[0];
 
-  tm[4] = x + (tm[1] * y) - (tm[0] * x);
-  tm[5] = y - (tm[0] * y) - (tm[1] * x);
+	tm[4] = x + (tm[1] * y) - (tm[0] * x);
+	tm[5] = y - (tm[0] * y) - (tm[1] * x);
 
 	var rgba = this.parse_color(color);
 	this._save();

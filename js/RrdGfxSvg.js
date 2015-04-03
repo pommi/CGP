@@ -24,7 +24,8 @@
  * RrdGfxSvg
  * @constructor
  */
-var RrdGfxSvg = function(svgId) {
+var RrdGfxSvg = function(svgId) 
+{
 	this.svg = document.getElementById(svgId);
 	this.svgns = "http://www.w3.org/2000/svg";
 	this.xmlns = "http://www.w3.org/XML/1998/namespace";
@@ -32,7 +33,7 @@ var RrdGfxSvg = function(svgId) {
 	this.path_color = null;
 	this.path_width = null;
 	this.dash = false;
-  this.dash_offset = null;
+	this.dash_offset = null;
 	this.dash_array = null;
 };
 
@@ -70,10 +71,10 @@ RrdGfxSvg.prototype.line = function (X0, Y0, X1, Y1, width, color)
 {
 	var shape = document.createElementNS(this.svgns, "line");
 
-  X0 = Math.round(X0)+0.5;
-  Y0 = Math.round(Y0)+0.5;
-  X1 = Math.round(X1)+0.5;
-  Y1 = Math.round(Y1)+0.5;
+	X0 = Math.round(X0)+0.5;
+	Y0 = Math.round(Y0)+0.5;
+	X1 = Math.round(X1)+0.5;
+	Y1 = Math.round(Y1)+0.5;
 
 	shape.setAttributeNS(null, "x1", X0);
 	shape.setAttributeNS(null, "y1", Y0);
@@ -91,10 +92,10 @@ RrdGfxSvg.prototype.dashed_line = function (X0, Y0, X1, Y1, width, color, dash_o
 {
 	var shape = document.createElementNS(this.svgns, "line");
 
-  X0 = Math.round(X0)+0.5;
-  Y0 = Math.round(Y0)+0.5;
-  X1 = Math.round(X1)+0.5;
-  Y1 = Math.round(Y1)+0.5;
+	X0 = Math.round(X0)+0.5;
+	Y0 = Math.round(Y0)+0.5;
+	X1 = Math.round(X1)+0.5;
+	Y1 = Math.round(Y1)+0.5;
 
 	shape.setAttributeNS(null, "x1", X0);
 	shape.setAttributeNS(null, "y1", Y0);
@@ -129,12 +130,12 @@ RrdGfxSvg.prototype.rectangle = function (X0, Y0, X1, Y1, width, style)
 
 RrdGfxSvg.prototype.new_area = function (X0, Y0, X1, Y1, X2, Y2, color)
 {
-  X0 = Math.round(X0)+0.5;
-  Y0 = Math.round(Y0)+0.5;
-  X1 = Math.round(X1)+0.5;
-  Y1 = Math.round(Y1)+0.5;
-  X2 = Math.round(X2)+0.5;
-  Y2 = Math.round(Y2)+0.5;
+	X0 = Math.round(X0)+0.5;
+	Y0 = Math.round(Y0)+0.5;
+	X1 = Math.round(X1)+0.5;
+	Y1 = Math.round(Y1)+0.5;
+	X2 = Math.round(X2)+0.5;
+	Y2 = Math.round(Y2)+0.5;
 
 	this.path_color = color;
 	this.path = 'M'+X0+','+Y0;
@@ -144,8 +145,8 @@ RrdGfxSvg.prototype.new_area = function (X0, Y0, X1, Y1, X2, Y2, color)
 
 RrdGfxSvg.prototype.add_point = function (x, y)
 {
-  x = Math.round(x)+0.5;
-  y = Math.round(y)+0.5;
+	x = Math.round(x)+0.5;
+	y = Math.round(y)+0.5;
 
 	this.path += ' L'+x+','+y;
 };
@@ -188,24 +189,24 @@ RrdGfxSvg.prototype.stroke_end = function ()
 
 RrdGfxSvg.prototype.moveTo = function (x,y)
 {
-  x = Math.round(x)+0.5;
-  y = Math.round(y)+0.5;
+	x = Math.round(x)+0.5;
+	y = Math.round(y)+0.5;
 
 	this.path += ' M'+x+','+y;
 };
 
 RrdGfxSvg.prototype.lineTo = function (x,y)
 {
-  x = Math.round(x)+0.5;
-  y = Math.round(y)+0.5;
+	x = Math.round(x)+0.5;
+	y = Math.round(y)+0.5;
 
 	this.path += ' L'+x+','+y;
 };
 
 RrdGfxSvg.prototype.text = function (x, y, color, font, tabwidth, angle, h_align, v_align, text)
 {
-  x = Math.round(x);
-  y = Math.round(y);
+	x = Math.round(x);
+	y = Math.round(y);
 
 	var svgtext = document.createElementNS(this.svgns, "text");
 
