@@ -608,10 +608,9 @@ RrdCmdLine.prototype = {
 			color = this.graph.color2rgba(color);
 		}
 
-		var faction = undefined;
-		if (args.length == 3)
-			fraction = args[2];
-
+		var fraction = undefined;
+		if (args.length >= 3 && args[2].legth > 0)
+			fraction = parseFloat(args[2]);
 		var legend = undefined;
 		if (args.length == 4)
 			legend = args[3];
