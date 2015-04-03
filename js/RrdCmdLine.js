@@ -69,7 +69,7 @@ RrdCmdLine.prototype = {
 				this.parse_tick(this.split(arg));
 			} else if (arg.substring(0,10) === 'TEXTALIGN:') {
 				this.parse_textalign(this.split(arg));
-			} else if (arg.substring(0,7) === 'SHIFT:') {
+			} else if (arg.substring(0,6) === 'SHIFT:') {
 				this.parse_shift(this.split(arg));
 			} else if (arg.charAt(0) === '-') {
 				var strip = 1;
