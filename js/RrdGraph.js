@@ -36,7 +36,7 @@ RrdGraphDescError.prototype = new Error();
  * RrdGraphDesc
  * @constructor
  */
-var RrdGraphDesc = function (graph) 
+var RrdGraphDesc = function (graph)
 {
 	this.gf = null;      /* graphing function */
 	this.stack = false;    /* boolean */
@@ -164,7 +164,7 @@ RrdGraphDesc.TXA_RIGHT = 1;
 RrdGraphDesc.TXA_CENTER = 2;
 RrdGraphDesc.TXA_JUSTIFIED = 3;
 
-RrdGraphDesc.cf_conv = function (str) 
+RrdGraphDesc.cf_conv = function (str)
 {
 	switch (str){
 		case 'AVERAGE': return RrdGraphDesc.CF_AVERAGE;
@@ -279,7 +279,7 @@ RrdGraphDesc.prototype.fshift = function (graph, vname, offset)
 	this.legend = '';
 };
 
-RrdGraphDesc.prototype.line = function (graph, width, value, color, legend, stack)
+RrdGraphDesc.prototype.line = function (graph, width, value, color, legend, stack, dashes, dash_offset)
 {
 	this.gf = RrdGraphDesc.GF_LINE;
 	this.vname = value;
@@ -287,10 +287,20 @@ RrdGraphDesc.prototype.line = function (graph, width, value, color, legend, stac
 	this.linewidth = width;
 	this.col = color;
 	if (legend === undefined) this.legend = '';
+	else if (legend.length === 0) this.legend = '';
 	else this.legend = '  '+legend;
 	if (stack === undefined) this.stack = false;
 	else this.stack = stack;
 	this.format = this.legend;
+
+	if (dashes != undefined) {
+		this.dash = true;
+		this.p_dashes = dashes;
+		this.ndash = dashes.length;
+	}
+	if (dash_offset !=undefined) {
+		this.offset = dash_offset;
+	}
 };
 
 RrdGraphDesc.prototype.area = function (graph, value, color, legend, stack)
@@ -300,6 +310,7 @@ RrdGraphDesc.prototype.area = function (graph, value, color, legend, stack)
 	this.vidx = graph.find_var(value);
 	this.col = color;
 	if (legend === undefined) this.legend = '';
+	else if (legend.length === 0) this.legend = '';
 	else this.legend = '  '+legend;
 	if (stack === undefined) this.stack = false;
 	else this.stack = stack;
@@ -315,6 +326,7 @@ RrdGraphDesc.prototype.tick = function (graph, vname, color, fraction, legend)
 	if (fraction !== undefined)
 		this.yrule = fraction;
 	if (legend === undefined) this.legend = '';
+	else if (legend.length === 0) this.legend = '';
 	else this.legend = '  '+legend;
 	this.format = this.legend;
 };
@@ -372,16 +384,26 @@ RrdGraphDesc.prototype.textalign = function (graph, align)
 	}
 };
 
-RrdGraphDesc.prototype.vrule = function (graph, time, color, legend)
+RrdGraphDesc.prototype.vrule = function (graph, time, color, legend, dashes, dash_offset)
 {
 	this.gf = RrdGraphDesc.GF_VRULE;
 	this.xrule = time;
 	this.col = color;
 	if (legend === undefined) this.legend = '';
+	else if (legend.length === 0) this.legend = '';
 	else this.legend = '  '+legend;
+
+	if (dashes != undefined) {
+		this.dash = true;
+		this.p_dashes = dashes;
+		this.ndash = dashes.length;
+	}
+	if (dash_offset !=undefined) {
+		this.offset = dash_offset;
+	}
 };
 
-RrdGraphDesc.prototype.hrule = function (graph, value, color, legend)
+RrdGraphDesc.prototype.hrule = function (graph, value, color, legend, dashes, dash_offset)
 {
 	this.gf = RrdGraphDesc.GF_HRULE;
 	this.vidx = graph.find_var(value);
@@ -389,7 +411,17 @@ RrdGraphDesc.prototype.hrule = function (graph, value, color, legend)
 		this.yrule = value;
 	this.col = color;
 	if (legend === undefined) this.legend = '';
+	else if (legend.length === 0) this.legend = '';
 	else this.legend = '  '+legend;
+
+	if (dashes != undefined) {
+		this.dash = true;
+		this.p_dashes = dashes;
+		this.ndash = dashes.length;
+	}
+	if (dash_offset !=undefined) {
+		this.offset = dash_offset;
+	}
 };
 
 /**
@@ -823,10 +855,10 @@ var RrdGraph = function (gfx, data)
 			FONT: 'rgba(0, 0, 0, 1.0)',
 			ARROW: 'rgba(127, 31, 31, 1.0)',
 			AXIS: 'rgba(31, 31, 31, 1.0)',
-			FRAME: 'rgba(0, 0, 0, 1.0)' 
+			FRAME: 'rgba(0, 0, 0, 1.0)'
 	};
 
-	this.xlab = [ 
+	this.xlab = [
 		{minsec: 0, length: 0, gridtm: RrdGraph.TMT_SECOND, gridst: 30, mgridtm: RrdGraph.TMT_MINUTE, mgridst: 5, labtm: RrdGraph.TMT_MINUTE, labst: 5, precis: 0, stst: '%H:%M' } ,
 		{minsec: 2, length: 0, gridtm: RrdGraph.TMT_MINUTE, gridst: 1, mgridtm: RrdGraph.TMT_MINUTE, mgridst: 5, labtm: RrdGraph.TMT_MINUTE, labst: 5, precis: 0, stst: '%H:%M' } ,
 		{minsec: 5, length: 0, gridtm: RrdGraph.TMT_MINUTE, gridst: 2, mgridtm: RrdGraph.TMT_MINUTE, mgridst: 10, labtm: RrdGraph.TMT_MINUTE, labst: 10, precis: 0, stst: '%H:%M' } ,
@@ -2963,9 +2995,9 @@ RrdGraph.prototype.gdes_add_shift = function (vname, offset)
 	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_SHIFT, vname, offset));
 };
 
-RrdGraph.prototype.gdes_add_line = function (width, value, color, legend, stack)
+RrdGraph.prototype.gdes_add_line = function (width, value, color, legend, stack, dashes, dash_offset)
 {
-	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_LINE, width, value, color, legend, stack));
+	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_LINE, width, value, color, legend, stack, dashes, dash_offset));
 };
 
 RrdGraph.prototype.gdes_add_area = function (value, color, legend, stack)
@@ -2993,14 +3025,14 @@ RrdGraph.prototype.gdes_add_textalign = function (align)
 	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_TEXTALIGN, align));
 };
 
-RrdGraph.prototype.gdes_add_vrule = function (time, color, legend)
+RrdGraph.prototype.gdes_add_vrule = function (time, color, legend, dashes, dash_offset)
 {
-	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_VRULE, time, color, legend));
+	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_VRULE, time, color, legend, dashes, dash_offset));
 };
 
-RrdGraph.prototype.gdes_add_hrule = function (value, color, legend)
+RrdGraph.prototype.gdes_add_hrule = function (value, color, legend, dashes, dash_offset)
 {
-	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_HRULE, value, color, legend));
+	this.gdes.push(new RrdGraphDesc(this, RrdGraphDesc.GF_HRULE, value, color, legend, dashes, dash_offset));
 };
 
 RrdGraph.prototype.tmt_conv = function (str)

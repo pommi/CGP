@@ -28,6 +28,9 @@ var RrdGfxCanvas = function(canvasId)
 {
 	this.canvas = document.getElementById(canvasId);
 	this.ctx = this.canvas.getContext('2d');
+	this.dash = false;
+  this.dash_offset = null;
+	this.dash_array = null;
 };
 
 RrdGfxCanvas.prototype.size = function (width, height)
@@ -38,7 +41,22 @@ RrdGfxCanvas.prototype.size = function (width, height)
 
 RrdGfxCanvas.prototype.set_dash = function (dashes, n, offset)
 {
+	this.dash = true;
+	this.dash_array = dashes;
+	this.dash_offset = offset;
+};
 
+RrdGfxCanvas.prototype._set_dash = function ()
+{
+	if (this.dash_array != undefined && this.dash_array.length > 0) {
+		this.ctx.setLineDash(this.dash_array);
+		if (this.dash_offset > 0) {
+			this.ctx.lineDashOffset = this.dash_offset;
+		}
+	}
+	this.dash = false;
+	this.dash_array = null;
+	this.dash_offset = 0;
 };
 
 RrdGfxCanvas.prototype.line = function (X0, Y0, X1, Y1, width, color)
@@ -58,6 +76,7 @@ RrdGfxCanvas.prototype.line = function (X0, Y0, X1, Y1, width, color)
 	this.ctx.save();
 	this.ctx.lineWidth = width;
 	this.ctx.strokeStyle = color;
+	if (this.dash) this._set_dash();
 	this.ctx.beginPath();
 	this.ctx.moveTo(X0, Y0);
 	this.ctx.lineTo(X1, Y1);
@@ -136,6 +155,7 @@ RrdGfxCanvas.prototype.rectangle = function (X0, Y0, X1, Y1, width, style)
 
 	this.ctx.save();
 	this.ctx.beginPath();
+	if (this.dash) this._set_dash();
 	this.ctx.lineWidth = width;
 	this.ctx.moveTo(X0, Y0);
 	this.ctx.lineTo(X1, Y0);
@@ -179,6 +199,7 @@ RrdGfxCanvas.prototype.stroke_begin = function (width, style)
 {
 	this.ctx.save();
 	this.ctx.beginPath();
+	if (this.dash) this._set_dash();
 	this.ctx.lineWidth = width;
 	this.ctx.strokeStyle = style;
 	this.ctx.lineCap = 'round';

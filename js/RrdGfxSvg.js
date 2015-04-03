@@ -31,6 +31,9 @@ var RrdGfxSvg = function(svgId) {
 	this.path = null;
 	this.path_color = null;
 	this.path_width = null;
+	this.dash = false;
+  this.dash_offset = null;
+	this.dash_array = null;
 };
 
 RrdGfxSvg.prototype.size = function (width, height)
@@ -45,7 +48,23 @@ RrdGfxSvg.prototype.size = function (width, height)
 
 RrdGfxSvg.prototype.set_dash = function (dashes, n, offset)
 {
+	this.dash = true;
+	this.dash_array = dashes;
+	this.dash_offset = offset;
 };
+
+RrdGfxSvg.prototype._set_dash = function (shape)
+{
+	if (this.dash_array != undefined && this.dash_array.length > 0) {
+		shape.setAttributeNS(null, "stroke-dasharray", this.dash_array.join(','));
+		if (this.dash_offset > 0) {
+			shape.setAttributeNS(null, "stroke-dashoffset", this.dash_offset);
+		}
+	}
+	this.dash = false;
+	this.dash_array = null;
+	this.dash_offset = 0;
+}
 
 RrdGfxSvg.prototype.line = function (X0, Y0, X1, Y1, width, color)
 {
@@ -62,6 +81,8 @@ RrdGfxSvg.prototype.line = function (X0, Y0, X1, Y1, width, color)
 	shape.setAttributeNS(null, "y2", Y1);
 	shape.setAttributeNS(null, "stroke-width", width);
 	shape.setAttributeNS(null, "stroke", color);
+	if (this.dash)
+		this._set_dash(shape);
 
 	this.svg.appendChild(shape);
 };
@@ -100,6 +121,8 @@ RrdGfxSvg.prototype.rectangle = function (X0, Y0, X1, Y1, width, style)
 	shape.setAttributeNS(null, "stroke-width", width);
 	shape.setAttributeNS(null, "stroke", style);
 	shape.setAttributeNS(null, "fill", "none");
+	if (this.dash)
+		this._set_dash(shape);
 
 	this.svg.appendChild(shape);
 };
@@ -157,6 +180,8 @@ RrdGfxSvg.prototype.stroke_end = function ()
 	shape.setAttributeNS(null, "stroke-width", this.path_width);
 	shape.setAttributeNS(null, "stroke-linecap", 'round');
 	shape.setAttributeNS(null, "stroke-linejoin", 'round');
+	if (this.dash)
+		this._set_dash(shape);
 
 	this.svg.appendChild(shape);
 };

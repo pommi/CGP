@@ -81,7 +81,7 @@ var RrdGfxPdf = function (orientation, unit, size)
 	this.CoreFonts = ['courier', 'helvetica', 'times', 'symbol', 'zapfdingbats'];
 	// Scale factor (number of points in user unit)
 	if(unit === 'pt')
-		this.k = 1; 
+		this.k = 1;
 	else if(unit === 'mm')
 		this.k = 72/25.4;
 	else if(unit === 'cm')
@@ -129,6 +129,10 @@ var RrdGfxPdf = function (orientation, unit, size)
 	this.SetDisplayMode('default');
 	// Set default PDF version number
 	this.PDFVersion = '1.3';
+
+	this.dash = false;
+	this.dash_array = null;
+	this.dash_offset = null;
 };
 
 RrdGfxPdf.CORE_FONTS= {
@@ -182,6 +186,31 @@ RrdGfxPdf.prototype.size = function (width, height)
 
 RrdGfxPdf.prototype.set_dash = function (dashes, n, offset)
 {
+	this.dash = true;
+	this.dash_array = dashes;
+	this.dash_offset = offset;
+};
+
+RrdGfxPdf.prototype._set_dash = function ()
+{
+	this.dash = true;
+
+	if (this.dash_array != undefined && this.dash_array.length > 0) {
+		for (var n=0; n < this.dash_array.length; n++) {
+			this.dash_array[n] = this.dash_array[n] * this.k;
+		}
+		this.dash_array = this.dash_array.join(' ');
+
+		if (this.dash_offset == 0) {
+			this._out('['+this.dash_array+'] 0 d');
+		} else {
+			this.dash_offset = this.dash_offset * this.k;
+			this._out('['+this.dash_array+'] '+this.dash_offset+' d');
+		}
+	}
+	this.dash = false;
+	this.dash_array = null;
+	this.dash_offset = 0;
 };
 
 RrdGfxPdf.prototype.line = function (X0, Y0, X1, Y1, width, color)
@@ -190,6 +219,8 @@ RrdGfxPdf.prototype.line = function (X0, Y0, X1, Y1, width, color)
 	this._setLineWidth(width);
 	var rgba = this.parse_color(color);
 	this._setDrawColor(rgba[0], rgba[1], rgba[2]);
+	if (this.dash)
+		this._set_dash();
 	this._moveTo(X0, Y0);
 	this._lineTo(X1, Y1);
 	this._stroke();
@@ -215,6 +246,8 @@ RrdGfxPdf.prototype.rectangle = function (X0, Y0, X1, Y1, width, style)
 	this._setLineWidth(width);
 	var rgba = this.parse_color(style);
 	this._setDrawColor(rgba[0], rgba[1], rgba[2]);
+	if (this.dash)
+		this._set_dash();
 	this._moveTo(X0, Y0);
 	this._lineTo(X1, Y0);
 	this._lineTo(X1, Y1);
@@ -250,6 +283,8 @@ RrdGfxPdf.prototype.stroke_begin = function (width, style)
 	this._setLineWidth(width);
 	var rgba = this.parse_color(style);
 	this._setDrawColor(rgba[0], rgba[1], rgba[2]);
+	if (this.dash)
+		this._set_dash();
 	this._out('0 J');  // line cap
 	this._out('0 j');  // line join
 };
