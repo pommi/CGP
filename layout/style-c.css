@@ -1,3 +1,11 @@
+label[for="navicon"] {
+	display: block;
+}
+
+#header h1 {
+	padding-left: 30px;
+}
+
 #content {
 	padding-left: 5px;
 }
@@ -12,5 +20,24 @@
 }
 
 .plugins {
+	position: absolute;
+	z-index: 0;
 	display: none;
+}
+
+.navicon:checked ~ .plugins {
+	display: block;
+}
+
+.graphs {
+	position: relative;
+	z-index: 1;
+	background: #fff;
+	min-height: 100%;
+	min-width: 100%;
+	bottom: 100%;
+}
+
+.navicon:checked ~ .graphs {
+	left: 125px;
 }

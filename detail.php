@@ -30,6 +30,12 @@ html_start();
 printf('<fieldset id="%s">', htmlentities($host));
 printf('<legend>%s</legend>', htmlentities($host));
 
+		echo <<<EOT
+<input type="checkbox" id="navicon" class="navicon" />
+<label for="navicon"></label>
+
+EOT;
+
 if (!$plugins = collectd_plugins($host)) {
 	echo "Unknown host\n";
 	return false;
