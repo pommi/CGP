@@ -67,6 +67,10 @@ a:hover {
 	width: 20em;
 }
 
+.row .hostinfo {
+	float: left;
+}
+
 .row .field {
 	float: left;
 	width: 3.4em;

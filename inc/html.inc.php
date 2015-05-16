@@ -238,6 +238,8 @@ function host_summary($cat, $hosts) {
 			urlencode($host),
 			htmlentities($host));
 
+		echo "<div class=\"hostinfo\">";
+
 		if ($CONFIG['showload']) {
 			require_once 'type/Default.class.php';
 			$load = array('h' => $host, 'p' => 'load', 't' => 'load');
@@ -304,7 +306,7 @@ function host_summary($cat, $hosts) {
 			}
 		}
 
-		print "</div>\n";
+		print "</div></div>\n";
 	}
 
 	echo "</div>\n";
