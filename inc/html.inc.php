@@ -19,8 +19,11 @@ function html_start() {
 <head>
 	<meta charset="utf-8">
 	<title>CGP{$path}</title>
-	<link rel="stylesheet" href="{$html_weburl}layout/style.css" type="text/css">
 	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="{$html_weburl}layout/style.css" type="text/css">
+	<link rel="stylesheet" href="{$html_weburl}layout/style-b.css" type="text/css" media="(max-width: 1000px),(max-device-width: 1000px) and (orientation: portrait),(max-device-width: 767px) and (orientation: landscape)">
+	<link rel="stylesheet" href="{$html_weburl}layout/style-c.css" type="text/css" media="(max-width: 767px),(max-device-width: 767px) and (orientation: portrait),(max-device-width: 499px) and (orientation: landscape)">
+	<link rel="stylesheet" href="{$html_weburl}layout/style-d.css" type="text/css" media="(max-width: 499px),(max-device-width: 499px) and (orientation: portrait)">
 
 EOT;
 	if (isset($CONFIG['page_refresh']) && is_numeric($CONFIG['page_refresh'])) {
