@@ -49,28 +49,31 @@ a:hover {
 	text-decoration: underline;
 }
 
-table.summary th {
-	width: 300px;
-	font-weight: normal;
-	text-align: left;
+.row {
+	clear: left;
+	padding: 4px;
 }
 
-table.summary tr.even {
+.row.even {
 /*	background: #eeeeee; */
 }
 
-table.summary tr.odd {
+.row.odd {
 /*	background: #cccccc; */
 }
 
-table.summary td {
-	width: 50px;
-	text-align: right;
+.row label {
+	float: left;
+	width: 20em;
 }
 
-table.summary td.wide {
-	width: 125px;
-	text-align: right;
+.row .field {
+	float: left;
+	width: 3.4em;
+}
+
+.row .field.wide {
+	width: 8em;
 }
 
 img {

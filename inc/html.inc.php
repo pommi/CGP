@@ -20,7 +20,7 @@ function html_start() {
 	<meta charset="utf-8">
 	<title>CGP{$path}</title>
 	<link rel="stylesheet" href="{$html_weburl}layout/style.css" type="text/css">
-	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<meta name="viewport" content="width=device-width">
 
 EOT;
 	if (isset($CONFIG['page_refresh']) && is_numeric($CONFIG['page_refresh'])) {
@@ -221,7 +221,7 @@ function host_summary($cat, $hosts) {
 
 	printf('<fieldset id="%s">', htmlentities($cat));
 	printf('<legend>%s</legend>', htmlentities($cat));
-	echo "<table class=\"summary\">\n";
+	echo "<div class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
 	$host_counter = 0;
@@ -229,8 +229,8 @@ function host_summary($cat, $hosts) {
 	foreach($hosts as $host) {
 		$host_counter++;
 
-		printf('<tr class="%s">', $row_style[$host_counter % 2]);
-		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
+		printf('<div class="row %s">', $row_style[$host_counter % 2]);
+		printf('<label><a href="%shost.php?h=%s">%s</a></label>',
 			htmlentities($CONFIG['weburl']),
 			urlencode($host),
 			htmlentities($host));
@@ -253,11 +253,11 @@ function host_summary($cat, $hosts) {
 				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
 					$class = '';
 					if ($cores > 0 && $rrd_info[$info] > $cores * 2)
-						$class = ' class="crit"';
+						$class = ' crit';
 					elseif ($cores > 0 && $rrd_info[$info] > $cores)
-						$class = ' class="warn"';
+						$class = ' warn';
 
-					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
+					printf('<div class="field%s">%.2f</div>', $class, $rrd_info[$info]);
 				}
 			}
 		}
@@ -276,11 +276,11 @@ function host_summary($cat, $hosts) {
 
 					$class = '';
 					if ($percent_mem > 90)
-						$class = ' class="crit"';
+						$class = ' crit';
 					elseif ($percent_mem > 70)
-						$class = ' class="warn"';
+						$class = ' warn';
 
-					printf('<td%s>%d%%</td>', $class, $percent_mem);
+					printf('<div class="field%s">%d%%</div>', $class, $percent_mem);
 				}
 			}
 		}
@@ -296,15 +296,15 @@ function host_summary($cat, $hosts) {
 				elseif ($time > 60)
 					$class .= ' warn';
 
-				printf('<td class="%s"><time class="timeago" datetime="%s">%d seconds ago</time></td>',
+				printf('<div class="field %s"><time class="timeago" datetime="%s">%d seconds ago</time></div>',
 					$class, date('c', $rrd_info['last_update']), $time);
 			}
 		}
 
-		print "</tr>\n";
+		print "</div>\n";
 	}
 
-	echo "</table>\n";
+	echo "</div>\n";
 	echo "</fieldset>\n";
 }
 
