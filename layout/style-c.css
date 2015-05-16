@@ -1,4 +1,16 @@
+#content {
+	padding-left: 5px;
+}
+
+#footer {
+	padding-left: 5px;
+}
+
 .row .hostinfo {
 	font-size: 0.7em;
 	opacity: 0.6;
+}
+
+.plugins {
+	display: none;
 }
