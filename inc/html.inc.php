@@ -243,11 +243,8 @@ function host_summary($cat, $hosts) {
 
 			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
 
-			# ignore if file does not exist
-			if (!$rrd_info)
-				continue;
-
-			if (isset($rrd_info['ds[shortterm].last_ds']) &&
+			if ($rrd_info &&
+				isset($rrd_info['ds[shortterm].last_ds']) &&
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
 
@@ -272,35 +269,36 @@ function host_summary($cat, $hosts) {
 			$rrd_info_ca = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/memory/memory-cached.rrd');
 
 			# ignore if file does not exist
-			if (!$rrd_info_mu || !$rrd_info_mf || !$rrd_info_bf || !$rrd_info_ca)
-				continue;
+			if ($rrd_info_mu && $rrd_info_mf && $rrd_info_bf && $rrd_info_ca) {
+				$info='ds[value].last_ds';
+				if (isset($rrd_info_mu[$info]) && isset($rrd_info_mf[$info]) && isset($rrd_info_bf[$info]) && isset($rrd_info_ca[$info]) ) {
+					$percent_mem =	$rrd_info_mu[$info] * 100 / ($rrd_info_mu[$info] + $rrd_info_mf[$info] + $rrd_info_bf[$info] + $rrd_info_ca[$info]);
 
-			$info='ds[value].last_ds';
-			if (isset($rrd_info_mu[$info]) && isset($rrd_info_mf[$info]) && isset($rrd_info_bf[$info]) && isset($rrd_info_ca[$info]) ) {
-				$percent_mem =	$rrd_info_mu[$info] * 100 / ($rrd_info_mu[$info] + $rrd_info_mf[$info] + $rrd_info_bf[$info] + $rrd_info_ca[$info]);
+					$class = '';
+					if ($percent_mem > 90)
+						$class = ' class="crit"';
+					elseif ($percent_mem > 70)
+						$class = ' class="warn"';
 
-				$class = '';
-				if ($percent_mem > 90)
-					$class = ' class="crit"';
-				elseif ($percent_mem > 70)
-					$class = ' class="warn"';
-
-				printf('<td%s>%d%%</td>', $class, $percent_mem);
+					printf('<td%s>%d%%</td>', $class, $percent_mem);
+				}
 			}
 		}
 
 		if ($CONFIG['showtime']) {
 			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
-			$time = time() - $rrd_info['last_update'];
+			if ($rrd_info) {
+				$time = time() - $rrd_info['last_update'];
 
-			$class = 'wide';
-			if ($time > 300)
-				$class .= ' crit';
-			elseif ($time > 60)
-				$class .= ' warn';
+				$class = 'wide';
+				if ($time > 300)
+					$class .= ' crit';
+				elseif ($time > 60)
+					$class .= ' warn';
 
-			printf('<td class="%s"><time class="timeago" datetime="%s">%d seconds ago</time></td>',
-				$class, date('c', $rrd_info['last_update']), $time);
+				printf('<td class="%s"><time class="timeago" datetime="%s">%d seconds ago</time></td>',
+					$class, date('c', $rrd_info['last_update']), $time);
+			}
 		}
 
 		print "</tr>\n";
