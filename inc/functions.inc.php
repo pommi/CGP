@@ -10,18 +10,18 @@ function GET($index) {
 
 function validate_get($value, $type) {
 	switch($type) {
-		case 'host':
+		case 'h': # host
 			if (!preg_match('/^[\w-.]+$/u', $value))
 				return NULL;
 		break;
-		case 'plugin':
-		case 'category':
-		case 'type':
+		case 'p': # plugin
+		case 'c': # category
+		case 't': # type
 			if (!preg_match('/^\w+$/u', $value))
 				return NULL;
 		break;
-		case 'pinstance':
-		case 'tinstance':
+		case 'pi': # plugin instance
+		case 'ti': # type instance
 			if (!preg_match('/^[\w-]+$/u', $value))
 				return NULL;
 		break;

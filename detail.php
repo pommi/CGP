@@ -15,12 +15,12 @@ if (empty($_GET['y']))
 if ($CONFIG['graph_type'] == 'hybrid')
 	$CONFIG['graph_type'] = 'canvas';
 
-$host = validate_get(GET('h'), 'host');
-$plugin = validate_get(GET('p'), 'plugin');
-$pinstance = validate_get(GET('pi'), 'pinstance');
-$category = validate_get(GET('c'), 'category');
-$type = validate_get(GET('t'), 'type');
-$tinstance = validate_get(GET('ti'), 'tinstance');
+$host = validate_get(GET('h'), 'h');
+$plugin = validate_get(GET('p'), 'p');
+$pinstance = validate_get(GET('pi'), 'pi');
+$category = validate_get(GET('c'), 'c');
+$type = validate_get(GET('t'), 't');
+$tinstance = validate_get(GET('ti'), 'ti');
 $seconds = GET('s');
 
 $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);

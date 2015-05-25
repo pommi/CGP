@@ -4,8 +4,8 @@ require_once 'conf/common.inc.php';
 require_once 'inc/functions.inc.php';
 require_once 'inc/collectd.inc.php';
 
-$plugin = validate_get(GET('p'), 'plugin');
-$type = validate_get(GET('t'), 'type');
+$plugin = validate_get(GET('p'), 'p');
+$type = validate_get(GET('t'), 't');
 $width = GET('x') ? filter_var(GET('x'), FILTER_VALIDATE_INT, array(
 	'min_range' => 10,
 	'max_range' => $CONFIG['max-width']
@@ -22,7 +22,7 @@ if ($width === NULL || $height === NULL) {
 	error_image();
 }
 
-if (validate_get(GET('h'), 'host') === NULL) {
+if (validate_get(GET('h'), 'h') === NULL) {
 	error_log('Invalid host: "' . urlencode(GET('h')) . '"');
 	error_image();
 }
@@ -31,7 +31,7 @@ $typesdb = parse_typesdb_file($CONFIG['typesdb']);
 
 if ($plugin == 'aggregation') {
 	$pi = explode("-", GET('pi'));
-	$plugin = $_GET['p'] = validate_get($pi[0], 'plugin');
+	$plugin = $_GET['p'] = validate_get($pi[0], 'p');
 }
 
 # plugin json
