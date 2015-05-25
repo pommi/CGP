@@ -313,15 +313,15 @@ function host_summary($cat, $hosts) {
 
 function breadcrumbs() {
 	$path = '';
-	if (validate_get(GET('h'), 'h'))
+	if (GET('h'))
 		$path .= ' - '.ucfirst(GET('h'));
-	if (validate_get(GET('p'), 'p'))
+	if (GET('p'))
 		$path .= ' - '.ucfirst(GET('p'));
-	if (validate_get(GET('pi'), 'pi'))
+	if (GET('pi'))
 		$path .= ' - '.GET('pi');
-	if (validate_get(GET('t'), 't') && validate_get(GET('p'), 'p') && GET('t') != GET('p'))
+	if (GET('t') && GET('p') && GET('t') != GET('p'))
 		$path .= ' - '.GET('t');
-	if (validate_get(GET('ti'), 'ti'))
+	if (GET('ti'))
 		$path .= ' - '.GET('ti');
 
 	return $path;

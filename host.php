@@ -4,8 +4,8 @@ require_once 'conf/common.inc.php';
 require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
-$host = validate_get(GET('h'), 'h');
-$plugin = validate_get(GET('p'), 'p');
+$host = GET('h');
+$plugin = GET('p');
 
 $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 

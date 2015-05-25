@@ -2,28 +2,66 @@
 
 # global functions
 
-function GET($index) {
-	if (isset($_GET[$index]))
-		return $_GET[$index];
-	return null;
-}
+function GET($index = NULL, $value = NULL) {
+	# parse all values from $_GET when no index is given
+	if ($index === NULL) {
+		$arr = array();
+		foreach($_GET as $i => $v) {
+			$arr[$i] = GET($i);
+		}
+		return $arr;
+	}
 
-function validate_get($value, $type) {
-	switch($type) {
+	if (!isset($_GET[$index]))
+		return NULL;
+
+	if ($value === NULL)
+		$value = $_GET[$index];
+
+	$desc = array(
+		'h'  => 'host',
+		'p'  => 'plugin',
+		'c'  => 'category',
+		't'  => 'type',
+		'pi' => 'plugin instance',
+		'ti' => 'type instance',
+		's'  => 'seconds',
+		'x'  => 'x-axis',
+		'y'  => 'y-axis',
+	);
+
+	switch($index) {
 		case 'h': # host
-			if (!preg_match('/^[\w-.]+$/u', $value))
+			if (!preg_match('/^[\w-.]+$/u', $value)) {
+				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
 				return NULL;
+			}
 		break;
 		case 'p': # plugin
 		case 'c': # category
 		case 't': # type
-			if (!preg_match('/^\w+$/u', $value))
+			if (!preg_match('/^\w+$/u', $value)) {
+				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
 				return NULL;
+			}
 		break;
 		case 'pi': # plugin instance
 		case 'ti': # type instance
-			if (!preg_match('/^[\w-]+$/u', $value))
+			if (!preg_match('/^[\w-]+$/u', $value)) {
+				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
 				return NULL;
+			}
+		break;
+		case 's': # seconds
+		case 'x': # x-axis
+		case 'y': # y-axis
+			if (!is_numeric($value)) {
+				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
+				return NULL;
+			}
+		break;
+		default:
+			return NULL;
 		break;
 	}
 

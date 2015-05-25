@@ -4,8 +4,8 @@ require_once 'conf/common.inc.php';
 require_once 'inc/functions.inc.php';
 require_once 'inc/collectd.inc.php';
 
-$plugin = validate_get(GET('p'), 'p');
-$type = validate_get(GET('t'), 't');
+$plugin = GET('p');
+$type = GET('t');
 $width = GET('x') ? filter_var(GET('x'), FILTER_VALIDATE_INT, array(
 	'min_range' => 10,
 	'max_range' => $CONFIG['max-width']
@@ -18,12 +18,12 @@ $height = GET('y') ? filter_var(GET('y'), FILTER_VALIDATE_INT, array(
 if ($width === NULL || $height === NULL) {
 	error_log(sprintf('Invalid image dimension, x="%s", y="%s"',
 		urlencode(GET('x')),
-		urlencode(GET('y'))));
+		urlencode(GET('y'))
+	));
 	error_image();
 }
 
-if (validate_get(GET('h'), 'h') === NULL) {
-	error_log('Invalid host: "' . urlencode(GET('h')) . '"');
+if (GET('h') === NULL) {
 	error_image();
 }
 
@@ -31,7 +31,7 @@ $typesdb = parse_typesdb_file($CONFIG['typesdb']);
 
 if ($plugin == 'aggregation') {
 	$pi = explode("-", GET('pi'));
-	$plugin = $_GET['p'] = validate_get($pi[0], 'p');
+	$plugin = $_GET['p'] = GET('p', $pi[0]);
 }
 
 # plugin json
@@ -49,19 +49,19 @@ if (!isset($plugin_json[$type]['type']))
 switch ($plugin_json[$type]['type']) {
 	case 'stacked':
 		require_once 'type/GenericStacked.class.php';
-		$obj = new Type_GenericStacked($CONFIG, $_GET);
+		$obj = new Type_GenericStacked($CONFIG, GET());
 		break;
 	case 'io':
 		require_once 'type/GenericIO.class.php';
-		$obj = new Type_GenericIO($CONFIG, $_GET);
+		$obj = new Type_GenericIO($CONFIG, GET());
 		break;
 	case 'uptime':
 		require_once 'type/Uptime.class.php';
-		$obj = new Type_Uptime($CONFIG, $_GET);
+		$obj = new Type_Uptime($CONFIG, GET());
 		break;
 	default:
 		require_once 'type/Default.class.php';
-		$obj = new Type_Default($CONFIG, $_GET);
+		$obj = new Type_Default($CONFIG, GET());
 		break;
 }
 
