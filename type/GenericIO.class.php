@@ -35,6 +35,8 @@ class Type_GenericIO extends Type_Base {
 					$rrdgraph[] = sprintf('VDEF:tot_%1$s=avg_%1$s,TOTAL', crc32hex($sources[$i]));
 					if ($this->percentile)
 						$rrdgraph[] = sprintf('VDEF:pct_%1$s=avg_%1$s,%2$s,PERCENT', crc32hex($sources[$i]), $this->percentile);
+					if ($this->percentile && $this->negative_io && $i == 1)
+						$rrdgraph[] = sprintf('VDEF:pct_%1$s_neg=avg_%1$s_neg,%2$s,PERCENT', crc32hex($sources[$i]), 100 - $this->percentile);
 					$i++;
 				}
 			}
@@ -70,10 +72,12 @@ class Type_GenericIO extends Type_Base {
 
 		if ($this->percentile) {
 			$rrdgraph[] = 'COMMENT: \l';
+			$i=0;
 			foreach($sources as $source) {
 				$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
-				$rrdgraph[] = sprintf('HRULE:pct_%s#%s:%sth Percentile %s', crc32hex($source), $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
+				$rrdgraph[] = sprintf('LINE:pct_%s%s#%s:%sth Percentile %s', crc32hex($source), ($i == 1 && $this->negative_io) ? '_neg' : '', $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
 				$rrdgraph[] = sprintf('GPRINT:pct_%s:%s\l', crc32hex($source), $this->rrd_format);
+				$i++;
 			}
 		}
 
