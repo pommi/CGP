@@ -20,6 +20,26 @@
 		"legend_format": "%5.1lf%s",
 		"base": "1024"
 	},
+	"percent": {
+		"title": "Swap utilization percentage on {{HOST}}",
+		"vertical": "Percentage",
+		"type": "stacked",
+		"legend": {
+			"free": {
+				"name": "Free",
+				"color": "00e000"
+			},
+			"cached": {
+				"name": "Cached",
+				"color": "0000ff"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%%"
+	},
 	"swap_io": {
 		"title": "Swapped I/O pages on {{HOST}}",
 		"vertical": "Pages",
