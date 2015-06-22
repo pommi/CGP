@@ -83,7 +83,7 @@ switch ($plugin_json[$type]['type']) {
 }
 
 # in case of aggregation, reset pi after initializing $obj to get a correct title
-if ($aggr) {
+if (isset($aggr) && $aggr) {
 	$_GET['pi'] = GET('pi', $pi[1]);
 }
 
