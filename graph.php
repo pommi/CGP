@@ -30,8 +30,9 @@ if (GET('h') === NULL) {
 $typesdb = parse_typesdb_file($CONFIG['typesdb']);
 
 if ($plugin == 'aggregation') {
-	$pi = explode("-", GET('pi'));
-	$plugin = $_GET['p'] = GET('p', $pi[0]);
+	$aggr = true;
+	$pi = explode("-", GET('pi'), 2);
+	$plugin = GET('p', $pi[0]);
 }
 
 # plugin json
@@ -79,6 +80,11 @@ switch ($plugin_json[$type]['type']) {
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, GET());
 		break;
+}
+
+# in case of aggregation, reset pi after initializing $obj to get a correct title
+if ($aggr) {
+	$_GET['pi'] = GET('pi', $pi[1]);
 }
 
 if (isset($typesdb[$type])) {
