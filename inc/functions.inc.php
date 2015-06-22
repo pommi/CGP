@@ -32,6 +32,8 @@ function GET($index = NULL, $value = NULL) {
 
 	switch($index) {
 		case 'h': # host
+		case 'pi': # plugin instance
+		case 'ti': # type instance
 			if (!preg_match('/^[\w-.]+$/u', $value)) {
 				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
 				return NULL;
@@ -41,13 +43,6 @@ function GET($index = NULL, $value = NULL) {
 		case 'c': # category
 		case 't': # type
 			if (!preg_match('/^\w+$/u', $value)) {
-				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
-				return NULL;
-			}
-		break;
-		case 'pi': # plugin instance
-		case 'ti': # type instance
-			if (!preg_match('/^[\w-]+$/u', $value)) {
 				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
 				return NULL;
 			}
