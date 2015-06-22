@@ -35,12 +35,24 @@ if ($plugin == 'aggregation') {
 }
 
 # plugin json
-if (function_exists('json_decode') && file_exists('plugin/'.$plugin.'.json')) {
-	$json = file_get_contents('plugin/'.$plugin.'.json');
-	$plugin_json = json_decode($json, true);
+if(function_exists('json_decode'))
+{
+	if (file_exists('plugin/'.$plugin.'.json')) {
+		$json = file_get_contents('plugin/'.$plugin.'.json');
+		$plugin_json = json_decode($json, true);
 
-	if (is_null($plugin_json))
-		error_log('CGP Error: invalid json in plugin/'.$plugin.'.json');
+		if (is_null($plugin_json))
+			error_log('CGP Error: invalid json in plugin/'.$plugin.'.json');
+	}
+	if (file_exists('conf/plugin/'.$plugin.'.json')) {
+		$json = file_get_contents('conf/plugin/'.$plugin.'.json');
+		$user_plugin_json = json_decode($json, true);
+
+		if (is_null($user_plugin_json))
+			error_log('CGP Error: invalid json in conf/plugin/'.$plugin.'.json');
+
+		$plugin_json = array_replace_recursive($plugin_json, $user_plugin_json);
+	}
 }
 
 if (!isset($plugin_json[$type]['type']))
