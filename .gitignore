@@ -1,2 +1,2 @@
-conf/config.local.php
+conf/*local*
 plugin/local/*.json
