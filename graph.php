@@ -80,10 +80,6 @@ switch ($plugin_json[$type]['type']) {
 		require_once 'type/Uptime.class.php';
 		$obj = new Type_Uptime($CONFIG, GET());
 		break;
-	case 'filled':
-		require_once 'type/GenericFilled.class.php';
-		$obj = new Type_GenericFilled($CONFIG, $_GET);
-		break;
 	default:
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, GET());
