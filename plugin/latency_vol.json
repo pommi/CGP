@@ -1,0 +1,27 @@
+{
+	"netapp_vol_latency": {
+		"title": "Disk time per operation ({{PI}}) on {{HOST}}",
+		"vertical": "Avg. Time/Op",
+		"type": "io",
+		"legend": {
+			"read_ops": {
+				"name": "Read",
+				"color": "0000ff"
+			},
+			"write_ops": {
+				"name": "Write",
+				"color": "00b000"
+			},
+			"read_latency": {
+				"name": "Read Latency",
+				"color": "00b0aa"
+			},
+			"write_latency": {
+				"name": "Write Latency",
+				"color": "00b0dd"
+			}
+		},
+		"legend_format": "%5.1lf%ss",
+		"scale": 0.001
+	}
+}

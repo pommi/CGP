@@ -1,0 +1,43 @@
+{
+	"cpu": {
+		"title": "Total CPU usage on {{HOST}}",
+		"vertical": "Percent",
+		"rrdtool_opts": ["-u", "100"],
+		"type": "stacked",
+		"legend": {
+			"idle": {
+				"name": "Idle",
+				"color": "e8e8e8"
+			},
+			"nice": {
+				"name": "Nice",
+				"color": "00e000"
+			},
+			"user": {
+				"name": "User",
+				"color": "0000ff"
+			},
+			"wait": {
+				"name": "Wait-IO",
+				"color": "ffb000"
+			},
+			"system": {
+				"name": "System",
+				"color": "ff0000"
+			},
+			"softirq": {
+				"name": "SoftIRQ",
+				"color": "ff00ff"
+			},
+			"interrupt": {
+				"name": "IRQ",
+				"color": "a000a0"
+			},
+			"steal": {
+				"name": "Steal",
+				"color": "000000"
+			}
+		},
+		"legend_format": "%5.2lf"
+	}
+}
