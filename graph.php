@@ -29,10 +29,10 @@ if (validate_get(GET('h'), 'host') === NULL) {
 
 $typesdb = parse_typesdb_file($CONFIG['typesdb']);
 
-if ($plugin == 'aggregation') {
-	$pi = explode("-", GET('pi'));
-	$plugin = $_GET['p'] = validate_get($pi[0], 'plugin');
-}
+#if ($plugin == 'aggregation') {
+#	$pi = explode("-", GET('pi'));
+#	$plugin = $_GET['p'] = validate_get($pi[0], 'plugin');
+#}
 
 # plugin json
 if (function_exists('json_decode') && file_exists('plugin/'.$plugin.'.json')) {
@@ -58,6 +58,10 @@ switch ($plugin_json[$type]['type']) {
 	case 'uptime':
 		require_once 'type/Uptime.class.php';
 		$obj = new Type_Uptime($CONFIG, $_GET);
+		break;
+	case 'filled':
+		require_once 'type/GenericFilled.class.php';
+		$obj = new Type_GenericFilled($CONFIG, $_GET);
 		break;
 	default:
 		require_once 'type/Default.class.php';

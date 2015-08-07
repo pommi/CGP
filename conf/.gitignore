@@ -1,1 +1,3 @@
 config.local.php
+config.hosts.php
+make_config_local.sh

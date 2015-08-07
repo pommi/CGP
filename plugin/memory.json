@@ -8,6 +8,10 @@
 				"name": "Free",
 				"color": "00e000"
 			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+            },
 			"inactive": {
 				"name": "Inactive",
 				"color": "00b000"
@@ -20,20 +24,27 @@
 				"name": "Cache",
 				"color": "0000ff"
 			},
+			"arc": {
+				"name": "ARC Cache",
+				"color": "0000ff"
+			},
 			"buffered": {
 				"name": "Buffered",
 				"color": "ffb000"
 			},
-			"locked": {
-				"name": "Locked",
-				"color": "ff00ff"
-			},
-			"used": {
-				"name": "Used",
-				"color": "ff0000"
+			"kernel": {
+				"name": "Kernel"
 			},
 			"active": {
 				"name": "Active",
+				"color": "ff00ff"
+			},
+			"unusable": {
+				"name": "Unusable",
+				"color": "00b000"
+			},
+			"locked": {
+				"name": "Locked",
 				"color": "ff00ff"
 			},
 			"wired": {
