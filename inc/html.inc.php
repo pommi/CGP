@@ -122,6 +122,7 @@ function html_end($footer = false) {
 EOT;
 	}
 	if ($CONFIG['graph_type'] == 'canvas') {
+		$html_weburl = htmlentities($CONFIG['weburl']);
 		if ($CONFIG['rrd_fetch_method'] == 'async') {
 			$js_async = 'true';
 		} else {
