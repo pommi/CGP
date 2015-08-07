@@ -230,17 +230,30 @@ function host_summary($cat, $hosts) {
 
 	$row_style = array(0 => "even", 1 => "odd");
 	$host_counter = 0;
+	$line_counter = 0;
 
 	foreach($hosts as $host) {
-		$host_counter++;
 
-		printf('<div class="row %s">', $row_style[$host_counter % 2]);
+        if($CONFIG['perline']) {
+            $foo = $host_counter % $CONFIG['perline'];
+            echo "<!--- $host_counter ".$CONFIG['perline']." $foo -->\n";
+            if($host_counter % $CONFIG['perline'] == 0) { 
+                printf('<div class="row %s">', $row_style[$line_counter % 2]);
+            } 
+        } else {
+            printf('<div class="row %s">', $row_style[$line_counter % 2]);
+        }
+
+
 		printf('<label><a href="%shost.php?h=%s">%s</a></label>',
 			htmlentities($CONFIG['weburl']),
 			urlencode($host),
 			htmlentities($host));
 
-		echo "<div class=\"hostinfo\">";
+
+        if ($CONFIG['showload'] || $CONFIG['showmem'] || $CONFIG['showtime']) {
+            echo "<div class=\"hostinfo\">";
+        }
 
 		if ($CONFIG['showload']) {
 			require_once 'type/Default.class.php';
@@ -308,7 +321,19 @@ function host_summary($cat, $hosts) {
 			}
 		}
 
-		print "</div></div>\n";
+        if($CONFIG['perline']) {
+            if(($host_counter % $CONFIG['perline'] ) == $CONFIG['perline'] - 1) { 
+                print "</div>\n";
+                $line_counter++;
+            } 
+            $host_counter++;
+        } else {
+            print "</div>\n";
+            $line_counter++;
+            if ($CONFIG['showload'] || $CONFIG['showmem'] || $CONFIG['showtime']) {
+                echo "</div>\n";
+            }
+        }
 	}
 
 	echo "</div>\n";
