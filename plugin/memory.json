@@ -12,7 +12,7 @@
 				"name": "Used",
 				"color": "ff0000"
             },
-            kernel": {
+            "kernel": {
                 "name": "Kernel"
             },
 			"inactive": {
