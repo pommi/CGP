@@ -232,20 +232,25 @@ function host_summary($cat, $hosts) {
 	$host_counter = 0;
 	$line_counter = 0;
 
+    if($CONFIG['perline']) {
+        printf('<div class="divTable">');
+    }
+
 	foreach($hosts as $host) {
 
         if($CONFIG['perline']) {
             $foo = $host_counter % $CONFIG['perline'];
             echo "<!--- $host_counter ".$CONFIG['perline']." $foo -->\n";
             if($host_counter % $CONFIG['perline'] == 0) { 
-                printf('<div class="row %s">', $row_style[$line_counter % 2]);
+                printf('<div class="divRow %s">', $row_style[$line_counter % 2]);
             } 
         } else {
             printf('<div class="row %s">', $row_style[$line_counter % 2]);
         }
 
 
-		printf('<label><a href="%shost.php?h=%s">%s</a></label>',
+		# printf('<label><a href="%shost.php?h=%s">%s</a></label>',
+		printf('<div class="divCell"><a href="%shost.php?h=%s">%s</a></div>',
 			htmlentities($CONFIG['weburl']),
 			urlencode($host),
 			htmlentities($host));
@@ -335,6 +340,10 @@ function host_summary($cat, $hosts) {
             }
         }
 	}
+    
+    if($CONFIG['perline']) {
+        printf('</div>'); 
+    }
 
 	echo "</div>\n";
 	echo "</fieldset>\n";
