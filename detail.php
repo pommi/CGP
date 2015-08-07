@@ -15,12 +15,12 @@ if (empty($_GET['y']))
 if ($CONFIG['graph_type'] == 'hybrid')
 	$CONFIG['graph_type'] = 'canvas';
 
-$host = validate_get(GET('h'), 'host');
-$plugin = validate_get(GET('p'), 'plugin');
-$pinstance = validate_get(GET('pi'), 'pinstance');
-$category = validate_get(GET('c'), 'category');
-$type = validate_get(GET('t'), 'type');
-$tinstance = validate_get(GET('ti'), 'tinstance');
+$host = GET('h');
+$plugin = GET('p');
+$pinstance = GET('pi');
+$category = GET('c');
+$type = GET('t');
+$tinstance = GET('ti');
 $seconds = GET('s');
 
 $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
@@ -29,6 +29,12 @@ html_start();
 
 printf('<fieldset id="%s">', htmlentities($host));
 printf('<legend>%s</legend>', htmlentities($host));
+
+		echo <<<EOT
+<input type="checkbox" id="navicon" class="navicon" />
+<label for="navicon"></label>
+
+EOT;
 
 if (!$plugins = collectd_plugins($host)) {
 	echo "Unknown host\n";
@@ -40,7 +46,7 @@ plugins_list($host, $selected_plugins);
 echo '<div class="graphs">';
 plugin_header($host, $plugin);
 
-$args = $_GET;
+$args = GET();
 print '<ul class="time-range">' . "\n";
 foreach($CONFIG['term'] as $key => $s) {
 	$args['s'] = $s;
@@ -59,7 +65,8 @@ if ($CONFIG['graph_type'] == 'canvas') {
 } else {
 	printf("<img src=\"%s%s\">\n",
 		htmlentities($CONFIG['weburl']),
-		htmlentities(build_url('graph.php', $_GET)));
+		htmlentities(build_url('graph.php', GET()))
+	);
 }
 echo '</div>';
 echo "</fieldset>\n";

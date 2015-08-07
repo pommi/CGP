@@ -39,5 +39,25 @@
 			}
 		},
 		"legend_format": "%5.1lf%s"
+	},
+	"percent_bytes": {
+		"title": "Free space percentage ({{PI}}) on {{HOST}}",
+		"vertical": "Percent",
+		"type": "stacked",
+		"legend": {
+			"reserved": {
+				"name": "Reserved",
+				"color": "aaaaaa"
+			},
+			"free": {
+				"name": "Free",
+				"color": "00ff00"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%%"
 	}
 }

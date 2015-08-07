@@ -32,8 +32,17 @@
 				"name": "Buffered",
 				"color": "ffb000"
 			},
-			"kernel": {
-				"name": "Kernel"
+			"locked": {
+				"name": "Locked",
+				"color": "ff00ff"
+			},
+			"slab": {
+				"name": "Slab",
+				"color": "ff00ff"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
 			},
 			"active": {
 				"name": "Active",

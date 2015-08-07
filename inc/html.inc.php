@@ -19,8 +19,11 @@ function html_start() {
 <head>
 	<meta charset="utf-8">
 	<title>CGP{$path}</title>
+	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="{$html_weburl}layout/style.css" type="text/css">
-	<meta name="viewport" content="width=1050, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<link rel="stylesheet" href="{$html_weburl}layout/style-b.css" type="text/css" media="(max-width: 1000px),(max-device-width: 1000px) and (orientation: portrait),(max-device-width: 767px) and (orientation: landscape)">
+	<link rel="stylesheet" href="{$html_weburl}layout/style-c.css" type="text/css" media="(max-width: 767px),(max-device-width: 767px) and (orientation: portrait),(max-device-width: 499px) and (orientation: landscape)">
+	<link rel="stylesheet" href="{$html_weburl}layout/style-d.css" type="text/css" media="(max-width: 499px),(max-device-width: 499px) and (orientation: portrait)">
 
 EOT;
 	if (isset($CONFIG['page_refresh']) && is_numeric($CONFIG['page_refresh'])) {
@@ -91,32 +94,33 @@ echo <<<EOT
 EOT;
 }
 
-function html_end() {
+function html_end($footer = false) {
 	global $CONFIG;
 
-	$git = '/usr/bin/git';
-	$changelog = $CONFIG['webdir'].'/doc/CHANGELOG';
+	if ($footer) {
+		$git = '/usr/bin/git';
+		$changelog = $CONFIG['webdir'].'/doc/CHANGELOG';
 
-	$version = 'v?';
-	if (file_exists($git) && is_dir($CONFIG['webdir'].'/.git')) {
-		chdir($CONFIG['webdir']);
-		$version = exec($git.' describe --tags');
-	} elseif (file_exists($changelog)) {
-		$changelog = file($changelog);
-		$version = explode(' ', $changelog[0]);
-		$version = 'v'.$version[0];
-	}
+		$version = 'v?';
+		if (file_exists($git) && is_dir($CONFIG['webdir'].'/.git')) {
+			chdir($CONFIG['webdir']);
+			$version = exec($git.' describe --tags');
+		} elseif (file_exists($changelog)) {
+			$changelog = file($changelog);
+			$version = explode(' ', $changelog[0]);
+			$version = 'v'.$version[0];
+		}
 
-	$html_weburl = htmlentities($CONFIG['weburl']);
+		$html_weburl = htmlentities($CONFIG['weburl']);
 
-	echo <<<EOT
+		echo <<<EOT
 </div>
 <div id="footer">
-<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$html_weburl}doc/LICENSE" rel="licence">GNU General Public License (GPLv3)</a></span>
+<hr><span class="small"><a href="http://pommi.nethuis.nl/category/cgp/" rel="external">Collectd Graph Panel</a> ({$version}) is distributed under the <a href="{$html_weburl}doc/LICENSE" rel="license">GNU General Public License (GPLv3)</a></span>
 </div>
 
 EOT;
-
+	}
 	if ($CONFIG['graph_type'] == 'canvas') {
 		if ($CONFIG['rrd_fetch_method'] == 'async') {
 			$js_async = 'true';
@@ -221,7 +225,7 @@ function host_summary($cat, $hosts) {
 
 	printf('<fieldset id="%s">', htmlentities($cat));
 	printf('<legend>%s</legend>', htmlentities($cat));
-	echo "<table class=\"summary\">\n";
+	echo "<div class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
 	$host_counter = 0;
@@ -229,11 +233,13 @@ function host_summary($cat, $hosts) {
 	foreach($hosts as $host) {
 		$host_counter++;
 
-		printf('<tr class="%s">', $row_style[$host_counter % 2]);
-		printf('<th><a href="%shost.php?h=%s">%s</a></th>',
+		printf('<div class="row %s">', $row_style[$host_counter % 2]);
+		printf('<label><a href="%shost.php?h=%s">%s</a></label>',
 			htmlentities($CONFIG['weburl']),
 			urlencode($host),
 			htmlentities($host));
+
+		echo "<div class=\"hostinfo\">";
 
 		if ($CONFIG['showload']) {
 			require_once 'type/Default.class.php';
@@ -243,11 +249,8 @@ function host_summary($cat, $hosts) {
 
 			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
 
-			# ignore if file does not exist
-			if (!$rrd_info)
-				continue;
-
-			if (isset($rrd_info['ds[shortterm].last_ds']) &&
+			if ($rrd_info &&
+				isset($rrd_info['ds[shortterm].last_ds']) &&
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
 
@@ -256,11 +259,11 @@ function host_summary($cat, $hosts) {
 				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
 					$class = '';
 					if ($cores > 0 && $rrd_info[$info] > $cores * 2)
-						$class = ' class="crit"';
+						$class = ' crit';
 					elseif ($cores > 0 && $rrd_info[$info] > $cores)
-						$class = ' class="warn"';
+						$class = ' warn';
 
-					printf('<td%s>%.2f</td>', $class, $rrd_info[$info]);
+					printf('<div class="field%s">%.2f</div>', $class, $rrd_info[$info]);
 				}
 			}
 		}
@@ -272,56 +275,57 @@ function host_summary($cat, $hosts) {
 			$rrd_info_ca = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/memory/memory-cached.rrd');
 
 			# ignore if file does not exist
-			if (!$rrd_info_mu || !$rrd_info_mf || !$rrd_info_bf || !$rrd_info_ca)
-				continue;
+			if ($rrd_info_mu && $rrd_info_mf && $rrd_info_bf && $rrd_info_ca) {
+				$info='ds[value].last_ds';
+				if (isset($rrd_info_mu[$info]) && isset($rrd_info_mf[$info]) && isset($rrd_info_bf[$info]) && isset($rrd_info_ca[$info]) ) {
+					$percent_mem =	$rrd_info_mu[$info] * 100 / ($rrd_info_mu[$info] + $rrd_info_mf[$info] + $rrd_info_bf[$info] + $rrd_info_ca[$info]);
 
-			$info='ds[value].last_ds';
-			if (isset($rrd_info_mu[$info]) && isset($rrd_info_mf[$info]) && isset($rrd_info_bf[$info]) && isset($rrd_info_ca[$info]) ) {
-				$percent_mem =	$rrd_info_mu[$info] * 100 / ($rrd_info_mu[$info] + $rrd_info_mf[$info] + $rrd_info_bf[$info] + $rrd_info_ca[$info]);
+					$class = '';
+					if ($percent_mem > 90)
+						$class = ' crit';
+					elseif ($percent_mem > 70)
+						$class = ' warn';
 
-				$class = '';
-				if ($percent_mem > 90)
-					$class = ' class="crit"';
-				elseif ($percent_mem > 70)
-					$class = ' class="warn"';
-
-				printf('<td%s>%d%%</td>', $class, $percent_mem);
+					printf('<div class="field%s">%d%%</div>', $class, $percent_mem);
+				}
 			}
 		}
 
 		if ($CONFIG['showtime']) {
 			$rrd_info = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/load/load.rrd');
-			$time = time() - $rrd_info['last_update'];
+			if ($rrd_info) {
+				$time = time() - $rrd_info['last_update'];
 
-			$class = 'wide';
-			if ($time > 300)
-				$class .= ' crit';
-			elseif ($time > 60)
-				$class .= ' warn';
+				$class = 'wide';
+				if ($time > 300)
+					$class .= ' crit';
+				elseif ($time > 60)
+					$class .= ' warn';
 
-			printf('<td class="%s"><time class="timeago" datetime="%s">%d seconds ago</time></td>',
-				$class, date('c', $rrd_info['last_update']), $time);
+				printf('<div class="field %s"><time class="timeago" datetime="%s">%d seconds ago</time></div>',
+					$class, date('c', $rrd_info['last_update']), $time);
+			}
 		}
 
-		print "</tr>\n";
+		print "</div></div>\n";
 	}
 
-	echo "</table>\n";
+	echo "</div>\n";
 	echo "</fieldset>\n";
 }
 
 
 function breadcrumbs() {
 	$path = '';
-	if (validate_get(GET('h'), 'host'))
+	if (GET('h'))
 		$path .= ' - '.ucfirst(GET('h'));
-	if (validate_get(GET('p'), 'plugin'))
+	if (GET('p'))
 		$path .= ' - '.ucfirst(GET('p'));
-	if (validate_get(GET('pi'), 'pinstance'))
+	if (GET('pi'))
 		$path .= ' - '.GET('pi');
-	if (validate_get(GET('t'), 'type') && validate_get(GET('p'), 'plugin') && GET('t') != GET('p'))
+	if (GET('t') && GET('p') && GET('t') != GET('p'))
 		$path .= ' - '.GET('t');
-	if (validate_get(GET('ti'), 'tinstance'))
+	if (GET('ti'))
 		$path .= ' - '.GET('ti');
 
 	return $path;

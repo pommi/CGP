@@ -251,7 +251,7 @@ RrdJson.prototype = {
 				break;
 // 			LINE[width]:value[#color][:[legend][:STACK]][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
 				case 'LINE':
-					this.graph.gdes_add_line(gdes[i].width, gdes[i].value, gdes[i].color, gdes[i].legend, gdes[i].stack);
+					this.graph.gdes_add_line(gdes[i].width, gdes[i].value, gdes[i].color, gdes[i].legend, gdes[i].stack, gdes[i].dashes, gdes[i].dash_offset);
 					break;
 // 			AREA:value[#color][:[legend][:STACK]]
 				case 'AREA':
@@ -263,11 +263,11 @@ RrdJson.prototype = {
 					break;
 // 			HRULE:value#color[:legend][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
 				case 'HRULE':
-					this.graph.gdes_add_hrule(gdes[i].value, gdes[i].color, gdes[i].legend);
+					this.graph.gdes_add_hrule(gdes[i].value, gdes[i].color, gdes[i].legend, gdes[i].dashes, gdes[i].dash_offset);
 					break;
 // 			VRULE:time#color[:legend][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
 				case 'VRULE':
-					this.graph.gdes_add_vrule(gdes[i].time, gdes[i].color, gdes[i].legend);
+					this.graph.gdes_add_vrule(gdes[i].time, gdes[i].color, gdes[i].legend, gdes[i].dashes, gdes[i].dash_offset);
 				break;
 // 			COMMENT:text
 				case 'COMMENT':
@@ -484,7 +484,9 @@ RrdJson.prototype = {
 						value: this.graph.gdes[i].vname,
 						color: this.graph.gdes[i].col,
 						legend: (this.graph.gdes[i].legend === '' ? undefined : this.graph.gdes[i].legend.substr(2)),
-						stack: (this.graph.gdes[i].stack === false ? undefined : this.graph.gdes[i].stack) });
+						stack: (this.graph.gdes[i].stack === false ? undefined : this.graph.gdes[i].stack),
+						dashes: (this.graph.gdes[i].dash === false ? undefined : this.graph.gdes[i].p_dashes),
+						dash_offset: this.graph.gdes[i].offset });
 					break;
 // 			AREA:value[#color][:[legend][:STACK]]
 				case RrdGraphDesc.GF_AREA:
@@ -510,7 +512,9 @@ RrdJson.prototype = {
 						type: 'HRULE',
 						value: this.graph.gdes[i].yrule,
 						color: this.graph.gdes[i].col,
-						legend: (this.graph.gdes[i].legend === '' ? undefined : this.graph.gdes[i].legend.substr(2)) });
+						legend: (this.graph.gdes[i].legend === '' ? undefined : this.graph.gdes[i].legend.substr(2)),
+						dashes: (this.graph.gdes[i].dash === false ? undefined : this.graph.gdes[i].p_dashes),
+						dash_offset: this.graph.gdes[i].offset });
 					break;
 // 			VRULE:time#color[:legend][:dashes[=on_s[,off_s[,on_s,off_s]...]][:dash-offset=offset]]
 				case RrdGraphDesc.GF_VRULE:
@@ -518,7 +522,9 @@ RrdJson.prototype = {
 						type: 'VRULE',
 						time: this.graph.gdes[i].xrule,
 						color: this.graph.gdes[i].col,
-						legend: (this.graph.gdes[i].legend === '' ? undefined : this.graph.gdes[i].legend.substr(2)) });
+						legend: (this.graph.gdes[i].legend === '' ? undefined : this.graph.gdes[i].legend.substr(2)),
+						dashes: (this.graph.gdes[i].dash === false ? undefined : this.graph.gdes[i].p_dashes),
+						dash_offset: this.graph.gdes[i].offset });
 					break;
 // 			COMMENT:text
 				case RrdGraphDesc.GF_COMMENT:

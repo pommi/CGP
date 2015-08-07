@@ -37,4 +37,4 @@ jQuery(document).ready(function() {
 EOT;
 }
 
-html_end();
+html_end(true);

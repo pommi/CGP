@@ -24,13 +24,17 @@
  * RrdGfxSvg
  * @constructor
  */
-var RrdGfxSvg = function(svgId) {
+var RrdGfxSvg = function(svgId) 
+{
 	this.svg = document.getElementById(svgId);
 	this.svgns = "http://www.w3.org/2000/svg";
 	this.xmlns = "http://www.w3.org/XML/1998/namespace";
 	this.path = null;
 	this.path_color = null;
 	this.path_width = null;
+	this.dash = false;
+	this.dash_offset = null;
+	this.dash_array = null;
 };
 
 RrdGfxSvg.prototype.size = function (width, height)
@@ -45,16 +49,32 @@ RrdGfxSvg.prototype.size = function (width, height)
 
 RrdGfxSvg.prototype.set_dash = function (dashes, n, offset)
 {
+	this.dash = true;
+	this.dash_array = dashes;
+	this.dash_offset = offset;
 };
+
+RrdGfxSvg.prototype._set_dash = function (shape)
+{
+	if (this.dash_array != undefined && this.dash_array.length > 0) {
+		shape.setAttributeNS(null, "stroke-dasharray", this.dash_array.join(','));
+		if (this.dash_offset > 0) {
+			shape.setAttributeNS(null, "stroke-dashoffset", this.dash_offset);
+		}
+	}
+	this.dash = false;
+	this.dash_array = null;
+	this.dash_offset = 0;
+}
 
 RrdGfxSvg.prototype.line = function (X0, Y0, X1, Y1, width, color)
 {
 	var shape = document.createElementNS(this.svgns, "line");
 
-  X0 = Math.round(X0)+0.5;
-  Y0 = Math.round(Y0)+0.5;
-  X1 = Math.round(X1)+0.5;
-  Y1 = Math.round(Y1)+0.5;
+	X0 = Math.round(X0)+0.5;
+	Y0 = Math.round(Y0)+0.5;
+	X1 = Math.round(X1)+0.5;
+	Y1 = Math.round(Y1)+0.5;
 
 	shape.setAttributeNS(null, "x1", X0);
 	shape.setAttributeNS(null, "y1", Y0);
@@ -62,6 +82,8 @@ RrdGfxSvg.prototype.line = function (X0, Y0, X1, Y1, width, color)
 	shape.setAttributeNS(null, "y2", Y1);
 	shape.setAttributeNS(null, "stroke-width", width);
 	shape.setAttributeNS(null, "stroke", color);
+	if (this.dash)
+		this._set_dash(shape);
 
 	this.svg.appendChild(shape);
 };
@@ -70,10 +92,10 @@ RrdGfxSvg.prototype.dashed_line = function (X0, Y0, X1, Y1, width, color, dash_o
 {
 	var shape = document.createElementNS(this.svgns, "line");
 
-  X0 = Math.round(X0)+0.5;
-  Y0 = Math.round(Y0)+0.5;
-  X1 = Math.round(X1)+0.5;
-  Y1 = Math.round(Y1)+0.5;
+	X0 = Math.round(X0)+0.5;
+	Y0 = Math.round(Y0)+0.5;
+	X1 = Math.round(X1)+0.5;
+	Y1 = Math.round(Y1)+0.5;
 
 	shape.setAttributeNS(null, "x1", X0);
 	shape.setAttributeNS(null, "y1", Y0);
@@ -100,18 +122,20 @@ RrdGfxSvg.prototype.rectangle = function (X0, Y0, X1, Y1, width, style)
 	shape.setAttributeNS(null, "stroke-width", width);
 	shape.setAttributeNS(null, "stroke", style);
 	shape.setAttributeNS(null, "fill", "none");
+	if (this.dash)
+		this._set_dash(shape);
 
 	this.svg.appendChild(shape);
 };
 
 RrdGfxSvg.prototype.new_area = function (X0, Y0, X1, Y1, X2, Y2, color)
 {
-  X0 = Math.round(X0)+0.5;
-  Y0 = Math.round(Y0)+0.5;
-  X1 = Math.round(X1)+0.5;
-  Y1 = Math.round(Y1)+0.5;
-  X2 = Math.round(X2)+0.5;
-  Y2 = Math.round(Y2)+0.5;
+	X0 = Math.round(X0)+0.5;
+	Y0 = Math.round(Y0)+0.5;
+	X1 = Math.round(X1)+0.5;
+	Y1 = Math.round(Y1)+0.5;
+	X2 = Math.round(X2)+0.5;
+	Y2 = Math.round(Y2)+0.5;
 
 	this.path_color = color;
 	this.path = 'M'+X0+','+Y0;
@@ -121,8 +145,8 @@ RrdGfxSvg.prototype.new_area = function (X0, Y0, X1, Y1, X2, Y2, color)
 
 RrdGfxSvg.prototype.add_point = function (x, y)
 {
-  x = Math.round(x)+0.5;
-  y = Math.round(y)+0.5;
+	x = Math.round(x)+0.5;
+	y = Math.round(y)+0.5;
 
 	this.path += ' L'+x+','+y;
 };
@@ -157,30 +181,32 @@ RrdGfxSvg.prototype.stroke_end = function ()
 	shape.setAttributeNS(null, "stroke-width", this.path_width);
 	shape.setAttributeNS(null, "stroke-linecap", 'round');
 	shape.setAttributeNS(null, "stroke-linejoin", 'round');
+	if (this.dash)
+		this._set_dash(shape);
 
 	this.svg.appendChild(shape);
 };
 
 RrdGfxSvg.prototype.moveTo = function (x,y)
 {
-  x = Math.round(x)+0.5;
-  y = Math.round(y)+0.5;
+	x = Math.round(x)+0.5;
+	y = Math.round(y)+0.5;
 
 	this.path += ' M'+x+','+y;
 };
 
 RrdGfxSvg.prototype.lineTo = function (x,y)
 {
-  x = Math.round(x)+0.5;
-  y = Math.round(y)+0.5;
+	x = Math.round(x)+0.5;
+	y = Math.round(y)+0.5;
 
 	this.path += ' L'+x+','+y;
 };
 
 RrdGfxSvg.prototype.text = function (x, y, color, font, tabwidth, angle, h_align, v_align, text)
 {
-  x = Math.round(x);
-  y = Math.round(y);
+	x = Math.round(x);
+	y = Math.round(y);
 
 	var svgtext = document.createElementNS(this.svgns, "text");
 

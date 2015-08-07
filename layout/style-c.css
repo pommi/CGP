@@ -1,0 +1,46 @@
+label[for="navicon"] {
+	display: block;
+}
+
+#header h1 {
+	padding-left: 30px;
+}
+
+#content {
+	padding-left: 5px;
+}
+
+#footer {
+	padding-left: 5px;
+}
+
+.row .hostinfo {
+	font-size: 0.7em;
+	opacity: 0.6;
+}
+
+.plugins {
+	position: absolute;
+	z-index: 0;
+	display: none;
+}
+
+.navicon:checked ~ .plugins {
+	display: block;
+}
+
+.graphs {
+	top: 0;
+	left: 0;
+	position: relative;
+	z-index: 1;
+	background: #fff;
+	min-height: 100%;
+	min-width: 100%;
+	bottom: 100%;
+	transition: left 0.2s;
+}
+
+.navicon:checked ~ .graphs {
+	left: 125px;
+}
