@@ -18,6 +18,9 @@ $CONFIG['rrdtool_opts'] = array();
 # category of hosts to show on main page
 #$CONFIG['cat']['category1'] = array('host1', 'host2');
 
+# category of hosts based on regular expression
+#$CONFIG['cat']['Mailservers'] = '/mail\d+/';
+
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 
