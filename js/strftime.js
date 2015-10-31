@@ -63,7 +63,7 @@ function strftime (fmt, time)
 				var d01 = new Date (d.getFullYear(), 0, 1);
 				return pad3(Math.ceil((d.getTime()-d01.getTime())/86400000)+1);
 			case 'm':
-				return pad2(d.getMonth());
+				return pad2(d.getMonth()+1);
 			case 'M':
 				return pad2(d.getMinutes());
 			case 'p':
@@ -98,7 +98,7 @@ function strftime (fmt, time)
 				var d01 = new Date(d.getFullYear(),0,1);
 				return pad2(Math.round((Math.ceil((d.getTime()-d01.getTime())/86400000)+1 + 7 - (d.getDay() === 0 ? 7 : d.getDay()))/7));
 			case 'x':
-				return pad2(d.getDate())+'/'+pad2(d.getMonth())+'/'+d.getFullYear();
+				return pad2(d.getDate())+'/'+pad2(d.getMonth()+1)+'/'+d.getFullYear();
 			case 'X':
 				return pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds());
 			case 'y':
