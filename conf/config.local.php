@@ -25,6 +25,8 @@ $CONFIG['showmem'] = true;
 # modify bogdanr rootdf addon
 $CONFIG['showrootdf'] = true;
 $CONFIG['showtime'] = true;
+# display ($CONFIG['showItem']) metrics legend on category header
+$CONFIG['showlegend'] = true;
 
 $CONFIG['term'] = array(
 	'15min'	 => 60 * 15,
