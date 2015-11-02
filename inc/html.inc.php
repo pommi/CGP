@@ -242,7 +242,6 @@ function host_summary($cat, $hosts) {
 	}
 	echo "</div></div>";
 	
-	printf('<legend>%s</legend>', htmlentities($cat));
 	echo "<div class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
