@@ -226,19 +226,20 @@ function host_summary($cat, $hosts) {
 	printf('<fieldset id="%s">', htmlentities($cat));
 	/* add ($CONFIG['showItem']) legend */
 	printf('<div class="row"><label><legend>%s</legend></label><div class="hostinfo">', htmlentities($cat));
-	if ($CONFIG['showload']) {
-		echo "<div class=\"field\">1'</div><div class=\"field\">5'</div><div class=\"field\">15'</div>";
-	}
-	if ($CONFIG['showmem']) {
-		echo "<div class=\"field\">mem</div>";
-	}
-	/* BEG Marc0Polo: modify bogdanr rootfs addon */
-	if ($CONFIG['showrootdf']) {
-		echo "<div class=\"field\">disk</div>";
-	}
-	/* END Marc0Polo */
-	if ($CONFIG['showtime']) {
-		echo "<div class=\"field\">update</div>";
+	if ($CONFIG['showlegend']) {
+		if ($CONFIG['showload']) {
+			echo "<div class=\"field\">1'</div><div class=\"field\">5'</div><div class=\"field\">15'</div>";
+		}
+		if ($CONFIG['showmem']) {
+			echo "<div class=\"field\">mem</div>";
+		}
+		/* modify bogdanr rootfs addon */
+		if ($CONFIG['showrootdf']) {
+			echo "<div class=\"field\">disk</div>";
+		}
+		if ($CONFIG['showtime']) {
+			echo "<div class=\"field\">update</div>";
+		}
 	}
 	echo "</div></div>";
 	
