@@ -224,7 +224,25 @@ function host_summary($cat, $hosts) {
 	$rrd = new RRDTool($CONFIG['rrdtool']);
 
 	printf('<fieldset id="%s">', htmlentities($cat));
-	printf('<legend>%s</legend>', htmlentities($cat));
+	/* add ($CONFIG['showItem']) legend */
+	printf('<div class="row"><label><legend>%s</legend></label><div class="hostinfo">', htmlentities($cat));
+	if ($CONFIG['showlegend']) {
+		if ($CONFIG['showload']) {
+			echo "<div class=\"field\">1'</div><div class=\"field\">5'</div><div class=\"field\">15'</div>";
+		}
+		if ($CONFIG['showmem']) {
+			echo "<div class=\"field\">mem</div>";
+		}
+		/* modify bogdanr rootfs addon */
+		if ($CONFIG['showrootdf']) {
+			echo "<div class=\"field\">disk</div>";
+		}
+		if ($CONFIG['showtime']) {
+			echo "<div class=\"field\">update</div>";
+		}
+	}
+	echo "</div></div>";
+	
 	echo "<div class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
@@ -287,6 +305,29 @@ function host_summary($cat, $hosts) {
 						$class = ' warn';
 
 					printf('<div class="field%s">%d%%</div>', $class, $percent_mem);
+				}
+			}
+		}
+
+		/* modify bogdanr rootfs addon */
+		if ($CONFIG['showrootdf']) {
+			$rrd_info_dff = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df-root/df_complex-free.rrd');
+			$rrd_info_dfu = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df-root/df_complex-reserved.rrd');
+			$rrd_info_dfr = $rrd->rrd_info($CONFIG['datadir'].'/'.$host.'/df-root/df_complex-used.rrd');
+			
+			# ignore if file does not exist
+			if ($rrd_info_dff && $rrd_info_dfu && $rrd_info_dfr) {
+				$info='ds[value].last_ds';
+				if (isset($rrd_info_dff[$info]) && isset($rrd_info_dfu[$info]) && isset($rrd_info_dfr[$info])) {
+					$percent_disk = ($rrd_info_dfu[$info] + $rrd_info_dfr[$info]) * 100 / ($rrd_info_dff[$info] + $rrd_info_dfu[$info] + $rrd_info_dfr[$info]);
+					
+					$class = '';
+					if ($percent_disk > 90)
+						$class = ' crit';
+					elseif ($percent_disk > 70)
+						$class = ' warn';
+
+					printf('<div class="field%s">%d%%</div>', $class, $percent_disk);
 				}
 			}
 		}
