@@ -4,6 +4,8 @@ require_once 'conf/common.inc.php';
 require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
+header("Content-Type: text/html");
+
 $host = GET('h');
 $plugin = GET('p');
 

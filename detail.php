@@ -5,6 +5,8 @@ require_once 'inc/functions.inc.php';
 require_once 'inc/html.inc.php';
 require_once 'inc/collectd.inc.php';
 
+header("Content-Type: text/html");
+
 # use width/height from config if nothing is given
 if (empty($_GET['x']))
 	$_GET['x'] = $CONFIG['detail-width'];
