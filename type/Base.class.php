@@ -285,7 +285,7 @@ class Type_Base {
 			$rrdgraph[] = '--base';
 			$rrdgraph[] = $this->base;
 		}
-		if (!array_search('-l', $rrdgraph)) {
+		if (array_search('-l', $rrdgraph) === false) {
 			$rrdgraph[] = '-l';
 			$rrdgraph[] = '0';
 		}
