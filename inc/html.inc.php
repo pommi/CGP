@@ -96,6 +96,7 @@ EOT;
 
 function html_end($footer = false) {
 	global $CONFIG;
+	$html_weburl = htmlentities($CONFIG['weburl']);
 
 	if ($footer) {
 		$git = '/usr/bin/git';
@@ -110,8 +111,6 @@ function html_end($footer = false) {
 			$version = explode(' ', $changelog[0]);
 			$version = 'v'.$version[0];
 		}
-
-		$html_weburl = htmlentities($CONFIG['weburl']);
 
 		echo <<<EOT
 </div>
