@@ -12,7 +12,7 @@ function GET($index = NULL, $value = NULL) {
 		return $arr;
 	}
 
-	if (!isset($_GET[$index]))
+	if (!isset($_GET[$index]) or strlen($_GET[$index]) == 0)
 		return NULL;
 
 	if ($value === NULL)
