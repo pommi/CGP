@@ -103,6 +103,11 @@ a:hover {
 	width: 8em;
 }
 
+table.summary td.wide {
+	width: 200px;
+	text-align: right;
+}
+
 img {
 	border: 0;
 }
