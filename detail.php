@@ -73,4 +73,14 @@ if ($CONFIG['graph_type'] == 'canvas') {
 echo '</div>';
 echo "</fieldset>\n";
 
+// Calculate the refresh time.
+$ReloadTime = (int)$_GET['s']*1000/120;
+if($ReloadTime < 5000) {
+	$ReloadTime = 5000; // Prevent the timer from falling below 5 secs.
+}
+?>
+<script>
+window.setInterval(function() { location.reload(); },<?php echo($ReloadTime); ?>);
+</script>
+<?php
 html_end();
