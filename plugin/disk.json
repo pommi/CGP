@@ -63,5 +63,32 @@
 		},
 		"legend_format": "%5.1lf%ss",
 		"scale": 0.001
+	},
+	"pending_operations": {
+		"title": "Disk Pending Operations ({{PI}}) on {{HOST}}",
+		"vertical": "Operations",
+		"legend": {
+			"value": {
+				"name": "Operations",
+				"color": "0000f0"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	},
+	"disk_io_time": {
+		"title": "Disk time spent doing I/Os ({{PI}}) on {{HOST}}",
+		"vertical": "I/O time (s)",
+		"legend": {
+			"io_time": {
+				"name": "I/O Time",
+				"color": "0000ff"
+			},
+			"weighted_io_time": {
+				"name": "Weighted I/O Time",
+				"color": "f0a000"
+			}
+		},
+		"legend_format": "%5.1lf%ss",
+		"scale": 0.001
 	}
 }
