@@ -32,6 +32,14 @@
 				"name": "Slab",
 				"color": "ff00ff"
 			},
+			"slab_recl": {
+				"name": "Slab Recl.",
+				"color": "ff77ff"
+			},
+			"slab_unrecl": {
+				"name": "Slab Unrecl.",
+				"color": "ff00ff"
+			},
 			"used": {
 				"name": "Used",
 				"color": "ff0000"
