@@ -1,3 +1,13 @@
+v1 (2017-03-05) (last major version, from now on every commit is a release)
+
+* notable changes since v0.4.1
+ - mobile support (responsive design)
+ - automatic support for all plugins (markup/styling in json)
+ - hybrid graph type (canvas graph on detail page, png on the others)
+ - svg graph support
+ - support for newer PHP versions
+ - deprecate support for collectd 4
+
 0.4.1 (2013-05-20)
 - remove dependency on mod_rewrite for rrd.php
 
