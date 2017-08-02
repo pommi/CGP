@@ -1,6 +1,6 @@
 {
 	"df_complex": {
-		"title": "Logical volumes for {{PI}}) on {{HOST}}",
+		"title": "Logical volumes for ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",
 		"type": "stacked",
 		"legend": {
