@@ -151,6 +151,51 @@ function plugin_header($host, $plugin) {
 		htmlentities($plugin));
 }
 
+function plugins_list_group($group, $selected_plugins = array()) {
+	global $CONFIG;
+
+	$plugins = collectd_plugins( $CONFIG['cat'][$group][0]);
+
+	echo '<div class="plugins">';
+	echo '<h2>Plugins</h2>';
+	echo '<ul>';
+
+	printf("<li><a %shref=\"%sgroup.php?h=%s\">overview</a></li>\n",
+		selected_overview($selected_plugins),
+		htmlentities($CONFIG['weburl']),
+		urlencode($group)
+	);
+
+	# first the ones defined as ordered
+	foreach($CONFIG['overview'] as $plugin) {
+		if (in_array($plugin, $plugins)) {
+			printf("<li><a %shref=\"%sgroup.php?h=%s&amp;p=%s\">%s</a></li>\n",
+				selected_plugin($plugin, $selected_plugins),
+				htmlentities($CONFIG['weburl']),
+				urlencode($group),
+				urlencode($plugin),
+				htmlentities($plugin)
+			);
+		}
+	}
+
+	# other plugins
+	foreach($plugins as $plugin) {
+		if (!in_array($plugin, $CONFIG['overview'])) {
+			printf("<li><a %shref=\"%sgroup.php?h=%s&amp;p=%s\">%s</a></li>\n",
+				selected_plugin($plugin, $selected_plugins),
+				htmlentities($CONFIG['weburl']),
+				urlencode($group),
+				urlencode($plugin),
+				htmlentities($plugin)
+			);
+		}
+	}
+
+	echo '</ul>';
+	echo '</div>';
+}
+
 function plugins_list($host, $selected_plugins = array()) {
 	global $CONFIG;
 
@@ -223,7 +268,10 @@ function host_summary($cat, $hosts) {
 	$rrd = new RRDTool($CONFIG['rrdtool']);
 
 	printf('<fieldset id="%s">', htmlentities($cat));
-	printf('<legend>%s</legend>', htmlentities($cat));
+	printf('<legend><a href="%sgroup.php?h=%s">%s</a></legend>',
+		   htmlentities($CONFIG['weburl']),
+		   htmlentities($cat),
+		   htmlentities($cat));
 	echo "<div class=\"summary\">\n";
 
 	$row_style = array(0 => "even", 1 => "odd");
