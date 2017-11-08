@@ -77,7 +77,7 @@ EOT;
 
 	}
 
-	if($CONFIG['version'] == 4) {
+	if($CONFIG['version'] == 4 && $CONFIG['version_warn']) {
 		echo <<<EOT
 <div class="warnheader">
 	You are using Collectd 4, which is deprecated by CGP. Graphs like
