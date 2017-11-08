@@ -4,6 +4,7 @@ require_once 'conf/common.inc.php';
 require_once 'inc/functions.inc.php';
 require_once 'inc/collectd.inc.php';
 
+$host = GET('h');
 $plugin = GET('p');
 $type = GET('t');
 $width = GET('x') ? filter_var(GET('x'), FILTER_VALIDATE_INT, array(
@@ -51,6 +52,19 @@ if(function_exists('json_decode'))
 
 		if (is_null($plugin_json_local))
 			error_log('CGP Error: invalid json in plugin/local/'.$plugin.'.json');
+
+		if (is_array($plugin_json)) {
+			$plugin_json = array_replace_recursive($plugin_json, $plugin_json_local);
+		} else {
+			$plugin_json = $plugin_json_local;
+		}
+	}
+	if (file_exists('plugin/local/'.$host.'.json')) {
+		$json = file_get_contents('plugin/local/'.$host.'.json');
+		$plugin_json_local = json_decode($json, true);
+
+		if (is_null($plugin_json_local))
+			error_log('CGP Error: invalid json in plugin/local/'.$host.'.json');
 
 		if (is_array($plugin_json)) {
 			$plugin_json = array_replace_recursive($plugin_json, $plugin_json_local);
