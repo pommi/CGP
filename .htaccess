@@ -7,5 +7,7 @@ Options -Indexes
 	</Files>
 </IfModule>
 
-RewriteEngine On
-RewriteRule ^.git(ignore|/) - [F,L]
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^.git(ignore|/) - [F,L]
+</IfModule>
