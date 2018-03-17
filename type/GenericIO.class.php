@@ -30,12 +30,12 @@ class Type_GenericIO extends Type_Base {
 					$rrdgraph[] = sprintf('CDEF:min_%s=min_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
 					$rrdgraph[] = sprintf('CDEF:avg_%s=avg_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
 					$rrdgraph[] = sprintf('CDEF:max_%s=max_%1$s_raw,%s,*', crc32hex($sources[$i]), $this->scale);
-					if ($i == 1)
+					if ($i % 2 == 1)
 						$rrdgraph[] = sprintf('CDEF:avg_%s_neg=avg_%1$s_raw,%s%s,*', crc32hex($sources[$i]), $this->negative_io ? '-' : '', $this->scale);
 					$rrdgraph[] = sprintf('VDEF:tot_%1$s=avg_%1$s,TOTAL', crc32hex($sources[$i]));
 					if ($this->percentile)
 						$rrdgraph[] = sprintf('VDEF:pct_%1$s=avg_%1$s,%2$s,PERCENT', crc32hex($sources[$i]), $this->percentile);
-					if ($this->percentile && $this->negative_io && $i == 1)
+					if ($this->percentile && $this->negative_io && $i % 2 == 1)
 						$rrdgraph[] = sprintf('VDEF:pct_%1$s_neg=avg_%1$s_neg,%2$s,PERCENT', crc32hex($sources[$i]), 100 - $this->percentile);
 					$i++;
 				}
@@ -47,7 +47,7 @@ class Type_GenericIO extends Type_Base {
 
 		$i = 0;
 		foreach($sources as $source) {
-			$rrdgraph[] = sprintf('AREA:avg_%s%s#%s', crc32hex($source), $i == 1 ? '_neg' : '', $this->get_faded_color($this->colors[$source]));
+			$rrdgraph[] = sprintf('AREA:avg_%s%s#%s', crc32hex($source), $i % 2 == 1 ? '_neg' : '', $this->get_faded_color($this->colors[$source]));
 			$i++;
 		}
 
@@ -63,7 +63,7 @@ class Type_GenericIO extends Type_Base {
 		$i = 0;
 		foreach($sources as $source) {
 			$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
-			$rrdgraph[] = sprintf('LINE1:avg_%s%s#%s:%s', crc32hex($source), $i == 1 ? '_neg' : '', $this->colors[$source], $this->rrd_escape($legend));
+			$rrdgraph[] = sprintf('LINE1:avg_%s%s#%s:%s', crc32hex($source), $i % 2 == 1 ? '_neg' : '', $this->colors[$source], $this->rrd_escape($legend));
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:%s Min,', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:%s Avg,', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:%s Max,', crc32hex($source), $this->rrd_format);
@@ -77,7 +77,7 @@ class Type_GenericIO extends Type_Base {
 			$i=0;
 			foreach($sources as $source) {
 				$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
-				$rrdgraph[] = sprintf('LINE:pct_%s%s#%s:%sth Percentile %s', crc32hex($source), ($i == 1 && $this->negative_io) ? '_neg' : '', $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
+				$rrdgraph[] = sprintf('LINE:pct_%s%s#%s:%sth Percentile %s', crc32hex($source), ($i % 2 == 1 && $this->negative_io) ? '_neg' : '', $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
 				$rrdgraph[] = sprintf('GPRINT:pct_%s:%s\l', crc32hex($source), $this->rrd_format);
 				$i++;
 			}
