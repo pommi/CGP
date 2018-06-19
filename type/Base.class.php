@@ -245,10 +245,13 @@ class Type_Base {
 				if (is_numeric($this->cache) && $this->cache > 0)
 					header("Expires: " . date(DATE_RFC822,strtotime($this->cache." seconds")));
 
-				if ($style === 'svg')
+				if ($style === 'svg') {
 					header("content-type: image/svg+xml");
-				else
+					header('Content-Disposition: filename="' . $this->rrd_title . '.svg"');
+				} else {
 					header("content-type: image/png");
+					header('Content-Disposition: filename="' . $this->rrd_title . '.png"');
+				}
 
 				$shellcmd = array_merge(
 					$this->rrd_graph_command($style),
