@@ -331,7 +331,7 @@ function breadcrumbs() {
 }
 
 # generate graph url's for a plugin of a host
-function graphs_from_plugin($host, $plugin, $overview=false) {
+function graphs_from_plugin($host, $plugin, $overview=false, $time=false) {
 	global $CONFIG;
 
 	if (!$plugindata = collectd_plugindata($host, $plugin))
@@ -352,9 +352,11 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 
 		$items['h'] = $host;
 
-		$time = array_key_exists($plugin, $CONFIG['time_range'])
-			? $CONFIG['time_range'][$plugin]
-			: $CONFIG['time_range']['default'];
+        if ( ! $time ) {
+		    $time = array_key_exists($plugin, $CONFIG['time_range'])
+			    ? $CONFIG['time_range'][$plugin]
+			    : $CONFIG['time_range']['default'];
+        }
 
 		if ($CONFIG['graph_type'] == 'canvas') {
 			chdir($CONFIG['webdir']);
