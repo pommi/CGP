@@ -65,6 +65,20 @@ echo <<<EOT
   <h1><a href="{$html_weburl}">Collectd Graph Panel</a></h1>
 </div>
 
+<div id="header">
+  <ul class="time-range">
+EOT;
+$args = $_GET;
+foreach($CONFIG['term'] as $key => $s) {
+	$args['s'] = $s;
+	$selected = selected_timerange($seconds, $s);
+	printf('<li><a %s href="%s%s">%s</a></li>'."\n",
+		$selected, "", build_url($_SERVER['PHP_SELF'], $args), $key);
+}
+		echo <<<EOT
+  </ul>
+</div>
+
 EOT;
 
 	if(!function_exists('json_decode')) {
