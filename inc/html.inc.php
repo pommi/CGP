@@ -366,11 +366,11 @@ function graphs_from_plugin($host, $plugin, $overview=false, $time=false) {
 
 		$items['h'] = $host;
 
-        if ( ! $time ) {
+                if ( ! $time ) {
 		    $time = array_key_exists($plugin, $CONFIG['time_range'])
 			    ? $CONFIG['time_range'][$plugin]
 			    : $CONFIG['time_range']['default'];
-        }
+                }
 
 		if ($CONFIG['graph_type'] == 'canvas') {
 			chdir($CONFIG['webdir']);
