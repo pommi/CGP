@@ -28,6 +28,11 @@ if (!strlen($host) || !$plugins = collectd_plugins($host)) {
 	return false;
 }
 
+if ( empty($selected_plugins) ) {
+        $plugins = collectd_plugins($host);
+        $selected_plugins = !$plugin ? $plugins : array($plugin);
+}
+
 plugins_list($host, $selected_plugins);
 
 echo '<div class="graphs">';
