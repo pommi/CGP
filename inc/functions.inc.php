@@ -34,7 +34,7 @@ function GET($index = NULL, $value = NULL) {
 		case 'h': # host
 		case 'pi': # plugin instance
 		case 'ti': # type instance
-			if (!preg_match('/^[\w-.: ]+$/u', $value)) {
+			if (!preg_match('/^[\w\-.: ]+$/u', $value)) {
 				error_log(sprintf('Invalid %s in $_GET["%s"]: "%s"', $desc[$index], $index, $value));
 				return NULL;
 			}
