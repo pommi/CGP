@@ -66,7 +66,7 @@ set up to reduce data usage and CPU time:
 
 License
 -------
-CGP is released under the terms of GPL version 3. See [doc/LICENSE](doc/LICENSE)
+CGP is released under the terms of GPL version 3. See [LICENSE](LICENSE)
 for the full license text.
 
 Acknowledgements
