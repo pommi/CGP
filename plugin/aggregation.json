@@ -1,8 +1,8 @@
 {
 	"cpu": {
-		"title": "CPU-{{PI}} usage on {{HOST}}",
-		"vertical": "Jiffies",
-		"rrdtool_opts": ["-u","100","-r"],
+		"title": "Total CPU usage on {{HOST}}",
+		"vertical": "Percent",
+		"rrdtool_opts": ["-u", "100"],
 		"type": "stacked",
 		"legend": {
 			"idle": {

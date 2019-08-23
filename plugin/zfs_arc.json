@@ -1,0 +1,26 @@
+{
+    "cache_size": {
+        "title": "ARC Usage on {{HOST}}",
+        "vertical": "Bytes",
+        "type": "filled",
+        "legend": {
+            "c": {
+                "name": "Target"
+            },
+            "arc": {
+                "name": "Cur Size"
+            },
+            "c_min": {
+                "name": "Min"
+            },
+            "c_max": {
+                "name": "Max"
+            },
+            "L2": {
+                "name": "L2 Size"
+            }
+        },
+        "legend_format": "%5.0lf%sB",
+        "base": "1024"
+    }
+}

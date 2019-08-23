@@ -1,0 +1,18 @@
+{
+	"disk_ops": {
+		"title": "Disk Operations ({{PI}}) on {{HOST}}",
+		"vertical": "Ops per second",
+		"type": "io",
+		"legend": {
+			"read": {
+				"name": "Read",
+				"color": "0000ff"
+			},
+			"write": {
+				"name": "Write",
+				"color": "00b000"
+			}
+		},
+		"legend_format": "%5.1lf%s"
+	}
+}

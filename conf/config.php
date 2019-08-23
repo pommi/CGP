@@ -36,6 +36,7 @@ $CONFIG['time_range']['uptime']  = 31536000;
 $CONFIG['showload'] = true;
 $CONFIG['showmem'] = false;
 $CONFIG['showtime'] = false;
+$CONFIG['perline'] = 1;
 
 $CONFIG['term'] = array(
 	'2hour'	 => 3600 * 2,

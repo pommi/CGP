@@ -121,6 +121,7 @@ function html_end($footer = false) {
 EOT;
 	}
 	if ($CONFIG['graph_type'] == 'canvas') {
+		$html_weburl = htmlentities($CONFIG['weburl']);
 		if ($CONFIG['rrd_fetch_method'] == 'async') {
 			$js_async = 'true';
 		} else {
@@ -228,17 +229,35 @@ function host_summary($cat, $hosts) {
 
 	$row_style = array(0 => "even", 1 => "odd");
 	$host_counter = 0;
+	$line_counter = 0;
+
+    if($CONFIG['perline']) {
+        printf('<div class="divTable">');
+    }
 
 	foreach($hosts as $host) {
-		$host_counter++;
 
-		printf('<div class="row %s">', $row_style[$host_counter % 2]);
-		printf('<label><a href="%shost.php?h=%s">%s</a></label>',
+        if($CONFIG['perline']) {
+            $foo = $host_counter % $CONFIG['perline'];
+            echo "<!--- $host_counter ".$CONFIG['perline']." $foo -->\n";
+            if($host_counter % $CONFIG['perline'] == 0) { 
+                printf('<div class="divRow %s">', $row_style[$line_counter % 2]);
+            } 
+        } else {
+            printf('<div class="row %s">', $row_style[$line_counter % 2]);
+        }
+
+
+		# printf('<label><a href="%shost.php?h=%s">%s</a></label>',
+		printf('<div class="divCell"><a href="%shost.php?h=%s">%s</a></div>',
 			htmlentities($CONFIG['weburl']),
 			urlencode($host),
 			htmlentities($host));
 
-		echo "<div class=\"hostinfo\">";
+
+        if ($CONFIG['showload'] || $CONFIG['showmem'] || $CONFIG['showtime']) {
+            echo "<div class=\"hostinfo\">";
+        }
 
 		if ($CONFIG['showload']) {
 			require_once 'type/Default.class.php';
@@ -306,8 +325,24 @@ function host_summary($cat, $hosts) {
 			}
 		}
 
-		print "</div></div>\n";
+        if($CONFIG['perline']) {
+            if(($host_counter % $CONFIG['perline'] ) == $CONFIG['perline'] - 1) { 
+                print "</div>\n";
+                $line_counter++;
+            } 
+            $host_counter++;
+        } else {
+            print "</div>\n";
+            $line_counter++;
+            if ($CONFIG['showload'] || $CONFIG['showmem'] || $CONFIG['showtime']) {
+                echo "</div>\n";
+            }
+        }
 	}
+    
+    if($CONFIG['perline']) {
+        printf('</div>'); 
+    }
 
 	echo "</div>\n";
 	echo "</fieldset>\n";

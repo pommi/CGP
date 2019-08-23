@@ -64,8 +64,8 @@ h2 {
 }
 
 a:link, a:visited, a:active {
-	text-decoration: none;
-	color: #222;
+	text-decoration: none; 
+	color: #222; 
 }
 
 a:hover {
@@ -78,11 +78,11 @@ a:hover {
 }
 
 .row.even {
-/*	background: #eeeeee; */
+/*	background: #aaaaaa;   */
 }
 
 .row.odd {
-/*	background: #cccccc; */
+/*	background: #cccccc; */ 
 }
 
 .row label {
@@ -161,7 +161,7 @@ hr {
 
 .selected:link, .selected:visited, .selected:active {
 	font-style: italic;
-	color: #4D79B5;
+	color: #4D79B5; 
 }
 
 .time-range li {
@@ -194,7 +194,7 @@ legend {
 
 code {
 	font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0,0,0,0.1); 
 	padding: 0 0.2em;
 }
 
@@ -202,3 +202,47 @@ code {
 	font-size: 0.7em;
 	opacity: 0.6;
 }
+
+.divCell {
+    float:left;/*fix for  buggy browsers*/
+    display:table-column;
+    width:20em; 
+/*    background-color:#ccc;  */
+}
+
+.divTable {
+    display:  table;
+    width:auto;
+    background-color:#fff;  
+/*    border:1px solid  #666666;  */
+    border-spacing:5px;/*cellspacing:poor IE support for  this*/
+    /* border-collapse:separate;*/
+}
+
+.divRow {
+    display:table-row;
+    width:auto;
+}
+
+.divRow:nth-of-type(odd) {
+        background: #ccc;
+} 
+
+.divRow label {
+    float: left;
+    width: 20em;
+}
+
+.divRow .hostinfo {
+    float: left;
+}
+
+.divRow .field {
+    float: left;
+    width: 3.4em;
+}
+
+.divRow .field.wide {
+    width: 8em;
+}
+

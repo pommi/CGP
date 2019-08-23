@@ -27,7 +27,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_errors": {
-		"title": "Interface Errors ({{PI}}) on {{HOST}}",
+		"title": "Errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "io",
 		"legend": {
@@ -55,7 +55,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_octets": {
-		"title": "Interface Traffic ({{PI}}) on {{HOST}}",
+		"title": "Traffic ({{PI}}) on {{HOST}}",
 		"vertical": "{{ND}}/second",
 		"type": "io",
 		"legend": {
@@ -72,7 +72,7 @@
 		"datasize": true
 	},
 	"if_packets": {
-		"title": "Interface Packets ({{PI}}) on {{HOST}}",
+		"title": "Packets ({{PI}}) on {{HOST}}",
 		"vertical": "Packets/s",
 		"type": "io",
 		"legend": {
@@ -88,7 +88,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_rx_errors": {
-		"title": "Interface receive errors ({{PI}}) on {{HOST}}",
+		"title": "Receive errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "stacked",
 		"legend": {
@@ -120,7 +120,7 @@
 		"legend_format": "%5.1lf%s"
 	},
 	"if_tx_errors": {
-		"title": "Interface transmit errors ({{PI}}) on {{HOST}}",
+		"title": "Transmit errors ({{PI}}) on {{HOST}}",
 		"vertical": "Errors/s",
 		"type": "stacked",
 		"legend": {

@@ -105,7 +105,7 @@ class Type_Base {
 			'type' => isset($_get['t']) ? $_get['t'] : null,
 			'tinstance' => isset($_get['ti']) ? $_get['ti'] : null,
 		);
-		$this->seconds = isset($_get['s']) ? $_get['s'] : null;
+        $this->seconds = isset($_get['s']) ? $_get['s'] : null;
 	}
 
 	function validate_color($color) {
@@ -172,7 +172,6 @@ class Type_Base {
 			$instance = strpos($basename,'-')
 				? substr($basename, strpos($basename,'-') + 1)
 				: 'value';
-
 			$this->tinstances[] = $instance;
 			$this->files[$instance] = $filename;
 			$this->identifiers[$instance] = preg_replace(
@@ -193,8 +192,8 @@ class Type_Base {
 			strlen($this->args['pinstance']) ? '-' : '', $this->args['pinstance'],
 			$this->args['type'],
 			strlen($this->args['tinstance']) ? '-' : '', $this->args['tinstance']
-		);
-		$identifier = preg_replace("/([*?[])/", '[$1]', $identifier);
+        );
+        $identifier = preg_replace("/([*?[])/", '[$1]', $identifier);
 
 		$wildcard = strlen($this->args['tinstance']) ? '.' : '[-.]*';
 
@@ -332,7 +331,7 @@ class Type_Base {
 			if(is_array($this->data_sources) && count($this->data_sources)==1 && in_array('value', $this->data_sources)) {
 				# use tinstances as sources
 				$sources = $this->tinstances;
-			} else {
+            } else {
 				# use data_sources as sources
 				$sources = $this->data_sources;
 			}

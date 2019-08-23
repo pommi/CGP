@@ -73,6 +73,10 @@ switch ($plugin_json[$type]['type']) {
 		require_once 'type/GenericIO.class.php';
 		$obj = new Type_GenericIO($CONFIG, GET());
 		break;
+	case 'filled':
+		require_once 'type/GenericFilled.class.php';
+		$obj = new Type_GenericFilled($CONFIG, GET());
+		break;
 	case 'uptime':
 		require_once 'type/Uptime.class.php';
 		$obj = new Type_Uptime($CONFIG, GET());
