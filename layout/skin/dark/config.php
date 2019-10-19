@@ -1,6 +1,6 @@
 <?php
 
-class Skin {
+class Skin extends Base {
 	# Basic rrdtool graph colors
 	var $rrdtool_colors = array(
 		'CANVAS' => '33393a',
@@ -10,10 +10,9 @@ class Skin {
 		'SHADEB' => '263032',
 	);
 
-	# Plugin colors
-	var $plugin_colors = array();
+	function __construct($config, $_get) {
+		Base::__construct($config, $_get);
 
-	function __construct() {
 		$this->plugin_colors['load'] = array(
 			'shortterm' => '3366ff',
 			'midterm' => 'ffcc66',
@@ -118,25 +117,28 @@ class Skin {
 
 	# Skin override functions
 
-	function rainbow_colors($rrd_sources) {
+	function rainbow_colors() {
 		$c = 0;
-		$sources = count($rrd_sources);
+		$sources = count($this->rrd_get_sources());
 		$sat = 0.75;
 		$val = 1.0;
-		foreach ($rrd_sources as $ds) {
+		foreach ($this->rrd_get_sources() as $ds) {
 			$h = $sources > 1 ? 360 - ($c * (330/($sources-1))) : 360;
 			$h = ($h %= 360);
 			$hex = '';
 			foreach($this->_HSVtoRGB($h / 360, $sat, $val) as $j) {
 				$hex .= sprintf('%02x', $j * 255);
 			}
-			$colors[$ds] = $hex;
+			$this->colors[$ds] = $hex;
 			$c++;
 		}
-		return $colors;
 	}
 
 	function get_faded_color($type, $fgc, $bgc=null, $percent=0.25) {
+		if ($bgc === null) {
+			$bgc = $this->rrd_canvas_color();
+		}
+
 		$rgb = array('r', 'g', 'b');
 
 		$fg['r'] = hexdec(substr($fgc,0,2));
