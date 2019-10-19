@@ -3,6 +3,7 @@
 require_once 'Base.class.php';
 
 class Type_GenericStacked extends Type_Base {
+	var $area_lines = true;
 
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
@@ -43,15 +44,24 @@ class Type_GenericStacked extends Type_Base {
 		$c = 0;
 		foreach ($sources as $source) {
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
-			$color = $this->get_faded_color($color);
-			$rrdgraph[] = sprintf('AREA:area_%s#%s', crc32hex($source), $color);
+			if ($this->area_lines) {
+				$color = $this->get_faded_color('area', $color);
+				$rrdgraph[] = sprintf('AREA:area_%s#%s', crc32hex($source), $color);
+			}
 		}
 
 		$c = 0;
 		foreach ($sources as $source) {
 			$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
-			$rrdgraph[] = sprintf('LINE1:area_%s#%s:%s', crc32hex($source), $this->validate_color($color), $this->rrd_escape($legend));
+			if ($this->area_lines) {
+				$rrdgraph[] = sprintf('LINE1:area_%s#%s:%s', crc32hex($source), $this->validate_color($color), $this->rrd_escape($legend));
+			} else {
+				if ($this->graph_type == 'canvas') {
+					$rrdgraph[] = sprintf('LINE1:area_%s#%s:%s', crc32hex($source), $this->validate_color($color), $this->rrd_escape($legend));
+				}
+				$rrdgraph[] = sprintf('AREA:area_%s#%s:%s', crc32hex($source), $color, $this->rrd_escape($legend));
+			}
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:%s Min,', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:%s Avg,', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:max_%s:MAX:%s Max,', crc32hex($source), $this->rrd_format);

@@ -21,6 +21,9 @@ $CONFIG['rrdtool_opts'] = array();
 # category of hosts based on regular expression
 #$CONFIG['cat']['Mailservers'] = '/mail\d+/';
 
+# UI skin
+$CONFIG['ui_skin'] = 'default';
+
 # default plugins to show on host page
 $CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
 

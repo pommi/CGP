@@ -34,6 +34,8 @@ class Type_Base {
 	var $flush_socket;
 	var $flush_type;
 
+	var $skin = null;
+
 	function __construct($config, $_get) {
 		$this->datadir = $config['datadir'];
 		$this->rrdtool = $config['rrdtool'];
@@ -47,6 +49,7 @@ class Type_Base {
 		}
 		$this->rrd_url = $config['rrd_url'];
 		$this->cache = $config['cache'];
+		$this->skin_options = @$config['skin_options'];
 		$this->parse_get($_get);
 		$this->rrd_title = sprintf(
 			'%s%s%s%s',
@@ -70,9 +73,16 @@ class Type_Base {
 		$this->graph_minmax = $config['graph_minmax'];
 		$this->flush_socket = $config['socket'];
 		$this->flush_type = $config['flush_type'];
+		if (class_exists('Skin')) {
+			$this->skin = new Skin();
+		}
 	}
 
 	function rainbow_colors() {
+		if ($this->skin and method_exists($this->skin, 'rainbow_colors')) {
+			$this->colors = $this->skin->rainbow_colors($this->rrd_get_sources());
+			return;
+		}
 		$c = 0;
 		$sources = count($this->rrd_get_sources());
 		foreach ($this->rrd_get_sources() as $ds) {
@@ -115,8 +125,18 @@ class Type_Base {
 			return $color;
 	}
 
-	function get_faded_color($fgc, $bgc='ffffff', $percent=0.25) {
+	function get_faded_color($type, $fgc, $bgc=null, $percent=0.25) {
+		# Type should be either 'line' or 'area.'
+		# Skins may make decisions with this value but the default
+		# implementation returns the same value for both.
+		if ($bgc === null) {
+			$bgc = $this->rrd_canvas_color();
+		}
 		$fgc = $this->validate_color($fgc);
+		if ($this->skin && method_exists($this->skin, 'get_faded_color')) {
+			return $this->skin->get_faded_color($type, $fgc, $bgc, $percent);
+		}
+
 		if (!is_numeric($percent))
 			$percent=0.25;
 
@@ -130,10 +150,7 @@ class Type_Base {
 		$bg['b'] = hexdec(substr($bgc,4,2));
 
 		foreach ($rgb as $pri) {
-			$c[$pri] = dechex(round($percent * $fg[$pri]) + ((1.0 - $percent) * $bg[$pri]));
-			if (strlen($c[$pri]) == 1) {
-				$c[$pri] = '0' . $c[$pri];
-			}
+			$c[$pri] = sprintf('%02x', round($percent * $fg[$pri]) + ((1.0 - $percent) * $bg[$pri]));
 		}
 
 		return $c['r'].$c['g'].$c['b'];
@@ -203,12 +220,48 @@ class Type_Base {
 		return $files ? $files : array();
 	}
 
+	function rrd_plugin_skin_colors() {
+		if (!$this->skin || !is_array($this->skin->plugin_colors)) {
+			return;
+		}
+		# Check if the current skin overrides any colors
+		$plugin = $this->args['plugin'];
+		$type = $this->args['type'];
+		if (is_array($this->colors) && is_array($this->skin->plugin_colors)) {
+			foreach (array($plugin . '-' . $type, $plugin) as $color_key) {
+				if (!array_key_exists($color_key, $this->skin->plugin_colors)) {
+					continue;
+				}
+				if (!is_array($this->skin->plugin_colors[$color_key])) {
+					continue;
+				}
+				if (array_key_exists('options', $this->skin->plugin_colors[$color_key])) {
+					$options = $this->skin->plugin_colors[$color_key]['options'];
+					if (is_array($options)) {
+						foreach ($options as $key => $value) {
+							$this->{$key} = $value;
+						}
+					}
+				}
+				foreach (array_keys($this->colors) as $ds) {
+					if (array_key_exists($ds, $this->skin->plugin_colors[$color_key])) {
+						$this->colors[$ds] = $this->skin->plugin_colors[$color_key][$ds];
+					}
+				}
+				break;
+			}
+		}
+	}
+
 	function rrd_graph($debug = false) {
 		$this->collectd_flush();
 
 		$colors = $this->colors;
-		$this->rainbow_colors();
+		if (!$this->colors) {
+			$this->rainbow_colors();
+		}
 		$this->colors = $colors + $this->colors;
+		$this->rrd_plugin_skin_colors();
 
 		$graphoptions = $this->rrd_gen_graph();
 		# $shellcmd contains escaped rrdtool arguments
@@ -278,6 +331,15 @@ class Type_Base {
 		);
 	}
 
+	function rrd_canvas_color() {
+		if ($this->skin && is_array($this->skin->rrdtool_colors)) {
+			if (array_key_exists('CANVAS', $this->skin->rrdtool_colors)) {
+				return $this->skin->rrdtool_colors['CANVAS'];
+			}
+		}
+		return 'ffffff';
+	}
+
 	function rrd_options() {
 		$rrdgraph = array();
 		foreach($this->rrdtool_opts as $opt)
@@ -291,6 +353,16 @@ class Type_Base {
 		if (array_search('-l', $rrdgraph) === false) {
 			$rrdgraph[] = '-l';
 			$rrdgraph[] = '0';
+		}
+		# Read skin graph color options
+		if ($this->skin && is_array($this->skin->rrdtool_colors)) {
+			foreach (array("BACK", "CANVAS", "SHADEA", "SHADEB", "GRID",
+						   "MGRID", "FONT", "AXIS", "FRAME", "ARROW") as $color_type) {
+				if (array_key_exists($color_type, $this->skin->rrdtool_colors)) {
+					$rrdgraph[] = '-c';
+					$rrdgraph[] = $color_type . '#' . $this->skin->rrdtool_colors[$color_type];
+				}
+			}
 		}
 		$rrdgraph = array_merge($rrdgraph, array(
 			'-w', is_numeric($this->width) ? $this->width : 400,

@@ -65,8 +65,8 @@ class Type_Ping extends Type_Base {
 			$c = 0;
 			foreach ($sources as $source) {
 				$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
-				$rrdgraph[] = sprintf('LINE1:max_%s#%s', crc32hex($source), $this->get_faded_color($color));
-				$rrdgraph[] = sprintf('LINE1:min_%s#%s', crc32hex($source), $this->get_faded_color($color));
+				$rrdgraph[] = sprintf('LINE1:max_%s#%s', crc32hex($source), $this->get_faded_color('line', $color));
+				$rrdgraph[] = sprintf('LINE1:min_%s#%s', crc32hex($source), $this->get_faded_color('line', $color));
 			}
 		}
 

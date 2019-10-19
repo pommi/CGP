@@ -35,7 +35,7 @@ class Type_Uptime extends Type_Base {
 		$c = 0;
 		foreach ($sources as $source) {
 			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
-			$color = $this->get_faded_color($color);
+			$color = $this->get_faded_color('area', $color);
 			$rrdgraph[] = sprintf('AREA:area_%s#%s', crc32hex($source), $color);
 		}
 
