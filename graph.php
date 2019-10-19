@@ -77,6 +77,10 @@ switch ($plugin_json[$type]['type']) {
 		require_once 'type/Uptime.class.php';
 		$obj = new Type_Uptime($CONFIG, GET());
 		break;
+    case 'ping':
+		require_once 'type/Ping.class.php';
+		$obj = new Type_Ping($CONFIG, $_GET);
+		break;
 	default:
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, GET());
