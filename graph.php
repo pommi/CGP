@@ -118,6 +118,13 @@ if (isset($plugin_json[$type]['vertical'])) {
 	$obj->rrd_vertical = str_replace('{{ND}}', ucfirst($CONFIG['network_datasize']), $obj->rrd_vertical);
 }
 
+if (isset($plugin_json[$type]['load_threshold_lines'])) {
+    $cores = count(array_filter(group_plugindata(collectd_plugindata(GET('h'), 'cpu')),
+                                function($x) { return is_numeric($x['pi']); } ));
+    $obj->hline_warn = $cores;
+    $obj->hline_fail = $cores * 2;
+}
+
 if (isset($plugin_json[$type]['rrdtool_opts'])) {
 	$rrdtool_extra_opts = $plugin_json[$type]['rrdtool_opts'];
 	# compatibility with plugins which specify arguments as string

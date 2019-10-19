@@ -3,6 +3,8 @@
 require_once 'Base.class.php';
 
 class Type_Default extends Type_Base {
+	var $hline_warn;
+	var $hline_fail;
 
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
@@ -55,6 +57,12 @@ class Type_Default extends Type_Base {
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:%s Last\\l', crc32hex($source), $this->rrd_format);
 		}
 
+		if ($this->hline_warn > 0) {
+			$rrdgraph[] = sprintf('HRULE:%d#ecd748::dashes', $this->hline_warn);
+		}
+		if ($this->hline_fail > 0) {
+			$rrdgraph[] = sprintf('HRULE:%d#cc3118::dashes', $this->hline_fail);
+		}
 		return $rrdgraph;
 	}
 }

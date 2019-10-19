@@ -17,6 +17,7 @@
 				"color": "ff0000"
 			}
 		},
-		"legend_format": "%.2lf"
+		"legend_format": "%.2lf",
+		"load_threshold_lines": true
 	}
 }

@@ -253,7 +253,8 @@ function host_summary($cat, $hosts) {
 				isset($rrd_info['ds[midterm].last_ds']) &&
 				isset($rrd_info['ds[longterm].last_ds'])) {
 
-				$cores = count(group_plugindata(collectd_plugindata($host, 'cpu')));
+				$cores = count(array_filter(group_plugindata(collectd_plugindata($host, 'cpu')),
+											function($x) { return is_numeric($x['pi']); } ));
 
 				foreach (array('ds[shortterm].last_ds', 'ds[midterm].last_ds', 'ds[longterm].last_ds') as $info) {
 					$class = '';
