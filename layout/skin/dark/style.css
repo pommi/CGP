@@ -139,6 +139,7 @@ hr {
 
 .graphs {
 	overflow: hidden;
+	background: #000;
 }
 
 .graphs img {

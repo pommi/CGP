@@ -21,9 +21,9 @@ function html_start() {
 	<title>CGP{$path}</title>
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="{$html_weburl}layout/skin/{$CONFIG['ui_skin']}/style.css" type="text/css">
-	<link rel="stylesheet" href="{$html_weburl}layout/style-b.css" type="text/css" media="(max-width: 1000px),(max-device-width: 1000px) and (orientation: portrait),(max-device-width: 767px) and (orientation: landscape)">
-	<link rel="stylesheet" href="{$html_weburl}layout/style-c.css" type="text/css" media="(max-width: 767px),(max-device-width: 767px) and (orientation: portrait),(max-device-width: 499px) and (orientation: landscape)">
-	<link rel="stylesheet" href="{$html_weburl}layout/style-d.css" type="text/css" media="(max-width: 499px),(max-device-width: 499px) and (orientation: portrait)">
+	<link rel="stylesheet" href="{$html_weburl}layout/skin/{$CONFIG['ui_skin']}/style-b.css" type="text/css" media="(max-width: 1000px),(max-device-width: 1000px) and (orientation: portrait),(max-device-width: 767px) and (orientation: landscape)">
+	<link rel="stylesheet" href="{$html_weburl}layout/skin/{$CONFIG['ui_skin']}/style-c.css" type="text/css" media="(max-width: 767px),(max-device-width: 767px) and (orientation: portrait),(max-device-width: 499px) and (orientation: landscape)">
+	<link rel="stylesheet" href="{$html_weburl}layout/skin/{$CONFIG['ui_skin']}/style-d.css" type="text/css" media="(max-width: 499px),(max-device-width: 499px) and (orientation: portrait)">
 
 EOT;
 	if (isset($CONFIG['page_refresh']) && is_numeric($CONFIG['page_refresh'])) {
