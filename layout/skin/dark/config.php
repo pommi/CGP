@@ -39,11 +39,13 @@ class Skin extends Base {
 			'options' => array(
 				'area_lines' => false,
 			),
-			'free' => '1e541a',
-			'cached' => '308729',
-			'buffered' => '42ba39',
-			'locked' => '54ec48',
-			'used' => '75ec6c', #'54ec48',
+			'free' => '133511',
+			'cached' => '1e541a',
+			'buffered' => '266b21',
+			'locked' => '42ba39',
+			'slab_recl' => '308729',
+			'slab_unrecl' => '54ec48',
+			'used' => '93ec8c',
 		);
 		$this->plugin_colors['swap'] = array(
 			'options' => array(
