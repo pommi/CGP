@@ -20,6 +20,7 @@ var CGP = (function() {
             } catch (ex) {
                 console.error('mouse_move:', ex, ex.stack);
             }
+            window.stop();
         }
     };
     var mouse_up = function(e) {
@@ -55,6 +56,7 @@ var CGP = (function() {
             } catch (ex) {
                 console.error('mouse_scroll:', ex, ex.stack);
             }
+            window.stop();
         }
 
         if (e.stopPropagation)
