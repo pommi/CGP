@@ -90,15 +90,18 @@ function collectd_plugindata($host, $plugin=NULL) {
 
 # returns an array of all plugins of a host
 function collectd_plugins($host) {
-	if (!$plugindata = collectd_plugindata($host))
+	global $CONFIG;
+	$hostdir = $CONFIG['datadir'].'/'.$host;
+	if (!is_dir($hostdir))
 		return false;
 
+	$plugin_dirs = glob($hostdir .'/*', GLOB_ONLYDIR);
 	$plugins = array();
-	foreach ($plugindata as $item) {
-		if (!in_array($item['p'], $plugins))
-			$plugins[] = $item['p'];
+	foreach($plugin_dirs as $item) {
+		preg_match('#/([\w_]+)[^/]*$#', $item, $matches);
+		if (!in_array($matches[1], $plugins))
+			$plugins[] = $matches[1];
 	}
-	sort($plugins);
 
 	return $plugins ? $plugins : false;
 }
