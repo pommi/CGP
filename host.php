@@ -8,6 +8,7 @@ header("Content-Type: text/html");
 
 $host = GET('h');
 $plugin = GET('p');
+$seconds = GET('s');
 
 $selected_plugins = !$plugin ? $CONFIG['overview'] : array($plugin);
 
@@ -27,13 +28,18 @@ if (!strlen($host) || !$plugins = collectd_plugins($host)) {
 	return false;
 }
 
+if ( empty($selected_plugins) ) {
+        $plugins = collectd_plugins($host);
+        $selected_plugins = !$plugin ? $plugins : array($plugin);
+}
+
 plugins_list($host, $selected_plugins);
 
 echo '<div class="graphs">';
 foreach ($selected_plugins as $selected_plugin) {
 	if (in_array($selected_plugin, $plugins)) {
 		plugin_header($host, $selected_plugin);
-		graphs_from_plugin($host, $selected_plugin, empty($plugin));
+		graphs_from_plugin($host, $selected_plugin, empty($plugin),$seconds);
 	}
 }
 echo '</div>';

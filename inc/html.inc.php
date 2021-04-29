@@ -65,6 +65,20 @@ echo <<<EOT
   <h1><a href="{$html_weburl}">Collectd Graph Panel</a></h1>
 </div>
 
+<div id="header">
+  <ul class="time-range">
+EOT;
+$args = $_GET;
+foreach($CONFIG['term'] as $key => $s) {
+	$args['s'] = $s;
+	$selected = selected_timerange($seconds, $s);
+	printf('<li><a %s href="%s%s">%s</a></li>'."\n",
+		$selected, "", build_url($_SERVER['PHP_SELF'], $args), $key);
+}
+		echo <<<EOT
+  </ul>
+</div>
+
 EOT;
 
 	if(!function_exists('json_decode')) {
@@ -331,7 +345,7 @@ function breadcrumbs() {
 }
 
 # generate graph url's for a plugin of a host
-function graphs_from_plugin($host, $plugin, $overview=false) {
+function graphs_from_plugin($host, $plugin, $overview=false, $time=false) {
 	global $CONFIG;
 
 	if (!$plugindata = collectd_plugindata($host, $plugin))
@@ -352,9 +366,11 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 
 		$items['h'] = $host;
 
-		$time = array_key_exists($plugin, $CONFIG['time_range'])
-			? $CONFIG['time_range'][$plugin]
-			: $CONFIG['time_range']['default'];
+                if ( ! $time ) {
+		    $time = array_key_exists($plugin, $CONFIG['time_range'])
+			    ? $CONFIG['time_range'][$plugin]
+			    : $CONFIG['time_range']['default'];
+                }
 
 		if ($CONFIG['graph_type'] == 'canvas') {
 			chdir($CONFIG['webdir']);
