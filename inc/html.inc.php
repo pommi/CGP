@@ -226,6 +226,20 @@ function host_summary($cat, $hosts) {
 	printf('<legend>%s</legend>', htmlentities($cat));
 	echo "<div class=\"summary\">\n";
 
+	# Headers: Show descriptions of the stats displayed
+	if ($CONFIG['summary_header']) {
+		echo "<div class=\"row odd summary-header\"><label>name</label><div class=\"hostinfo\">";
+		if ($CONFIG['showload']) {
+			echo "<div class=\"field\" title=\"The short-term load\">short</div><div class=\"field\" title=\"The mid-term load\">mid</div><div class=\"field\" title=\"The long-term load\">long</div>";
+		}
+
+		if ($CONFIG['showmem']) {
+			echo "<div class=\"field\" title=\"The amount of utilized memory\">mem</div>";
+		}
+
+		echo "</div></div>";	
+	}
+
 	$row_style = array(0 => "even", 1 => "odd");
 	$host_counter = 0;
 
