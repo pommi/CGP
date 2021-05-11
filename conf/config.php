@@ -37,6 +37,9 @@ $CONFIG['showload'] = true;
 $CONFIG['showmem'] = false;
 $CONFIG['showtime'] = false;
 
+# display headers for the summary on overview page
+$CONFIG['summary_header'] = false;
+
 $CONFIG['term'] = array(
 	'2hour'	 => 3600 * 2,
 	'8hour'	 => 3600 * 8,
