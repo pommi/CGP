@@ -2,9 +2,7 @@
 
 require_once 'Base.class.php';
 
-class Type_Default extends Type_Base {
-	var $hline_warn;
-	var $hline_fail;
+class Type_Ping extends Type_Base {
 
 	function rrd_gen_graph() {
 		$rrdgraph = $this->rrd_options();
@@ -37,6 +35,32 @@ class Type_Default extends Type_Base {
 			}
 		}
 
+		# Draw shaded areas when some or all hosts are down
+		$files_count = count($this->files);
+		$files_present_def = 'CDEF:files_present=';
+		$i=0;
+		foreach ($this->files as $file) {
+			$files_present_def .= sprintf('avg_%1$s,UN,1,avg_%1$s,IF,0,GT,', crc32hex($sources[$i++]));
+		}
+		$files_present_def .= (($files_count > 1) ? (implode(',', array_fill(0, ($files_count - 1), '+'))) : '0,+');
+		$rrdgraph[] = $files_present_def;
+		$rrdgraph[] = sprintf('CDEF:files_missing=%d,files_present,-', $files_count);
+		$files_missing_colors = array('54ec4833', 'ecd74866', 'ea644aaa');
+		for ($i = 0; $i < 3; $i++) {
+			if ($i <= 1) {
+				if ($files_count <= ($i + 1)) {
+					continue;
+				}
+				$lower = $i;
+				$upper = ($i == 0) ? 1 : ($files_count - 1);
+			} else {
+				$lower = ($files_count - 1);
+				$upper = $files_count;
+			}
+			$rrdgraph[] = sprintf('CDEF:missing_%d=files_missing,%d,LE,UNKN,files_missing,%d,LE,INF,UNKN,IF,IF', $i, $lower, $upper);
+			$rrdgraph[] = sprintf('AREA:missing_%d#%s', $i, $files_missing_colors[$i]);
+		}
+
 		if ($this->graph_minmax) {
 			$c = 0;
 			foreach ($sources as $source) {
@@ -57,12 +81,8 @@ class Type_Default extends Type_Base {
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:LAST:%s Last\\l', crc32hex($source), $this->rrd_format);
 		}
 
-		if ($this->hline_warn > 0) {
-			$rrdgraph[] = sprintf('HRULE:%d#ecd748::dashes', $this->hline_warn);
-		}
-		if ($this->hline_fail > 0) {
-			$rrdgraph[] = sprintf('HRULE:%d#cc3118::dashes', $this->hline_fail);
-		}
 		return $rrdgraph;
 	}
 }
+
+?>

@@ -1,6 +1,7 @@
 {
 	"ping": {
 		"title": "Ping latency on {{HOST}}",
+		"type": "ping",
 		"vertical": "Milliseconds",
 		"legend_format": "%5.1lf"
 	},

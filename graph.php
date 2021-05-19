@@ -77,6 +77,10 @@ switch ($plugin_json[$type]['type']) {
 		require_once 'type/Uptime.class.php';
 		$obj = new Type_Uptime($CONFIG, GET());
 		break;
+    case 'ping':
+		require_once 'type/Ping.class.php';
+		$obj = new Type_Ping($CONFIG, $_GET);
+		break;
 	default:
 		require_once 'type/Default.class.php';
 		$obj = new Type_Default($CONFIG, GET());
@@ -116,6 +120,13 @@ if (isset($plugin_json[$type]['title'])) {
 if (isset($plugin_json[$type]['vertical'])) {
 	$obj->rrd_vertical = $plugin_json[$type]['vertical'];
 	$obj->rrd_vertical = str_replace('{{ND}}', ucfirst($CONFIG['network_datasize']), $obj->rrd_vertical);
+}
+
+if (isset($plugin_json[$type]['load_threshold_lines'])) {
+    $cores = count(array_filter(group_plugindata(collectd_plugindata(GET('h'), 'cpu')),
+                                function($x) { return is_numeric($x['pi']); } ));
+    $obj->hline_warn = $cores;
+    $obj->hline_fail = $cores * 2;
 }
 
 if (isset($plugin_json[$type]['rrdtool_opts'])) {

@@ -47,15 +47,15 @@ class Type_GenericIO extends Type_Base {
 
 		$i = 0;
 		foreach($sources as $source) {
-			$rrdgraph[] = sprintf('AREA:avg_%s%s#%s', crc32hex($source), $i % 2 == 1 ? '_neg' : '', $this->get_faded_color($this->colors[$source]));
+			$rrdgraph[] = sprintf('AREA:avg_%s%s#%s', crc32hex($source), $i % 2 == 1 ? '_neg' : '', $this->get_faded_color('area', $this->colors[$source]));
 			$i++;
 		}
 
 		if (!$this->negative_io) {
 			$rrdgraph[] = sprintf('AREA:overlap#%s',
 				$this->get_faded_color(
-					$this->get_faded_color($this->colors[$sources[0]]),
-					$this->get_faded_color($this->colors[$sources[1]])
+					$this->get_faded_color('area', $this->colors[$sources[0]]),
+					$this->get_faded_color('area', $this->colors[$sources[1]])
 				)
 			);
 		}
@@ -77,7 +77,13 @@ class Type_GenericIO extends Type_Base {
 			$i=0;
 			foreach($sources as $source) {
 				$legend = empty($this->legend[$source]) ? $source : $this->legend[$source];
+<<<<<<< HEAD
 				$rrdgraph[] = sprintf('LINE:pct_%s%s#%s:%sth Percentile %s', crc32hex($source), ($i % 2 == 1 && $this->negative_io) ? '_neg' : '', $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
+||||||| parent of 5b889db... Add basic skinning/theming ability, and skin ("dark") with dark background colors
+				$rrdgraph[] = sprintf('LINE:pct_%s%s#%s:%sth Percentile %s', crc32hex($source), ($i == 1 && $this->negative_io) ? '_neg' : '', $this->get_faded_color($this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
+=======
+				$rrdgraph[] = sprintf('LINE:pct_%s%s#%s:%sth Percentile %s', crc32hex($source), ($i == 1 && $this->negative_io) ? '_neg' : '', $this->get_faded_color('line', $this->colors[$source], '000000', 0.6), $this->percentile, $this->rrd_escape($legend));
+>>>>>>> 5b889db... Add basic skinning/theming ability, and skin ("dark") with dark background colors
 				$rrdgraph[] = sprintf('GPRINT:pct_%s:%s\l', crc32hex($source), $this->rrd_format);
 				$i++;
 			}

@@ -1,4 +1,25 @@
 {
+	"percent_bytes": {
+		"title": "Free space percent ({{PI}}) on {{HOST}}",
+		"vertical": "%",
+		"type": "stacked",
+		"legend": {
+			"reserved": {
+				"name": "Reserved",
+				"color": "aaaaaa"
+			},
+			"free": {
+				"name": "Free",
+				"color": "00ff00"
+			},
+			"used": {
+				"name": "Used",
+				"color": "ff0000"
+			}
+		},
+		"legend_format": "%5.1lf%sB",
+		"base": "1024"
+	},
 	"df_complex": {
 		"title": "Free space ({{PI}}) on {{HOST}}",
 		"vertical": "Bytes",

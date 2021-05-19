@@ -1726,6 +1726,10 @@ RrdGraph.prototype.leg_place = function (calc_width)
 				default_txtalign = this.gdes[i].txtalign;
 
 			if (!this.force_rules_legend) {
+				if ((this.gdes[i].gf === RrdGraphDesc.GF_HRULE || this.gdes[i].gf === RrdGraphDesc.GF_VRULE) &&
+					this.gdes[i].legend === '  ') {
+					this.gdes[i].legend = '';
+				}
 				if (this.gdes[i].gf === RrdGraphDesc.GF_HRULE && (this.gdes[i].yrule < this.minval || this.gdes[i].yrule > this.maxval))
 					this.gdes[i].legend = null;
 				if (this.gdes[i].gf === RrdGraphDesc.GF_VRULE && (this.gdes[i].xrule < this.start || this.gdes[i].xrule > this.end))
