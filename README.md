@@ -30,6 +30,9 @@ CGP is designed to run out of the box. If you want to modify some configuration
 settings, please create `conf/config.local.php` to overrule the settings from
 `conf/config.php`.
 
+Dependency install (Debian)
+sudo apt update && sudo apt install collectd rrdtool bc time nginx php-fpm php-json -y
+
 In a default configuration, the server will execute `rrdtool` to draw PNG
 graphs. These pictures are static and can put quite a burden on the server. For
 more flexibility, set `$CONFIG['graph_type'] = 'canvas'`. This will make web
