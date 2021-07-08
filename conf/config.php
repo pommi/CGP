@@ -3,6 +3,9 @@
 # collectd version
 $CONFIG['version'] = 5;
 
+# show collectd 4 deprecation warning
+$CONFIG['version_warn'] = true;
+
 # collectd's datadir
 $CONFIG['datadir'] = '/var/lib/collectd/rrd';
 
